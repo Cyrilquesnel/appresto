@@ -27,7 +27,7 @@
 | 1.1 | Next.js 14 + Supabase Init | ✅ TERMINÉ | 2026-04-13 |
 | 1.2 | BDD Complète + RLS | ✅ TERMINÉ | 2026-04-13 — 4 migrations créées, RLS sur 28 tables |
 | 1.3 | Auth Flow Complet | ✅ TERMINÉ | 2026-04-13 |
-| 1.4 | Rate Limiting Upstash | ⬜ À FAIRE | |
+| 1.4 | Rate Limiting Upstash | ✅ TERMINÉ | 2026-04-13 — tRPC v11 + Upstash rate limiting + Zustand store + providers |
 | 1.5 | Layout Mobile + Navigation | ⬜ À FAIRE | |
 | 1.6 | CI/CD Initial | ⬜ À FAIRE | |
 | 1.R | Régression Phase 1 | ⬜ À FAIRE | |
@@ -136,10 +136,10 @@
 ## Statistiques
 
 - **Total tasks**: 44
-- **Complètes**: 3
+- **Complètes**: 4
 - **En cours**: 0
-- **Restantes**: 41
-- **Progression**: 7%
+- **Restantes**: 40
+- **Progression**: 9%
 
 ---
 
