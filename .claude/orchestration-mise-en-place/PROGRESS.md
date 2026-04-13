@@ -51,8 +51,8 @@
 
 | Task | Titre | Statut | Notes |
 |---|---|---|---|
-| 3.1 | Mercuriale + Fournisseurs | ⬜ À FAIRE | |
-| 3.2 | OCR Factures (Gemini) | ⬜ À FAIRE | |
+| 3.1 | Mercuriale + Fournisseurs | ✅ TERMINÉ | 2026-04-13 — CRUD fournisseurs + mercuriale + cascade prix + 37 tests |
+| 3.2 | OCR Factures (Gemini) | ✅ TERMINÉ | 2026-04-13 — invoice-ocr.ts + /api/process-invoice + InvoiceUpload + 7 tests |
 | 3.3 | Génération Bons de Commande | ⬜ À FAIRE | |
 | 3.4 | Export WhatsApp + Email + PDF | ⬜ À FAIRE | |
 | 3.R | Régression Phase 3 | ⬜ À FAIRE | |
@@ -136,9 +136,9 @@
 ## Statistiques
 
 - **Total tasks**: 44
-- **Complètes**: 13
+- **Complètes**: 15
 - **En cours**: 0
-- **Restantes**: 31
+- **Restantes**: 29
 - **Progression**: 30%
 
 ---
