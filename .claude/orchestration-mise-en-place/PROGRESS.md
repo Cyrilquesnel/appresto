@@ -24,7 +24,7 @@
 
 | Task | Titre | Statut | Notes |
 |---|---|---|---|
-| 1.1 | Next.js 14 + Supabase Init | ⬜ À FAIRE | |
+| 1.1 | Next.js 14 + Supabase Init | ✅ TERMINÉ | 2026-04-13 |
 | 1.2 | BDD Complète + RLS | ⬜ À FAIRE | |
 | 1.3 | Auth Flow Complet | ⬜ À FAIRE | |
 | 1.4 | Rate Limiting Upstash | ⬜ À FAIRE | |
@@ -136,10 +136,10 @@
 ## Statistiques
 
 - **Total tasks**: 44
-- **Complètes**: 0
+- **Complètes**: 1
 - **En cours**: 0
-- **Restantes**: 44
-- **Progression**: 0%
+- **Restantes**: 43
+- **Progression**: 2%
 
 ---
 
