@@ -236,6 +236,82 @@ export const dashboardRouter = router({
       }
     }),
 
+  // ═══ ONBOARDING ═══
+  getOnboardingStatus: protectedProcedure.query(async ({ ctx }) => {
+    const { data: restaurant } = await ctx.supabase
+      .from('restaurants')
+      .select('parametres, created_at')
+      .eq('id', ctx.restaurantId)
+      .single()
+
+    const parametres = (restaurant?.parametres as Record<string, unknown>) ?? {}
+    const onboardingCompletedAt = parametres.onboarding_completed_at as string | undefined
+
+    const createdAt = new Date((restaurant?.created_at as string | null) ?? Date.now())
+    const daysSinceCreation = Math.floor((Date.now() - createdAt.getTime()) / (1000 * 60 * 60 * 24))
+
+    const { count: platsCount } = await ctx.supabase
+      .from('plats')
+      .select('*', { count: 'exact', head: true })
+      .eq('restaurant_id', ctx.restaurantId)
+
+    const { data: restaurantIngredients } = await ctx.supabase
+      .from('restaurant_ingredients')
+      .select('id')
+      .eq('restaurant_id', ctx.restaurantId)
+
+    const ingredientIds = restaurantIngredients?.map(i => i.id) ?? []
+    const { count: mercurialeCount } = ingredientIds.length > 0
+      ? await ctx.supabase
+          .from('mercuriale')
+          .select('*', { count: 'exact', head: true })
+          .in('ingredient_id', ingredientIds)
+          .eq('est_actif', true)
+      : { count: 0 }
+
+    const { count: bonsCount } = await ctx.supabase
+      .from('bons_de_commande')
+      .select('*', { count: 'exact', head: true })
+      .eq('restaurant_id', ctx.restaurantId)
+
+    return {
+      completed: !!onboardingCompletedAt,
+      completed_at: onboardingCompletedAt ?? null,
+      days_since_creation: daysSinceCreation,
+      steps: {
+        type_etablissement: !!parametres.type_etablissement,
+        premier_plat: (platsCount ?? 0) > 0,
+        premiers_prix: (mercurialeCount ?? 0) > 0,
+        premiere_commande: (bonsCount ?? 0) > 0,
+      },
+    }
+  }),
+
+  completeOnboarding: protectedProcedure
+    .input(z.object({
+      type_etablissement: z.enum(['restaurant', 'brasserie', 'gastronomique', 'snack', 'traiteur', 'autre']),
+    }))
+    .mutation(async ({ ctx, input }) => {
+      const { data: restaurant } = await ctx.supabase
+        .from('restaurants')
+        .select('parametres')
+        .eq('id', ctx.restaurantId)
+        .single()
+
+      await ctx.supabase
+        .from('restaurants')
+        .update({
+          parametres: {
+            ...((restaurant?.parametres as Record<string, unknown>) ?? {}),
+            type_etablissement: input.type_etablissement,
+            onboarding_completed_at: new Date().toISOString(),
+          },
+        })
+        .eq('id', ctx.restaurantId)
+
+      return { success: true }
+    }),
+
   getVentesSemaine: protectedProcedure.query(async ({ ctx }) => {
     const today = new Date()
     const dates = Array.from({ length: 7 }, (_, i) => {

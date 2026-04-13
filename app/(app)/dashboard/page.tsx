@@ -7,6 +7,7 @@ import { ChargesCard } from '@/components/dashboard/ChargesCard'
 import { VentesSemaineChart } from '@/components/dashboard/VentesSemaineChart'
 import { RealtimeIndicator } from '@/components/dashboard/RealtimeIndicator'
 import { useDashboardRealtime } from '@/hooks/useDashboardRealtime'
+import { OnboardingProgress } from '@/components/onboarding/OnboardingProgress'
 
 export default function DashboardPage() {
   useDashboardRealtime()
@@ -26,6 +27,8 @@ export default function DashboardPage() {
 
   return (
     <div className="max-w-lg mx-auto px-4 py-6 space-y-4">
+      <OnboardingProgress />
+
       {/* Header */}
       <div className="flex items-center justify-between">
         <h1 className="text-xl font-bold text-gray-900">Dashboard</h1>

@@ -89,7 +89,7 @@
 
 | Task | Titre | Statut | Notes |
 |---|---|---|---|
-| 6.1 | Onboarding Progressif 3 Jours | ⬜ À FAIRE | |
+| 6.1 | Onboarding Progressif 3 Jours | ✅ TERMINÉ | 2026-04-13 — 3 pages + tRPC + cron + OnboardingProgress + build ✅ |
 | 6.2 | PWA Manifest + Service Worker | ⬜ À FAIRE | |
 | 6.3 | Push Notifications VAPID | ⬜ À FAIRE | |
 | 6.4 | Seed Catalogue 500 Ingrédients | ⬜ À FAIRE | |
@@ -136,10 +136,10 @@
 ## Statistiques
 
 - **Total tasks**: 44
-- **Complètes**: 30
+- **Complètes**: 31
 - **En cours**: 0
-- **Restantes**: 14
-- **Progression**: 68%
+- **Restantes**: 13
+- **Progression**: 70%
 
 ---
 
