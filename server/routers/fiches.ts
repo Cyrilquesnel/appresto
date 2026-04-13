@@ -76,11 +76,10 @@ export const fichesRouter = router({
 
       // INSERT fiche_technique_versions (snapshot initial)
       await ctx.supabase.from('fiche_technique_versions').insert({
-        restaurant_id: ctx.restaurantId,
         plat_id: platData.id,
-        version: 1,
-        snapshot: { plat, ingredients, allergenes },
-        auteur_id: ctx.user.id,
+        version_number: 1,
+        ingredients_snapshot: { plat, ingredients, allergenes },
+        modifie_par: ctx.user.id,
       })
 
       return { plat_id: platData.id }
@@ -166,11 +165,10 @@ export const fichesRouter = router({
           .eq('plat_id', platId)
 
         await ctx.supabase.from('fiche_technique_versions').insert({
-          restaurant_id: ctx.restaurantId,
           plat_id: platId,
-          version: (count ?? 0) + 1,
-          snapshot: { plat, ingredients },
-          auteur_id: ctx.user.id,
+          version_number: (count ?? 0) + 1,
+          ingredients_snapshot: { plat, ingredients },
+          modifie_par: ctx.user.id,
         })
       }
 

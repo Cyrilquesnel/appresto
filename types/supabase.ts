@@ -141,24 +141,144 @@ export interface Database {
       fiche_technique_versions: {
         Row: {
           id: string
-          restaurant_id: string
           plat_id: string
-          version: number
-          snapshot: Json
-          auteur_id: string | null
+          version_number: number
+          ingredients_snapshot: Json
+          cout_calcule: number | null
+          modifie_par: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          plat_id: string
+          version_number: number
+          ingredients_snapshot: Json
+          cout_calcule?: number | null
+          modifie_par?: string | null
+          created_at?: string
+        }
+        Update: never  // IMMUTABLE — versions jamais modifiées
+        Relationships: []
+      }
+      ingredients_catalog: {
+        Row: {
+          id: string
+          nom: string
+          allergenes: string[]
+          kcal_par_100g: number | null
+          unite_standard: string | null
+          search_vector: unknown | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          nom: string
+          allergenes?: string[]
+          kcal_par_100g?: number | null
+          unite_standard?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          nom?: string
+          allergenes?: string[]
+          kcal_par_100g?: number | null
+          unite_standard?: string | null
+          created_at?: string
+        }
+        Relationships: []
+      }
+      restaurant_ingredients: {
+        Row: {
+          id: string
+          restaurant_id: string
+          catalog_id: string | null
+          nom_custom: string | null
+          allergenes_override: string[] | null
+          kcal_override: number | null
+          deleted_at: string | null
           created_at: string
         }
         Insert: {
           id?: string
           restaurant_id: string
-          plat_id: string
-          version: number
-          snapshot: Json
-          auteur_id?: string | null
+          catalog_id?: string | null
+          nom_custom?: string | null
+          allergenes_override?: string[] | null
+          kcal_override?: number | null
+          deleted_at?: string | null
           created_at?: string
         }
-        Update: never  // IMMUTABLE — versions jamais modifiées
-        Relationships: []
+        Update: {
+          id?: string
+          restaurant_id?: string
+          catalog_id?: string | null
+          nom_custom?: string | null
+          allergenes_override?: string[] | null
+          kcal_override?: number | null
+          deleted_at?: string | null
+          created_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'restaurant_ingredients_catalog_id_fkey'
+            columns: ['catalog_id']
+            isOneToOne: false
+            referencedRelation: 'ingredients_catalog'
+            referencedColumns: ['id']
+          }
+        ]
+      }
+      mercuriale: {
+        Row: {
+          id: string
+          ingredient_id: string
+          fournisseur_id: string | null
+          prix: number
+          unite: string
+          est_actif: boolean
+          source: string
+          date_maj: string
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          ingredient_id: string
+          fournisseur_id?: string | null
+          prix: number
+          unite: string
+          est_actif?: boolean
+          source?: string
+          date_maj?: string
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          ingredient_id?: string
+          fournisseur_id?: string | null
+          prix?: number
+          unite?: string
+          est_actif?: boolean
+          source?: string
+          date_maj?: string
+          created_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'mercuriale_ingredient_id_fkey'
+            columns: ['ingredient_id']
+            isOneToOne: false
+            referencedRelation: 'restaurant_ingredients'
+            referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'mercuriale_fournisseur_id_fkey'
+            columns: ['fournisseur_id']
+            isOneToOne: false
+            referencedRelation: 'fournisseurs'
+            referencedColumns: ['id']
+          }
+        ]
       }
       fournisseurs: {
         Row: {
