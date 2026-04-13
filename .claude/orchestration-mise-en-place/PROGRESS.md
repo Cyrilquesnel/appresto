@@ -10,7 +10,7 @@
 | Phase | Nom | Statut | Tâches |
 |---|---|---|---|
 | Phase 1 | Foundation | ✅ COMPLÈTE | 6 tasks + 1R |
-| Phase 2 | Module OPÉRER | ⬜ À FAIRE | 5 tasks + 1R |
+| Phase 2 | Module OPÉRER | ✅ COMPLÈTE | 5 tasks + 1R |
 | Phase 3 | Module ACHETER | ⬜ À FAIRE | 4 tasks + 1R |
 | Phase 4 | Module PILOTER | ⬜ À FAIRE | 3 tasks + 1R |
 | Phase 5 | Module PMS | ⬜ À FAIRE | 7 tasks + 1R |
@@ -43,7 +43,7 @@
 | 2.3 | Fiche Technique (CRUD + Versioning) | ✅ TERMINÉ | 2026-04-13 — fichesRouter + FicheTechniqueForm + AllergenesDisplay + page detail |
 | 2.4 | Enrichissement Claude Haiku | ✅ TERMINÉ | 2026-04-13 — claude-enrichment.ts + intégration analyze-dish + prompt cache |
 | 2.5 | Trigger Cascade Prix → Coûts | ✅ TERMINÉ | 2026-04-13 — Edge Function + pg_net trigger + tests 10/10 |
-| 2.R | Régression Phase 2 | ⬜ À FAIRE | |
+| 2.R | Régression Phase 2 | ✅ TERMINÉ | 2026-04-13 — typecheck ✅ lint ✅ build ✅ 27 tests ✅ merge→develop |
 
 ---
 
@@ -136,10 +136,10 @@
 ## Statistiques
 
 - **Total tasks**: 44
-- **Complètes**: 12
+- **Complètes**: 13
 - **En cours**: 0
-- **Restantes**: 32
-- **Progression**: 27%
+- **Restantes**: 31
+- **Progression**: 30%
 
 ---
 
