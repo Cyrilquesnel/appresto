@@ -485,6 +485,93 @@ export interface Database {
         Update: never  // IMMUTABLE
         Relationships: []
       }
+      ventes: {
+        Row: {
+          id: string
+          restaurant_id: string
+          date: string
+          service: string
+          nb_couverts: number | null
+          panier_moyen: number | null
+          montant_total: number
+          plat_id: string | null
+          quantite: number | null
+          mode_saisie: string
+          notes: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          restaurant_id: string
+          date: string
+          service: string
+          nb_couverts?: number | null
+          panier_moyen?: number | null
+          montant_total: number
+          plat_id?: string | null
+          quantite?: number | null
+          mode_saisie: string
+          notes?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          restaurant_id?: string
+          date?: string
+          service?: string
+          nb_couverts?: number | null
+          panier_moyen?: number | null
+          montant_total?: number
+          plat_id?: string | null
+          quantite?: number | null
+          mode_saisie?: string
+          notes?: string | null
+          created_at?: string
+        }
+        Relationships: []
+      }
+      charges: {
+        Row: {
+          id: string
+          restaurant_id: string
+          mois: string
+          masse_salariale: number | null
+          loyer: number | null
+          energie: number | null
+          assurances: number | null
+          autres_charges: number | null
+          charges_fixes_total: number | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          restaurant_id: string
+          mois: string
+          masse_salariale?: number | null
+          loyer?: number | null
+          energie?: number | null
+          assurances?: number | null
+          autres_charges?: number | null
+          charges_fixes_total?: number | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          restaurant_id?: string
+          mois?: string
+          masse_salariale?: number | null
+          loyer?: number | null
+          energie?: number | null
+          assurances?: number | null
+          autres_charges?: number | null
+          charges_fixes_total?: number | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       ingredients_view: {
