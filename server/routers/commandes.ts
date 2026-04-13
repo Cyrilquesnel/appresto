@@ -175,4 +175,144 @@ export const commandesRouter = router({
 
       return data ?? []
     }),
+
+  // ═══════════════════════════════════════════
+  // BONS DE COMMANDE
+  // ═══════════════════════════════════════════
+
+  generateBonDeCommande: protectedProcedure
+    .input(
+      z.object({
+        fournisseur_id: z.string().uuid(),
+        date_livraison_souhaitee: z.string().optional(),
+        notes: z.string().optional(),
+        lignes: z
+          .array(
+            z.object({
+              ingredient_id: z.string().uuid(),
+              quantite: z.number().positive(),
+              unite: z.string().min(1).max(20),
+              prix_unitaire: z.number().positive().optional(),
+            })
+          )
+          .min(1),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { fournisseur_id, date_livraison_souhaitee, notes, lignes } = input
+
+      // Calculer total_ht — si prix_unitaire absent, chercher dans mercuriale
+      let total_ht = 0
+      const lignesAvecPrix = await Promise.all(
+        lignes.map(async (ligne) => {
+          let prix = ligne.prix_unitaire ?? 0
+          if (!prix) {
+            const { data: merc } = await ctx.supabase
+              .from('mercuriale')
+              .select('prix')
+              .eq('ingredient_id', ligne.ingredient_id)
+              .eq('est_actif', true)
+              .single()
+            prix = merc?.prix ?? 0
+          }
+          total_ht += ligne.quantite * prix
+          return { ...ligne, prix_unitaire: prix }
+        })
+      )
+      total_ht = Math.round(total_ht * 100) / 100
+
+      const { data: bon, error: bonError } = await ctx.supabase
+        .from('bons_de_commande')
+        .insert({
+          restaurant_id: ctx.restaurantId,
+          fournisseur_id,
+          date_livraison_souhaitee: date_livraison_souhaitee || null,
+          notes: notes || null,
+          total_ht,
+          statut: 'brouillon',
+        })
+        .select('id')
+        .single()
+
+      if (bonError || !bon) throw new Error(bonError?.message ?? 'Erreur création bon')
+
+      await ctx.supabase.from('bon_de_commande_lignes').insert(
+        lignesAvecPrix.map((l, i) => ({
+          bon_id: bon.id,
+          ingredient_id: l.ingredient_id,
+          quantite: l.quantite,
+          unite: l.unite,
+          prix_unitaire: l.prix_unitaire || null,
+          total_ligne:
+            l.prix_unitaire ? Math.round(l.quantite * l.prix_unitaire * 100) / 100 : null,
+          ordre: i,
+        }))
+      )
+
+      return { bon_id: bon.id }
+    }),
+
+  listBons: protectedProcedure
+    .input(
+      z
+        .object({
+          statut: z.enum(['brouillon', 'envoye', 'confirme', 'recu']).optional(),
+          fournisseur_id: z.string().uuid().optional(),
+        })
+        .optional()
+    )
+    .query(async ({ ctx, input }) => {
+      let query = ctx.supabase
+        .from('bons_de_commande')
+        .select(
+          `id, statut, total_ht, date_livraison_souhaitee, envoye_via, created_at,
+           fournisseur:fournisseurs(id, nom, contact_whatsapp, contact_email)`
+        )
+        .eq('restaurant_id', ctx.restaurantId)
+        .order('created_at', { ascending: false })
+
+      if (input?.statut) query = query.eq('statut', input.statut)
+      if (input?.fournisseur_id) query = query.eq('fournisseur_id', input.fournisseur_id)
+
+      const { data } = await query
+      return data ?? []
+    }),
+
+  getBon: protectedProcedure
+    .input(z.object({ bonId: z.string().uuid() }))
+    .query(async ({ ctx, input }) => {
+      const { data } = await ctx.supabase
+        .from('bons_de_commande')
+        .select(
+          `*, fournisseur:fournisseurs(*),
+           lignes:bon_de_commande_lignes(
+             id, quantite, unite, prix_unitaire, total_ligne, ordre,
+             ingredient:restaurant_ingredients(id, nom_custom, catalog:ingredients_catalog(nom))
+           )`
+        )
+        .eq('id', input.bonId)
+        .eq('restaurant_id', ctx.restaurantId)
+        .single()
+      return data ?? null
+    }),
+
+  updateStatutBon: protectedProcedure
+    .input(
+      z.object({
+        bonId: z.string().uuid(),
+        statut: z.enum(['brouillon', 'envoye', 'confirme', 'recu']),
+        envoye_via: z.enum(['whatsapp', 'email', 'pdf']).optional(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      await ctx.supabase
+        .from('bons_de_commande')
+        .update({
+          statut: input.statut,
+          envoye_via: input.envoye_via ?? null,
+        })
+        .eq('id', input.bonId)
+        .eq('restaurant_id', ctx.restaurantId)
+      return { success: true }
+    }),
 })

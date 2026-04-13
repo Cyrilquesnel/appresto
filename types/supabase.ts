@@ -379,6 +379,84 @@ export interface Database {
           }
         ]
       }
+      bons_de_commande: {
+        Row: {
+          id: string
+          restaurant_id: string
+          fournisseur_id: string | null
+          date_commande: string
+          date_livraison_souhaitee: string | null
+          statut: string
+          total_ht: number | null
+          notes: string | null
+          envoye_via: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          restaurant_id: string
+          fournisseur_id?: string | null
+          date_commande?: string
+          date_livraison_souhaitee?: string | null
+          statut?: string
+          total_ht?: number | null
+          notes?: string | null
+          envoye_via?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          restaurant_id?: string
+          fournisseur_id?: string | null
+          date_commande?: string
+          date_livraison_souhaitee?: string | null
+          statut?: string
+          total_ht?: number | null
+          notes?: string | null
+          envoye_via?: string | null
+          created_at?: string
+        }
+        Relationships: [
+          { foreignKeyName: 'bons_de_commande_restaurant_id_fkey'; columns: ['restaurant_id']; referencedRelation: 'restaurants'; referencedColumns: ['id'] },
+          { foreignKeyName: 'bons_de_commande_fournisseur_id_fkey'; columns: ['fournisseur_id']; referencedRelation: 'fournisseurs'; referencedColumns: ['id'] }
+        ]
+      }
+      bon_de_commande_lignes: {
+        Row: {
+          id: string
+          bon_id: string
+          ingredient_id: string | null
+          quantite: number
+          unite: string
+          prix_unitaire: number | null
+          total_ligne: number | null
+          ordre: number
+        }
+        Insert: {
+          id?: string
+          bon_id: string
+          ingredient_id?: string | null
+          quantite: number
+          unite: string
+          prix_unitaire?: number | null
+          total_ligne?: number | null
+          ordre?: number
+        }
+        Update: {
+          id?: string
+          bon_id?: string
+          ingredient_id?: string | null
+          quantite?: number
+          unite?: string
+          prix_unitaire?: number | null
+          total_ligne?: number | null
+          ordre?: number
+        }
+        Relationships: [
+          { foreignKeyName: 'bon_de_commande_lignes_bon_id_fkey'; columns: ['bon_id']; referencedRelation: 'bons_de_commande'; referencedColumns: ['id'] },
+          { foreignKeyName: 'bon_de_commande_lignes_ingredient_id_fkey'; columns: ['ingredient_id']; referencedRelation: 'restaurant_ingredients'; referencedColumns: ['id'] }
+        ]
+      }
       nettoyage_completions: {
         Row: {
           id: string
