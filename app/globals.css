@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #1a1a2e;
+  --color-primary-light: #16213e;
+  --color-accent: #e94560;
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+  --spacing-safe-bottom: env(safe-area-inset-bottom);
+  --spacing-safe-top: env(safe-area-inset-top);
+}
+
+.h-screen-safe {
+  height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+}
