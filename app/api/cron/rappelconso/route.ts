@@ -6,6 +6,7 @@ import {
   type RappelConsoRecord,
 } from '@/lib/rappelconso'
 import { sendRappelAlert } from '@/lib/push-notifications'
+import { pingHeartbeat } from '@/lib/betteruptime'
 import type { PushSubscription } from 'web-push'
 
 export const maxDuration = 60
@@ -69,9 +70,7 @@ export async function GET(req: NextRequest) {
       totalProcessed++
     }
 
-    if (process.env.BETTERUPTIME_HEARTBEAT_URL) {
-      await fetch(process.env.BETTERUPTIME_HEARTBEAT_URL).catch(() => {})
-    }
+    await pingHeartbeat('rappelconso')
 
     console.log(`[rappelconso] ${totalProcessed} restaurants, ${totalAlerts} alertes`)
     return Response.json({ processed: totalProcessed, alerts: totalAlerts })

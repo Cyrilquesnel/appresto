@@ -1,6 +1,7 @@
 import { NextRequest } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { sendOnboardingNotification } from '@/lib/push-notifications'
+import { pingHeartbeat } from '@/lib/betteruptime'
 import type { PushSubscription } from 'web-push'
 
 export const maxDuration = 30
@@ -52,6 +53,8 @@ export async function GET(req: NextRequest) {
 
     notified++
   }
+
+  await pingHeartbeat('onboarding')
 
   return Response.json({ notified })
 }

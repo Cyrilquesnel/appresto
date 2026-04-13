@@ -103,7 +103,7 @@
 |---|---|---|---|
 | 7.1 | GitHub Actions Pipeline | ✅ TERMINÉ | 2026-04-13 — ci.yml 5 jobs (quality/unit/integration/build/e2e-preview) + deploy-prod.yml + 3 specs E2E + .prettierignore |
 | 7.2 | Sentry + PostHog | ✅ TERMINÉ | 2026-04-13 — Sentry client/server/edge + withSentryConfig + lib/posthog (EU + sanitize PII) + PostHogProvider + 5 tests |
-| 7.3 | BetterUptime + Crons | ⬜ À FAIRE | |
+| 7.3 | BetterUptime + Crons | ✅ TERMINÉ | 2026-04-13 — lib/betteruptime (3 heartbeats typés) + wire dans rappelconso/temperatures/onboarding + 4 tests |
 | 7.4 | pgTAP — Tests RLS Complets | ⬜ À FAIRE | |
 | 7.5 | Déploiement Vercel Production | ⬜ À FAIRE | |
 | 7.R | Régression Phase 7 | ⬜ À FAIRE | |
@@ -136,10 +136,10 @@
 ## Statistiques
 
 - **Total tasks**: 44
-- **Complètes**: 37
+- **Complètes**: 38
 - **En cours**: 0
-- **Restantes**: 7
-- **Progression**: 84%
+- **Restantes**: 6
+- **Progression**: 86%
 
 ---
 
