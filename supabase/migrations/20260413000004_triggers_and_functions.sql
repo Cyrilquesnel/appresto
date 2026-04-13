@@ -1,4 +1,11 @@
--- Trigger cascade prix → coûts (async via pg_net)
+-- Activer pg_net pour les appels HTTP asynchrones depuis les triggers
+CREATE EXTENSION IF NOT EXISTS pg_net;
+
+-- Trigger cascade prix → coûts (async via pg_net, non-bloquant)
+-- app.edge_function_url et app.service_role_key doivent être configurés :
+--   En dev local : ALTER DATABASE postgres SET app.edge_function_url = 'http://localhost:54321/functions/v1';
+--                  ALTER DATABASE postgres SET app.service_role_key = '<local-anon-key>';
+--   En production : utiliser Supabase Vault (vault.secrets)
 CREATE OR REPLACE FUNCTION trigger_recalculate_costs()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -8,17 +15,21 @@ BEGIN
       'Content-Type', 'application/json',
       'Authorization', 'Bearer ' || current_setting('app.service_role_key', true)
     ),
+    -- body doit être TEXT pour pg_net
     body := jsonb_build_object(
       'ingredient_id', NEW.ingredient_id,
       'nouveau_prix', NEW.prix
-    )
+    )::text
   );
   RETURN NEW;
 EXCEPTION WHEN OTHERS THEN
+  -- Ne jamais bloquer la transaction mercuriale même si pg_net échoue
+  RAISE WARNING '[trigger_recalculate_costs] Erreur pg_net: %', SQLERRM;
   RETURN NEW;
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
+DROP TRIGGER IF EXISTS after_mercuriale_update ON mercuriale;
 CREATE TRIGGER after_mercuriale_update
   AFTER INSERT OR UPDATE OF prix ON mercuriale
   FOR EACH ROW

@@ -42,7 +42,7 @@
 | 2.2 | Validation Ingrédients (UI) | ✅ TERMINÉ | 2026-04-13 — IngredientValidator + IngredientSearch + useDebounce + step flow |
 | 2.3 | Fiche Technique (CRUD + Versioning) | ✅ TERMINÉ | 2026-04-13 — fichesRouter + FicheTechniqueForm + AllergenesDisplay + page detail |
 | 2.4 | Enrichissement Claude Haiku | ✅ TERMINÉ | 2026-04-13 — claude-enrichment.ts + intégration analyze-dish + prompt cache |
-| 2.5 | Trigger Cascade Prix → Coûts | ⬜ À FAIRE | |
+| 2.5 | Trigger Cascade Prix → Coûts | ✅ TERMINÉ | 2026-04-13 — Edge Function + pg_net trigger + tests 10/10 |
 | 2.R | Régression Phase 2 | ⬜ À FAIRE | |
 
 ---
@@ -136,10 +136,10 @@
 ## Statistiques
 
 - **Total tasks**: 44
-- **Complètes**: 11
+- **Complètes**: 12
 - **En cours**: 0
-- **Restantes**: 33
-- **Progression**: 25%
+- **Restantes**: 32
+- **Progression**: 27%
 
 ---
 
