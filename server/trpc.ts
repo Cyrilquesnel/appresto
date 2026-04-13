@@ -24,8 +24,7 @@ export const createTRPCContext = async () => {
   let role: string | null = null
 
   if (user) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data: restaurantUser } = await (supabase as any)
+    const { data: restaurantUser } = await supabase
       .from('restaurant_users')
       .select('restaurant_id, role')
       .eq('user_id', user.id)

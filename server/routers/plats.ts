@@ -12,10 +12,12 @@ export const platsRouter = router({
   }),
 
   searchIngredients: protectedProcedure
-    .input(z.object({ query: z.string(), limit: z.number().default(20) }))
+    .input(z.object({
+      query: z.string().min(1).max(100),
+      limit: z.number().int().min(1).max(50).default(20),
+    }))
     .query(async ({ ctx, input }) => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const { data } = await (ctx.supabase as any)
+      const { data } = await ctx.supabase
         .rpc('search_ingredients', {
           p_query: input.query,
           p_restaurant_id: ctx.restaurantId,

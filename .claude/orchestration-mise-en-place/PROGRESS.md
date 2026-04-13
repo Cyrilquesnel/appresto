@@ -9,7 +9,7 @@
 
 | Phase | Nom | Statut | Tâches |
 |---|---|---|---|
-| Phase 1 | Foundation | ⬜ À FAIRE | 6 tasks + 1R |
+| Phase 1 | Foundation | ✅ COMPLÈTE | 6 tasks + 1R |
 | Phase 2 | Module OPÉRER | ⬜ À FAIRE | 5 tasks + 1R |
 | Phase 3 | Module ACHETER | ⬜ À FAIRE | 4 tasks + 1R |
 | Phase 4 | Module PILOTER | ⬜ À FAIRE | 3 tasks + 1R |
@@ -28,9 +28,9 @@
 | 1.2 | BDD Complète + RLS | ✅ TERMINÉ | 2026-04-13 — 4 migrations créées, RLS sur 28 tables |
 | 1.3 | Auth Flow Complet | ✅ TERMINÉ | 2026-04-13 |
 | 1.4 | Rate Limiting Upstash | ✅ TERMINÉ | 2026-04-13 — tRPC v11 + Upstash rate limiting + Zustand store + providers |
-| 1.5 | Layout Mobile + Navigation | ⬜ À FAIRE | |
-| 1.6 | CI/CD Initial | ⬜ À FAIRE | |
-| 1.R | Régression Phase 1 | ⬜ À FAIRE | |
+| 1.5 | Health Check + Variables d'Environnement | ✅ TERMINÉ | 2026-04-13 — /api/health + .env.example complet |
+| 1.6 | CI/CD Initial | ✅ TERMINÉ | 2026-04-13 — GitHub Actions CI + Playwright config + mocks + smoke tests |
+| 1.R | Régression Phase 1 | ✅ TERMINÉ | 2026-04-13 — typecheck ✅ lint ✅ tests 3/3 ✅ types Supabase corrigés |
 
 ---
 
@@ -38,10 +38,10 @@
 
 | Task | Titre | Statut | Notes |
 |---|---|---|---|
-| 2.1 | Pipeline Photo (Gemini) | ⬜ À FAIRE | |
-| 2.2 | Validation Ingrédients (UI) | ⬜ À FAIRE | |
-| 2.3 | Fiche Technique (CRUD + Versioning) | ⬜ À FAIRE | |
-| 2.4 | Enrichissement Claude Haiku | ⬜ À FAIRE | |
+| 2.1 | Pipeline Photo (Gemini) | ✅ TERMINÉ | 2026-04-13 — DishCamera + Gemini Vision + /api/analyze-dish + rate limit |
+| 2.2 | Validation Ingrédients (UI) | ✅ TERMINÉ | 2026-04-13 — IngredientValidator + IngredientSearch + useDebounce + step flow |
+| 2.3 | Fiche Technique (CRUD + Versioning) | ✅ TERMINÉ | 2026-04-13 — fichesRouter + FicheTechniqueForm + AllergenesDisplay + page detail |
+| 2.4 | Enrichissement Claude Haiku | ✅ TERMINÉ | 2026-04-13 — claude-enrichment.ts + intégration analyze-dish + prompt cache |
 | 2.5 | Trigger Cascade Prix → Coûts | ⬜ À FAIRE | |
 | 2.R | Régression Phase 2 | ⬜ À FAIRE | |
 
@@ -136,10 +136,10 @@
 ## Statistiques
 
 - **Total tasks**: 44
-- **Complètes**: 4
+- **Complètes**: 11
 - **En cours**: 0
-- **Restantes**: 40
-- **Progression**: 9%
+- **Restantes**: 33
+- **Progression**: 25%
 
 ---
 

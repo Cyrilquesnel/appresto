@@ -1,4 +1,5 @@
-import { createServerClient } from '@supabase/ssr'
+import { createServerClient, type CookieOptions } from '@supabase/ssr'
+import { createClient as createSupabaseClient } from '@supabase/supabase-js'
 import { cookies } from 'next/headers'
 import type { Database } from '@/types/supabase'
 
@@ -10,10 +11,10 @@ export function createClient() {
     {
       cookies: {
         get(name: string) { return cookieStore.get(name)?.value },
-        set(name: string, value: string, options: any) {
+        set(name: string, value: string, options: CookieOptions) {
           try { cookieStore.set({ name, value, ...options }) } catch {}
         },
-        remove(name: string, options: any) {
+        remove(name: string, options: CookieOptions) {
           try { cookieStore.set({ name, value: '', ...options }) } catch {}
         },
       },
@@ -22,8 +23,6 @@ export function createClient() {
 }
 
 export function createServiceClient() {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const { createClient: createSupabaseClient } = require('@supabase/supabase-js') as typeof import('@supabase/supabase-js')
   return createSupabaseClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!

@@ -26,7 +26,7 @@ export default function RegisterPage() {
     }
 
     if (data.user) {
-      const { data: restaurant, error: restError } = await (supabase as any)
+      const { data: restaurant, error: restError } = await supabase
         .from('restaurants')
         .insert({ nom: restaurantNom, owner_id: data.user.id, parametres: {} })
         .select('id')
@@ -38,7 +38,7 @@ export default function RegisterPage() {
         return
       }
 
-      await (supabase as any).from('restaurant_users').insert({
+      await supabase.from('restaurant_users').insert({
         restaurant_id: restaurant.id,
         user_id: data.user.id,
         role: 'owner'
