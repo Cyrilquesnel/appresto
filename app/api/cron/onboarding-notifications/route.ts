@@ -1,5 +1,7 @@
 import { NextRequest } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { sendOnboardingNotification } from '@/lib/push-notifications'
+import type { PushSubscription } from 'web-push'
 
 export const maxDuration = 30
 
@@ -19,7 +21,7 @@ export async function GET(req: NextRequest) {
 
   const { data: restaurants } = await supabase
     .from('restaurants')
-    .select('id, nom, parametres, created_at')
+    .select('id, parametres, created_at')
     .gte('created_at', j2Start.toISOString().split('T')[0])
     .lte('created_at', j1Start.toISOString().split('T')[0] + 'T23:59:59Z')
 
@@ -28,13 +30,27 @@ export async function GET(req: NextRequest) {
     const createdAt = new Date((restaurant.created_at as string | null) ?? Date.now())
     const days = Math.floor((Date.now() - createdAt.getTime()) / (1000 * 60 * 60 * 24))
 
-    if (days === 1) {
-      console.log(`[onboarding] J+1 — restaurant ${restaurant.id}: ajoutez vos prix`)
-      notified++
-    } else if (days === 2) {
-      console.log(`[onboarding] J+2 — restaurant ${restaurant.id}: générez votre premier bon de commande`)
-      notified++
+    const type = days === 1 ? 'j2' : days === 2 ? 'j3' : null
+    if (!type) continue
+
+    const { data: sub } = await supabase
+      .from('push_subscriptions')
+      .select('subscription')
+      .eq('restaurant_id', restaurant.id)
+      .single()
+
+    if (sub) {
+      try {
+        await sendOnboardingNotification(sub.subscription as unknown as PushSubscription, type)
+        console.log(`[onboarding] Push ${type} envoyé — restaurant ${restaurant.id}`)
+      } catch (err) {
+        console.error(`[onboarding] Push failed — restaurant ${restaurant.id}:`, err)
+      }
+    } else {
+      console.log(`[onboarding] ${type} — pas de subscription pour restaurant ${restaurant.id}`)
     }
+
+    notified++
   }
 
   return Response.json({ notified })
