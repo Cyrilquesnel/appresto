@@ -20,7 +20,7 @@ export async function GET(req: NextRequest) {
   let sent = 0
   let failed = 0
 
-  for (const row of (subscriptions ?? [])) {
+  for (const row of subscriptions ?? []) {
     try {
       await sendPMSReminder(row.subscription as unknown as PushSubscription)
       sent++

@@ -7,27 +7,33 @@ const ModeVentesEnum = z.enum(['simple', 'detail'])
 export const dashboardRouter = router({
   // ═══ VENTES ═══
   logVentes: protectedProcedure
-    .input(z.discriminatedUnion('mode', [
-      z.object({
-        mode: z.literal('simple'),
-        date: z.string(),
-        service: ServiceEnum,
-        nb_couverts: z.number().int().min(0),
-        panier_moyen: z.number().positive(),
-        notes: z.string().optional(),
-      }),
-      z.object({
-        mode: z.literal('detail'),
-        date: z.string(),
-        service: ServiceEnum,
-        lignes: z.array(z.object({
-          plat_id: z.string().uuid(),
-          quantite: z.number().int().positive(),
-          prix_vente: z.number().positive(),
-        })).min(1),
-        notes: z.string().optional(),
-      }),
-    ]))
+    .input(
+      z.discriminatedUnion('mode', [
+        z.object({
+          mode: z.literal('simple'),
+          date: z.string(),
+          service: ServiceEnum,
+          nb_couverts: z.number().int().min(0),
+          panier_moyen: z.number().positive(),
+          notes: z.string().optional(),
+        }),
+        z.object({
+          mode: z.literal('detail'),
+          date: z.string(),
+          service: ServiceEnum,
+          lignes: z
+            .array(
+              z.object({
+                plat_id: z.string().uuid(),
+                quantite: z.number().int().positive(),
+                prix_vente: z.number().positive(),
+              })
+            )
+            .min(1),
+          notes: z.string().optional(),
+        }),
+      ])
+    )
     .mutation(async ({ ctx, input }) => {
       if (input.mode === 'simple') {
         const montant = input.nb_couverts * input.panier_moyen
@@ -45,7 +51,7 @@ export const dashboardRouter = router({
         if (error) throw new Error(error.message)
         return { success: true, montant_total: montant }
       } else {
-        const insertions = input.lignes.map(l => ({
+        const insertions = input.lignes.map((l) => ({
           restaurant_id: ctx.restaurantId,
           date: input.date,
           service: input.service,
@@ -63,10 +69,12 @@ export const dashboardRouter = router({
     }),
 
   getVentes: protectedProcedure
-    .input(z.object({
-      date_debut: z.string(),
-      date_fin: z.string(),
-    }))
+    .input(
+      z.object({
+        date_debut: z.string(),
+        date_fin: z.string(),
+      })
+    )
     .query(async ({ ctx, input }) => {
       const { data } = await ctx.supabase
         .from('ventes')
@@ -80,25 +88,28 @@ export const dashboardRouter = router({
 
   // ═══ CHARGES ═══
   saveCharges: protectedProcedure
-    .input(z.object({
-      mois: z.string(),
-      masse_salariale: z.number().min(0).optional(),
-      loyer: z.number().min(0).optional(),
-      energie: z.number().min(0).optional(),
-      assurances: z.number().min(0).optional(),
-      autres_charges: z.number().min(0).optional(),
-    }))
+    .input(
+      z.object({
+        mois: z.string(),
+        masse_salariale: z.number().min(0).optional(),
+        loyer: z.number().min(0).optional(),
+        energie: z.number().min(0).optional(),
+        assurances: z.number().min(0).optional(),
+        autres_charges: z.number().min(0).optional(),
+      })
+    )
     .mutation(async ({ ctx, input }) => {
       const { mois, ...charges } = input
       const charges_fixes_total = Object.values(charges).reduce((a: number, b) => a + (b ?? 0), 0)
-      await ctx.supabase
-        .from('charges')
-        .upsert({
+      await ctx.supabase.from('charges').upsert(
+        {
           restaurant_id: ctx.restaurantId,
           mois,
           ...charges,
           charges_fixes_total,
-        }, { onConflict: 'restaurant_id,mois' })
+        },
+        { onConflict: 'restaurant_id,mois' }
+      )
       return { success: true }
     }),
 
@@ -121,7 +132,10 @@ export const dashboardRouter = router({
       .select('parametres')
       .eq('id', ctx.restaurantId)
       .single()
-    return (data?.parametres as Record<string, unknown> | null)?.mode_ventes as 'simple' | 'detail' ?? 'simple'
+    return (
+      ((data?.parametres as Record<string, unknown> | null)?.mode_ventes as 'simple' | 'detail') ??
+      'simple'
+    )
   }),
 
   setModeVentes: protectedProcedure
@@ -136,7 +150,10 @@ export const dashboardRouter = router({
       await ctx.supabase
         .from('restaurants')
         .update({
-          parametres: { ...(restaurant?.parametres as Record<string, unknown> ?? {}), mode_ventes: input.mode },
+          parametres: {
+            ...((restaurant?.parametres as Record<string, unknown>) ?? {}),
+            mode_ventes: input.mode,
+          },
         })
         .eq('id', ctx.restaurantId)
       return { success: true }
@@ -144,9 +161,11 @@ export const dashboardRouter = router({
 
   // ═══ KPIs DASHBOARD ═══
   get: protectedProcedure
-    .input(z.object({
-      periode: z.enum(['mois', 'semaine']).default('mois'),
-    }))
+    .input(
+      z.object({
+        periode: z.enum(['mois', 'semaine']).default('mois'),
+      })
+    )
     .query(async ({ ctx, input }) => {
       const now = new Date()
 
@@ -195,7 +214,7 @@ export const dashboardRouter = router({
       const nb_couverts = ventes.reduce((sum, v) => sum + (v.nb_couverts ?? 0), 0)
       const panier_moyen = nb_couverts > 0 ? ca_total / nb_couverts : null
 
-      const platsMap = Object.fromEntries(platsAvecCout.map(p => [p.id, p.cout_de_revient]))
+      const platsMap = Object.fromEntries(platsAvecCout.map((p) => [p.id, p.cout_de_revient]))
       const food_cost_euros = ventes.reduce((sum, v) => {
         if (!v.plat_id || !v.quantite) return sum
         const cout = platsMap[v.plat_id]
@@ -203,22 +222,28 @@ export const dashboardRouter = router({
         return sum + v.quantite * cout
       }, 0)
 
-      const food_cost_pct = ca_total > 0 && food_cost_euros > 0
-        ? Math.round((food_cost_euros / ca_total) * 10000) / 100
-        : null
+      const food_cost_pct =
+        ca_total > 0 && food_cost_euros > 0
+          ? Math.round((food_cost_euros / ca_total) * 10000) / 100
+          : null
 
       const masse_salariale = charges?.masse_salariale ?? null
       const charges_fixes = charges
-        ? (charges.loyer ?? 0) + (charges.energie ?? 0) + (charges.assurances ?? 0) + (charges.autres_charges ?? 0)
+        ? (charges.loyer ?? 0) +
+          (charges.energie ?? 0) +
+          (charges.assurances ?? 0) +
+          (charges.autres_charges ?? 0)
         : null
 
-      const marge_brute = ca_total > 0
-        ? ca_total - food_cost_euros - (masse_salariale ?? 0) - (charges_fixes ?? 0)
-        : null
+      const marge_brute =
+        ca_total > 0
+          ? ca_total - food_cost_euros - (masse_salariale ?? 0) - (charges_fixes ?? 0)
+          : null
 
-      const seuil_rentabilite = charges_fixes && food_cost_pct && food_cost_pct < 100
-        ? charges_fixes / (1 - food_cost_pct / 100)
-        : null
+      const seuil_rentabilite =
+        charges_fixes && food_cost_pct && food_cost_pct < 100
+          ? charges_fixes / (1 - food_cost_pct / 100)
+          : null
 
       return {
         ca_total: Math.round(ca_total * 100) / 100,
@@ -227,7 +252,8 @@ export const dashboardRouter = router({
         masse_salariale,
         charges_fixes,
         marge_brute: marge_brute != null ? Math.round(marge_brute * 100) / 100 : null,
-        seuil_rentabilite: seuil_rentabilite != null ? Math.round(seuil_rentabilite * 100) / 100 : null,
+        seuil_rentabilite:
+          seuil_rentabilite != null ? Math.round(seuil_rentabilite * 100) / 100 : null,
         nb_couverts,
         panier_moyen: panier_moyen != null ? Math.round(panier_moyen * 100) / 100 : null,
         periode: input.periode,
@@ -260,14 +286,15 @@ export const dashboardRouter = router({
       .select('id')
       .eq('restaurant_id', ctx.restaurantId)
 
-    const ingredientIds = restaurantIngredients?.map(i => i.id) ?? []
-    const { count: mercurialeCount } = ingredientIds.length > 0
-      ? await ctx.supabase
-          .from('mercuriale')
-          .select('*', { count: 'exact', head: true })
-          .in('ingredient_id', ingredientIds)
-          .eq('est_actif', true)
-      : { count: 0 }
+    const ingredientIds = restaurantIngredients?.map((i) => i.id) ?? []
+    const { count: mercurialeCount } =
+      ingredientIds.length > 0
+        ? await ctx.supabase
+            .from('mercuriale')
+            .select('*', { count: 'exact', head: true })
+            .in('ingredient_id', ingredientIds)
+            .eq('est_actif', true)
+        : { count: 0 }
 
     const { count: bonsCount } = await ctx.supabase
       .from('bons_de_commande')
@@ -288,9 +315,18 @@ export const dashboardRouter = router({
   }),
 
   completeOnboarding: protectedProcedure
-    .input(z.object({
-      type_etablissement: z.enum(['restaurant', 'brasserie', 'gastronomique', 'snack', 'traiteur', 'autre']),
-    }))
+    .input(
+      z.object({
+        type_etablissement: z.enum([
+          'restaurant',
+          'brasserie',
+          'gastronomique',
+          'snack',
+          'traiteur',
+          'autre',
+        ]),
+      })
+    )
     .mutation(async ({ ctx, input }) => {
       const { data: restaurant } = await ctx.supabase
         .from('restaurants')
@@ -327,9 +363,10 @@ export const dashboardRouter = router({
       .gte('date', dates[0])
       .lte('date', dates[6])
 
-    return dates.map(date => ({
+    return dates.map((date) => ({
       date,
-      montant: ventes?.filter(v => v.date === date).reduce((s, v) => s + (v.montant_total ?? 0), 0) ?? 0,
+      montant:
+        ventes?.filter((v) => v.date === date).reduce((s, v) => s + (v.montant_total ?? 0), 0) ?? 0,
     }))
   }),
 })

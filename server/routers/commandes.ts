@@ -243,8 +243,9 @@ export const commandesRouter = router({
           quantite: l.quantite,
           unite: l.unite,
           prix_unitaire: l.prix_unitaire || null,
-          total_ligne:
-            l.prix_unitaire ? Math.round(l.quantite * l.prix_unitaire * 100) / 100 : null,
+          total_ligne: l.prix_unitaire
+            ? Math.round(l.quantite * l.prix_unitaire * 100) / 100
+            : null,
           ordre: i,
         }))
       )

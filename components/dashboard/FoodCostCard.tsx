@@ -28,7 +28,10 @@ export function FoodCostCard({ pct, euros, ca }: FoodCostCardProps) {
         </p>
       ) : (
         <>
-          <p className={`text-4xl font-bold mt-1 ${textColors[status]}`} data-testid="food-cost-pct">
+          <p
+            className={`text-4xl font-bold mt-1 ${textColors[status]}`}
+            data-testid="food-cost-pct"
+          >
             {pct}%
           </p>
           <p className="text-sm text-gray-500 mt-1">
@@ -38,8 +41,8 @@ export function FoodCostCard({ pct, euros, ca }: FoodCostCardProps) {
             {status === 'good'
               ? '✓ Maîtrisé (< 30%)'
               : status === 'warn'
-              ? '⚠ Attention (30-35%)'
-              : '⚠ Élevé (> 35%)'}
+                ? '⚠ Attention (30-35%)'
+                : '⚠ Élevé (> 35%)'}
           </p>
         </>
       )}

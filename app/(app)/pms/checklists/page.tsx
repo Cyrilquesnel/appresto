@@ -12,9 +12,13 @@ interface ChecklistWithStatus {
 
 export default function ChecklistsPage() {
   const today = new Date().toISOString().split('T')[0]
-  const { data: checklists, refetch, isLoading } = trpc.pms.getChecklistsWithStatus.useQuery({ date: today })
+  const {
+    data: checklists,
+    refetch,
+    isLoading,
+  } = trpc.pms.getChecklistsWithStatus.useQuery({ date: today })
 
-  const completed = checklists?.filter(c => c.completed_today).length ?? 0
+  const completed = checklists?.filter((c) => c.completed_today).length ?? 0
   const total = checklists?.length ?? 0
 
   if (isLoading) {
@@ -30,7 +34,11 @@ export default function ChecklistsPage() {
       <div className="mb-6">
         <h1 className="text-xl font-bold text-gray-900">Checklists</h1>
         <p className="text-sm text-gray-400 mt-1">
-          {new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long' })}
+          {new Date().toLocaleDateString('fr-FR', {
+            weekday: 'long',
+            day: 'numeric',
+            month: 'long',
+          })}
         </p>
         {total > 0 && (
           <div className="mt-2 flex items-center gap-2">
@@ -40,7 +48,9 @@ export default function ChecklistsPage() {
                 style={{ width: `${total > 0 ? (completed / total) * 100 : 0}%` }}
               />
             </div>
-            <span className="text-xs text-gray-500">{completed}/{total}</span>
+            <span className="text-xs text-gray-500">
+              {completed}/{total}
+            </span>
           </div>
         )}
       </div>
@@ -49,12 +59,14 @@ export default function ChecklistsPage() {
         <div className="text-center py-12 text-gray-400">
           <p className="text-4xl mb-3">📋</p>
           <p className="font-medium">Aucune checklist configurée</p>
-          <p className="text-sm mt-1">Les checklists sont créées automatiquement à l&apos;inscription</p>
+          <p className="text-sm mt-1">
+            Les checklists sont créées automatiquement à l&apos;inscription
+          </p>
         </div>
       )}
 
       <div className="space-y-3">
-        {(checklists as unknown as ChecklistWithStatus[] | undefined)?.map(checklist => (
+        {(checklists as unknown as ChecklistWithStatus[] | undefined)?.map((checklist) => (
           <Checklist
             key={checklist.id}
             checklist={checklist}

@@ -10,7 +10,9 @@ import { createClient } from '@/lib/supabase/server'
 
 export async function POST(req: NextRequest) {
   const supabase = createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
   if (!user) return Response.json({ error: 'Non authentifié' }, { status: 401 })
 
   const { type, data } = await req.json()

@@ -39,19 +39,12 @@ export default function FournisseursPage() {
           >
             <h3 className="font-semibold text-gray-900">{f.nom}</h3>
             {f.contact_whatsapp && (
-              <p className="text-sm text-success mt-1">
-                WhatsApp : {f.contact_whatsapp}
-              </p>
+              <p className="text-sm text-success mt-1">WhatsApp : {f.contact_whatsapp}</p>
             )}
-            {f.contact_email && (
-              <p className="text-sm text-gray-500">{f.contact_email}</p>
-            )}
-            {f.contact_tel && (
-              <p className="text-sm text-gray-500">Tél : {f.contact_tel}</p>
-            )}
+            {f.contact_email && <p className="text-sm text-gray-500">{f.contact_email}</p>}
+            {f.contact_tel && <p className="text-sm text-gray-500">Tél : {f.contact_tel}</p>}
             <p className="text-xs text-gray-400 mt-2">
-              Délai : {f.delai_jours}j
-              {f.min_commande ? ` · Min. ${f.min_commande}€` : ''}
+              Délai : {f.delai_jours}j{f.min_commande ? ` · Min. ${f.min_commande}€` : ''}
             </p>
           </div>
         ))}

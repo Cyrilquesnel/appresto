@@ -26,7 +26,7 @@ export async function GET(req: NextRequest) {
     .lte('created_at', j1Start.toISOString().split('T')[0] + 'T23:59:59Z')
 
   let notified = 0
-  for (const restaurant of (restaurants ?? [])) {
+  for (const restaurant of restaurants ?? []) {
     const createdAt = new Date((restaurant.created_at as string | null) ?? Date.now())
     const days = Math.floor((Date.now() - createdAt.getTime()) / (1000 * 60 * 60 * 24))
 

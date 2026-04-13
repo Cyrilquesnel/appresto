@@ -14,7 +14,9 @@ test('manifest.json accessible et valide', async ({ page }) => {
 
 test('meta tags iOS présents', async ({ page }) => {
   await page.goto('/')
-  const appleCapable = await page.locator('meta[name="apple-mobile-web-app-capable"]').getAttribute('content')
+  const appleCapable = await page
+    .locator('meta[name="apple-mobile-web-app-capable"]')
+    .getAttribute('content')
   expect(appleCapable).toBe('yes')
 })
 

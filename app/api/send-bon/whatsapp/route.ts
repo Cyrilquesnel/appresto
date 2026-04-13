@@ -4,7 +4,9 @@ import { sendBonDeCommande, type BonLigneData } from '@/lib/whatsapp'
 
 export async function POST(req: NextRequest) {
   const supabase = createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Non authentifié' }, { status: 401 })
 
   const restaurantId = req.headers.get('x-restaurant-id')
@@ -15,14 +17,16 @@ export async function POST(req: NextRequest) {
   // Charger le bon avec ses lignes et ingrédients (bon_de_commande_lignes)
   const { data: bon } = await supabase
     .from('bons_de_commande')
-    .select(`
+    .select(
+      `
       id, total_ht, date_livraison_souhaitee, notes,
       fournisseur:fournisseurs(nom, contact_whatsapp),
       lignes:bon_de_commande_lignes(
         quantite, unite, prix_unitaire,
         ingredient:restaurant_ingredients(nom_custom, catalog:ingredients_catalog(nom))
       )
-    `)
+    `
+    )
     .eq('id', bon_id)
     .eq('restaurant_id', restaurantId)
     .single()
@@ -36,14 +40,15 @@ export async function POST(req: NextRequest) {
     .single()
 
   // Formatter les lignes avec nom_produit résolu
-  const lignes: BonLigneData[] = ((bon.lignes ?? []) as Array<{
-    quantite: number
-    unite: string
-    prix_unitaire: number | null
-    ingredient: { nom_custom: string | null; catalog: { nom: string } | null } | null
-  }>).map((l) => ({
-    nom_produit:
-      l.ingredient?.nom_custom ?? l.ingredient?.catalog?.nom ?? 'Produit',
+  const lignes: BonLigneData[] = (
+    (bon.lignes ?? []) as Array<{
+      quantite: number
+      unite: string
+      prix_unitaire: number | null
+      ingredient: { nom_custom: string | null; catalog: { nom: string } | null } | null
+    }>
+  ).map((l) => ({
+    nom_produit: l.ingredient?.nom_custom ?? l.ingredient?.catalog?.nom ?? 'Produit',
     quantite: l.quantite,
     unite: l.unite,
     prix_unitaire: l.prix_unitaire ?? undefined,

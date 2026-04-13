@@ -212,216 +212,168 @@
   {
     "nom": "Saumon (filet)",
     "categorie": "poisson",
-    "allergenes": [
-      "poisson"
-    ],
+    "allergenes": ["poisson"],
     "kcal_par_100g": 208,
     "unite_standard": "g"
   },
   {
     "nom": "Saumon fumé",
     "categorie": "poisson",
-    "allergenes": [
-      "poisson"
-    ],
+    "allergenes": ["poisson"],
     "kcal_par_100g": 172,
     "unite_standard": "g"
   },
   {
     "nom": "Cabillaud (filet)",
     "categorie": "poisson",
-    "allergenes": [
-      "poisson"
-    ],
+    "allergenes": ["poisson"],
     "kcal_par_100g": 82,
     "unite_standard": "g"
   },
   {
     "nom": "Thon rouge (filet)",
     "categorie": "poisson",
-    "allergenes": [
-      "poisson"
-    ],
+    "allergenes": ["poisson"],
     "kcal_par_100g": 144,
     "unite_standard": "g"
   },
   {
     "nom": "Thon albacore",
     "categorie": "poisson",
-    "allergenes": [
-      "poisson"
-    ],
+    "allergenes": ["poisson"],
     "kcal_par_100g": 130,
     "unite_standard": "g"
   },
   {
     "nom": "Sole (filet)",
     "categorie": "poisson",
-    "allergenes": [
-      "poisson"
-    ],
+    "allergenes": ["poisson"],
     "kcal_par_100g": 83,
     "unite_standard": "g"
   },
   {
     "nom": "Bar (loup de mer)",
     "categorie": "poisson",
-    "allergenes": [
-      "poisson"
-    ],
+    "allergenes": ["poisson"],
     "kcal_par_100g": 97,
     "unite_standard": "g"
   },
   {
     "nom": "Daurade royale",
     "categorie": "poisson",
-    "allergenes": [
-      "poisson"
-    ],
+    "allergenes": ["poisson"],
     "kcal_par_100g": 96,
     "unite_standard": "g"
   },
   {
     "nom": "Merlan (filet)",
     "categorie": "poisson",
-    "allergenes": [
-      "poisson"
-    ],
+    "allergenes": ["poisson"],
     "kcal_par_100g": 82,
     "unite_standard": "g"
   },
   {
     "nom": "Turbot (filet)",
     "categorie": "poisson",
-    "allergenes": [
-      "poisson"
-    ],
+    "allergenes": ["poisson"],
     "kcal_par_100g": 95,
     "unite_standard": "g"
   },
   {
     "nom": "Rouget (filet)",
     "categorie": "poisson",
-    "allergenes": [
-      "poisson"
-    ],
+    "allergenes": ["poisson"],
     "kcal_par_100g": 109,
     "unite_standard": "g"
   },
   {
     "nom": "Maquereau (filet)",
     "categorie": "poisson",
-    "allergenes": [
-      "poisson"
-    ],
+    "allergenes": ["poisson"],
     "kcal_par_100g": 205,
     "unite_standard": "g"
   },
   {
     "nom": "Sardines fraîches",
     "categorie": "poisson",
-    "allergenes": [
-      "poisson"
-    ],
+    "allergenes": ["poisson"],
     "kcal_par_100g": 135,
     "unite_standard": "g"
   },
   {
     "nom": "Hareng fumé",
     "categorie": "poisson",
-    "allergenes": [
-      "poisson"
-    ],
+    "allergenes": ["poisson"],
     "kcal_par_100g": 217,
     "unite_standard": "g"
   },
   {
     "nom": "Crevettes roses",
     "categorie": "poisson",
-    "allergenes": [
-      "crustaces"
-    ],
+    "allergenes": ["crustaces"],
     "kcal_par_100g": 85,
     "unite_standard": "g"
   },
   {
     "nom": "Gambas",
     "categorie": "poisson",
-    "allergenes": [
-      "crustaces"
-    ],
+    "allergenes": ["crustaces"],
     "kcal_par_100g": 90,
     "unite_standard": "g"
   },
   {
     "nom": "Homard",
     "categorie": "poisson",
-    "allergenes": [
-      "crustaces"
-    ],
+    "allergenes": ["crustaces"],
     "kcal_par_100g": 90,
     "unite_standard": "g"
   },
   {
     "nom": "Langoustines",
     "categorie": "poisson",
-    "allergenes": [
-      "crustaces"
-    ],
+    "allergenes": ["crustaces"],
     "kcal_par_100g": 77,
     "unite_standard": "g"
   },
   {
     "nom": "Crabe (chair)",
     "categorie": "poisson",
-    "allergenes": [
-      "crustaces"
-    ],
+    "allergenes": ["crustaces"],
     "kcal_par_100g": 97,
     "unite_standard": "g"
   },
   {
     "nom": "Moules",
     "categorie": "poisson",
-    "allergenes": [
-      "mollusques"
-    ],
+    "allergenes": ["mollusques"],
     "kcal_par_100g": 86,
     "unite_standard": "g"
   },
   {
     "nom": "Saint-Jacques",
     "categorie": "poisson",
-    "allergenes": [
-      "mollusques"
-    ],
+    "allergenes": ["mollusques"],
     "kcal_par_100g": 88,
     "unite_standard": "g"
   },
   {
     "nom": "Huîtres",
     "categorie": "poisson",
-    "allergenes": [
-      "mollusques"
-    ],
+    "allergenes": ["mollusques"],
     "kcal_par_100g": 68,
     "unite_standard": "g"
   },
   {
     "nom": "Calmars",
     "categorie": "poisson",
-    "allergenes": [
-      "mollusques"
-    ],
+    "allergenes": ["mollusques"],
     "kcal_par_100g": 92,
     "unite_standard": "g"
   },
   {
     "nom": "Poulpe",
     "categorie": "poisson",
-    "allergenes": [
-      "mollusques"
-    ],
+    "allergenes": ["mollusques"],
     "kcal_par_100g": 82,
     "unite_standard": "g"
   },
@@ -624,18 +576,14 @@
   {
     "nom": "Céleri-rave",
     "categorie": "legume",
-    "allergenes": [
-      "celeri"
-    ],
+    "allergenes": ["celeri"],
     "kcal_par_100g": 42,
     "unite_standard": "g"
   },
   {
     "nom": "Céleri branche",
     "categorie": "legume",
-    "allergenes": [
-      "celeri"
-    ],
+    "allergenes": ["celeri"],
     "kcal_par_100g": 16,
     "unite_standard": "g"
   },
@@ -782,36 +730,28 @@
   {
     "nom": "Farine de blé T45",
     "categorie": "feculent",
-    "allergenes": [
-      "gluten"
-    ],
+    "allergenes": ["gluten"],
     "kcal_par_100g": 364,
     "unite_standard": "g"
   },
   {
     "nom": "Farine de blé T55",
     "categorie": "feculent",
-    "allergenes": [
-      "gluten"
-    ],
+    "allergenes": ["gluten"],
     "kcal_par_100g": 364,
     "unite_standard": "g"
   },
   {
     "nom": "Farine de blé T65",
     "categorie": "feculent",
-    "allergenes": [
-      "gluten"
-    ],
+    "allergenes": ["gluten"],
     "kcal_par_100g": 354,
     "unite_standard": "g"
   },
   {
     "nom": "Farine de seigle",
     "categorie": "feculent",
-    "allergenes": [
-      "gluten"
-    ],
+    "allergenes": ["gluten"],
     "kcal_par_100g": 335,
     "unite_standard": "g"
   },
@@ -874,48 +814,35 @@
   {
     "nom": "Pâtes sèches (spaghetti)",
     "categorie": "feculent",
-    "allergenes": [
-      "gluten"
-    ],
+    "allergenes": ["gluten"],
     "kcal_par_100g": 352,
     "unite_standard": "g"
   },
   {
     "nom": "Pâtes sèches (tagliatelles)",
     "categorie": "feculent",
-    "allergenes": [
-      "gluten",
-      "oeufs"
-    ],
+    "allergenes": ["gluten", "oeufs"],
     "kcal_par_100g": 352,
     "unite_standard": "g"
   },
   {
     "nom": "Pâtes sèches (penne)",
     "categorie": "feculent",
-    "allergenes": [
-      "gluten"
-    ],
+    "allergenes": ["gluten"],
     "kcal_par_100g": 352,
     "unite_standard": "g"
   },
   {
     "nom": "Pâtes fraîches (tagliatelles)",
     "categorie": "feculent",
-    "allergenes": [
-      "gluten",
-      "oeufs"
-    ],
+    "allergenes": ["gluten", "oeufs"],
     "kcal_par_100g": 275,
     "unite_standard": "g"
   },
   {
     "nom": "Gnocchis frais",
     "categorie": "feculent",
-    "allergenes": [
-      "gluten",
-      "oeufs"
-    ],
+    "allergenes": ["gluten", "oeufs"],
     "kcal_par_100g": 150,
     "unite_standard": "g"
   },
@@ -943,18 +870,14 @@
   {
     "nom": "Boulgour",
     "categorie": "feculent",
-    "allergenes": [
-      "gluten"
-    ],
+    "allergenes": ["gluten"],
     "kcal_par_100g": 342,
     "unite_standard": "g"
   },
   {
     "nom": "Semoule fine",
     "categorie": "feculent",
-    "allergenes": [
-      "gluten"
-    ],
+    "allergenes": ["gluten"],
     "kcal_par_100g": 360,
     "unite_standard": "g"
   },
@@ -968,132 +891,98 @@
   {
     "nom": "Pain de mie",
     "categorie": "feculent",
-    "allergenes": [
-      "gluten"
-    ],
+    "allergenes": ["gluten"],
     "kcal_par_100g": 266,
     "unite_standard": "g"
   },
   {
     "nom": "Pain brioche",
     "categorie": "feculent",
-    "allergenes": [
-      "gluten",
-      "oeufs",
-      "lait"
-    ],
+    "allergenes": ["gluten", "oeufs", "lait"],
     "kcal_par_100g": 350,
     "unite_standard": "g"
   },
   {
     "nom": "Chapelure",
     "categorie": "feculent",
-    "allergenes": [
-      "gluten"
-    ],
+    "allergenes": ["gluten"],
     "kcal_par_100g": 395,
     "unite_standard": "g"
   },
   {
     "nom": "Biscuits secs (pour desserts)",
     "categorie": "feculent",
-    "allergenes": [
-      "gluten",
-      "lait",
-      "oeufs"
-    ],
+    "allergenes": ["gluten", "lait", "oeufs"],
     "kcal_par_100g": 450,
     "unite_standard": "g"
   },
   {
     "nom": "Filo (pâte)",
     "categorie": "feculent",
-    "allergenes": [
-      "gluten"
-    ],
+    "allergenes": ["gluten"],
     "kcal_par_100g": 297,
     "unite_standard": "g"
   },
   {
     "nom": "Pâte brisée",
     "categorie": "feculent",
-    "allergenes": [
-      "gluten",
-      "lait"
-    ],
+    "allergenes": ["gluten", "lait"],
     "kcal_par_100g": 400,
     "unite_standard": "g"
   },
   {
     "nom": "Pâte feuilletée",
     "categorie": "feculent",
-    "allergenes": [
-      "gluten",
-      "lait"
-    ],
+    "allergenes": ["gluten", "lait"],
     "kcal_par_100g": 490,
     "unite_standard": "g"
   },
   {
     "nom": "Beurre doux",
     "categorie": "laitage",
-    "allergenes": [
-      "lait"
-    ],
+    "allergenes": ["lait"],
     "kcal_par_100g": 717,
     "unite_standard": "g"
   },
   {
     "nom": "Beurre demi-sel",
     "categorie": "laitage",
-    "allergenes": [
-      "lait"
-    ],
+    "allergenes": ["lait"],
     "kcal_par_100g": 717,
     "unite_standard": "g"
   },
   {
     "nom": "Beurre clarifié (ghee)",
     "categorie": "laitage",
-    "allergenes": [
-      "lait"
-    ],
+    "allergenes": ["lait"],
     "kcal_par_100g": 900,
     "unite_standard": "g"
   },
   {
     "nom": "Crème fraîche épaisse 30%",
     "categorie": "laitage",
-    "allergenes": [
-      "lait"
-    ],
+    "allergenes": ["lait"],
     "kcal_par_100g": 292,
     "unite_standard": "g"
   },
   {
     "nom": "Crème fraîche épaisse 40%",
     "categorie": "laitage",
-    "allergenes": [
-      "lait"
-    ],
+    "allergenes": ["lait"],
     "kcal_par_100g": 380,
     "unite_standard": "g"
   },
   {
     "nom": "Crème liquide 35%",
     "categorie": "laitage",
-    "allergenes": [
-      "lait"
-    ],
+    "allergenes": ["lait"],
     "kcal_par_100g": 345,
     "unite_standard": "ml"
   },
   {
     "nom": "Crème légère 15%",
     "categorie": "laitage",
-    "allergenes": [
-      "lait"
-    ],
+    "allergenes": ["lait"],
     "kcal_par_100g": 150,
     "unite_standard": "ml"
   },
@@ -1107,27 +996,21 @@
   {
     "nom": "Lait entier",
     "categorie": "laitage",
-    "allergenes": [
-      "lait"
-    ],
+    "allergenes": ["lait"],
     "kcal_par_100g": 61,
     "unite_standard": "ml"
   },
   {
     "nom": "Lait demi-écrémé",
     "categorie": "laitage",
-    "allergenes": [
-      "lait"
-    ],
+    "allergenes": ["lait"],
     "kcal_par_100g": 45,
     "unite_standard": "ml"
   },
   {
     "nom": "Lait écrémé",
     "categorie": "laitage",
-    "allergenes": [
-      "lait"
-    ],
+    "allergenes": ["lait"],
     "kcal_par_100g": 33,
     "unite_standard": "ml"
   },
@@ -1141,261 +1024,203 @@
   {
     "nom": "Yaourt nature",
     "categorie": "laitage",
-    "allergenes": [
-      "lait"
-    ],
+    "allergenes": ["lait"],
     "kcal_par_100g": 59,
     "unite_standard": "g"
   },
   {
     "nom": "Yaourt grec",
     "categorie": "laitage",
-    "allergenes": [
-      "lait"
-    ],
+    "allergenes": ["lait"],
     "kcal_par_100g": 115,
     "unite_standard": "g"
   },
   {
     "nom": "Crème fraîche (crème acidulée)",
     "categorie": "laitage",
-    "allergenes": [
-      "lait"
-    ],
+    "allergenes": ["lait"],
     "kcal_par_100g": 210,
     "unite_standard": "g"
   },
   {
     "nom": "Lait ribot (babeurre)",
     "categorie": "laitage",
-    "allergenes": [
-      "lait"
-    ],
+    "allergenes": ["lait"],
     "kcal_par_100g": 40,
     "unite_standard": "ml"
   },
   {
     "nom": "Mozzarella",
     "categorie": "laitage",
-    "allergenes": [
-      "lait"
-    ],
+    "allergenes": ["lait"],
     "kcal_par_100g": 280,
     "unite_standard": "g"
   },
   {
     "nom": "Mozzarella di bufala",
     "categorie": "laitage",
-    "allergenes": [
-      "lait"
-    ],
+    "allergenes": ["lait"],
     "kcal_par_100g": 290,
     "unite_standard": "g"
   },
   {
     "nom": "Burrata",
     "categorie": "laitage",
-    "allergenes": [
-      "lait"
-    ],
+    "allergenes": ["lait"],
     "kcal_par_100g": 330,
     "unite_standard": "g"
   },
   {
     "nom": "Ricotta",
     "categorie": "fromage",
-    "allergenes": [
-      "lait"
-    ],
+    "allergenes": ["lait"],
     "kcal_par_100g": 174,
     "unite_standard": "g"
   },
   {
     "nom": "Parmesan (reggiano)",
     "categorie": "fromage",
-    "allergenes": [
-      "lait"
-    ],
+    "allergenes": ["lait"],
     "kcal_par_100g": 431,
     "unite_standard": "g"
   },
   {
     "nom": "Gruyère",
     "categorie": "fromage",
-    "allergenes": [
-      "lait"
-    ],
+    "allergenes": ["lait"],
     "kcal_par_100g": 413,
     "unite_standard": "g"
   },
   {
     "nom": "Comté 12 mois",
     "categorie": "fromage",
-    "allergenes": [
-      "lait"
-    ],
+    "allergenes": ["lait"],
     "kcal_par_100g": 409,
     "unite_standard": "g"
   },
   {
     "nom": "Comté 24 mois",
     "categorie": "fromage",
-    "allergenes": [
-      "lait"
-    ],
+    "allergenes": ["lait"],
     "kcal_par_100g": 420,
     "unite_standard": "g"
   },
   {
     "nom": "Emmental",
     "categorie": "fromage",
-    "allergenes": [
-      "lait"
-    ],
+    "allergenes": ["lait"],
     "kcal_par_100g": 380,
     "unite_standard": "g"
   },
   {
     "nom": "Beaufort",
     "categorie": "fromage",
-    "allergenes": [
-      "lait"
-    ],
+    "allergenes": ["lait"],
     "kcal_par_100g": 401,
     "unite_standard": "g"
   },
   {
     "nom": "Roquefort",
     "categorie": "fromage",
-    "allergenes": [
-      "lait"
-    ],
+    "allergenes": ["lait"],
     "kcal_par_100g": 369,
     "unite_standard": "g"
   },
   {
     "nom": "Gorgonzola",
     "categorie": "fromage",
-    "allergenes": [
-      "lait"
-    ],
+    "allergenes": ["lait"],
     "kcal_par_100g": 361,
     "unite_standard": "g"
   },
   {
     "nom": "Bleu d'Auvergne",
     "categorie": "fromage",
-    "allergenes": [
-      "lait"
-    ],
+    "allergenes": ["lait"],
     "kcal_par_100g": 350,
     "unite_standard": "g"
   },
   {
     "nom": "Brie de Meaux",
     "categorie": "fromage",
-    "allergenes": [
-      "lait"
-    ],
+    "allergenes": ["lait"],
     "kcal_par_100g": 334,
     "unite_standard": "g"
   },
   {
     "nom": "Camembert",
     "categorie": "fromage",
-    "allergenes": [
-      "lait"
-    ],
+    "allergenes": ["lait"],
     "kcal_par_100g": 300,
     "unite_standard": "g"
   },
   {
     "nom": "Chèvre frais",
     "categorie": "fromage",
-    "allergenes": [
-      "lait"
-    ],
+    "allergenes": ["lait"],
     "kcal_par_100g": 268,
     "unite_standard": "g"
   },
   {
     "nom": "Chèvre sec",
     "categorie": "fromage",
-    "allergenes": [
-      "lait"
-    ],
+    "allergenes": ["lait"],
     "kcal_par_100g": 375,
     "unite_standard": "g"
   },
   {
     "nom": "Cheddar",
     "categorie": "fromage",
-    "allergenes": [
-      "lait"
-    ],
+    "allergenes": ["lait"],
     "kcal_par_100g": 400,
     "unite_standard": "g"
   },
   {
     "nom": "Mascarpone",
     "categorie": "fromage",
-    "allergenes": [
-      "lait"
-    ],
+    "allergenes": ["lait"],
     "kcal_par_100g": 429,
     "unite_standard": "g"
   },
   {
     "nom": "Philadelphia (fromage frais)",
     "categorie": "fromage",
-    "allergenes": [
-      "lait"
-    ],
+    "allergenes": ["lait"],
     "kcal_par_100g": 350,
     "unite_standard": "g"
   },
   {
     "nom": "Époisses",
     "categorie": "fromage",
-    "allergenes": [
-      "lait"
-    ],
+    "allergenes": ["lait"],
     "kcal_par_100g": 342,
     "unite_standard": "g"
   },
   {
     "nom": "Munster",
     "categorie": "fromage",
-    "allergenes": [
-      "lait"
-    ],
+    "allergenes": ["lait"],
     "kcal_par_100g": 316,
     "unite_standard": "g"
   },
   {
     "nom": "Saint-Nectaire",
     "categorie": "fromage",
-    "allergenes": [
-      "lait"
-    ],
+    "allergenes": ["lait"],
     "kcal_par_100g": 340,
     "unite_standard": "g"
   },
   {
     "nom": "Reblochon",
     "categorie": "fromage",
-    "allergenes": [
-      "lait"
-    ],
+    "allergenes": ["lait"],
     "kcal_par_100g": 332,
     "unite_standard": "g"
   },
   {
     "nom": "Tome de Savoie",
     "categorie": "fromage",
-    "allergenes": [
-      "lait"
-    ],
+    "allergenes": ["lait"],
     "kcal_par_100g": 350,
     "unite_standard": "g"
   },
@@ -1535,9 +1360,7 @@
   {
     "nom": "Noix de coco râpée",
     "categorie": "fruit",
-    "allergenes": [
-      "fruits_a_coque"
-    ],
+    "allergenes": ["fruits_a_coque"],
     "kcal_par_100g": 660,
     "unite_standard": "g"
   },
@@ -1684,9 +1507,7 @@
   {
     "nom": "Curry (poudre)",
     "categorie": "epice",
-    "allergenes": [
-      "celeri"
-    ],
+    "allergenes": ["celeri"],
     "kcal_par_100g": 325,
     "unite_standard": "g"
   },
@@ -1833,18 +1654,14 @@
   {
     "nom": "Moutarde de Dijon",
     "categorie": "epice",
-    "allergenes": [
-      "moutarde"
-    ],
+    "allergenes": ["moutarde"],
     "kcal_par_100g": 66,
     "unite_standard": "g"
   },
   {
     "nom": "Moutarde à l'ancienne",
     "categorie": "epice",
-    "allergenes": [
-      "moutarde"
-    ],
+    "allergenes": ["moutarde"],
     "kcal_par_100g": 77,
     "unite_standard": "g"
   },
@@ -1886,18 +1703,14 @@
   {
     "nom": "Huile de sésame",
     "categorie": "sauce",
-    "allergenes": [
-      "sesame"
-    ],
+    "allergenes": ["sesame"],
     "kcal_par_100g": 884,
     "unite_standard": "ml"
   },
   {
     "nom": "Huile de noix",
     "categorie": "sauce",
-    "allergenes": [
-      "fruits_a_coque"
-    ],
+    "allergenes": ["fruits_a_coque"],
     "kcal_par_100g": 900,
     "unite_standard": "ml"
   },
@@ -1918,45 +1731,35 @@
   {
     "nom": "Fond de veau (lié)",
     "categorie": "sauce",
-    "allergenes": [
-      "gluten"
-    ],
+    "allergenes": ["gluten"],
     "kcal_par_100g": 35,
     "unite_standard": "ml"
   },
   {
     "nom": "Fumet de poisson",
     "categorie": "sauce",
-    "allergenes": [
-      "poisson"
-    ],
+    "allergenes": ["poisson"],
     "kcal_par_100g": 10,
     "unite_standard": "ml"
   },
   {
     "nom": "Vinaigre de vin rouge",
     "categorie": "sauce",
-    "allergenes": [
-      "so2_sulfites"
-    ],
+    "allergenes": ["so2_sulfites"],
     "kcal_par_100g": 19,
     "unite_standard": "ml"
   },
   {
     "nom": "Vinaigre de vin blanc",
     "categorie": "sauce",
-    "allergenes": [
-      "so2_sulfites"
-    ],
+    "allergenes": ["so2_sulfites"],
     "kcal_par_100g": 19,
     "unite_standard": "ml"
   },
   {
     "nom": "Vinaigre balsamique",
     "categorie": "sauce",
-    "allergenes": [
-      "so2_sulfites"
-    ],
+    "allergenes": ["so2_sulfites"],
     "kcal_par_100g": 88,
     "unite_standard": "ml"
   },
@@ -1970,30 +1773,21 @@
   {
     "nom": "Sauce soja",
     "categorie": "sauce",
-    "allergenes": [
-      "gluten",
-      "soja"
-    ],
+    "allergenes": ["gluten", "soja"],
     "kcal_par_100g": 53,
     "unite_standard": "ml"
   },
   {
     "nom": "Sauce soja sucrée (teriyaki)",
     "categorie": "sauce",
-    "allergenes": [
-      "gluten",
-      "soja"
-    ],
+    "allergenes": ["gluten", "soja"],
     "kcal_par_100g": 90,
     "unite_standard": "ml"
   },
   {
     "nom": "Sauce Worcestershire",
     "categorie": "sauce",
-    "allergenes": [
-      "poisson",
-      "so2_sulfites"
-    ],
+    "allergenes": ["poisson", "so2_sulfites"],
     "kcal_par_100g": 78,
     "unite_standard": "ml"
   },
@@ -2007,21 +1801,14 @@
   {
     "nom": "Sauce hoisin",
     "categorie": "sauce",
-    "allergenes": [
-      "soja",
-      "sesame",
-      "arachides"
-    ],
+    "allergenes": ["soja", "sesame", "arachides"],
     "kcal_par_100g": 220,
     "unite_standard": "ml"
   },
   {
     "nom": "Sauce huître",
     "categorie": "sauce",
-    "allergenes": [
-      "mollusques",
-      "gluten"
-    ],
+    "allergenes": ["mollusques", "gluten"],
     "kcal_par_100g": 51,
     "unite_standard": "ml"
   },
@@ -2049,18 +1836,14 @@
   {
     "nom": "Fond blanc de volaille (poudre)",
     "categorie": "sauce",
-    "allergenes": [
-      "gluten"
-    ],
+    "allergenes": ["gluten"],
     "kcal_par_100g": 280,
     "unite_standard": "g"
   },
   {
     "nom": "Bouillon de légumes (poudre)",
     "categorie": "sauce",
-    "allergenes": [
-      "celeri"
-    ],
+    "allergenes": ["celeri"],
     "kcal_par_100g": 260,
     "unite_standard": "g"
   },
@@ -2116,27 +1899,21 @@
   {
     "nom": "Œufs frais (calibre M)",
     "categorie": "autre",
-    "allergenes": [
-      "oeufs"
-    ],
+    "allergenes": ["oeufs"],
     "kcal_par_100g": 143,
     "unite_standard": "pièce"
   },
   {
     "nom": "Œufs (jaune)",
     "categorie": "autre",
-    "allergenes": [
-      "oeufs"
-    ],
+    "allergenes": ["oeufs"],
     "kcal_par_100g": 322,
     "unite_standard": "g"
   },
   {
     "nom": "Œufs (blanc)",
     "categorie": "autre",
-    "allergenes": [
-      "oeufs"
-    ],
+    "allergenes": ["oeufs"],
     "kcal_par_100g": 52,
     "unite_standard": "g"
   },
@@ -2192,136 +1969,105 @@
   {
     "nom": "Chocolat noir 70%",
     "categorie": "autre",
-    "allergenes": [
-      "so2_sulfites"
-    ],
+    "allergenes": ["so2_sulfites"],
     "kcal_par_100g": 546,
     "unite_standard": "g"
   },
   {
     "nom": "Chocolat au lait",
     "categorie": "autre",
-    "allergenes": [
-      "lait",
-      "so2_sulfites"
-    ],
+    "allergenes": ["lait", "so2_sulfites"],
     "kcal_par_100g": 535,
     "unite_standard": "g"
   },
   {
     "nom": "Chocolat blanc",
     "categorie": "autre",
-    "allergenes": [
-      "lait"
-    ],
+    "allergenes": ["lait"],
     "kcal_par_100g": 562,
     "unite_standard": "g"
   },
   {
     "nom": "Pâte de praliné",
     "categorie": "autre",
-    "allergenes": [
-      "fruits_a_coque"
-    ],
+    "allergenes": ["fruits_a_coque"],
     "kcal_par_100g": 544,
     "unite_standard": "g"
   },
   {
     "nom": "Pâte d'amande",
     "categorie": "autre",
-    "allergenes": [
-      "fruits_a_coque"
-    ],
+    "allergenes": ["fruits_a_coque"],
     "kcal_par_100g": 451,
     "unite_standard": "g"
   },
   {
     "nom": "Amandes (entières)",
     "categorie": "autre",
-    "allergenes": [
-      "fruits_a_coque"
-    ],
+    "allergenes": ["fruits_a_coque"],
     "kcal_par_100g": 579,
     "unite_standard": "g"
   },
   {
     "nom": "Amandes (poudre)",
     "categorie": "autre",
-    "allergenes": [
-      "fruits_a_coque"
-    ],
+    "allergenes": ["fruits_a_coque"],
     "kcal_par_100g": 579,
     "unite_standard": "g"
   },
   {
     "nom": "Noisettes",
     "categorie": "autre",
-    "allergenes": [
-      "fruits_a_coque"
-    ],
+    "allergenes": ["fruits_a_coque"],
     "kcal_par_100g": 628,
     "unite_standard": "g"
   },
   {
     "nom": "Noix",
     "categorie": "autre",
-    "allergenes": [
-      "fruits_a_coque"
-    ],
+    "allergenes": ["fruits_a_coque"],
     "kcal_par_100g": 654,
     "unite_standard": "g"
   },
   {
     "nom": "Pistaches",
     "categorie": "autre",
-    "allergenes": [
-      "fruits_a_coque"
-    ],
+    "allergenes": ["fruits_a_coque"],
     "kcal_par_100g": 562,
     "unite_standard": "g"
   },
   {
     "nom": "Pignons de pin",
     "categorie": "autre",
-    "allergenes": [
-      "fruits_a_coque"
-    ],
+    "allergenes": ["fruits_a_coque"],
     "kcal_par_100g": 673,
     "unite_standard": "g"
   },
   {
     "nom": "Noix de cajou",
     "categorie": "autre",
-    "allergenes": [
-      "fruits_a_coque"
-    ],
+    "allergenes": ["fruits_a_coque"],
     "kcal_par_100g": 553,
     "unite_standard": "g"
   },
   {
     "nom": "Arachides (cacahuètes)",
     "categorie": "autre",
-    "allergenes": [
-      "arachides"
-    ],
+    "allergenes": ["arachides"],
     "kcal_par_100g": 567,
     "unite_standard": "g"
   },
   {
     "nom": "Sésame (graines)",
     "categorie": "autre",
-    "allergenes": [
-      "sesame"
-    ],
+    "allergenes": ["sesame"],
     "kcal_par_100g": 573,
     "unite_standard": "g"
   },
   {
     "nom": "Tahini (pâte de sésame)",
     "categorie": "autre",
-    "allergenes": [
-      "sesame"
-    ],
+    "allergenes": ["sesame"],
     "kcal_par_100g": 595,
     "unite_standard": "g"
   },
@@ -2363,54 +2109,42 @@
   {
     "nom": "Vin blanc sec",
     "categorie": "autre",
-    "allergenes": [
-      "so2_sulfites"
-    ],
+    "allergenes": ["so2_sulfites"],
     "kcal_par_100g": 70,
     "unite_standard": "ml"
   },
   {
     "nom": "Vin rouge sec",
     "categorie": "autre",
-    "allergenes": [
-      "so2_sulfites"
-    ],
+    "allergenes": ["so2_sulfites"],
     "kcal_par_100g": 70,
     "unite_standard": "ml"
   },
   {
     "nom": "Porto blanc",
     "categorie": "autre",
-    "allergenes": [
-      "so2_sulfites"
-    ],
+    "allergenes": ["so2_sulfites"],
     "kcal_par_100g": 152,
     "unite_standard": "ml"
   },
   {
     "nom": "Cognac",
     "categorie": "autre",
-    "allergenes": [
-      "so2_sulfites"
-    ],
+    "allergenes": ["so2_sulfites"],
     "kcal_par_100g": 230,
     "unite_standard": "ml"
   },
   {
     "nom": "Bière blonde (cuisine)",
     "categorie": "autre",
-    "allergenes": [
-      "gluten"
-    ],
+    "allergenes": ["gluten"],
     "kcal_par_100g": 43,
     "unite_standard": "ml"
   },
   {
     "nom": "Vinaigre de framboise",
     "categorie": "sauce",
-    "allergenes": [
-      "so2_sulfites"
-    ],
+    "allergenes": ["so2_sulfites"],
     "kcal_par_100g": 19,
     "unite_standard": "ml"
   },
@@ -2431,59 +2165,42 @@
   {
     "nom": "Pesto basilic",
     "categorie": "sauce",
-    "allergenes": [
-      "fruits_a_coque",
-      "lait"
-    ],
+    "allergenes": ["fruits_a_coque", "lait"],
     "kcal_par_100g": 430,
     "unite_standard": "g"
   },
   {
     "nom": "Aïoli",
     "categorie": "sauce",
-    "allergenes": [
-      "oeufs"
-    ],
+    "allergenes": ["oeufs"],
     "kcal_par_100g": 450,
     "unite_standard": "g"
   },
   {
     "nom": "Sauce béarnaise",
     "categorie": "sauce",
-    "allergenes": [
-      "oeufs",
-      "lait",
-      "so2_sulfites"
-    ],
+    "allergenes": ["oeufs", "lait", "so2_sulfites"],
     "kcal_par_100g": 450,
     "unite_standard": "g"
   },
   {
     "nom": "Sauce hollandaise",
     "categorie": "sauce",
-    "allergenes": [
-      "oeufs",
-      "lait"
-    ],
+    "allergenes": ["oeufs", "lait"],
     "kcal_par_100g": 420,
     "unite_standard": "g"
   },
   {
     "nom": "Sauce béchamel",
     "categorie": "sauce",
-    "allergenes": [
-      "gluten",
-      "lait"
-    ],
+    "allergenes": ["gluten", "lait"],
     "kcal_par_100g": 130,
     "unite_standard": "g"
   },
   {
     "nom": "Sauce velouté",
     "categorie": "sauce",
-    "allergenes": [
-      "gluten"
-    ],
+    "allergenes": ["gluten"],
     "kcal_par_100g": 80,
     "unite_standard": "g"
   },
@@ -2511,18 +2228,14 @@
   {
     "nom": "Pâte de curry vert",
     "categorie": "epice",
-    "allergenes": [
-      "poisson"
-    ],
+    "allergenes": ["poisson"],
     "kcal_par_100g": 180,
     "unite_standard": "g"
   },
   {
     "nom": "Pâte de curry rouge",
     "categorie": "epice",
-    "allergenes": [
-      "poisson"
-    ],
+    "allergenes": ["poisson"],
     "kcal_par_100g": 180,
     "unite_standard": "g"
   },
@@ -2557,30 +2270,21 @@
   {
     "nom": "Miso blanc",
     "categorie": "sauce",
-    "allergenes": [
-      "soja",
-      "gluten"
-    ],
+    "allergenes": ["soja", "gluten"],
     "kcal_par_100g": 199,
     "unite_standard": "g"
   },
   {
     "nom": "Miso rouge",
     "categorie": "sauce",
-    "allergenes": [
-      "soja",
-      "gluten"
-    ],
+    "allergenes": ["soja", "gluten"],
     "kcal_par_100g": 218,
     "unite_standard": "g"
   },
   {
     "nom": "Tempura (farine)",
     "categorie": "feculent",
-    "allergenes": [
-      "gluten",
-      "oeufs"
-    ],
+    "allergenes": ["gluten", "oeufs"],
     "kcal_par_100g": 350,
     "unite_standard": "g"
   },
@@ -2671,9 +2375,7 @@
   {
     "nom": "Edamame",
     "categorie": "legume",
-    "allergenes": [
-      "soja"
-    ],
+    "allergenes": ["soja"],
     "kcal_par_100g": 122,
     "unite_standard": "g"
   },
@@ -2750,9 +2452,7 @@
   {
     "nom": "Nouilles soba",
     "categorie": "feculent",
-    "allergenes": [
-      "gluten"
-    ],
+    "allergenes": ["gluten"],
     "kcal_par_100g": 337,
     "unite_standard": "g"
   },
@@ -2766,40 +2466,28 @@
   {
     "nom": "Panko (chapelure japonaise)",
     "categorie": "feculent",
-    "allergenes": [
-      "gluten"
-    ],
+    "allergenes": ["gluten"],
     "kcal_par_100g": 385,
     "unite_standard": "g"
   },
   {
     "nom": "Crêpe dentelle (brisures)",
     "categorie": "feculent",
-    "allergenes": [
-      "gluten",
-      "lait",
-      "oeufs"
-    ],
+    "allergenes": ["gluten", "lait", "oeufs"],
     "kcal_par_100g": 490,
     "unite_standard": "g"
   },
   {
     "nom": "Blinis",
     "categorie": "feculent",
-    "allergenes": [
-      "gluten",
-      "oeufs",
-      "lait"
-    ],
+    "allergenes": ["gluten", "oeufs", "lait"],
     "kcal_par_100g": 225,
     "unite_standard": "pièce"
   },
   {
     "nom": "Tortillas de blé",
     "categorie": "feculent",
-    "allergenes": [
-      "gluten"
-    ],
+    "allergenes": ["gluten"],
     "kcal_par_100g": 316,
     "unite_standard": "g"
   },
@@ -2813,118 +2501,91 @@
   {
     "nom": "Œufs de caille",
     "categorie": "autre",
-    "allergenes": [
-      "oeufs"
-    ],
+    "allergenes": ["oeufs"],
     "kcal_par_100g": 158,
     "unite_standard": "pièce"
   },
   {
     "nom": "Anchois (filets en conserve)",
     "categorie": "poisson",
-    "allergenes": [
-      "poisson"
-    ],
+    "allergenes": ["poisson"],
     "kcal_par_100g": 210,
     "unite_standard": "g"
   },
   {
     "nom": "Bottarga",
     "categorie": "poisson",
-    "allergenes": [
-      "poisson"
-    ],
+    "allergenes": ["poisson"],
     "kcal_par_100g": 380,
     "unite_standard": "g"
   },
   {
     "nom": "Tarama",
     "categorie": "poisson",
-    "allergenes": [
-      "poisson",
-      "oeufs"
-    ],
+    "allergenes": ["poisson", "oeufs"],
     "kcal_par_100g": 500,
     "unite_standard": "g"
   },
   {
     "nom": "Hareng fumé (filet)",
     "categorie": "poisson",
-    "allergenes": [
-      "poisson"
-    ],
+    "allergenes": ["poisson"],
     "kcal_par_100g": 217,
     "unite_standard": "g"
   },
   {
     "nom": "Truite fumée",
     "categorie": "poisson",
-    "allergenes": [
-      "poisson"
-    ],
+    "allergenes": ["poisson"],
     "kcal_par_100g": 190,
     "unite_standard": "g"
   },
   {
     "nom": "Anguille fumée",
     "categorie": "poisson",
-    "allergenes": [
-      "poisson"
-    ],
+    "allergenes": ["poisson"],
     "kcal_par_100g": 289,
     "unite_standard": "g"
   },
   {
     "nom": "Oursin (corail)",
     "categorie": "poisson",
-    "allergenes": [
-      "mollusques"
-    ],
+    "allergenes": ["mollusques"],
     "kcal_par_100g": 110,
     "unite_standard": "g"
   },
   {
     "nom": "Encornets (calmars grillés)",
     "categorie": "poisson",
-    "allergenes": [
-      "mollusques"
-    ],
+    "allergenes": ["mollusques"],
     "kcal_par_100g": 90,
     "unite_standard": "g"
   },
   {
     "nom": "Seiche",
     "categorie": "poisson",
-    "allergenes": [
-      "mollusques"
-    ],
+    "allergenes": ["mollusques"],
     "kcal_par_100g": 79,
     "unite_standard": "g"
   },
   {
     "nom": "Bulots",
     "categorie": "poisson",
-    "allergenes": [
-      "mollusques"
-    ],
+    "allergenes": ["mollusques"],
     "kcal_par_100g": 78,
     "unite_standard": "g"
   },
   {
     "nom": "Coques",
     "categorie": "poisson",
-    "allergenes": [
-      "mollusques"
-    ],
+    "allergenes": ["mollusques"],
     "kcal_par_100g": 76,
     "unite_standard": "g"
   },
   {
     "nom": "Bigorneaux",
     "categorie": "poisson",
-    "allergenes": [
-      "mollusques"
-    ],
+    "allergenes": ["mollusques"],
     "kcal_par_100g": 60,
     "unite_standard": "g"
   },
@@ -2966,9 +2627,7 @@
   {
     "nom": "Germes de soja",
     "categorie": "legume",
-    "allergenes": [
-      "soja"
-    ],
+    "allergenes": ["soja"],
     "kcal_par_100g": 30,
     "unite_standard": "g"
   },
@@ -3073,9 +2732,7 @@
   {
     "nom": "Za'atar",
     "categorie": "epice",
-    "allergenes": [
-      "sesame"
-    ],
+    "allergenes": ["sesame"],
     "kcal_par_100g": 285,
     "unite_standard": "g"
   },
@@ -3089,9 +2746,7 @@
   {
     "nom": "Shichimi togarashi",
     "categorie": "epice",
-    "allergenes": [
-      "sesame"
-    ],
+    "allergenes": ["sesame"],
     "kcal_par_100g": 300,
     "unite_standard": "g"
   },
@@ -3105,9 +2760,7 @@
   {
     "nom": "Graines de moutarde",
     "categorie": "epice",
-    "allergenes": [
-      "moutarde"
-    ],
+    "allergenes": ["moutarde"],
     "kcal_par_100g": 469,
     "unite_standard": "g"
   },
@@ -3177,91 +2830,70 @@
   {
     "nom": "Amaretto",
     "categorie": "autre",
-    "allergenes": [
-      "fruits_a_coque"
-    ],
+    "allergenes": ["fruits_a_coque"],
     "kcal_par_100g": 310,
     "unite_standard": "ml"
   },
   {
     "nom": "Marsala (vin sicilien)",
     "categorie": "autre",
-    "allergenes": [
-      "so2_sulfites"
-    ],
+    "allergenes": ["so2_sulfites"],
     "kcal_par_100g": 150,
     "unite_standard": "ml"
   },
   {
     "nom": "Vermouth blanc",
     "categorie": "autre",
-    "allergenes": [
-      "so2_sulfites"
-    ],
+    "allergenes": ["so2_sulfites"],
     "kcal_par_100g": 120,
     "unite_standard": "ml"
   },
   {
     "nom": "Pastis (pour cuisine)",
     "categorie": "autre",
-    "allergenes": [
-      "so2_sulfites"
-    ],
+    "allergenes": ["so2_sulfites"],
     "kcal_par_100g": 230,
     "unite_standard": "ml"
   },
   {
     "nom": "Encre de seiche",
     "categorie": "sauce",
-    "allergenes": [
-      "mollusques"
-    ],
+    "allergenes": ["mollusques"],
     "kcal_par_100g": 50,
     "unite_standard": "g"
   },
   {
     "nom": "Furikake",
     "categorie": "epice",
-    "allergenes": [
-      "poisson",
-      "sesame"
-    ],
+    "allergenes": ["poisson", "sesame"],
     "kcal_par_100g": 330,
     "unite_standard": "g"
   },
   {
     "nom": "Mirin",
     "categorie": "sauce",
-    "allergenes": [
-      "gluten"
-    ],
+    "allergenes": ["gluten"],
     "kcal_par_100g": 235,
     "unite_standard": "ml"
   },
   {
     "nom": "Saké (pour cuisine)",
     "categorie": "sauce",
-    "allergenes": [
-      "gluten"
-    ],
+    "allergenes": ["gluten"],
     "kcal_par_100g": 134,
     "unite_standard": "ml"
   },
   {
     "nom": "Nam pla (sauce de poisson)",
     "categorie": "sauce",
-    "allergenes": [
-      "poisson"
-    ],
+    "allergenes": ["poisson"],
     "kcal_par_100g": 43,
     "unite_standard": "ml"
   },
   {
     "nom": "Nuoc-mâm",
     "categorie": "sauce",
-    "allergenes": [
-      "poisson"
-    ],
+    "allergenes": ["poisson"],
     "kcal_par_100g": 43,
     "unite_standard": "ml"
   },
@@ -3282,75 +2914,56 @@
   {
     "nom": "Vinaigre de Modène IGP",
     "categorie": "sauce",
-    "allergenes": [
-      "so2_sulfites"
-    ],
+    "allergenes": ["so2_sulfites"],
     "kcal_par_100g": 100,
     "unite_standard": "ml"
   },
   {
     "nom": "Crème de marrons",
     "categorie": "autre",
-    "allergenes": [
-      "fruits_a_coque"
-    ],
+    "allergenes": ["fruits_a_coque"],
     "kcal_par_100g": 268,
     "unite_standard": "g"
   },
   {
     "nom": "Praliné (pâte)",
     "categorie": "autre",
-    "allergenes": [
-      "fruits_a_coque"
-    ],
+    "allergenes": ["fruits_a_coque"],
     "kcal_par_100g": 544,
     "unite_standard": "g"
   },
   {
     "nom": "Gianduja",
     "categorie": "autre",
-    "allergenes": [
-      "fruits_a_coque",
-      "lait"
-    ],
+    "allergenes": ["fruits_a_coque", "lait"],
     "kcal_par_100g": 540,
     "unite_standard": "g"
   },
   {
     "nom": "Nougat blanc",
     "categorie": "autre",
-    "allergenes": [
-      "fruits_a_coque",
-      "oeufs"
-    ],
+    "allergenes": ["fruits_a_coque", "oeufs"],
     "kcal_par_100g": 400,
     "unite_standard": "g"
   },
   {
     "nom": "Caramel (beurre salé)",
     "categorie": "sauce",
-    "allergenes": [
-      "lait"
-    ],
+    "allergenes": ["lait"],
     "kcal_par_100g": 420,
     "unite_standard": "g"
   },
   {
     "nom": "Dulce de leche",
     "categorie": "sauce",
-    "allergenes": [
-      "lait"
-    ],
+    "allergenes": ["lait"],
     "kcal_par_100g": 328,
     "unite_standard": "g"
   },
   {
     "nom": "Crème anglaise",
     "categorie": "sauce",
-    "allergenes": [
-      "lait",
-      "oeufs"
-    ],
+    "allergenes": ["lait", "oeufs"],
     "kcal_par_100g": 130,
     "unite_standard": "ml"
   },
@@ -3378,10 +2991,7 @@
   {
     "nom": "Glace vanille (artisanale)",
     "categorie": "autre",
-    "allergenes": [
-      "lait",
-      "oeufs"
-    ],
+    "allergenes": ["lait", "oeufs"],
     "kcal_par_100g": 207,
     "unite_standard": "g"
   },
@@ -3395,86 +3005,63 @@
   {
     "nom": "Pain d'épices",
     "categorie": "feculent",
-    "allergenes": [
-      "gluten",
-      "so2_sulfites"
-    ],
+    "allergenes": ["gluten", "so2_sulfites"],
     "kcal_par_100g": 368,
     "unite_standard": "g"
   },
   {
     "nom": "Financier (base)",
     "categorie": "feculent",
-    "allergenes": [
-      "gluten",
-      "lait",
-      "oeufs",
-      "fruits_a_coque"
-    ],
+    "allergenes": ["gluten", "lait", "oeufs", "fruits_a_coque"],
     "kcal_par_100g": 430,
     "unite_standard": "g"
   },
   {
     "nom": "Poudre de noisettes",
     "categorie": "autre",
-    "allergenes": [
-      "fruits_a_coque"
-    ],
+    "allergenes": ["fruits_a_coque"],
     "kcal_par_100g": 628,
     "unite_standard": "g"
   },
   {
     "nom": "Pralin en grains",
     "categorie": "autre",
-    "allergenes": [
-      "fruits_a_coque"
-    ],
+    "allergenes": ["fruits_a_coque"],
     "kcal_par_100g": 580,
     "unite_standard": "g"
   },
   {
     "nom": "Feuilletine",
     "categorie": "feculent",
-    "allergenes": [
-      "gluten",
-      "lait"
-    ],
+    "allergenes": ["gluten", "lait"],
     "kcal_par_100g": 450,
     "unite_standard": "g"
   },
   {
     "nom": "Soja texturé",
     "categorie": "autre",
-    "allergenes": [
-      "soja"
-    ],
+    "allergenes": ["soja"],
     "kcal_par_100g": 329,
     "unite_standard": "g"
   },
   {
     "nom": "Tofu ferme",
     "categorie": "autre",
-    "allergenes": [
-      "soja"
-    ],
+    "allergenes": ["soja"],
     "kcal_par_100g": 76,
     "unite_standard": "g"
   },
   {
     "nom": "Tempeh",
     "categorie": "autre",
-    "allergenes": [
-      "soja"
-    ],
+    "allergenes": ["soja"],
     "kcal_par_100g": 195,
     "unite_standard": "g"
   },
   {
     "nom": "Seitan",
     "categorie": "autre",
-    "allergenes": [
-      "gluten"
-    ],
+    "allergenes": ["gluten"],
     "kcal_par_100g": 370,
     "unite_standard": "g"
   },
@@ -3537,18 +3124,14 @@
   {
     "nom": "Son d'avoine",
     "categorie": "feculent",
-    "allergenes": [
-      "gluten"
-    ],
+    "allergenes": ["gluten"],
     "kcal_par_100g": 246,
     "unite_standard": "g"
   },
   {
     "nom": "Flocons d'avoine",
     "categorie": "feculent",
-    "allergenes": [
-      "gluten"
-    ],
+    "allergenes": ["gluten"],
     "kcal_par_100g": 389,
     "unite_standard": "g"
   },
@@ -3639,9 +3222,7 @@
   {
     "nom": "Bonito séché (katsuobushi)",
     "categorie": "poisson",
-    "allergenes": [
-      "poisson"
-    ],
+    "allergenes": ["poisson"],
     "kcal_par_100g": 335,
     "unite_standard": "g"
   },
@@ -3655,11 +3236,7 @@
   {
     "nom": "Boudin blanc",
     "categorie": "viande",
-    "allergenes": [
-      "lait",
-      "oeufs",
-      "gluten"
-    ],
+    "allergenes": ["lait", "oeufs", "gluten"],
     "kcal_par_100g": 247,
     "unite_standard": "g"
   },
@@ -3694,45 +3271,35 @@
   {
     "nom": "Saint-Pierre (filet)",
     "categorie": "poisson",
-    "allergenes": [
-      "poisson"
-    ],
+    "allergenes": ["poisson"],
     "kcal_par_100g": 87,
     "unite_standard": "g"
   },
   {
     "nom": "Palourdes",
     "categorie": "poisson",
-    "allergenes": [
-      "mollusques"
-    ],
+    "allergenes": ["mollusques"],
     "kcal_par_100g": 77,
     "unite_standard": "g"
   },
   {
     "nom": "Pétoncles",
     "categorie": "poisson",
-    "allergenes": [
-      "mollusques"
-    ],
+    "allergenes": ["mollusques"],
     "kcal_par_100g": 88,
     "unite_standard": "g"
   },
   {
     "nom": "Raie (aile)",
     "categorie": "poisson",
-    "allergenes": [
-      "poisson"
-    ],
+    "allergenes": ["poisson"],
     "kcal_par_100g": 95,
     "unite_standard": "g"
   },
   {
     "nom": "Limande-sole (filet)",
     "categorie": "poisson",
-    "allergenes": [
-      "poisson"
-    ],
+    "allergenes": ["poisson"],
     "kcal_par_100g": 83,
     "unite_standard": "g"
   },
@@ -3816,10 +3383,7 @@
   {
     "nom": "Dukkah",
     "categorie": "epice",
-    "allergenes": [
-      "fruits_a_coque",
-      "graines_de_sesame"
-    ],
+    "allergenes": ["fruits_a_coque", "graines_de_sesame"],
     "kcal_par_100g": 520,
     "unite_standard": "g"
   },
@@ -3833,55 +3397,42 @@
   {
     "nom": "Orge perlé",
     "categorie": "feculent",
-    "allergenes": [
-      "gluten"
-    ],
+    "allergenes": ["gluten"],
     "kcal_par_100g": 352,
     "unite_standard": "g"
   },
   {
     "nom": "Épeautre (grains)",
     "categorie": "feculent",
-    "allergenes": [
-      "gluten"
-    ],
+    "allergenes": ["gluten"],
     "kcal_par_100g": 338,
     "unite_standard": "g"
   },
   {
     "nom": "Udon (nouilles fraîches)",
     "categorie": "feculent",
-    "allergenes": [
-      "gluten"
-    ],
+    "allergenes": ["gluten"],
     "kcal_par_100g": 130,
     "unite_standard": "g"
   },
   {
     "nom": "Vermicelles de soja",
     "categorie": "feculent",
-    "allergenes": [
-      "soja"
-    ],
+    "allergenes": ["soja"],
     "kcal_par_100g": 352,
     "unite_standard": "g"
   },
   {
     "nom": "Farro",
     "categorie": "feculent",
-    "allergenes": [
-      "gluten"
-    ],
+    "allergenes": ["gluten"],
     "kcal_par_100g": 340,
     "unite_standard": "g"
   },
   {
     "nom": "Pesto roquette",
     "categorie": "sauce",
-    "allergenes": [
-      "fruits_a_coque",
-      "lait"
-    ],
+    "allergenes": ["fruits_a_coque", "lait"],
     "kcal_par_100g": 430,
     "unite_standard": "g"
   },
@@ -3895,72 +3446,56 @@
   {
     "nom": "Sauce romesco",
     "categorie": "sauce",
-    "allergenes": [
-      "fruits_a_coque"
-    ],
+    "allergenes": ["fruits_a_coque"],
     "kcal_par_100g": 220,
     "unite_standard": "g"
   },
   {
     "nom": "Sauce tzatziki",
     "categorie": "sauce",
-    "allergenes": [
-      "lait"
-    ],
+    "allergenes": ["lait"],
     "kcal_par_100g": 95,
     "unite_standard": "g"
   },
   {
     "nom": "Fourme d'Ambert",
     "categorie": "fromage",
-    "allergenes": [
-      "lait"
-    ],
+    "allergenes": ["lait"],
     "kcal_par_100g": 340,
     "unite_standard": "g"
   },
   {
     "nom": "Ossau-Iraty",
     "categorie": "fromage",
-    "allergenes": [
-      "lait"
-    ],
+    "allergenes": ["lait"],
     "kcal_par_100g": 380,
     "unite_standard": "g"
   },
   {
     "nom": "Morbier",
     "categorie": "fromage",
-    "allergenes": [
-      "lait"
-    ],
+    "allergenes": ["lait"],
     "kcal_par_100g": 305,
     "unite_standard": "g"
   },
   {
     "nom": "Crottin de Chavignol",
     "categorie": "fromage",
-    "allergenes": [
-      "lait"
-    ],
+    "allergenes": ["lait"],
     "kcal_par_100g": 360,
     "unite_standard": "g"
   },
   {
     "nom": "Fromage blanc 0%",
     "categorie": "laitage",
-    "allergenes": [
-      "lait"
-    ],
+    "allergenes": ["lait"],
     "kcal_par_100g": 44,
     "unite_standard": "g"
   },
   {
     "nom": "Kéfir",
     "categorie": "laitage",
-    "allergenes": [
-      "lait"
-    ],
+    "allergenes": ["lait"],
     "kcal_par_100g": 61,
     "unite_standard": "g"
   },
@@ -4016,9 +3551,7 @@
   {
     "nom": "Sel de céleri",
     "categorie": "autre",
-    "allergenes": [
-      "celeri"
-    ],
+    "allergenes": ["celeri"],
     "kcal_par_100g": 0,
     "unite_standard": "g"
   }

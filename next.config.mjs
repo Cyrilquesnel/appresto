@@ -1,12 +1,12 @@
 // @ts-check
-import withPWA from "@ducanh2912/next-pwa"
+import withPWA from '@ducanh2912/next-pwa'
 
 const nextConfig = withPWA({
-  dest: "public",
+  dest: 'public',
   cacheOnFrontEndNav: true,
   aggressiveFrontEndNavCaching: false,
   reloadOnOnline: true,
-  disable: process.env.NODE_ENV === "development",
+  disable: process.env.NODE_ENV === 'development',
   workboxOptions: {
     disableDevLogs: true,
     skipWaiting: true,
@@ -15,7 +15,7 @@ const nextConfig = withPWA({
   },
 })({
   experimental: {
-    serverActions: { allowedOrigins: ["localhost:3000"] },
+    serverActions: { allowedOrigins: ['localhost:3000'] },
   },
 })
 

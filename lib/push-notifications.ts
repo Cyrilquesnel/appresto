@@ -3,7 +3,7 @@ import webpush from 'web-push'
 webpush.setVapidDetails(
   'mailto:contact@miseenplace.fr',
   process.env.VAPID_PUBLIC_KEY!,
-  process.env.VAPID_PRIVATE_KEY!,
+  process.env.VAPID_PRIVATE_KEY!
 )
 
 export type { PushSubscription } from 'web-push'
@@ -21,7 +21,7 @@ export interface PushPayload {
 
 export async function sendPushNotification(
   subscription: webpush.PushSubscription,
-  payload: PushPayload,
+  payload: PushPayload
 ): Promise<void> {
   await webpush.sendNotification(subscription, JSON.stringify(payload), {
     urgency: 'normal',
@@ -42,7 +42,7 @@ export async function sendPMSReminder(subscription: webpush.PushSubscription): P
 export async function sendRappelAlert(
   subscription: webpush.PushSubscription,
   produit: string,
-  ingredient: string,
+  ingredient: string
 ): Promise<void> {
   await sendPushNotification(subscription, {
     title: 'Alerte rappel produit',
@@ -55,10 +55,13 @@ export async function sendRappelAlert(
 
 export async function sendOnboardingNotification(
   subscription: webpush.PushSubscription,
-  type: 'j2' | 'j3',
+  type: 'j2' | 'j3'
 ): Promise<void> {
   const messages = {
-    j2: { body: 'Ajoutez vos prix pour calculer votre food cost automatiquement', url: '/mercuriale' },
+    j2: {
+      body: 'Ajoutez vos prix pour calculer votre food cost automatiquement',
+      url: '/mercuriale',
+    },
     j3: { body: 'Générez votre premier bon de commande en 2 minutes', url: '/commandes/nouveau' },
   }
   await sendPushNotification(subscription, {

@@ -5,14 +5,16 @@ export default function RappelsPage() {
   const { data: alerts, refetch } = trpc.pms.getRappelAlerts.useQuery()
   const markTraite = trpc.pms.markRappelTraite.useMutation({ onSuccess: () => refetch() })
 
-  const nonTraites = alerts?.filter(a => !a.traite).length ?? 0
+  const nonTraites = alerts?.filter((a) => !a.traite).length ?? 0
 
   return (
     <div className="max-w-lg mx-auto px-4 py-6">
       <div className="mb-6">
         <h1 className="text-xl font-bold text-gray-900">Alertes RappelConso</h1>
         {nonTraites > 0 && (
-          <p className="text-sm text-red-500 font-medium mt-1">{nonTraites} alerte(s) non traitée(s)</p>
+          <p className="text-sm text-red-500 font-medium mt-1">
+            {nonTraites} alerte(s) non traitée(s)
+          </p>
         )}
       </div>
 
@@ -25,7 +27,7 @@ export default function RappelsPage() {
       )}
 
       <div className="space-y-3">
-        {alerts?.map(alert => (
+        {alerts?.map((alert) => (
           <div
             key={alert.id}
             className={`rounded-2xl p-4 border ${
@@ -36,9 +38,7 @@ export default function RappelsPage() {
             <div className="flex items-start justify-between gap-2">
               <div className="flex-1">
                 <p className="font-bold text-red-700">{alert.nom_produit}</p>
-                {alert.nom_marque && (
-                  <p className="text-xs text-gray-500">{alert.nom_marque}</p>
-                )}
+                {alert.nom_marque && <p className="text-xs text-gray-500">{alert.nom_marque}</p>}
                 <p className="text-sm text-gray-600 mt-1">{alert.motif}</p>
                 {alert.date_rappel && (
                   <p className="text-xs text-gray-400 mt-1">

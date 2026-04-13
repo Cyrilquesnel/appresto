@@ -22,7 +22,7 @@ interface ChecklistProps {
 
 export function Checklist({ checklist, date, onCompleted }: ChecklistProps) {
   const [itemStates, setItemStates] = useState<Record<string, boolean>>(
-    Object.fromEntries(checklist.items.map(item => [item.id, false]))
+    Object.fromEntries(checklist.items.map((item) => [item.id, false]))
   )
   const [startTime] = useState(Date.now())
 
@@ -30,21 +30,18 @@ export function Checklist({ checklist, date, onCompleted }: ChecklistProps) {
     onSuccess: () => onCompleted(),
   })
 
-  const toggleItem = (id: string) => setItemStates(s => ({ ...s, [id]: !s[id] }))
+  const toggleItem = (id: string) => setItemStates((s) => ({ ...s, [id]: !s[id] }))
 
-  const allRequired = checklist.items
-    .filter(i => i.obligatoire)
-    .every(i => itemStates[i.id])
+  const allRequired = checklist.items.filter((i) => i.obligatoire).every((i) => itemStates[i.id])
 
-  const remainingRequired = checklist.items
-    .filter(i => i.obligatoire && !itemStates[i.id]).length
+  const remainingRequired = checklist.items.filter((i) => i.obligatoire && !itemStates[i.id]).length
 
   const handleSubmit = () => {
     const duree = Math.round((Date.now() - startTime) / 60000)
     save.mutate({
       checklist_id: checklist.id,
       date,
-      items_valides: checklist.items.map(item => ({
+      items_valides: checklist.items.map((item) => ({
         item_id: item.id,
         valide: itemStates[item.id] ?? false,
       })),
@@ -77,7 +74,7 @@ export function Checklist({ checklist, date, onCompleted }: ChecklistProps) {
       <h3 className="font-semibold text-gray-900 mb-3">{checklist.nom}</h3>
 
       <div className="space-y-2 mb-4">
-        {checklist.items.map(item => (
+        {checklist.items.map((item) => (
           <button
             key={item.id}
             onClick={() => toggleItem(item.id)}
@@ -88,8 +85,12 @@ export function Checklist({ checklist, date, onCompleted }: ChecklistProps) {
             }`}
             data-testid={`checklist-item-${item.id}`}
           >
-            <span className={`text-xl ${itemStates[item.id] ? 'opacity-100' : 'opacity-20'}`}>✓</span>
-            <span className={`text-sm flex-1 ${itemStates[item.id] ? 'text-green-700 line-through' : 'text-gray-700'}`}>
+            <span className={`text-xl ${itemStates[item.id] ? 'opacity-100' : 'opacity-20'}`}>
+              ✓
+            </span>
+            <span
+              className={`text-sm flex-1 ${itemStates[item.id] ? 'text-green-700 line-through' : 'text-gray-700'}`}
+            >
               {item.description}
               {item.obligatoire && <span className="text-red-500 ml-1">*</span>}
             </span>
@@ -106,8 +107,8 @@ export function Checklist({ checklist, date, onCompleted }: ChecklistProps) {
         {save.isPending
           ? 'Enregistrement...'
           : allRequired
-          ? '✓ Valider la checklist'
-          : `${remainingRequired} item(s) requis restants`}
+            ? '✓ Valider la checklist'
+            : `${remainingRequired} item(s) requis restants`}
       </button>
 
       {save.isError && (

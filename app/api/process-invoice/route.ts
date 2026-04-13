@@ -7,7 +7,9 @@ export const maxDuration = 30
 
 export async function POST(req: NextRequest) {
   const supabase = createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
   if (!user) return NextResponse.json({ error: 'Non authentifié' }, { status: 401 })
 
   const restaurantId = req.headers.get('x-restaurant-id')
@@ -17,7 +19,10 @@ export async function POST(req: NextRequest) {
   if (invoiceOCRLimiter) {
     const { success } = await invoiceOCRLimiter.limit(`invoice_ocr:${restaurantId}`)
     if (!success) {
-      return NextResponse.json({ error: 'Limite OCR atteinte (50/jour). Réessayez demain.' }, { status: 429 })
+      return NextResponse.json(
+        { error: 'Limite OCR atteinte (50/jour). Réessayez demain.' },
+        { status: 429 }
+      )
     }
   }
 
@@ -45,10 +50,12 @@ export async function POST(req: NextRequest) {
     .is('deleted_at', null)
 
   // Normaliser en { id, nom } pour le matching
-  const ingredients = (ings ?? []).map((i) => ({
-    id: i.id,
-    nom: i.nom_custom ?? (i.catalog as { nom: string } | null)?.nom ?? '',
-  })).filter((i) => i.nom !== '')
+  const ingredients = (ings ?? [])
+    .map((i) => ({
+      id: i.id,
+      nom: i.nom_custom ?? (i.catalog as { nom: string } | null)?.nom ?? '',
+    }))
+    .filter((i) => i.nom !== '')
 
   // Matcher chaque ligne de facture
   const lignesAvecMatch = invoiceData.lignes.map((ligne) => {

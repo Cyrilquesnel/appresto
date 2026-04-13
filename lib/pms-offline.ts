@@ -26,7 +26,9 @@ function openDB(): Promise<IDBDatabase> {
   })
 }
 
-export async function queuePMSRecord(request: Omit<QueuedRequest, 'id' | 'timestamp'>): Promise<void> {
+export async function queuePMSRecord(
+  request: Omit<QueuedRequest, 'id' | 'timestamp'>
+): Promise<void> {
   const db = await openDB()
   const record: QueuedRequest = {
     ...request,

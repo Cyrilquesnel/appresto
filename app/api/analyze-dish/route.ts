@@ -1,16 +1,18 @@
-import { NextRequest, NextResponse } from "next/server"
-import { dishAnalysisLimiter } from "@/lib/upstash"
-import { analyzeWithRetry } from "@/lib/ai/gemini"
-import { enrichIngredients, shouldEnrich } from "@/lib/ai/claude-enrichment"
-import { createClient } from "@/lib/supabase/server"
+import { NextRequest, NextResponse } from 'next/server'
+import { dishAnalysisLimiter } from '@/lib/upstash'
+import { analyzeWithRetry } from '@/lib/ai/gemini'
+import { enrichIngredients, shouldEnrich } from '@/lib/ai/claude-enrichment'
+import { createClient } from '@/lib/supabase/server'
 
 export async function POST(request: NextRequest) {
   const supabase = createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return NextResponse.json({ error: "Non authentifié" }, { status: 401 })
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
+  if (!user) return NextResponse.json({ error: 'Non authentifié' }, { status: 401 })
 
-  const restaurantId = request.headers.get("x-restaurant-id")
-  if (!restaurantId) return NextResponse.json({ error: "restaurant_id manquant" }, { status: 400 })
+  const restaurantId = request.headers.get('x-restaurant-id')
+  if (!restaurantId) return NextResponse.json({ error: 'restaurant_id manquant' }, { status: 400 })
 
   // Rate limiting
   let analysesRestantes: number | null = null
@@ -26,23 +28,24 @@ export async function POST(request: NextRequest) {
   }
 
   const formData = await request.formData()
-  const file = formData.get("image") as File | null
+  const file = formData.get('image') as File | null
 
-  if (!file) return NextResponse.json({ error: "Image manquante" }, { status: 400 })
-  if (file.size > 10 * 1024 * 1024) return NextResponse.json({ error: "Image trop grande (max 10MB)" }, { status: 400 })
-  if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
-    return NextResponse.json({ error: "Format invalide (JPEG, PNG, WebP)" }, { status: 400 })
+  if (!file) return NextResponse.json({ error: 'Image manquante' }, { status: 400 })
+  if (file.size > 10 * 1024 * 1024)
+    return NextResponse.json({ error: 'Image trop grande (max 10MB)' }, { status: 400 })
+  if (!['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) {
+    return NextResponse.json({ error: 'Format invalide (JPEG, PNG, WebP)' }, { status: 400 })
   }
 
   const imageBuffer = Buffer.from(await file.arrayBuffer())
-  const imageBase64 = imageBuffer.toString("base64")
+  const imageBase64 = imageBuffer.toString('base64')
 
   // Upload storage (fire and forget — non bloquant)
   const storagePath = `${restaurantId}/${Date.now()}.jpg`
   supabase.storage
-    .from("dish-photos")
+    .from('dish-photos')
     .upload(storagePath, imageBuffer, { contentType: file.type })
-    .catch((err: unknown) => console.error("[analyze-dish] Storage upload error:", err))
+    .catch((err: unknown) => console.error('[analyze-dish] Storage upload error:', err))
 
   // Analyse Gemini
   const geminiResult = await analyzeWithRetry(imageBase64, file.type)
@@ -51,13 +54,18 @@ export async function POST(request: NextRequest) {
   const ingredientsConfiance = geminiResult.ingredients_detectes.map((i) => i.confiance)
   const needsEnrichment = shouldEnrich(geminiResult.confiance_globale, ingredientsConfiance)
 
-  let enrichedData: Record<string, { allergenes_confirmes?: string[]; grammage_portion?: number; kcal_par_100g?: number }> = {}
+  let enrichedData: Record<
+    string,
+    { allergenes_confirmes?: string[]; grammage_portion?: number; kcal_par_100g?: number }
+  > = {}
   if (needsEnrichment) {
     const lowConfidenceNames = geminiResult.ingredients_detectes
       .filter((i) => i.confiance < 0.65)
       .map((i) => i.nom)
 
-    console.log(`[analyze-dish] confiance faible — enrichissement Claude pour: ${lowConfidenceNames.join(', ')}`)
+    console.log(
+      `[analyze-dish] confiance faible — enrichissement Claude pour: ${lowConfidenceNames.join(', ')}`
+    )
     enrichedData = await enrichIngredients(lowConfidenceNames)
   }
 

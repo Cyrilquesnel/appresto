@@ -34,7 +34,7 @@ export default function LoginPage() {
         <input
           type="email"
           value={email}
-          onChange={e => setEmail(e.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
           required
           className="w-full border border-gray-300 rounded-lg px-3 py-3 text-base focus:outline-none focus:ring-2"
           placeholder="chef@restaurant.fr"
@@ -46,7 +46,7 @@ export default function LoginPage() {
         <input
           type="password"
           value={password}
-          onChange={e => setPassword(e.target.value)}
+          onChange={(e) => setPassword(e.target.value)}
           required
           className="w-full border border-gray-300 rounded-lg px-3 py-3 text-base focus:outline-none focus:ring-2"
           placeholder="••••••••"

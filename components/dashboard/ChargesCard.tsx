@@ -41,7 +41,7 @@ export function ChargesCard({ mois, masse_salariale, charges_fixes }: ChargesCar
     <div className="bg-white rounded-2xl border border-gray-100" data-testid="charges-card">
       <button
         className="w-full flex items-center justify-between px-4 py-3"
-        onClick={() => setOpen(v => !v)}
+        onClick={() => setOpen((v) => !v)}
         type="button"
       >
         <div className="text-left">
@@ -50,7 +50,9 @@ export function ChargesCard({ mois, masse_salariale, charges_fixes }: ChargesCar
             {charges_fixes != null ? `${charges_fixes.toFixed(0)} €` : 'Non renseigné'}
           </p>
           {masse_salariale != null && (
-            <p className="text-xs text-gray-400">dont {masse_salariale.toFixed(0)} € masse salariale</p>
+            <p className="text-xs text-gray-400">
+              dont {masse_salariale.toFixed(0)} € masse salariale
+            </p>
           )}
         </div>
         <span className="text-gray-400 text-lg">{open ? '▲' : '▼'}</span>
@@ -72,7 +74,7 @@ export function ChargesCard({ mois, masse_salariale, charges_fixes }: ChargesCar
                 min={0}
                 step={10}
                 value={form[key as keyof typeof form]}
-                onChange={e => setForm(f => ({ ...f, [key]: e.target.value }))}
+                onChange={(e) => setForm((f) => ({ ...f, [key]: e.target.value }))}
                 placeholder="0 €"
                 className="flex-1 px-3 py-1.5 rounded-lg border border-gray-200 text-sm"
               />

@@ -26,9 +26,9 @@ export function ReceptionForm({ initialItems = [], fournisseurId, onSuccess }: R
   const [dateReception, setDateReception] = useState(today)
   const [numeroBL, setNumeroBL] = useState('')
   const [items, setItems] = useState<ReceptionItem[]>(
-    initialItems.length > 0 ? initialItems : [
-      { nom_produit: '', quantite: 1, unite: 'kg', conforme: true }
-    ]
+    initialItems.length > 0
+      ? initialItems
+      : [{ nom_produit: '', quantite: 1, unite: 'kg', conforme: true }]
   )
 
   const { data: fournisseurs } = trpc.commandes.listFournisseurs.useQuery()
@@ -37,15 +37,15 @@ export function ReceptionForm({ initialItems = [], fournisseurId, onSuccess }: R
   })
 
   const updateItem = (index: number, updates: Partial<ReceptionItem>) => {
-    setItems(items.map((item, i) => i === index ? { ...item, ...updates } : item))
+    setItems(items.map((item, i) => (i === index ? { ...item, ...updates } : item)))
   }
 
   const addItem = () => {
-    setItems(prev => [...prev, { nom_produit: '', quantite: 1, unite: 'kg', conforme: true }])
+    setItems((prev) => [...prev, { nom_produit: '', quantite: 1, unite: 'kg', conforme: true }])
   }
 
   const removeItem = (index: number) => {
-    setItems(prev => prev.filter((_, i) => i !== index))
+    setItems((prev) => prev.filter((_, i) => i !== index))
   }
 
   const isDLCAlerte = (dlc?: string) => {
@@ -53,17 +53,18 @@ export function ReceptionForm({ initialItems = [], fournisseurId, onSuccess }: R
     return new Date(dlc) <= new Date()
   }
 
-  const canSubmit = selectedFournisseur && items.length > 0 && items.every(i => i.nom_produit.trim())
+  const canSubmit =
+    selectedFournisseur && items.length > 0 && items.every((i) => i.nom_produit.trim())
 
   return (
     <form
-      onSubmit={e => {
+      onSubmit={(e) => {
         e.preventDefault()
         createReception.mutate({
           fournisseur_id: selectedFournisseur,
           date_reception: dateReception,
           numero_bl: numeroBL || undefined,
-          items: items.filter(i => i.nom_produit.trim()),
+          items: items.filter((i) => i.nom_produit.trim()),
         })
       }}
       className="space-y-4"
@@ -71,13 +72,15 @@ export function ReceptionForm({ initialItems = [], fournisseurId, onSuccess }: R
     >
       <select
         value={selectedFournisseur}
-        onChange={e => setSelectedFournisseur(e.target.value)}
+        onChange={(e) => setSelectedFournisseur(e.target.value)}
         required
         className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white"
       >
         <option value="">Sélectionner un fournisseur</option>
-        {fournisseurs?.map(f => (
-          <option key={f.id} value={f.id}>{f.nom}</option>
+        {fournisseurs?.map((f) => (
+          <option key={f.id} value={f.id}>
+            {f.nom}
+          </option>
         ))}
       </select>
 
@@ -85,13 +88,13 @@ export function ReceptionForm({ initialItems = [], fournisseurId, onSuccess }: R
         <input
           type="date"
           value={dateReception}
-          onChange={e => setDateReception(e.target.value)}
+          onChange={(e) => setDateReception(e.target.value)}
           className="px-4 py-3 rounded-xl border border-gray-200"
         />
         <input
           type="text"
           value={numeroBL}
-          onChange={e => setNumeroBL(e.target.value)}
+          onChange={(e) => setNumeroBL(e.target.value)}
           placeholder="N° bon de livraison"
           className="px-4 py-3 rounded-xl border border-gray-200"
         />
@@ -108,13 +111,19 @@ export function ReceptionForm({ initialItems = [], fournisseurId, onSuccess }: R
               <input
                 type="text"
                 value={item.nom_produit}
-                onChange={e => updateItem(index, { nom_produit: e.target.value })}
+                onChange={(e) => updateItem(index, { nom_produit: e.target.value })}
                 placeholder="Nom du produit *"
                 required
                 className="flex-1 px-3 py-2 rounded-lg border border-gray-200 text-sm mr-2"
               />
               {items.length > 1 && (
-                <button type="button" onClick={() => removeItem(index)} className="text-red-400 text-lg">×</button>
+                <button
+                  type="button"
+                  onClick={() => removeItem(index)}
+                  className="text-red-400 text-lg"
+                >
+                  ×
+                </button>
               )}
             </div>
 
@@ -124,12 +133,14 @@ export function ReceptionForm({ initialItems = [], fournisseurId, onSuccess }: R
                 <input
                   type="date"
                   value={item.dlc ?? ''}
-                  onChange={e => updateItem(index, { dlc: e.target.value })}
+                  onChange={(e) => updateItem(index, { dlc: e.target.value })}
                   className={`w-full px-2 py-1 text-sm rounded-lg border ${isDLCAlerte(item.dlc) ? 'border-red-400 text-red-600' : 'border-gray-200'}`}
                   data-testid={`item-dlc-${index}`}
                 />
                 {isDLCAlerte(item.dlc) && (
-                  <p className="text-red-500 text-xs mt-1" data-testid={`dlc-alerte-${index}`}>⚠ DLC dépassée !</p>
+                  <p className="text-red-500 text-xs mt-1" data-testid={`dlc-alerte-${index}`}>
+                    ⚠ DLC dépassée !
+                  </p>
                 )}
               </div>
               <div>
@@ -137,7 +148,7 @@ export function ReceptionForm({ initialItems = [], fournisseurId, onSuccess }: R
                 <input
                   type="text"
                   value={item.numero_lot ?? ''}
-                  onChange={e => updateItem(index, { numero_lot: e.target.value })}
+                  onChange={(e) => updateItem(index, { numero_lot: e.target.value })}
                   placeholder="LOT123"
                   className="w-full px-2 py-1 text-sm rounded-lg border border-gray-200"
                 />
@@ -150,7 +161,13 @@ export function ReceptionForm({ initialItems = [], fournisseurId, onSuccess }: R
                 <input
                   type="number"
                   value={item.temperature_reception ?? ''}
-                  onChange={e => updateItem(index, { temperature_reception: e.target.value ? parseFloat(e.target.value) : undefined })}
+                  onChange={(e) =>
+                    updateItem(index, {
+                      temperature_reception: e.target.value
+                        ? parseFloat(e.target.value)
+                        : undefined,
+                    })
+                  }
                   step={0.5}
                   className="w-20 px-2 py-1 text-sm rounded-lg border border-gray-200 text-center"
                 />
@@ -159,7 +176,14 @@ export function ReceptionForm({ initialItems = [], fournisseurId, onSuccess }: R
                 <input
                   type="checkbox"
                   checked={item.conforme}
-                  onChange={e => updateItem(index, { conforme: e.target.checked, anomalie_description: e.target.checked ? undefined : item.anomalie_description })}
+                  onChange={(e) =>
+                    updateItem(index, {
+                      conforme: e.target.checked,
+                      anomalie_description: e.target.checked
+                        ? undefined
+                        : item.anomalie_description,
+                    })
+                  }
                   className="w-5 h-5"
                   data-testid={`item-conforme-${index}`}
                 />
@@ -170,7 +194,7 @@ export function ReceptionForm({ initialItems = [], fournisseurId, onSuccess }: R
             {!item.conforme && (
               <textarea
                 value={item.anomalie_description ?? ''}
-                onChange={e => updateItem(index, { anomalie_description: e.target.value })}
+                onChange={(e) => updateItem(index, { anomalie_description: e.target.value })}
                 placeholder="Décrire l'anomalie constatée (obligatoire) *"
                 required
                 className="w-full mt-2 px-3 py-2 text-sm rounded-xl border border-red-300"

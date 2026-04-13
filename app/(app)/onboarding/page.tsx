@@ -12,7 +12,7 @@ const TYPES_ETABLISSEMENT = [
   { value: 'autre', label: 'Autre', emoji: '🍴' },
 ] as const
 
-type TypeEtablissement = typeof TYPES_ETABLISSEMENT[number]['value']
+type TypeEtablissement = (typeof TYPES_ETABLISSEMENT)[number]['value']
 
 export default function OnboardingPage() {
   const router = useRouter()
@@ -39,7 +39,7 @@ export default function OnboardingPage() {
       <div className="bg-white rounded-3xl p-6 space-y-4">
         <h2 className="font-semibold text-gray-900">Quel type d&apos;établissement ?</h2>
         <div className="grid grid-cols-2 gap-3">
-          {TYPES_ETABLISSEMENT.map(type => (
+          {TYPES_ETABLISSEMENT.map((type) => (
             <button
               key={type.value}
               onClick={() => setSelected(type.value)}

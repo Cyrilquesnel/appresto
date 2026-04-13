@@ -2,9 +2,7 @@ import { describe, it, expect } from 'vitest'
 
 // Logique métier extraite du router
 
-function calculerTotalHT(
-  lignes: Array<{ quantite: number; prix_unitaire: number }>
-): number {
+function calculerTotalHT(lignes: Array<{ quantite: number; prix_unitaire: number }>): number {
   const total = lignes.reduce((sum, l) => sum + l.quantite * l.prix_unitaire, 0)
   return Math.round(total * 100) / 100
 }
@@ -51,7 +49,7 @@ describe('updateStatutBon — transitions valides', () => {
     })
   })
 
-  it('recu est l\'état final (pas de suivant)', () => {
+  it("recu est l'état final (pas de suivant)", () => {
     const STATUT_SUIVANT: Record<string, string> = {
       brouillon: 'envoye',
       envoye: 'confirme',

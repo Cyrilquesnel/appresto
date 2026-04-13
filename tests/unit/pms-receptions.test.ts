@@ -14,25 +14,22 @@ describe('validation DLC', () => {
 
 describe('statut réception', () => {
   it('statut = anomalie si au moins un item non-conforme', () => {
-    const items = [
-      { conforme: true },
-      { conforme: false, anomalie_description: 'Produit abîmé' },
-    ]
-    const hasAnomalie = items.some(i => !i.conforme)
+    const items = [{ conforme: true }, { conforme: false, anomalie_description: 'Produit abîmé' }]
+    const hasAnomalie = items.some((i) => !i.conforme)
     const statut = hasAnomalie ? 'anomalie' : 'conforme'
     expect(statut).toBe('anomalie')
   })
 
   it('statut = conforme si tous les items sont conformes', () => {
     const items = [{ conforme: true }, { conforme: true }]
-    const hasAnomalie = items.some(i => !i.conforme)
+    const hasAnomalie = items.some((i) => !i.conforme)
     const statut = hasAnomalie ? 'anomalie' : 'conforme'
     expect(statut).toBe('conforme')
   })
 
   it('item non-conforme sans description = erreur', () => {
     const items = [{ conforme: false, anomalie_description: undefined }]
-    const sanDescription = items.filter(i => !i.conforme && !i.anomalie_description)
+    const sanDescription = items.filter((i) => !i.conforme && !i.anomalie_description)
     expect(sanDescription.length).toBeGreaterThan(0)
   })
 })

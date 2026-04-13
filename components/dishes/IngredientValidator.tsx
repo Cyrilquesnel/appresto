@@ -83,7 +83,9 @@ export function IngredientValidator({ initialIngredients, onChange }: Ingredient
             </button>
           </div>
           {ing.confiance !== undefined && ing.confiance < 0.65 && (
-            <span className="text-xs text-amber-500 ml-1" title="Confiance faible">⚠</span>
+            <span className="text-xs text-amber-500 ml-1" title="Confiance faible">
+              ⚠
+            </span>
           )}
         </div>
       ))}

@@ -48,16 +48,12 @@ export default function DashboardPage() {
           {kpis?.nb_couverts != null && kpis.nb_couverts > 0 && (
             <span>{kpis.nb_couverts} couverts</span>
           )}
-          {kpis?.panier_moyen != null && (
-            <span>{kpis.panier_moyen.toFixed(0)} €/couvert</span>
-          )}
+          {kpis?.panier_moyen != null && <span>{kpis.panier_moyen.toFixed(0)} €/couvert</span>}
         </div>
       </div>
 
       {/* Graphique 7 jours */}
-      {semaine && semaine.some(d => d.montant > 0) && (
-        <VentesSemaineChart data={semaine} />
-      )}
+      {semaine && semaine.some((d) => d.montant > 0) && <VentesSemaineChart data={semaine} />}
 
       {/* Food Cost */}
       <FoodCostCard

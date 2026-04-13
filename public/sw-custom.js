@@ -16,8 +16,8 @@ self.addEventListener('notificationclick', (event) => {
   event.notification.close()
   const url = event.notification.data?.url ?? '/'
   event.waitUntil(
-    self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then(clients => {
-      const existing = clients.find(c => c.url.includes(self.registration.scope))
+    self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clients) => {
+      const existing = clients.find((c) => c.url.includes(self.registration.scope))
       if (existing) {
         existing.focus()
         existing.postMessage({ type: 'NAVIGATE', url })
@@ -33,10 +33,7 @@ const DB_NAME = 'mise-en-place-sync'
 const STORE_NAME = 'pms-queue'
 const SYNC_TAG = 'pms-sync'
 
-const PMS_ROUTES = [
-  '/api/trpc/pms.saveTemperatureLog',
-  '/api/trpc/pms.saveChecklistCompletion',
-]
+const PMS_ROUTES = ['/api/trpc/pms.saveTemperatureLog', '/api/trpc/pms.saveChecklistCompletion']
 
 function openDB() {
   return new Promise((resolve, reject) => {
@@ -54,7 +51,7 @@ function openDB() {
 
 self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url)
-  const isPMSRoute = PMS_ROUTES.some(route => url.pathname.startsWith(route))
+  const isPMSRoute = PMS_ROUTES.some((route) => url.pathname.startsWith(route))
   if (!isPMSRoute) return
 
   event.respondWith(
@@ -81,10 +78,9 @@ self.addEventListener('fetch', (event) => {
         await self.registration.sync.register(SYNC_TAG)
       }
 
-      return new Response(
-        JSON.stringify({ result: { data: { queued: true } } }),
-        { headers: { 'Content-Type': 'application/json' } }
-      )
+      return new Response(JSON.stringify({ result: { data: { queued: true } } }), {
+        headers: { 'Content-Type': 'application/json' },
+      })
     })
   )
 })
@@ -125,5 +121,5 @@ async function flushQueue() {
   }
 
   const clients = await self.clients.matchAll()
-  clients.forEach(client => client.postMessage({ type: 'PMS_SYNC_COMPLETE' }))
+  clients.forEach((client) => client.postMessage({ type: 'PMS_SYNC_COMPLETE' }))
 }

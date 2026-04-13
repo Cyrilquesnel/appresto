@@ -54,21 +54,13 @@ export default function BonDetailPage() {
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-6 space-y-4">
-      <button
-        onClick={() => router.back()}
-        className="text-gray-400 hover:text-gray-600 text-sm"
-      >
+      <button onClick={() => router.back()} className="text-gray-400 hover:text-gray-600 text-sm">
         ← Retour
       </button>
 
       <BonDeCommandePreview bon={bonTyped} />
 
-      {bon.statut === 'brouillon' && (
-        <SendBonOptions
-          bon={bonData}
-          onSent={() => refetch()}
-        />
-      )}
+      {bon.statut === 'brouillon' && <SendBonOptions bon={bonData} onSent={() => refetch()} />}
 
       {bon.statut !== 'brouillon' && (
         <div className="text-center text-sm text-gray-400 py-2">

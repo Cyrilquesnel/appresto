@@ -13,7 +13,7 @@ const mockRappel = {
 }
 
 describe('matchRappelWithIngredients', () => {
-  it('trouve un match si le nom de l\'ingrédient est dans le produit rappelé', () => {
+  it("trouve un match si le nom de l'ingrédient est dans le produit rappelé", () => {
     const ingredients = [
       { id: '1', nom: 'brie' },
       { id: '2', nom: 'camembert' },
@@ -38,7 +38,7 @@ describe('matchRappelWithIngredients', () => {
     expect(match).not.toBeNull()
   })
 
-  it('retourne le nom de l\'ingrédient correspondant', () => {
+  it("retourne le nom de l'ingrédient correspondant", () => {
     const ingredients = [{ id: '42', nom: 'brie' }]
     const match = matchRappelWithIngredients(mockRappel, ingredients)
     expect(match?.nom).toBe('brie')

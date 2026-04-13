@@ -18,7 +18,9 @@ export const ratelimit = {
 
 export const createTRPCContext = async () => {
   const supabase = createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
 
   let restaurantId: string | null = null
   let role: string | null = null
@@ -69,7 +71,10 @@ export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
 export const aiProcedure = protectedProcedure.use(async ({ ctx, next }) => {
   const { success } = await ratelimit.ai.limit(ctx.restaurantId)
   if (!success) {
-    throw new TRPCError({ code: 'TOO_MANY_REQUESTS', message: 'Limite atteinte. Réessayez dans 1 heure.' })
+    throw new TRPCError({
+      code: 'TOO_MANY_REQUESTS',
+      message: 'Limite atteinte. Réessayez dans 1 heure.',
+    })
   }
   return next({ ctx })
 })

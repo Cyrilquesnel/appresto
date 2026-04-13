@@ -31,14 +31,23 @@ export function IOSInstallPrompt() {
     >
       <div className="flex items-start gap-3">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/icons/icon-192.png" alt="Mise en Place" className="w-12 h-12 rounded-xl flex-shrink-0" />
+        <img
+          src="/icons/icon-192.png"
+          alt="Mise en Place"
+          className="w-12 h-12 rounded-xl flex-shrink-0"
+        />
         <div className="flex-1">
           <p className="font-semibold text-gray-900 text-sm">Installer Mise en Place</p>
           <p className="text-xs text-gray-500 mt-1">
             Appuyez sur{' '}
             <span className="inline-flex items-center gap-1">
               <svg className="w-4 h-4 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"
+                />
               </svg>
             </span>{' '}
             puis « Sur l&apos;écran d&apos;accueil »

@@ -1,4 +1,4 @@
-import { GoogleGenerativeAI, SchemaType, type Schema } from "@google/generative-ai"
+import { GoogleGenerativeAI, SchemaType, type Schema } from '@google/generative-ai'
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!)
 
@@ -14,21 +14,30 @@ const ingredientSchema: Schema = {
           nom: { type: SchemaType.STRING },
           categorie: {
             type: SchemaType.STRING,
-            format: "enum",
-            enum: ["viande", "poisson", "legume", "feculent", "sauce", "fromage", "laitage", "autre"],
+            format: 'enum',
+            enum: [
+              'viande',
+              'poisson',
+              'legume',
+              'feculent',
+              'sauce',
+              'fromage',
+              'laitage',
+              'autre',
+            ],
           },
           visible: { type: SchemaType.BOOLEAN },
           grammage_suggere: { type: SchemaType.NUMBER },
           allergenes: { type: SchemaType.ARRAY, items: { type: SchemaType.STRING } },
           confiance: { type: SchemaType.NUMBER },
         },
-        required: ["nom", "categorie", "visible", "confiance"],
+        required: ['nom', 'categorie', 'visible', 'confiance'],
       },
     },
     confiance_globale: { type: SchemaType.NUMBER },
     remarques: { type: SchemaType.STRING },
   },
-  required: ["type_plat", "ingredients_detectes", "confiance_globale"],
+  required: ['type_plat', 'ingredients_detectes', 'confiance_globale'],
 }
 
 export interface DetectedIngredient {
@@ -47,11 +56,14 @@ export interface GeminiDishResult {
   remarques?: string
 }
 
-export async function analyzeDishPhoto(imageBase64: string, mimeType: string): Promise<GeminiDishResult> {
+export async function analyzeDishPhoto(
+  imageBase64: string,
+  mimeType: string
+): Promise<GeminiDishResult> {
   const model = genAI.getGenerativeModel({
-    model: "gemini-2.0-flash",
+    model: 'gemini-2.0-flash',
     generationConfig: {
-      responseMimeType: "application/json",
+      responseMimeType: 'application/json',
       responseSchema: ingredientSchema,
     },
   })
@@ -73,7 +85,7 @@ export async function analyzeWithRetry(
   mimeType: string,
   maxRetries = 3
 ): Promise<GeminiDishResult> {
-  let lastError: Error = new Error("Gemini: max retries exceeded")
+  let lastError: Error = new Error('Gemini: max retries exceeded')
   for (let i = 0; i < maxRetries; i++) {
     try {
       return await analyzeDishPhoto(imageBase64, mimeType)
