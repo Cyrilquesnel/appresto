@@ -13,7 +13,7 @@
 | Phase 2 | Module OPÉRER | ✅ COMPLÈTE | 5 tasks + 1R |
 | Phase 3 | Module ACHETER | ✅ COMPLÈTE | 4 tasks + 1R |
 | Phase 4 | Module PILOTER | ✅ COMPLÈTE | 3 tasks + 1R |
-| Phase 5 | Module PMS | ⬜ À FAIRE | 7 tasks + 1R |
+| Phase 5 | Module PMS | ✅ COMPLÈTE | 7 tasks + 1R |
 | Phase 6 | Finitions | ⬜ À FAIRE | 4 tasks + 1R |
 | Phase 7 | CI/CD & Monitoring | ⬜ À FAIRE | 5 tasks + 1R |
 | Phase 8 | E2E & Beta | ⬜ À FAIRE | 4 tasks |
@@ -74,14 +74,14 @@
 
 | Task | Titre | Statut | Notes |
 |---|---|---|---|
-| 5.1 | Températures (Immuable) | ⬜ À FAIRE | |
-| 5.2 | Checklists Nettoyage | ⬜ À FAIRE | |
-| 5.3 | Réceptions Marchandises | ⬜ À FAIRE | |
-| 5.4 | HACCP Auto-génération | ⬜ À FAIRE | |
-| 5.5 | RappelConso — Cron + Alertes | ⬜ À FAIRE | |
-| 5.6 | Export DDPP PDF | ⬜ À FAIRE | |
-| 5.7 | Offline PWA + Background Sync | ⬜ À FAIRE | |
-| 5.R | Régression Phase 5 | ⬜ À FAIRE | |
+| 5.1 | Températures (Immuable) | ✅ TERMINÉ | 2026-04-13 — equipements + temperature_logs INSERT ONLY + conforme calculé |
+| 5.2 | Checklists Nettoyage | ✅ TERMINÉ | 2026-04-13 — nettoyage_checklists + completed_today + INSERT ONLY completions |
+| 5.3 | Réceptions Marchandises | ✅ TERMINÉ | 2026-04-13 — receptions + reception_items + validation non-conforme |
+| 5.4 | HACCP Auto-génération | ✅ TERMINÉ | 2026-04-13 — Claude Haiku 4.5 + prompt cache + guard ≥3 plats |
+| 5.5 | RappelConso — Cron + Alertes | ✅ TERMINÉ | 2026-04-13 — cron vercel 21h + matchRappelWithIngredients + rappel_alerts |
+| 5.6 | Export DDPP PDF | ✅ TERMINÉ | 2026-04-13 — DDPPExport react-pdf + page API generate-pdf |
+| 5.7 | Offline PWA + Background Sync | ✅ TERMINÉ | 2026-04-13 — sw-custom.js + IndexedDB queue + OfflineBadge + SWRegistrar |
+| 5.R | Régression Phase 5 | ✅ TERMINÉ | 2026-04-13 — typecheck ✅ lint ✅ build ✅ 23 tests ✅ merge→develop |
 
 ---
 
@@ -136,10 +136,10 @@
 ## Statistiques
 
 - **Total tasks**: 44
-- **Complètes**: 22
+- **Complètes**: 30
 - **En cours**: 0
-- **Restantes**: 22
-- **Progression**: 50%
+- **Restantes**: 14
+- **Progression**: 68%
 
 ---
 
