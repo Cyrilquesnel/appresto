@@ -1,3 +1,34 @@
+// ═══ PUSH NOTIFICATIONS ═══
+self.addEventListener('push', (event) => {
+  if (!event.data) return
+  const payload = event.data.json()
+  event.waitUntil(
+    self.registration.showNotification(payload.title, {
+      body: payload.body,
+      icon: payload.icon ?? '/icons/icon-192.png',
+      badge: payload.badge ?? '/icons/icon-192.png',
+      data: payload.data,
+    })
+  )
+})
+
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close()
+  const url = event.notification.data?.url ?? '/'
+  event.waitUntil(
+    self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then(clients => {
+      const existing = clients.find(c => c.url.includes(self.registration.scope))
+      if (existing) {
+        existing.focus()
+        existing.postMessage({ type: 'NAVIGATE', url })
+      } else {
+        self.clients.openWindow(url)
+      }
+    })
+  )
+})
+
+// ═══ OFFLINE SYNC ═══
 const DB_NAME = 'mise-en-place-sync'
 const STORE_NAME = 'pms-queue'
 const SYNC_TAG = 'pms-sync'

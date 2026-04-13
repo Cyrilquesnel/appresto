@@ -1,6 +1,8 @@
 import { NextRequest } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { fetchRecentRappels, matchRappelWithIngredients, type RappelConsoRecord } from '@/lib/rappelconso'
+import { sendRappelAlert } from '@/lib/push-notifications'
+import type { PushSubscription } from 'web-push'
 
 export const maxDuration = 60
 export const dynamic = 'force-dynamic'
@@ -82,8 +84,27 @@ export async function GET(req: NextRequest) {
 async function notifyRestaurant(
   restaurantId: string,
   rappel: RappelConsoRecord,
-  ingredientNom: string
+  ingredientNom: string,
 ): Promise<void> {
-  console.log(`[rappelconso] Alerte pour restaurant ${restaurantId}: ${ingredientNom} — ${rappel.nom_produit_rappele}`)
-  // Push notification et email seront implémentés en Task 6.3
+  const supabase = createClient()
+  const { data: sub } = await supabase
+    .from('push_subscriptions')
+    .select('subscription')
+    .eq('restaurant_id', restaurantId)
+    .single()
+
+  if (sub) {
+    try {
+      await sendRappelAlert(
+        sub.subscription as unknown as PushSubscription,
+        rappel.nom_produit_rappele,
+        ingredientNom,
+      )
+      console.log(`[rappelconso] Push envoyé — restaurant ${restaurantId}: ${ingredientNom}`)
+    } catch (err) {
+      console.error(`[rappelconso] Push failed — restaurant ${restaurantId}:`, err)
+    }
+  } else {
+    console.log(`[rappelconso] Pas de subscription push — restaurant ${restaurantId}: ${ingredientNom}`)
+  }
 }

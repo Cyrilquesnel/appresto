@@ -14,7 +14,7 @@
 | Phase 3 | Module ACHETER | ✅ COMPLÈTE | 4 tasks + 1R |
 | Phase 4 | Module PILOTER | ✅ COMPLÈTE | 3 tasks + 1R |
 | Phase 5 | Module PMS | ✅ COMPLÈTE | 7 tasks + 1R |
-| Phase 6 | Finitions | ⬜ À FAIRE | 4 tasks + 1R |
+| Phase 6 | Finitions | ✅ COMPLÈTE | 4 tasks + 1R |
 | Phase 7 | CI/CD & Monitoring | ⬜ À FAIRE | 5 tasks + 1R |
 | Phase 8 | E2E & Beta | ⬜ À FAIRE | 4 tasks |
 
@@ -89,11 +89,11 @@
 
 | Task | Titre | Statut | Notes |
 |---|---|---|---|
-| 6.1 | Onboarding Progressif 3 Jours | ⬜ À FAIRE | |
-| 6.2 | PWA Manifest + Service Worker | ⬜ À FAIRE | |
-| 6.3 | Push Notifications VAPID | ⬜ À FAIRE | |
-| 6.4 | Seed Catalogue 500 Ingrédients | ⬜ À FAIRE | |
-| 6.R | Régression Phase 6 | ⬜ À FAIRE | |
+| 6.1 | Onboarding Progressif 3 Jours | ✅ TERMINÉ | 2026-04-13 — 3 pages + tRPC + cron + OnboardingProgress + build ✅ |
+| 6.2 | PWA Manifest + Service Worker | ✅ TERMINÉ | 2026-04-13 — manifest complet + share_target + IOSInstallPrompt + SWRegistrar + safe-area + build ✅ |
+| 6.3 | Push Notifications VAPID | ✅ TERMINÉ | 2026-04-13 — web-push + lib + migration + API + PushPermissionPrompt + SW handler + 4 tests Vitest ✅ |
+| 6.4 | Seed Catalogue 500 Ingrédients | ✅ TERMINÉ | 2026-04-13 — 508 ingrédients dans data/ingredients-catalog.json + migration SQL 000006 |
+| 6.R | Régression Phase 6 | ✅ TERMINÉ | 2026-04-13 — typecheck ✅ lint ✅ build ✅ 100 tests ✅ merge→develop |
 
 ---
 
@@ -136,10 +136,10 @@
 ## Statistiques
 
 - **Total tasks**: 44
-- **Complètes**: 30
+- **Complètes**: 35
 - **En cours**: 0
-- **Restantes**: 14
-- **Progression**: 68%
+- **Restantes**: 9
+- **Progression**: 80%
 
 ---
 

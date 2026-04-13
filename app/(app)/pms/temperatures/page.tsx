@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { trpc } from '@/lib/trpc/client'
 import { TemperatureLogger } from '@/components/pms/TemperatureLogger'
 import { EquipementSetup } from '@/components/pms/EquipementSetup'
+import { PushPermissionPrompt } from '@/components/pms/PushPermissionPrompt'
 
 export default function TemperaturesPage() {
   const [showSetup, setShowSetup] = useState(false)
@@ -43,6 +44,8 @@ export default function TemperaturesPage() {
           <EquipementSetup onSuccess={() => setShowSetup(false)} />
         </div>
       )}
+
+      <PushPermissionPrompt />
 
       {equipements && equipements.length === 0 && (
         <div className="text-center py-12 text-gray-400">

@@ -1,14 +1,49 @@
 {
   "name": "Mise en Place",
   "short_name": "Mise en Place",
-  "description": "Le copilote du restaurateur indépendant",
-  "start_url": "/",
+  "description": "Gestion restauration — fiches techniques, commandes, PMS",
+  "start_url": "/dashboard",
+  "scope": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#1a1a2e",
-  "orientation": "portrait",
+  "background_color": "#1a3a2a",
+  "theme_color": "#1a3a2a",
+  "orientation": "portrait-primary",
+  "lang": "fr",
+  "categories": ["food", "business", "productivity"],
   "icons": [
-    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
-    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
-  ]
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/dashboard.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Tableau de bord"
+    }
+  ],
+  "share_target": {
+    "action": "/plats/nouveau",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "files": [
+        {
+          "name": "photo",
+          "accept": ["image/*"]
+        }
+      ]
+    }
+  }
 }
