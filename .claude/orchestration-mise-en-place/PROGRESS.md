@@ -1,6 +1,6 @@
 # PROGRESS.md — Mise en Place
 
-**Dernière mise à jour**: 2026-04-12
+**Dernière mise à jour**: 2026-04-13
 **Statut global**: Phase 10 complète (task files créés) — Prêt pour exécution
 
 ---
@@ -25,8 +25,8 @@
 | Task | Titre | Statut | Notes |
 |---|---|---|---|
 | 1.1 | Next.js 14 + Supabase Init | ✅ TERMINÉ | 2026-04-13 |
-| 1.2 | BDD Complète + RLS | ⬜ À FAIRE | |
-| 1.3 | Auth Flow Complet | ⬜ À FAIRE | |
+| 1.2 | BDD Complète + RLS | ✅ TERMINÉ | 2026-04-13 — 4 migrations créées, RLS sur 28 tables |
+| 1.3 | Auth Flow Complet | ✅ TERMINÉ | 2026-04-13 |
 | 1.4 | Rate Limiting Upstash | ⬜ À FAIRE | |
 | 1.5 | Layout Mobile + Navigation | ⬜ À FAIRE | |
 | 1.6 | CI/CD Initial | ⬜ À FAIRE | |
@@ -136,10 +136,10 @@
 ## Statistiques
 
 - **Total tasks**: 44
-- **Complètes**: 1
+- **Complètes**: 3
 - **En cours**: 0
-- **Restantes**: 43
-- **Progression**: 2%
+- **Restantes**: 41
+- **Progression**: 7%
 
 ---
 
