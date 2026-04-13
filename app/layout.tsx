@@ -1,16 +1,21 @@
 import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import { Providers } from '@/providers'
+import { SWRegistrar } from '@/components/SWRegistrar'
+import { IOSInstallPrompt } from '@/components/IOSInstallPrompt'
 
 export const metadata: Metadata = {
   title: 'Mise en Place',
-  description: 'Le copilote du restaurateur indépendant',
+  description: 'Gestion restauration — fiches techniques, commandes, PMS',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
     title: 'Mise en Place',
   },
   manifest: '/manifest.json',
+  other: {
+    'mobile-web-app-capable': 'yes',
+  },
 }
 
 export const viewport: Viewport = {
@@ -18,6 +23,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   viewportFit: 'cover',
+  themeColor: '#1a3a2a',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -28,6 +34,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="antialiased">
         <Providers>{children}</Providers>
+        <SWRegistrar />
+        <IOSInstallPrompt />
       </body>
     </html>
   )
