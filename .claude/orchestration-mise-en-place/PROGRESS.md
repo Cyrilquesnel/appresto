@@ -11,7 +11,7 @@
 |---|---|---|---|
 | Phase 1 | Foundation | ✅ COMPLÈTE | 6 tasks + 1R |
 | Phase 2 | Module OPÉRER | ✅ COMPLÈTE | 5 tasks + 1R |
-| Phase 3 | Module ACHETER | ⬜ À FAIRE | 4 tasks + 1R |
+| Phase 3 | Module ACHETER | ✅ COMPLÈTE | 4 tasks + 1R |
 | Phase 4 | Module PILOTER | ⬜ À FAIRE | 3 tasks + 1R |
 | Phase 5 | Module PMS | ⬜ À FAIRE | 7 tasks + 1R |
 | Phase 6 | Finitions | ⬜ À FAIRE | 4 tasks + 1R |
@@ -55,7 +55,7 @@
 | 3.2 | OCR Factures (Gemini) | ✅ TERMINÉ | 2026-04-13 — invoice-ocr.ts + /api/process-invoice + InvoiceUpload + 7 tests |
 | 3.3 | Génération Bons de Commande | ✅ TERMINÉ | 2026-04-13 — router CRUD + pages liste/nouveau/détail + BonPreview + types Supabase + 9 tests |
 | 3.4 | Export WhatsApp + Email + PDF | ✅ TERMINÉ | 2026-04-13 — lib/whatsapp + email + PDF renderer + routes API + SendBonOptions + 8 tests |
-| 3.R | Régression Phase 3 | ⬜ À FAIRE | |
+| 3.R | Régression Phase 3 | ✅ TERMINÉ | 2026-04-13 — typecheck ✅ lint ✅ build ✅ 61 tests ✅ |
 
 ---
 
@@ -136,10 +136,10 @@
 ## Statistiques
 
 - **Total tasks**: 44
-- **Complètes**: 17
+- **Complètes**: 18
 - **En cours**: 0
-- **Restantes**: 27
-- **Progression**: 30%
+- **Restantes**: 26
+- **Progression**: 41%
 
 ---
 
