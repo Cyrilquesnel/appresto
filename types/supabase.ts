@@ -325,14 +325,55 @@ export interface Database {
         }
         Relationships: []
       }
+      equipements: {
+        Row: {
+          id: string
+          restaurant_id: string
+          nom: string
+          type: string
+          temp_min: number
+          temp_max: number
+          frequence_releve: string
+          localisation: string | null
+          actif: boolean
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          restaurant_id: string
+          nom: string
+          type: string
+          temp_min: number
+          temp_max: number
+          frequence_releve?: string
+          localisation?: string | null
+          actif?: boolean
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          restaurant_id?: string
+          nom?: string
+          type?: string
+          temp_min?: number
+          temp_max?: number
+          frequence_releve?: string
+          localisation?: string | null
+          actif?: boolean
+          created_at?: string
+        }
+        Relationships: []
+      }
       temperature_logs: {
         Row: {
           id: string
           equipement_id: string
           restaurant_id: string
           valeur: number
+          conforme: boolean
           action_corrective: string | null
-          auteur_id: string | null
+          releve_par: string | null
+          timestamp_releve: string
           created_at: string
         }
         Insert: {
@@ -340,11 +381,274 @@ export interface Database {
           equipement_id: string
           restaurant_id: string
           valeur: number
+          conforme: boolean
           action_corrective?: string | null
-          auteur_id?: string | null
+          releve_par?: string | null
+          timestamp_releve?: string
           created_at?: string
         }
         Update: never  // IMMUTABLE
+        Relationships: []
+      }
+      nettoyage_checklists: {
+        Row: {
+          id: string
+          restaurant_id: string
+          nom: string
+          type: string
+          active: boolean
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          restaurant_id: string
+          nom: string
+          type: string
+          active?: boolean
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          restaurant_id?: string
+          nom?: string
+          type?: string
+          active?: boolean
+          created_at?: string
+        }
+        Relationships: []
+      }
+      nettoyage_checklist_items: {
+        Row: {
+          id: string
+          checklist_id: string
+          ordre: number
+          description: string
+          obligatoire: boolean
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          checklist_id: string
+          ordre: number
+          description: string
+          obligatoire?: boolean
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          checklist_id?: string
+          ordre?: number
+          description?: string
+          obligatoire?: boolean
+          created_at?: string
+        }
+        Relationships: []
+      }
+      receptions: {
+        Row: {
+          id: string
+          restaurant_id: string
+          fournisseur_id: string
+          date_reception: string
+          numero_bl: string | null
+          bon_de_commande_id: string | null
+          statut: string
+          receptionne_par: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          restaurant_id: string
+          fournisseur_id: string
+          date_reception: string
+          numero_bl?: string | null
+          bon_de_commande_id?: string | null
+          statut?: string
+          receptionne_par?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          restaurant_id?: string
+          fournisseur_id?: string
+          date_reception?: string
+          numero_bl?: string | null
+          bon_de_commande_id?: string | null
+          statut?: string
+          receptionne_par?: string | null
+          created_at?: string
+        }
+        Relationships: []
+      }
+      reception_items: {
+        Row: {
+          id: string
+          reception_id: string
+          restaurant_id: string
+          ingredient_id: string | null
+          nom_produit: string
+          quantite: number
+          unite: string
+          dlc: string | null
+          numero_lot: string | null
+          temperature_reception: number | null
+          conforme: boolean
+          anomalie_description: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          reception_id: string
+          restaurant_id: string
+          ingredient_id?: string | null
+          nom_produit: string
+          quantite: number
+          unite: string
+          dlc?: string | null
+          numero_lot?: string | null
+          temperature_reception?: number | null
+          conforme?: boolean
+          anomalie_description?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          reception_id?: string
+          restaurant_id?: string
+          ingredient_id?: string | null
+          nom_produit?: string
+          quantite?: number
+          unite?: string
+          dlc?: string | null
+          numero_lot?: string | null
+          temperature_reception?: number | null
+          conforme?: boolean
+          anomalie_description?: string | null
+          created_at?: string
+        }
+        Relationships: []
+      }
+      haccp_points_critiques: {
+        Row: {
+          id: string
+          restaurant_id: string
+          plat_id: string | null
+          plat_nom: string | null
+          danger: string
+          etape_critique: string
+          ccp_numero: string
+          temperature_critique: number | null
+          limite_critique: string
+          mesure_surveillance: string
+          action_corrective: string
+          verification: string
+          genere_le: string
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          restaurant_id: string
+          plat_id?: string | null
+          plat_nom?: string | null
+          danger: string
+          etape_critique: string
+          ccp_numero: string
+          temperature_critique?: number | null
+          limite_critique: string
+          mesure_surveillance: string
+          action_corrective: string
+          verification: string
+          genere_le?: string
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          restaurant_id?: string
+          plat_id?: string | null
+          plat_nom?: string | null
+          danger?: string
+          etape_critique?: string
+          ccp_numero?: string
+          temperature_critique?: number | null
+          limite_critique?: string
+          mesure_surveillance?: string
+          action_corrective?: string
+          verification?: string
+          genere_le?: string
+          created_at?: string
+        }
+        Relationships: []
+      }
+      rappel_alerts: {
+        Row: {
+          id: string
+          restaurant_id: string
+          rappelconso_id: string
+          ingredient_id: string | null
+          nom_produit: string
+          nom_marque: string | null
+          motif: string | null
+          risques: string | null
+          date_rappel: string | null
+          lien_info: string | null
+          traite: boolean
+          traite_le: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          restaurant_id: string
+          rappelconso_id: string
+          ingredient_id?: string | null
+          nom_produit: string
+          nom_marque?: string | null
+          motif?: string | null
+          risques?: string | null
+          date_rappel?: string | null
+          lien_info?: string | null
+          traite?: boolean
+          traite_le?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          restaurant_id?: string
+          rappelconso_id?: string
+          ingredient_id?: string | null
+          nom_produit?: string
+          nom_marque?: string | null
+          motif?: string | null
+          risques?: string | null
+          date_rappel?: string | null
+          lien_info?: string | null
+          traite?: boolean
+          traite_le?: string | null
+          created_at?: string
+        }
+        Relationships: []
+      }
+      push_subscriptions: {
+        Row: {
+          id: string
+          restaurant_id: string
+          user_id: string
+          subscription: Json
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          restaurant_id: string
+          user_id: string
+          subscription: Json
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          restaurant_id?: string
+          user_id?: string
+          subscription?: Json
+          created_at?: string
+        }
         Relationships: []
       }
       restaurant_users: {

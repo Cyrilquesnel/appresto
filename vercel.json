@@ -1,0 +1,16 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/rappelconso",
+      "schedule": "0 21 * * *"
+    },
+    {
+      "path": "/api/cron/temperature-reminders",
+      "schedule": "0 7,17 * * *"
+    },
+    {
+      "path": "/api/cron/onboarding-notifications",
+      "schedule": "0 10 * * *"
+    }
+  ]
+}
