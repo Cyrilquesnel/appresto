@@ -12,7 +12,7 @@
 | Phase 1 | Foundation | ✅ COMPLÈTE | 6 tasks + 1R |
 | Phase 2 | Module OPÉRER | ✅ COMPLÈTE | 5 tasks + 1R |
 | Phase 3 | Module ACHETER | ✅ COMPLÈTE | 4 tasks + 1R |
-| Phase 4 | Module PILOTER | ⬜ À FAIRE | 3 tasks + 1R |
+| Phase 4 | Module PILOTER | ✅ COMPLÈTE | 3 tasks + 1R |
 | Phase 5 | Module PMS | ⬜ À FAIRE | 7 tasks + 1R |
 | Phase 6 | Finitions | ⬜ À FAIRE | 4 tasks + 1R |
 | Phase 7 | CI/CD & Monitoring | ⬜ À FAIRE | 5 tasks + 1R |
@@ -63,10 +63,10 @@
 
 | Task | Titre | Statut | Notes |
 |---|---|---|---|
-| 4.1 | Saisie Ventes Quotidienne | ⬜ À FAIRE | |
-| 4.2 | Dashboard Food Cost + Charges | ⬜ À FAIRE | |
-| 4.3 | Realtime Dashboard | ⬜ À FAIRE | |
-| 4.R | Régression Phase 4 | ⬜ À FAIRE | |
+| 4.1 | Saisie Ventes Quotidienne | ✅ TERMINÉ | 2026-04-13 — dashboardRouter + SaisieVentesSimple/Detail + page |
+| 4.2 | Dashboard Food Cost + Charges | ✅ TERMINÉ | 2026-04-13 — KPIs (food cost %, seuil rentabilité) + FoodCostCard + ChargesCard + VentesSemaineChart |
+| 4.3 | Realtime Dashboard | ✅ TERMINÉ | 2026-04-13 — useDashboardRealtime (WebSocket) + RealtimeIndicator |
+| 4.R | Régression Phase 4 | ✅ TERMINÉ | 2026-04-13 — typecheck ✅ lint ✅ build ✅ 12 tests ✅ merge→develop |
 
 ---
 
@@ -136,10 +136,10 @@
 ## Statistiques
 
 - **Total tasks**: 44
-- **Complètes**: 18
+- **Complètes**: 22
 - **En cours**: 0
-- **Restantes**: 26
-- **Progression**: 41%
+- **Restantes**: 22
+- **Progression**: 50%
 
 ---
 
