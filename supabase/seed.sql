@@ -1,0 +1,22 @@
+-- Ingrédients de test pour développement
+INSERT INTO ingredients_catalog (nom, categorie, allergenes, kcal_par_100g, unite_standard) VALUES
+('Boeuf haché', 'viande', '{}', 250, 'g'),
+('Poulet filet', 'viande', '{}', 165, 'g'),
+('Saumon filet', 'poisson', '{"poisson"}', 208, 'g'),
+('Beurre doux', 'laitage', '{"lait"}', 717, 'g'),
+('Crème fraîche', 'laitage', '{"lait"}', 300, 'ml'),
+('Farine T55', 'féculent', '{"gluten"}', 364, 'g'),
+('Tomate', 'légume', '{}', 18, 'g'),
+('Oignon', 'légume', '{}', 40, 'g'),
+('Ail', 'légume', '{}', 149, 'g'),
+('Pomme de terre', 'légume', '{}', 77, 'g'),
+('Riz basmati', 'féculent', '{}', 350, 'g'),
+('Pâtes tagliatelles', 'féculent', '{"gluten","oeufs"}', 352, 'g'),
+('Parmesan', 'fromage', '{"lait"}', 431, 'g'),
+('Emmental', 'fromage', '{"lait"}', 380, 'g'),
+('Lait entier', 'laitage', '{"lait"}', 65, 'ml'),
+('Oeuf entier', 'autre', '{"oeufs"}', 143, 'piece'),
+('Huile d''olive', 'autre', '{}', 884, 'ml'),
+('Sel', 'épice', '{}', 0, 'g'),
+('Poivre noir', 'épice', '{}', 251, 'g'),
+('Champignon de Paris', 'légume', '{}', 22, 'g');
