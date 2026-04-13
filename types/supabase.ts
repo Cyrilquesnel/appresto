@@ -68,6 +68,17 @@ export interface Database {
         Insert: Omit<Database['public']['Tables']['temperature_logs']['Row'], 'id' | 'created_at'>
         Update: never  // IMMUTABLE
       }
+      restaurant_users: {
+        Row: {
+          id: string
+          restaurant_id: string
+          user_id: string
+          role: 'owner' | 'manager' | 'staff'
+          created_at: string
+        }
+        Insert: Omit<Database['public']['Tables']['restaurant_users']['Row'], 'id' | 'created_at'>
+        Update: Partial<Database['public']['Tables']['restaurant_users']['Insert']>
+      }
       nettoyage_completions: {
         Row: {
           id: string
