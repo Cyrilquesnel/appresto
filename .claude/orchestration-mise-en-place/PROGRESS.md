@@ -1,7 +1,7 @@
 # PROGRESS.md — Mise en Place
 
 **Dernière mise à jour**: 2026-04-13
-**Statut global**: Phase 10 complète (task files créés) — Prêt pour exécution
+**Statut global**: **100% COMPLET** — 44/44 tasks ✅ — Prêt pour beta
 
 ---
 
@@ -114,10 +114,10 @@
 
 | Task | Titre | Statut | Notes |
 |---|---|---|---|
-| 8.1 | Tests Playwright Complets | ⬜ À FAIRE | |
-| 8.2 | Tests Performance | ⬜ À FAIRE | |
-| 8.3 | Validation RLS + Sécurité | ⬜ À FAIRE | |
-| 8.4 | Préparation Beta | ⬜ À FAIRE | |
+| 8.1 | Tests Playwright Complets | ✅ TERMINÉ | 2026-04-14 — global-setup + fixtures authedPage + 2 specs (mercuriale, pms-temperatures) + playwright.config mis à jour |
+| 8.2 | Tests Performance | ✅ TERMINÉ | 2026-04-14 — performance.spec.ts (LCP < 2.5s, CLS < 0.1, FCP < 1.8s, bundle < 300kb, health < 500ms) |
+| 8.3 | Validation RLS + Sécurité | ✅ TERMINÉ | 2026-04-14 — security-headers.spec.ts (headers prod + crons 401) + scripts/audit-rls.sql |
+| 8.4 | Préparation Beta | ✅ TERMINÉ | 2026-04-14 — migration 000007 feature_flags + beta_invitations + scripts/invite-beta.js |
 
 ---
 
@@ -136,10 +136,10 @@
 ## Statistiques
 
 - **Total tasks**: 44
-- **Complètes**: 41
+- **Complètes**: 44
 - **En cours**: 0
-- **Restantes**: 3
-- **Progression**: 93%
+- **Restantes**: 0
+- **Progression**: 100%
 
 ---
 
