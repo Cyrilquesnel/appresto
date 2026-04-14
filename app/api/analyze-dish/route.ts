@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { dishAnalysisLimiter } from '@/lib/upstash'
 import { analyzeWithRetry } from '@/lib/ai/gemini'
 import { enrichIngredients, shouldEnrich } from '@/lib/ai/claude-enrichment'
-import { createClient } from '@/lib/supabase/server'
+import { createClient, createServiceClient } from '@/lib/supabase/server'
 
 export async function POST(request: NextRequest) {
   const supabase = createClient()
@@ -40,9 +40,10 @@ export async function POST(request: NextRequest) {
   const imageBuffer = Buffer.from(await file.arrayBuffer())
   const imageBase64 = imageBuffer.toString('base64')
 
-  // Upload storage (fire and forget — non bloquant)
+  // Upload storage avec service client (bypasse RLS)
   const storagePath = `${restaurantId}/${Date.now()}.jpg`
-  supabase.storage
+  const serviceClient = createServiceClient()
+  serviceClient.storage
     .from('dish-photos')
     .upload(storagePath, imageBuffer, { contentType: file.type })
     .catch((err: unknown) => console.error('[analyze-dish] Storage upload error:', err))
