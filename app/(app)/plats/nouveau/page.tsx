@@ -85,6 +85,7 @@ export default function NouveauPlatPage() {
           initialIngredients={validatedIngredients}
           photoUrl={result.image_url}
           typePlat={result.type_plat}
+          initialNom={result.type_plat}
         />
       </div>
     )
