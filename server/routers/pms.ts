@@ -1,6 +1,7 @@
 import { router, protectedProcedure } from '../trpc'
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
+import { sendPushNotification } from '@/lib/push-notifications'
 
 const EquipementTypeEnum = z.enum(['frigo', 'congelateur', 'bain_marie', 'four', 'autre'])
 
@@ -85,6 +86,48 @@ export const pmsRouter = router({
         .single()
 
       if (error) throw new Error(`Erreur INSERT température: ${error.message}`)
+
+      // Alerte push si hors plage
+      if (!conforme) {
+        try {
+          const { data: users } = await ctx.supabase
+            .from('restaurant_users')
+            .select('user_id')
+            .eq('restaurant_id', ctx.restaurantId)
+
+          const userIds = (users ?? []).map((u) => u.user_id)
+          if (userIds.length > 0) {
+            const { data: subs } = await ctx.supabase
+              .from('push_subscriptions')
+              .select('subscription')
+              .in('user_id', userIds)
+
+            if (subs && subs.length > 0) {
+              await Promise.allSettled(
+                subs.map((sub) => {
+                  const s = sub.subscription as {
+                    endpoint: string
+                    keys: { p256dh: string; auth: string }
+                  }
+                  return sendPushNotification(
+                    { endpoint: s.endpoint, keys: s.keys },
+                    {
+                      title: '⚠️ Température hors plage',
+                      body: `${equipement.nom} : ${input.valeur}°C (plage ${equipement.temp_min}–${equipement.temp_max}°C)`,
+                      icon: '/icons/icon-192.png',
+                      badge: '/icons/badge-72.png',
+                      data: { url: '/pms/temperatures', type: 'temperature-alert' },
+                    }
+                  )
+                })
+              )
+            }
+          }
+        } catch {
+          // Notification non critique — ne pas bloquer la réponse
+        }
+      }
+
       return { id: data.id, conforme }
     }),
 

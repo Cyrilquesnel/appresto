@@ -16,13 +16,21 @@ export default function CommandesPage() {
     <div className="max-w-2xl mx-auto px-4 py-6">
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-xl font-bold text-primary">Commandes</h1>
-        <Link
-          href="/commandes/nouveau"
-          className="px-4 py-2 bg-accent text-white rounded-xl font-medium"
-          data-testid="new-commande-button"
-        >
-          + Nouveau
-        </Link>
+        <div className="flex gap-2">
+          <Link
+            href="/commandes/auto"
+            className="px-3 py-2 rounded-xl border border-indigo-200 text-indigo-600 font-medium text-sm"
+          >
+            Auto ✨
+          </Link>
+          <Link
+            href="/commandes/nouveau"
+            className="px-4 py-2 bg-accent text-white rounded-xl font-medium"
+            data-testid="new-commande-button"
+          >
+            + Nouveau
+          </Link>
+        </div>
       </div>
 
       <div className="space-y-3">

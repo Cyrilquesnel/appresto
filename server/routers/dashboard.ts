@@ -283,11 +283,57 @@ export const dashboardRouter = router({
   getMyRestaurant: protectedProcedure.query(async ({ ctx }) => {
     const { data } = await ctx.supabase
       .from('restaurants')
-      .select('id, nom')
+      .select('id, nom, parametres')
       .eq('id', ctx.restaurantId)
       .single()
-    return { id: data?.id ?? null, nom: data?.nom ?? null }
+    const parametres = (data?.parametres as Record<string, unknown>) ?? {}
+    return {
+      id: data?.id ?? null,
+      nom: data?.nom ?? null,
+      type_etablissement: (parametres.type_etablissement as string | undefined) ?? null,
+    }
   }),
+
+  updateRestaurant: protectedProcedure
+    .input(
+      z.object({
+        nom: z.string().min(1).max(200).optional(),
+        type_etablissement: z
+          .enum(['restaurant', 'brasserie', 'gastronomique', 'snack', 'traiteur', 'autre'])
+          .optional(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const updates: Record<string, unknown> = {}
+
+      if (input.nom !== undefined) {
+        updates.nom = input.nom
+      }
+
+      if (input.type_etablissement !== undefined) {
+        const { data: restaurant } = await ctx.supabase
+          .from('restaurants')
+          .select('parametres')
+          .eq('id', ctx.restaurantId)
+          .single()
+
+        updates.parametres = {
+          ...((restaurant?.parametres as Record<string, unknown>) ?? {}),
+          type_etablissement: input.type_etablissement,
+        }
+      }
+
+      if (Object.keys(updates).length > 0) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const { error } = await ctx.supabase
+          .from('restaurants')
+          .update(updates as any) // eslint-disable-line @typescript-eslint/no-explicit-any
+          .eq('id', ctx.restaurantId)
+        if (error) throw new Error(error.message)
+      }
+
+      return { success: true }
+    }),
 
   // ═══ ONBOARDING ═══
   getOnboardingStatus: protectedProcedure.query(async ({ ctx }) => {

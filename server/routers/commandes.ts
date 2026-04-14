@@ -316,4 +316,173 @@ export const commandesRouter = router({
         .eq('restaurant_id', ctx.restaurantId)
       return { success: true }
     }),
+
+  // ═══════════════════════════════════════════
+  // COMMANDE AUTO — suggestion basée ventes + recettes
+  // ═══════════════════════════════════════════
+
+  suggestCommande: protectedProcedure
+    .input(z.object({ jours: z.number().int().min(1).max(30).default(7) }))
+    .query(async ({ ctx, input }) => {
+      const dateDebut = new Date()
+      dateDebut.setDate(dateDebut.getDate() - input.jours)
+      const dateFin = new Date().toISOString().split('T')[0]
+
+      // 1. Ventes sur la période
+      const { data: ventes } = await ctx.supabase
+        .from('ventes')
+        .select('plat_id, quantite')
+        .eq('restaurant_id', ctx.restaurantId)
+        .gte('date', dateDebut.toISOString().split('T')[0])
+        .lte('date', dateFin)
+        .not('plat_id', 'is', null)
+
+      if (!ventes || ventes.length === 0) {
+        return { suggestions: [], jours: input.jours, nb_plats: 0 }
+      }
+
+      // Agréger quantités vendues par plat
+      const platQuantites = new Map<string, number>()
+      for (const v of ventes) {
+        if (!v.plat_id) continue
+        platQuantites.set(v.plat_id, (platQuantites.get(v.plat_id) ?? 0) + (v.quantite ?? 1))
+      }
+
+      const platIds = Array.from(platQuantites.keys())
+
+      // 2. Fiches techniques pour ces plats
+      const { data: lignesFiches } = await ctx.supabase
+        .from('fiche_technique')
+        .select(
+          `plat_id, grammage, unite, fournisseur_id_habituel,
+           ingredient:restaurant_ingredients(id, nom_custom, catalog:ingredients_catalog(nom))`
+        )
+        .in('plat_id', platIds)
+        .eq('restaurant_id', ctx.restaurantId)
+        .not('ingredient_id', 'is', null)
+
+      if (!lignesFiches || lignesFiches.length === 0) {
+        return { suggestions: [], jours: input.jours, nb_plats: platIds.length }
+      }
+
+      // 3. Mercuriale pour les ingrédients (fournisseur + prix)
+      const ingredientIds = Array.from(
+        new Set(
+          lignesFiches
+            .map((l) => (l.ingredient as unknown as { id: string } | null)?.id)
+            .filter(Boolean) as string[]
+        )
+      )
+
+      const { data: mercuriale } =
+        ingredientIds.length > 0
+          ? await ctx.supabase
+              .from('mercuriale')
+              .select(
+                'ingredient_id, fournisseur_id, prix, unite, fournisseur:fournisseurs(id, nom)'
+              )
+              .in('ingredient_id', ingredientIds)
+              .eq('est_actif', true)
+          : { data: [] }
+
+      const mercurialeMap = new Map((mercuriale ?? []).map((m) => [m.ingredient_id, m]))
+
+      // 4. Calculer les besoins : quantite_vendue × grammage (convertit g→kg si unite=g)
+      const besoins = new Map<
+        string,
+        {
+          ingredient_id: string
+          nom: string
+          quantite_totale: number
+          unite: string
+          prix_unitaire: number | null
+          fournisseur_id: string | null
+          fournisseur_nom: string | null
+        }
+      >()
+
+      for (const ligne of lignesFiches) {
+        const ing = ligne.ingredient as unknown as {
+          id: string
+          nom_custom: string | null
+          catalog: { nom: string } | null
+        } | null
+        if (!ing) continue
+        const qteVendue = platQuantites.get(ligne.plat_id as string) ?? 0
+        if (qteVendue === 0) continue
+
+        const grammage = ligne.grammage ?? 0
+        const unite = (ligne.unite as string) ?? 'g'
+        // Convertir tout en kg si l'unité est g
+        const quantiteNecessaire =
+          unite === 'g' ? (grammage * qteVendue) / 1000 : grammage * qteVendue
+        const uniteFinale = unite === 'g' ? 'kg' : unite
+
+        const merc = mercurialeMap.get(ing.id)
+        const fournisseurId =
+          (ligne.fournisseur_id_habituel as string | null) ?? merc?.fournisseur_id ?? null
+        const fournisseurNom = (merc?.fournisseur as { nom: string } | null)?.nom ?? null
+
+        const nom = ing.nom_custom ?? ing.catalog?.nom ?? 'Ingrédient'
+
+        const existing = besoins.get(ing.id)
+        if (existing) {
+          existing.quantite_totale += quantiteNecessaire
+        } else {
+          besoins.set(ing.id, {
+            ingredient_id: ing.id,
+            nom,
+            quantite_totale: quantiteNecessaire,
+            unite: uniteFinale,
+            prix_unitaire: merc?.prix ?? null,
+            fournisseur_id: fournisseurId,
+            fournisseur_nom: fournisseurNom,
+          })
+        }
+      }
+
+      // 5. Grouper par fournisseur
+      const parFournisseur = new Map<
+        string,
+        {
+          fournisseur_id: string | null
+          fournisseur_nom: string
+          lignes: typeof besoins extends Map<string, infer V> ? V[] : never[]
+        }
+      >()
+
+      for (const besoin of Array.from(besoins.values())) {
+        const key = besoin.fournisseur_id ?? '__sans_fournisseur__'
+        const label = besoin.fournisseur_nom ?? 'Sans fournisseur'
+        if (!parFournisseur.has(key)) {
+          parFournisseur.set(key, {
+            fournisseur_id: besoin.fournisseur_id,
+            fournisseur_nom: label,
+            lignes: [],
+          })
+        }
+        parFournisseur.get(key)!.lignes.push({
+          ...besoin,
+          quantite_totale: Math.ceil(besoin.quantite_totale * 10) / 10,
+        })
+      }
+
+      return {
+        suggestions: Array.from(parFournisseur.values()) as Array<{
+          fournisseur_id: string | null
+          fournisseur_nom: string
+          lignes: Array<{
+            ingredient_id: string
+            nom: string
+            quantite_totale: number
+            unite: string
+            prix_unitaire: number | null
+            fournisseur_id: string | null
+            fournisseur_nom: string | null
+          }>
+        }>,
+        jours: input.jours,
+        nb_plats: platIds.length,
+      }
+    }),
 })
