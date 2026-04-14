@@ -1,7 +1,10 @@
 'use client'
 import { useState } from 'react'
 import { DishCamera } from '@/components/dishes/DishCamera'
-import { IngredientValidator, type ValidatedIngredient } from '@/components/dishes/IngredientValidator'
+import {
+  IngredientValidator,
+  type ValidatedIngredient,
+} from '@/components/dishes/IngredientValidator'
 import { FicheTechniqueForm } from '@/components/dishes/FicheTechniqueForm'
 import { useRestaurantStore } from '@/lib/store'
 import type { DetectedIngredient } from '@/lib/ai/gemini'
@@ -57,7 +60,7 @@ export default function NouveauPlatPage() {
       }
       if (!res.ok) throw new Error('Erreur analyse')
 
-      const data = await res.json() as AnalysisResult
+      const data = (await res.json()) as AnalysisResult
       setResult(data)
       setValidatedIngredients(toValidated(data.ingredients))
       setStep('validate')
@@ -73,7 +76,9 @@ export default function NouveauPlatPage() {
     return (
       <div className="p-4 max-w-lg mx-auto">
         <div className="flex items-center gap-3 mb-4">
-          <button onClick={() => setStep('validate')} className="text-gray-500 hover:text-gray-700">←</button>
+          <button onClick={() => setStep('validate')} className="text-gray-500 hover:text-gray-700">
+            ←
+          </button>
           <h1 className="text-xl font-bold">Créer la fiche technique</h1>
         </div>
         <FicheTechniqueForm
@@ -90,12 +95,21 @@ export default function NouveauPlatPage() {
     return (
       <div className="p-4 max-w-lg mx-auto">
         <div className="flex items-center gap-3 mb-4">
-          <button onClick={() => setStep('capture')} className="text-gray-500 hover:text-gray-700">←</button>
+          <button onClick={() => setStep('capture')} className="text-gray-500 hover:text-gray-700">
+            ←
+          </button>
           <h1 className="text-xl font-bold">Valider les ingrédients</h1>
         </div>
 
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        {preview && <img src={preview} alt="Plat analysé" className="w-full rounded-xl object-cover mb-4" style={{ maxHeight: '200px' }} />}
+        {preview && (
+          <img
+            src={preview}
+            alt="Plat analysé"
+            className="w-full rounded-xl object-cover mb-4"
+            style={{ maxHeight: '200px' }}
+          />
+        )}
 
         <p className="text-sm text-gray-500 mb-3">
           {result.type_plat} — {validatedIngredients.length} ingrédient(s) détecté(s)

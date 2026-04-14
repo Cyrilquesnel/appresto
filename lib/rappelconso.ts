@@ -1,4 +1,5 @@
-const RAPPELCONSO_API = 'https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/rappelconso0/records'
+const RAPPELCONSO_API =
+  'https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/rappelconso0/records'
 
 export interface RappelConsoRecord {
   rappelguid: string
@@ -47,10 +48,7 @@ export function matchRappelWithIngredients(
 
   for (const ingredient of ingredients) {
     const ingredientNom = ingredient.nom.toLowerCase()
-    if (
-      searchText.includes(ingredientNom) ||
-      ingredientNom.includes(searchText.split(' ')[0])
-    ) {
+    if (searchText.includes(ingredientNom) || ingredientNom.includes(searchText.split(' ')[0])) {
       return { ingredient_id: ingredient.id, nom: ingredient.nom }
     }
   }

@@ -6,15 +6,18 @@ on:
   pull_request:
     branches: [main, develop]
 
+env:
+  NODE_VERSION: '20'
+
 jobs:
   quality:
-    name: Quality (typecheck + lint)
+    name: Quality (typecheck + lint + format)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
       - run: npm ci
       - name: TypeScript check
@@ -25,14 +28,14 @@ jobs:
         run: npm run format:check
 
   unit-tests:
-    name: Unit Tests
+    name: Unit Tests (vitest)
     needs: quality
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
       - run: npm ci
       - name: Run unit tests
@@ -42,3 +45,79 @@ jobs:
           NEXT_PUBLIC_SUPABASE_ANON_KEY: test-key
           SUPABASE_SERVICE_ROLE_KEY: test-service-key
           NEXT_PUBLIC_APP_URL: http://localhost:3000
+
+  integration-tests:
+    name: Integration Tests (Supabase + pgTAP)
+    needs: quality
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      - uses: supabase/setup-cli@v1
+        with:
+          version: latest
+      - name: Start Supabase local
+        run: supabase start
+      - name: Run migrations
+        run: supabase db reset --no-seed
+      - name: Run pgTAP tests
+        run: supabase test db
+        continue-on-error: true
+      - name: Stop Supabase
+        if: always()
+        run: supabase stop
+
+  build:
+    name: Build (Next.js)
+    needs: quality
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      - run: npm ci
+      - name: Next.js build
+        run: npm run build
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: http://localhost:54321
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: test-key
+          SUPABASE_SERVICE_ROLE_KEY: test-service-key
+          NEXT_PUBLIC_APP_URL: http://localhost:3000
+          CRON_SECRET: test-secret
+
+  e2e-preview:
+    name: E2E Tests (Playwright on Vercel preview)
+    needs: [unit-tests, build]
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+      - run: npm ci
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium webkit
+      - name: Wait for Vercel preview
+        id: vercel
+        uses: patrickedqvist/wait-for-vercel-preview@v1.3.1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          max_timeout: 600
+      - name: Run Playwright tests
+        run: npx playwright test
+        env:
+          PLAYWRIGHT_BASE_URL: ${{ steps.vercel.outputs.url }}
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7

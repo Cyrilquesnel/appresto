@@ -20,13 +20,12 @@ export function SaisieVentesSimple({ onSuccess }: SaisieVentesSimpleProps) {
     },
   })
 
-  const montantEstime = couverts && panierMoyen
-    ? (parseFloat(couverts) * parseFloat(panierMoyen)).toFixed(2)
-    : null
+  const montantEstime =
+    couverts && panierMoyen ? (parseFloat(couverts) * parseFloat(panierMoyen)).toFixed(2) : null
 
   return (
     <form
-      onSubmit={e => {
+      onSubmit={(e) => {
         e.preventDefault()
         logVentes.mutate({
           mode: 'simple',
@@ -43,13 +42,13 @@ export function SaisieVentesSimple({ onSuccess }: SaisieVentesSimpleProps) {
         <input
           type="date"
           value={date}
-          onChange={e => setDate(e.target.value)}
+          onChange={(e) => setDate(e.target.value)}
           className="px-4 py-3 rounded-xl border border-gray-200 bg-white text-sm"
           data-testid="ventes-date"
         />
         <select
           value={service}
-          onChange={e => setService(e.target.value as 'midi' | 'soir')}
+          onChange={(e) => setService(e.target.value as 'midi' | 'soir')}
           className="px-4 py-3 rounded-xl border border-gray-200 bg-white text-sm"
           data-testid="ventes-service"
         >
@@ -64,7 +63,7 @@ export function SaisieVentesSimple({ onSuccess }: SaisieVentesSimpleProps) {
           <input
             type="number"
             value={couverts}
-            onChange={e => setCouverts(e.target.value)}
+            onChange={(e) => setCouverts(e.target.value)}
             min={0}
             required
             placeholder="ex: 35"
@@ -77,7 +76,7 @@ export function SaisieVentesSimple({ onSuccess }: SaisieVentesSimpleProps) {
           <input
             type="number"
             value={panierMoyen}
-            onChange={e => setPanierMoyen(e.target.value)}
+            onChange={(e) => setPanierMoyen(e.target.value)}
             min={0}
             step={0.5}
             required

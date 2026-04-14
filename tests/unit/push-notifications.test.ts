@@ -9,7 +9,11 @@ vi.mock('web-push', () => ({
 
 // eslint-disable-next-line import/first
 import webpush from 'web-push'
-import { sendPMSReminder, sendRappelAlert, sendOnboardingNotification } from '@/lib/push-notifications'
+import {
+  sendPMSReminder,
+  sendRappelAlert,
+  sendOnboardingNotification,
+} from '@/lib/push-notifications'
 
 const mockSubscription = {
   endpoint: 'https://fcm.googleapis.com/test',
@@ -28,7 +32,7 @@ describe('push-notifications', () => {
     expect(webpush.sendNotification).toHaveBeenCalledWith(
       mockSubscription,
       expect.stringContaining('températures'),
-      expect.any(Object),
+      expect.any(Object)
     )
   })
 

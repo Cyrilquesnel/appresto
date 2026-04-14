@@ -9,10 +9,7 @@ serve(async (req) => {
     return new Response('Unauthorized', { status: 401 })
   }
 
-  const supabase = createClient(
-    Deno.env.get('SUPABASE_URL')!,
-    serviceRoleKey!
-  )
+  const supabase = createClient(Deno.env.get('SUPABASE_URL')!, serviceRoleKey!)
 
   let payload: { ingredient_id: string; nouveau_prix: number }
   try {
@@ -53,13 +50,15 @@ serve(async (req) => {
     // Récupérer toutes les lignes du plat avec le prix mercuriale actif
     const { data: allLignes, error: allLignesError } = await supabase
       .from('fiche_technique')
-      .select(`
+      .select(
+        `
         id,
         grammage,
         unite,
         ingredient_id,
         mercuriale!inner(prix, unite, est_actif)
-      `)
+      `
+      )
       .eq('plat_id', platId)
       .eq('mercuriale.est_actif', true)
 
@@ -123,7 +122,9 @@ serve(async (req) => {
     })
 
     updatedCount++
-    console.log(`[recalculate-costs] Plat ${platId}: cout_de_revient=${coutDeRevient} (v${nextVersion})`)
+    console.log(
+      `[recalculate-costs] Plat ${platId}: cout_de_revient=${coutDeRevient} (v${nextVersion})`
+    )
   }
 
   console.log(`[recalculate-costs] ${updatedCount}/${platIds.length} plats mis à jour`)

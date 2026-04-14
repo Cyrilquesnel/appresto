@@ -1,7 +1,7 @@
 # PROGRESS.md — Mise en Place
 
 **Dernière mise à jour**: 2026-04-13
-**Statut global**: Phase 10 complète (task files créés) — Prêt pour exécution
+**Statut global**: **100% COMPLET** — 44/44 tasks ✅ — Prêt pour beta
 
 ---
 
@@ -101,12 +101,12 @@
 
 | Task | Titre | Statut | Notes |
 |---|---|---|---|
-| 7.1 | GitHub Actions Pipeline | ⬜ À FAIRE | |
-| 7.2 | Sentry + PostHog | ⬜ À FAIRE | |
-| 7.3 | BetterUptime + Crons | ⬜ À FAIRE | |
-| 7.4 | pgTAP — Tests RLS Complets | ⬜ À FAIRE | |
-| 7.5 | Déploiement Vercel Production | ⬜ À FAIRE | |
-| 7.R | Régression Phase 7 | ⬜ À FAIRE | |
+| 7.1 | GitHub Actions Pipeline | ✅ TERMINÉ | 2026-04-13 — ci.yml 5 jobs (quality/unit/integration/build/e2e-preview) + deploy-prod.yml + 3 specs E2E + .prettierignore |
+| 7.2 | Sentry + PostHog | ✅ TERMINÉ | 2026-04-13 — Sentry client/server/edge + withSentryConfig + lib/posthog (EU + sanitize PII) + PostHogProvider + 5 tests |
+| 7.3 | BetterUptime + Crons | ✅ TERMINÉ | 2026-04-13 — lib/betteruptime (3 heartbeats typés) + wire dans rappelconso/temperatures/onboarding + 4 tests |
+| 7.4 | pgTAP — Tests RLS Complets | ✅ TERMINÉ | 2026-04-14 — 3 fichiers SQL (46 tests) : rls_isolation (24), rls_immutability (12), rls_storage (10) |
+| 7.5 | Déploiement Vercel Production | ✅ TERMINÉ | 2026-04-14 — vercel.json (fra1 EU + 6 security headers + cache policies) + next.config allowedOrigins dynamique + scripts/check-env.js + deploy-prod.yml mis à jour |
+| 7.R | Régression Phase 7 | ✅ TERMINÉ | 2026-04-14 — typecheck ✅ lint ✅ format ✅ 109 tests ✅ merge→develop |
 
 ---
 
@@ -114,10 +114,10 @@
 
 | Task | Titre | Statut | Notes |
 |---|---|---|---|
-| 8.1 | Tests Playwright Complets | ⬜ À FAIRE | |
-| 8.2 | Tests Performance | ⬜ À FAIRE | |
-| 8.3 | Validation RLS + Sécurité | ⬜ À FAIRE | |
-| 8.4 | Préparation Beta | ⬜ À FAIRE | |
+| 8.1 | Tests Playwright Complets | ✅ TERMINÉ | 2026-04-14 — global-setup + fixtures authedPage + 2 specs (mercuriale, pms-temperatures) + playwright.config mis à jour |
+| 8.2 | Tests Performance | ✅ TERMINÉ | 2026-04-14 — performance.spec.ts (LCP < 2.5s, CLS < 0.1, FCP < 1.8s, bundle < 300kb, health < 500ms) |
+| 8.3 | Validation RLS + Sécurité | ✅ TERMINÉ | 2026-04-14 — security-headers.spec.ts (headers prod + crons 401) + scripts/audit-rls.sql |
+| 8.4 | Préparation Beta | ✅ TERMINÉ | 2026-04-14 — migration 000007 feature_flags + beta_invitations + scripts/invite-beta.js |
 
 ---
 
@@ -136,10 +136,10 @@
 ## Statistiques
 
 - **Total tasks**: 44
-- **Complètes**: 35
+- **Complètes**: 44
 - **En cours**: 0
-- **Restantes**: 9
-- **Progression**: 80%
+- **Restantes**: 0
+- **Progression**: 100%
 
 ---
 

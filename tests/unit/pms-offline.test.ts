@@ -18,10 +18,7 @@ describe('pms-offline queue logic', () => {
   })
 
   it('PMS_ROUTES inclut saveTemperatureLog et saveChecklistCompletion', () => {
-    const PMS_ROUTES = [
-      '/api/trpc/pms.saveTemperatureLog',
-      '/api/trpc/pms.saveChecklistCompletion',
-    ]
+    const PMS_ROUTES = ['/api/trpc/pms.saveTemperatureLog', '/api/trpc/pms.saveChecklistCompletion']
     expect(PMS_ROUTES).toHaveLength(2)
     expect(PMS_ROUTES[0]).toContain('saveTemperatureLog')
     expect(PMS_ROUTES[1]).toContain('saveChecklistCompletion')

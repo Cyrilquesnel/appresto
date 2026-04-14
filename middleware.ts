@@ -10,7 +10,9 @@ export async function middleware(request: NextRequest) {
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
-        get(name) { return request.cookies.get(name)?.value },
+        get(name) {
+          return request.cookies.get(name)?.value
+        },
         set(name, value, options) {
           request.cookies.set({ name, value, ...options })
           response = NextResponse.next({ request: { headers: request.headers } })
@@ -25,11 +27,13 @@ export async function middleware(request: NextRequest) {
     }
   )
 
-  const { data: { user } } = await supabase.auth.getUser()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
   const pathname = request.nextUrl.pathname
 
   const publicRoutes = ['/login', '/register', '/api/health']
-  const isPublic = publicRoutes.some(r => pathname.startsWith(r))
+  const isPublic = publicRoutes.some((r) => pathname.startsWith(r))
 
   if (!user && !isPublic) {
     return NextResponse.redirect(new URL('/login', request.url))

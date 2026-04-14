@@ -55,9 +55,7 @@ export function MercurialeTable() {
             <p className="font-medium text-sm text-gray-900 truncate">
               {ingredientNom(item as MercurialeItem)}
             </p>
-            <p className="text-xs text-gray-400 truncate">
-              {item.fournisseur?.nom ?? '—'}
-            </p>
+            <p className="text-xs text-gray-400 truncate">{item.fournisseur?.nom ?? '—'}</p>
           </div>
 
           <div className="flex items-center gap-2 flex-shrink-0">
@@ -81,10 +79,7 @@ export function MercurialeTable() {
                 >
                   ✓
                 </button>
-                <button
-                  onClick={() => setEditingId(null)}
-                  className="text-xs text-gray-400"
-                >
+                <button onClick={() => setEditingId(null)} className="text-xs text-gray-400">
                   ✕
                 </button>
               </>

@@ -1,7 +1,7 @@
 import { vi } from 'vitest'
 
 export const mockClaudeEnrichment = {
-  'bœuf': {
+  bœuf: {
     allergenes_confirmes: [],
     grammage_portion: 180,
     kcal_par_100g: 250,

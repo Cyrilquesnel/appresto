@@ -47,7 +47,7 @@ describe('formatBonMessage', () => {
   it('calcule le sous-total ligne quand prix_unitaire présent', () => {
     const msg = formatBonMessage(bonTest)
     expect(msg).toContain('42.50 €') // 5 × 8.50
-    expect(msg).toContain('6.40 €')  // 2 × 3.20
+    expect(msg).toContain('6.40 €') // 2 × 3.20
   })
 
   it('affiche juste le nom si prix_unitaire absent', () => {

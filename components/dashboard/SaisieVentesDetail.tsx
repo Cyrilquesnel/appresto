@@ -33,17 +33,20 @@ export function SaisieVentesDetail({ onSuccess }: SaisieVentesDetailProps) {
 
   function addLigne() {
     if (!selectedPlatId || !prixVente) return
-    const existing = lignes.findIndex(l => l.plat_id === selectedPlatId)
+    const existing = lignes.findIndex((l) => l.plat_id === selectedPlatId)
     if (existing >= 0) {
       const updated = [...lignes]
       updated[existing].quantite += parseInt(quantite, 10)
       setLignes(updated)
     } else {
-      setLignes(prev => [...prev, {
-        plat_id: selectedPlatId,
-        quantite: parseInt(quantite, 10),
-        prix_vente: parseFloat(prixVente),
-      }])
+      setLignes((prev) => [
+        ...prev,
+        {
+          plat_id: selectedPlatId,
+          quantite: parseInt(quantite, 10),
+          prix_vente: parseFloat(prixVente),
+        },
+      ])
     }
     setSelectedPlatId('')
     setQuantite('1')
@@ -51,10 +54,10 @@ export function SaisieVentesDetail({ onSuccess }: SaisieVentesDetailProps) {
   }
 
   function removeLigne(index: number) {
-    setLignes(prev => prev.filter((_, i) => i !== index))
+    setLignes((prev) => prev.filter((_, i) => i !== index))
   }
 
-  const platsMap = Object.fromEntries((plats ?? []).map(p => [p.id, p.nom]))
+  const platsMap = Object.fromEntries((plats ?? []).map((p) => [p.id, p.nom]))
 
   return (
     <div className="space-y-4" data-testid="saisie-ventes-detail">
@@ -62,12 +65,12 @@ export function SaisieVentesDetail({ onSuccess }: SaisieVentesDetailProps) {
         <input
           type="date"
           value={date}
-          onChange={e => setDate(e.target.value)}
+          onChange={(e) => setDate(e.target.value)}
           className="px-4 py-3 rounded-xl border border-gray-200 bg-white text-sm"
         />
         <select
           value={service}
-          onChange={e => setService(e.target.value as 'midi' | 'soir')}
+          onChange={(e) => setService(e.target.value as 'midi' | 'soir')}
           className="px-4 py-3 rounded-xl border border-gray-200 bg-white text-sm"
         >
           <option value="midi">Midi</option>
@@ -80,19 +83,21 @@ export function SaisieVentesDetail({ onSuccess }: SaisieVentesDetailProps) {
         <p className="text-xs font-medium text-gray-500 uppercase tracking-wide">Ajouter un plat</p>
         <select
           value={selectedPlatId}
-          onChange={e => setSelectedPlatId(e.target.value)}
+          onChange={(e) => setSelectedPlatId(e.target.value)}
           className="w-full px-3 py-2 rounded-lg border border-gray-200 bg-white text-sm"
         >
           <option value="">Choisir un plat...</option>
-          {plats?.map(p => (
-            <option key={p.id} value={p.id}>{p.nom}</option>
+          {plats?.map((p) => (
+            <option key={p.id} value={p.id}>
+              {p.nom}
+            </option>
           ))}
         </select>
         <div className="grid grid-cols-2 gap-2">
           <input
             type="number"
             value={quantite}
-            onChange={e => setQuantite(e.target.value)}
+            onChange={(e) => setQuantite(e.target.value)}
             min={1}
             placeholder="Qté"
             className="px-3 py-2 rounded-lg border border-gray-200 bg-white text-sm"
@@ -100,7 +105,7 @@ export function SaisieVentesDetail({ onSuccess }: SaisieVentesDetailProps) {
           <input
             type="number"
             value={prixVente}
-            onChange={e => setPrixVente(e.target.value)}
+            onChange={(e) => setPrixVente(e.target.value)}
             min={0}
             step={0.5}
             placeholder="Prix vente €"
@@ -121,14 +126,26 @@ export function SaisieVentesDetail({ onSuccess }: SaisieVentesDetailProps) {
       {lignes.length > 0 && (
         <div className="space-y-2">
           {lignes.map((l, i) => (
-            <div key={i} className="flex items-center justify-between bg-white rounded-xl px-4 py-3 border border-gray-100">
+            <div
+              key={i}
+              className="flex items-center justify-between bg-white rounded-xl px-4 py-3 border border-gray-100"
+            >
               <div>
                 <p className="font-medium text-sm">{platsMap[l.plat_id] ?? 'Plat'}</p>
-                <p className="text-xs text-gray-400">{l.quantite} × {l.prix_vente.toFixed(2)} €</p>
+                <p className="text-xs text-gray-400">
+                  {l.quantite} × {l.prix_vente.toFixed(2)} €
+                </p>
               </div>
               <div className="flex items-center gap-3">
-                <span className="font-semibold text-sm">{(l.quantite * l.prix_vente).toFixed(2)} €</span>
-                <button onClick={() => removeLigne(i)} className="text-red-400 text-lg leading-none">×</button>
+                <span className="font-semibold text-sm">
+                  {(l.quantite * l.prix_vente).toFixed(2)} €
+                </span>
+                <button
+                  onClick={() => removeLigne(i)}
+                  className="text-red-400 text-lg leading-none"
+                >
+                  ×
+                </button>
               </div>
             </div>
           ))}

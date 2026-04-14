@@ -106,9 +106,7 @@ export function FicheTechniqueForm({
       </button>
 
       {createFiche.isError && (
-        <p className="text-red-600 text-sm text-center">
-          Erreur: {createFiche.error.message}
-        </p>
+        <p className="text-red-600 text-sm text-center">Erreur: {createFiche.error.message}</p>
       )}
     </form>
   )

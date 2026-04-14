@@ -43,13 +43,11 @@ export function HACCPDisplay() {
           <p className="text-sm text-yellow-700 font-medium">
             Créez au moins 3 plats actifs pour générer le plan HACCP
           </p>
-          <p className="text-xs text-gray-500 mt-1">
-            ({data?.plats_count ?? 0}/3 plats actifs)
-          </p>
+          <p className="text-xs text-gray-500 mt-1">({data?.plats_count ?? 0}/3 plats actifs)</p>
         </div>
       )}
 
-      {data?.points.map(point => (
+      {data?.points.map((point) => (
         <div
           key={point.id}
           className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden"

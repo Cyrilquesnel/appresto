@@ -1,8 +1,10 @@
 import type { Metadata, Viewport } from 'next'
+import { Suspense } from 'react'
 import './globals.css'
 import { Providers } from '@/providers'
 import { SWRegistrar } from '@/components/SWRegistrar'
 import { IOSInstallPrompt } from '@/components/IOSInstallPrompt'
+import { PostHogProvider } from '@/components/PostHogProvider'
 
 export const metadata: Metadata = {
   title: 'Mise en Place',
@@ -33,7 +35,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="apple-touch-icon" href="/icons/icon-192.png" />
       </head>
       <body className="antialiased">
-        <Providers>{children}</Providers>
+        <Suspense fallback={null}>
+          <PostHogProvider>
+            <Providers>{children}</Providers>
+          </PostHogProvider>
+        </Suspense>
         <SWRegistrar />
         <IOSInstallPrompt />
       </body>

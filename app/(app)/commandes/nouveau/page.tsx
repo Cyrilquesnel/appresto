@@ -31,7 +31,9 @@ export default function NouveauBonPage() {
   })
 
   const mercurialeFiltered = selectedFournisseur
-    ? mercuriale?.filter((m) => (m.fournisseur as { id: string } | null)?.id === selectedFournisseur)
+    ? mercuriale?.filter(
+        (m) => (m.fournisseur as { id: string } | null)?.id === selectedFournisseur
+      )
     : mercuriale
 
   function addLigne(item: typeof mercuriale extends (infer T)[] | undefined ? T : never) {
@@ -82,7 +84,10 @@ export default function NouveauBonPage() {
       <div className="space-y-4">
         <select
           value={selectedFournisseur}
-          onChange={(e) => { setSelectedFournisseur(e.target.value); setLignes([]) }}
+          onChange={(e) => {
+            setSelectedFournisseur(e.target.value)
+            setLignes([])
+          }}
           className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white"
           data-testid="fournisseur-select"
         >
@@ -177,9 +182,7 @@ export default function NouveauBonPage() {
           className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm resize-none"
         />
 
-        {generateBon.error && (
-          <p className="text-sm text-red-500">{generateBon.error.message}</p>
-        )}
+        {generateBon.error && <p className="text-sm text-red-500">{generateBon.error.message}</p>}
 
         <button
           onClick={handleSubmit}

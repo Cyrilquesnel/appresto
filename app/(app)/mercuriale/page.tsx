@@ -30,8 +30,8 @@ export default function MercurialePage() {
       </div>
 
       <p className="text-sm text-gray-500 mb-4">
-        Prix actifs par ingrédient. Une modification déclenche le recalcul automatique
-        des coûts de revient.
+        Prix actifs par ingrédient. Une modification déclenche le recalcul automatique des coûts de
+        revient.
       </p>
 
       <div className="mb-4">
@@ -60,7 +60,8 @@ export default function MercurialePage() {
           )}
           {invoiceResult.requires_manual > 0 && (
             <p className="text-xs text-orange-500">
-              {invoiceResult.requires_manual} produit(s) non reconnu(s) — vérification manuelle requise
+              {invoiceResult.requires_manual} produit(s) non reconnu(s) — vérification manuelle
+              requise
             </p>
           )}
 
@@ -68,7 +69,9 @@ export default function MercurialePage() {
             {invoiceResult.invoice.lignes.map((ligne, i) => (
               <div key={i} className="py-2 flex items-center justify-between gap-2">
                 <div className="min-w-0">
-                  <p className={`text-xs font-medium truncate ${ligne.matched ? 'text-gray-900' : 'text-orange-500'}`}>
+                  <p
+                    className={`text-xs font-medium truncate ${ligne.matched ? 'text-gray-900' : 'text-orange-500'}`}
+                  >
                     {ligne.designation}
                     {!ligne.matched && ' ·'}
                   </p>

@@ -72,9 +72,7 @@ export function InvoiceUpload({ onResult }: InvoiceUploadProps) {
       >
         {loading ? 'Analyse en cours...' : 'Scanner une facture'}
       </button>
-      {error && (
-        <p className="text-sm text-red-500 mt-2 text-center">{error}</p>
-      )}
+      {error && <p className="text-sm text-red-500 mt-2 text-center">{error}</p>}
     </div>
   )
 }
