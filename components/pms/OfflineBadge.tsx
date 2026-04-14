@@ -21,7 +21,10 @@ export function OfflineBadge() {
     updateCount()
     const interval = setInterval(updateCount, 5000)
 
-    const handleOnline = () => { setIsOnline(true); updateCount() }
+    const handleOnline = () => {
+      setIsOnline(true)
+      updateCount()
+    }
     const handleOffline = () => setIsOnline(false)
     const handleSWMessage = (e: MessageEvent) => {
       if (e.data?.type === 'PMS_SYNC_COMPLETE') updateCount()
@@ -52,7 +55,10 @@ export function OfflineBadge() {
         <>
           <span>📡</span>
           <span>
-            Mode hors-ligne{count > 0 ? ` — ${count} relevé(s) en attente` : ' — les relevés seront synchronisés au retour du réseau'}
+            Mode hors-ligne
+            {count > 0
+              ? ` — ${count} relevé(s) en attente`
+              : ' — les relevés seront synchronisés au retour du réseau'}
           </span>
         </>
       ) : count > 0 ? (

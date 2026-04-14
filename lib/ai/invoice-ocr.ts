@@ -4,17 +4,17 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!)
 
 export interface InvoiceLine {
   designation: string
-  dlc?: string              // format ISO: YYYY-MM-DD
+  dlc?: string // format ISO: YYYY-MM-DD
   numero_lot?: string
   quantite: number
-  unite: string             // 'kg', 'pcs', 'L', etc.
-  prix_unitaire_ht: number  // en euros HT
+  unite: string // 'kg', 'pcs', 'L', etc.
+  prix_unitaire_ht: number // en euros HT
   total_ht?: number
 }
 
 export interface InvoiceData {
   fournisseur_nom?: string
-  date_facture?: string      // format ISO: YYYY-MM-DD
+  date_facture?: string // format ISO: YYYY-MM-DD
   numero_facture?: string
   total_ht_facture?: number
   lignes: InvoiceLine[]
@@ -47,7 +47,10 @@ const INVOICE_SCHEMA: Schema = {
   required: ['lignes'],
 }
 
-export async function extractInvoiceData(imageBase64: string, mimeType: string): Promise<InvoiceData> {
+export async function extractInvoiceData(
+  imageBase64: string,
+  mimeType: string
+): Promise<InvoiceData> {
   const model = genAI.getGenerativeModel({
     model: 'gemini-2.0-flash',
     generationConfig: {

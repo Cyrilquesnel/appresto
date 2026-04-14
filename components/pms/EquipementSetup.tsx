@@ -43,7 +43,7 @@ export function EquipementSetup({ onSuccess }: { onSuccess: () => void }) {
 
   return (
     <form
-      onSubmit={e => {
+      onSubmit={(e) => {
         e.preventDefault()
         create.mutate({
           nom,
@@ -58,7 +58,7 @@ export function EquipementSetup({ onSuccess }: { onSuccess: () => void }) {
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-2">Type</label>
         <div className="grid grid-cols-3 gap-2">
-          {(Object.keys(TYPE_DEFAULTS) as EquipementType[]).map(t => (
+          {(Object.keys(TYPE_DEFAULTS) as EquipementType[]).map((t) => (
             <button
               key={t}
               type="button"
@@ -78,7 +78,7 @@ export function EquipementSetup({ onSuccess }: { onSuccess: () => void }) {
       <input
         type="text"
         value={nom}
-        onChange={e => setNom(e.target.value)}
+        onChange={(e) => setNom(e.target.value)}
         required
         placeholder="Nom de l'équipement"
         className="w-full px-4 py-3 rounded-xl border border-gray-200"
@@ -91,7 +91,7 @@ export function EquipementSetup({ onSuccess }: { onSuccess: () => void }) {
           <input
             type="number"
             value={tempMin}
-            onChange={e => setTempMin(e.target.value)}
+            onChange={(e) => setTempMin(e.target.value)}
             step={0.5}
             className="w-full px-4 py-3 rounded-xl border border-gray-200 text-center"
             data-testid="temp-min-input"
@@ -102,7 +102,7 @@ export function EquipementSetup({ onSuccess }: { onSuccess: () => void }) {
           <input
             type="number"
             value={tempMax}
-            onChange={e => setTempMax(e.target.value)}
+            onChange={(e) => setTempMax(e.target.value)}
             step={0.5}
             className="w-full px-4 py-3 rounded-xl border border-gray-200 text-center"
             data-testid="temp-max-input"
@@ -115,12 +115,10 @@ export function EquipementSetup({ onSuccess }: { onSuccess: () => void }) {
         disabled={!nom || create.isPending}
         className="w-full py-4 bg-indigo-600 text-white font-semibold rounded-2xl disabled:opacity-50"
       >
-        {create.isPending ? 'Ajout...' : 'Ajouter l\'équipement'}
+        {create.isPending ? 'Ajout...' : "Ajouter l'équipement"}
       </button>
 
-      {create.isError && (
-        <p className="text-sm text-red-500 text-center">{create.error.message}</p>
-      )}
+      {create.isError && <p className="text-sm text-red-500 text-center">{create.error.message}</p>}
     </form>
   )
 }

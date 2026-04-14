@@ -12,9 +12,7 @@ function desactiverAncienPrix(
   lignes: Array<{ ingredient_id: string; est_actif: boolean }>,
   ingredientId: string
 ): Array<{ ingredient_id: string; est_actif: boolean }> {
-  return lignes.map((l) =>
-    l.ingredient_id === ingredientId ? { ...l, est_actif: false } : l
-  )
+  return lignes.map((l) => (l.ingredient_id === ingredientId ? { ...l, est_actif: false } : l))
 }
 
 // ─── Tests ───────────────────────────────────────────────────────────────────
@@ -40,7 +38,7 @@ describe('mercuriale — affichage nom ingrédient', () => {
 })
 
 describe('setMercurialePrice — logique de désactivation', () => {
-  it('désactive uniquement l\'ancien prix actif de l\'ingrédient concerné', () => {
+  it("désactive uniquement l'ancien prix actif de l'ingrédient concerné", () => {
     const lignes = [
       { ingredient_id: 'ing-1', est_actif: true },
       { ingredient_id: 'ing-2', est_actif: true },
@@ -51,7 +49,7 @@ describe('setMercurialePrice — logique de désactivation', () => {
     expect(result.find((l) => l.ingredient_id === 'ing-2')?.est_actif).toBe(true)
   })
 
-  it('ne touche pas les lignes d\'autres ingrédients', () => {
+  it("ne touche pas les lignes d'autres ingrédients", () => {
     const lignes = [
       { ingredient_id: 'ing-A', est_actif: true },
       { ingredient_id: 'ing-B', est_actif: true },

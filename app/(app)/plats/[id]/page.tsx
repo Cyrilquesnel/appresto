@@ -9,17 +9,21 @@ interface Props {
 
 export default async function PlatDetailPage({ params }: Props) {
   const supabase = createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
   if (!user) redirect('/login')
 
   const { data: plat } = await supabase
     .from('plats')
-    .select(`
+    .select(
+      `
       *,
       fiche_technique (
         id, nom_ingredient, grammage, unite, ordre
       )
-    `)
+    `
+    )
     .eq('id', params.id)
     .single()
 
@@ -32,13 +36,15 @@ export default async function PlatDetailPage({ params }: Props) {
   return (
     <div className="p-4 max-w-lg mx-auto">
       <div className="flex items-center gap-3 mb-4">
-        <Link href="/plats" className="text-gray-500 hover:text-gray-700">←</Link>
+        <Link href="/plats" className="text-gray-500 hover:text-gray-700">
+          ←
+        </Link>
         <h1 className="text-xl font-bold flex-1 truncate">{plat.nom}</h1>
-        <span className={`text-xs px-2 py-1 rounded-full font-medium ${
-          plat.statut === 'actif'
-            ? 'bg-green-100 text-green-700'
-            : 'bg-gray-100 text-gray-500'
-        }`}>
+        <span
+          className={`text-xs px-2 py-1 rounded-full font-medium ${
+            plat.statut === 'actif' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'
+          }`}
+        >
           {plat.statut}
         </span>
       </div>
@@ -69,9 +75,7 @@ export default async function PlatDetailPage({ params }: Props) {
 
       {lignes.length > 0 && (
         <div className="mb-4">
-          <h2 className="text-sm font-medium text-gray-700 mb-2">
-            Ingrédients ({lignes.length})
-          </h2>
+          <h2 className="text-sm font-medium text-gray-700 mb-2">Ingrédients ({lignes.length})</h2>
           <div className="space-y-2">
             {lignes.map((ligne) => (
               <div

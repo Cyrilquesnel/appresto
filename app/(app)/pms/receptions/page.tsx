@@ -15,7 +15,11 @@ export default function ReceptionsPage() {
         <h2 className="text-2xl font-bold mb-2">Réception enregistrée !</h2>
         <div className="flex gap-3 mt-4">
           <button
-            onClick={() => { setSuccessId(null); setShowForm(false); refetch() }}
+            onClick={() => {
+              setSuccessId(null)
+              setShowForm(false)
+              refetch()
+            }}
             className="px-6 py-3 bg-indigo-600 text-white font-medium rounded-xl"
           >
             Retour à la liste
@@ -36,7 +40,7 @@ export default function ReceptionsPage() {
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-xl font-bold text-gray-900">Réceptions</h1>
         <button
-          onClick={() => setShowForm(v => !v)}
+          onClick={() => setShowForm((v) => !v)}
           className="px-3 py-2 bg-indigo-600 text-white text-sm font-medium rounded-xl"
         >
           {showForm ? 'Annuler' : '+ Nouvelle'}
@@ -64,9 +68,13 @@ export default function ReceptionsPage() {
       )}
 
       <div className="space-y-3">
-        {receptions?.map(reception => {
-          const fournisseurNom = (reception.fournisseur as unknown as { nom: string } | null)?.nom ?? 'Fournisseur'
-          const anomalies = (reception.items as unknown as Array<{ conforme: boolean }> | null)?.filter(i => !i.conforme).length ?? 0
+        {receptions?.map((reception) => {
+          const fournisseurNom =
+            (reception.fournisseur as unknown as { nom: string } | null)?.nom ?? 'Fournisseur'
+          const anomalies =
+            (reception.items as unknown as Array<{ conforme: boolean }> | null)?.filter(
+              (i) => !i.conforme
+            ).length ?? 0
           return (
             <div
               key={reception.id}
@@ -81,11 +89,15 @@ export default function ReceptionsPage() {
                   </p>
                 </div>
                 <div className="text-right">
-                  <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${
-                    reception.statut === 'conforme' ? 'bg-green-100 text-green-700' :
-                    reception.statut === 'anomalie' ? 'bg-red-100 text-red-700' :
-                    'bg-gray-100 text-gray-700'
-                  }`}>
+                  <span
+                    className={`text-xs font-medium px-2 py-0.5 rounded-full ${
+                      reception.statut === 'conforme'
+                        ? 'bg-green-100 text-green-700'
+                        : reception.statut === 'anomalie'
+                          ? 'bg-red-100 text-red-700'
+                          : 'bg-gray-100 text-gray-700'
+                    }`}
+                  >
                     {reception.statut}
                   </span>
                   {anomalies > 0 && (

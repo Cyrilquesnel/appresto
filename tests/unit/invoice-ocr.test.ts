@@ -8,15 +8,15 @@ const ingredients = [
 ]
 
 describe('matchIngredient', () => {
-  it('retourne l\'id sur match exact', () => {
+  it("retourne l'id sur match exact", () => {
     expect(matchIngredient('beurre', ingredients)).toBe('1')
   })
 
-  it('retourne l\'id sur match partiel (ingrédient dans designation)', () => {
+  it("retourne l'id sur match partiel (ingrédient dans designation)", () => {
     expect(matchIngredient('beurre clarifié fermier', ingredients)).toBe('1')
   })
 
-  it('retourne l\'id sur match inverse (designation dans ingrédient)', () => {
+  it("retourne l'id sur match inverse (designation dans ingrédient)", () => {
     expect(matchIngredient('bœuf', ingredients)).toBe('3')
   })
 

@@ -38,9 +38,7 @@ export function IngredientSearch({
         className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-accent"
         data-testid="ingredient-search-input"
       />
-      {isLoading && (
-        <div className="absolute right-3 top-3 text-gray-400 text-sm">...</div>
-      )}
+      {isLoading && <div className="absolute right-3 top-3 text-gray-400 text-sm">...</div>}
       {results && results.length > 0 && query.length >= 2 && (
         <ul className="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-xl shadow-lg max-h-60 overflow-y-auto">
           {results.map((item: IngredientSearchResult) => (

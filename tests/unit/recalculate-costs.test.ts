@@ -30,13 +30,13 @@ describe('calcul cout_de_revient', () => {
   it('additionne correctement plusieurs ingrédients', () => {
     const lignes = [
       { grammage: 200, prix: 15.0 }, // 3€
-      { grammage: 100, prix: 8.0 },  // 0.80€
-      { grammage: 50, prix: 20.0 },  // 1€
+      { grammage: 100, prix: 8.0 }, // 0.80€
+      { grammage: 50, prix: 20.0 }, // 1€
     ]
     expect(calculerCoutDeRevient(lignes)).toBe(4.8)
   })
 
-  it('retourne null si un ingrédient n\'a pas de prix', () => {
+  it("retourne null si un ingrédient n'a pas de prix", () => {
     const lignes = [
       { grammage: 200, prix: 15.0 },
       { grammage: 100, prix: null }, // pas de prix

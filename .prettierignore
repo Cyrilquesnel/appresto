@@ -1,0 +1,34 @@
+# Build artifacts
+.next/
+out/
+build/
+dist/
+coverage/
+playwright-report/
+test-results/
+
+# Dependencies
+node_modules/
+
+# Generated files
+types/supabase.ts
+public/sw.js
+public/sw-custom.js
+public/workbox-*.js
+public/swe-worker-*.js
+
+# Data / fixtures
+data/
+tests/fixtures/
+supabase/migrations/
+supabase/seed.sql
+
+# Claude Code docs (manually formatted)
+.claude/orchestration-mise-en-place/
+.claude/skills/
+CLAUDE.md
+
+# Env / config
+.env*
+*.lock
+package-lock.json

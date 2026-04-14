@@ -64,9 +64,7 @@ export function BonDeCommandePDF({ bon }: { bon: BonDeCommandeData }) {
               {new Date(bon.date_livraison_souhaitee).toLocaleDateString('fr-FR')}
             </Text>
           )}
-          <Text style={styles.subtitle}>
-            Date : {new Date().toLocaleDateString('fr-FR')}
-          </Text>
+          <Text style={styles.subtitle}>Date : {new Date().toLocaleDateString('fr-FR')}</Text>
         </View>
 
         <View style={styles.table}>
@@ -104,9 +102,7 @@ export function BonDeCommandePDF({ bon }: { bon: BonDeCommandeData }) {
           </View>
         )}
 
-        <Text style={styles.footer}>
-          Bon de commande généré par Mise en Place — miseenplace.fr
-        </Text>
+        <Text style={styles.footer}>Bon de commande généré par Mise en Place — miseenplace.fr</Text>
       </Page>
     </Document>
   )

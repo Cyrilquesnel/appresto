@@ -5,7 +5,7 @@ describe('calcul KPIs dashboard', () => {
     const ca_total = 10000
     const food_cost_euros = 2800
     const pct = Math.round((food_cost_euros / ca_total) * 10000) / 100
-    expect(pct).toBe(28.00)
+    expect(pct).toBe(28.0)
   })
 
   it('seuil_rentabilite = charges_fixes / (1 - food_cost_pct/100)', () => {
@@ -22,7 +22,7 @@ describe('calcul KPIs dashboard', () => {
   })
 
   it('food cost 35% = limite warn/bad', () => {
-    const status = (pct: number) => pct <= 30 ? 'good' : pct <= 35 ? 'warn' : 'bad'
+    const status = (pct: number) => (pct <= 30 ? 'good' : pct <= 35 ? 'warn' : 'bad')
     expect(status(28)).toBe('good')
     expect(status(33)).toBe('warn')
     expect(status(36)).toBe('bad')

@@ -1,6 +1,7 @@
 import { NextRequest } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { sendOnboardingNotification } from '@/lib/push-notifications'
+import { pingHeartbeat } from '@/lib/betteruptime'
 import type { PushSubscription } from 'web-push'
 
 export const maxDuration = 30
@@ -26,7 +27,7 @@ export async function GET(req: NextRequest) {
     .lte('created_at', j1Start.toISOString().split('T')[0] + 'T23:59:59Z')
 
   let notified = 0
-  for (const restaurant of (restaurants ?? [])) {
+  for (const restaurant of restaurants ?? []) {
     const createdAt = new Date((restaurant.created_at as string | null) ?? Date.now())
     const days = Math.floor((Date.now() - createdAt.getTime()) / (1000 * 60 * 60 * 24))
 
@@ -52,6 +53,8 @@ export async function GET(req: NextRequest) {
 
     notified++
   }
+
+  await pingHeartbeat('onboarding')
 
   return Response.json({ notified })
 }

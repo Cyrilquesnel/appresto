@@ -19,7 +19,11 @@ interface BonPreviewData {
   date_livraison_souhaitee: string | null
   notes: string | null
   created_at: string
-  fournisseur: { nom: string; contact_whatsapp?: string | null; contact_email?: string | null } | null
+  fournisseur: {
+    nom: string
+    contact_whatsapp?: string | null
+    contact_email?: string | null
+  } | null
   lignes: LignePreview[]
 }
 
@@ -28,10 +32,7 @@ interface BonDeCommandePreviewProps {
 }
 
 function ligneNom(ligne: LignePreview): string {
-  return (
-    ligne.ingredient?.nom_custom ??
-    (ligne.ingredient?.catalog?.nom ?? '—')
-  )
+  return ligne.ingredient?.nom_custom ?? ligne.ingredient?.catalog?.nom ?? '—'
 }
 
 const STATUT_LABELS: Record<string, { label: string; color: string }> = {
@@ -45,12 +46,13 @@ export function BonDeCommandePreview({ bon }: BonDeCommandePreviewProps) {
   const statut = STATUT_LABELS[bon.statut] ?? STATUT_LABELS.brouillon
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-200 p-4 space-y-4" data-testid="bon-preview">
+    <div
+      className="bg-white rounded-2xl border border-gray-200 p-4 space-y-4"
+      data-testid="bon-preview"
+    >
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="font-bold text-gray-900 text-base">
-            {bon.fournisseur?.nom ?? '—'}
-          </h2>
+          <h2 className="font-bold text-gray-900 text-base">{bon.fournisseur?.nom ?? '—'}</h2>
           <p className="text-xs text-gray-400 mt-0.5">
             {new Date(bon.created_at).toLocaleDateString('fr-FR', {
               day: '2-digit',
@@ -96,9 +98,7 @@ export function BonDeCommandePreview({ bon }: BonDeCommandePreviewProps) {
         </span>
       </div>
 
-      {bon.notes && (
-        <p className="text-xs text-gray-500 bg-gray-50 rounded-xl p-3">{bon.notes}</p>
-      )}
+      {bon.notes && <p className="text-xs text-gray-500 bg-gray-50 rounded-xl p-3">{bon.notes}</p>}
     </div>
   )
 }

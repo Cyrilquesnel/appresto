@@ -5,7 +5,9 @@ import { SWRegistrar } from '@/components/SWRegistrar'
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
   const supabase = createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
 
   if (!user) redirect('/login')
 
@@ -14,8 +16,10 @@ export default async function AppLayout({ children }: { children: React.ReactNod
       <SWRegistrar />
       <main className="pb-20">{children}</main>
       <OfflineBadge />
-      <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50"
-        style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
+      <nav
+        className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50"
+        style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
+      >
         <div className="flex items-center justify-around h-14">
           <a href="/dashboard" className="flex flex-col items-center text-xs text-gray-600">
             <span className="text-xl">📊</span>

@@ -46,7 +46,7 @@ export default function PMSPage() {
       <p className="text-sm text-gray-400 mb-6">Plan de Maîtrise Sanitaire</p>
 
       <div className="grid grid-cols-2 gap-3">
-        {modules.map(m => (
+        {modules.map((m) => (
           <Link
             key={m.href}
             href={m.href}

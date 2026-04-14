@@ -51,7 +51,7 @@ export default function ExportPage() {
           <label className="text-sm text-gray-600">Période:</label>
           <select
             value={mois}
-            onChange={e => setMois(parseInt(e.target.value, 10))}
+            onChange={(e) => setMois(parseInt(e.target.value, 10))}
             className="px-3 py-2 rounded-xl border border-gray-200 bg-white"
           >
             <option value={1}>1 mois</option>

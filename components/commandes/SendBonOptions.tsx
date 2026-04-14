@@ -82,15 +82,16 @@ export function SendBonOptions({ bon, onSent }: SendBonOptionsProps) {
       )}
 
       {/* Email — PRIORITÉ 2 */}
-      {bon.fournisseur.contact_whatsapp === null && (bon as { fournisseur: { contact_email?: string | null } }).fournisseur.contact_email && (
-        <button
-          disabled={!!loading}
-          className="w-full py-4 bg-blue-600 text-white font-semibold rounded-2xl disabled:opacity-50"
-          data-testid="send-email-button"
-        >
-          {loading === 'email' ? 'Envoi...' : 'Envoyer par email'}
-        </button>
-      )}
+      {bon.fournisseur.contact_whatsapp === null &&
+        (bon as { fournisseur: { contact_email?: string | null } }).fournisseur.contact_email && (
+          <button
+            disabled={!!loading}
+            className="w-full py-4 bg-blue-600 text-white font-semibold rounded-2xl disabled:opacity-50"
+            data-testid="send-email-button"
+          >
+            {loading === 'email' ? 'Envoi...' : 'Envoyer par email'}
+          </button>
+        )}
 
       {/* PDF — PRIORITÉ 3 */}
       <button

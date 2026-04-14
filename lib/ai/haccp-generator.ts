@@ -35,11 +35,11 @@ export async function generateHACCPPlan(
     type_plat?: string | null
   }>
 ): Promise<HACCPPointCritique[]> {
-  const platsSummary = plats.map(p => ({
+  const platsSummary = plats.map((p) => ({
     nom: p.nom,
     type: p.type_plat,
-    ingredients: p.ingredients.map(i => i.nom).join(', '),
-    allergenes: Array.from(new Set(p.ingredients.flatMap(i => i.allergenes))),
+    ingredients: p.ingredients.map((i) => i.nom).join(', '),
+    allergenes: Array.from(new Set(p.ingredients.flatMap((i) => i.allergenes))),
   }))
 
   const response = await anthropic.messages.create({
@@ -80,7 +80,7 @@ Génère UNIQUEMENT le JSON, sans markdown, sans explication.`,
   try {
     const points = JSON.parse(text) as Array<Record<string, unknown>>
     return points.map((p, i) => ({
-      plat_id: plats.find(pl => pl.nom === p.plat_nom)?.id ?? null,
+      plat_id: plats.find((pl) => pl.nom === p.plat_nom)?.id ?? null,
       plat_nom: p.plat_nom as string | undefined,
       danger: p.danger as string,
       etape_critique: p.etape_critique as string,

@@ -41,7 +41,7 @@ export default function RegisterPage() {
       await supabase.from('restaurant_users').insert({
         restaurant_id: restaurant.id,
         user_id: data.user.id,
-        role: 'owner'
+        role: 'owner',
       })
 
       router.push('/onboarding')
@@ -52,11 +52,13 @@ export default function RegisterPage() {
   return (
     <form onSubmit={handleRegister} className="space-y-4">
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Nom de votre restaurant</label>
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Nom de votre restaurant
+        </label>
         <input
           type="text"
           value={restaurantNom}
-          onChange={e => setRestaurantNom(e.target.value)}
+          onChange={(e) => setRestaurantNom(e.target.value)}
           required
           className="w-full border border-gray-300 rounded-lg px-3 py-3 text-base"
           placeholder="Le Bistrot du Coin"
@@ -67,7 +69,7 @@ export default function RegisterPage() {
         <input
           type="email"
           value={email}
-          onChange={e => setEmail(e.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
           required
           className="w-full border border-gray-300 rounded-lg px-3 py-3 text-base"
           placeholder="chef@restaurant.fr"
@@ -79,7 +81,7 @@ export default function RegisterPage() {
         <input
           type="password"
           value={password}
-          onChange={e => setPassword(e.target.value)}
+          onChange={(e) => setPassword(e.target.value)}
           required
           minLength={8}
           className="w-full border border-gray-300 rounded-lg px-3 py-3 text-base"

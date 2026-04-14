@@ -6,9 +6,9 @@ const anthropic = new Anthropic({
 
 export interface EnrichedIngredient {
   allergenes_confirmes: string[]
-  grammage_portion: number    // en grammes
+  grammage_portion: number // en grammes
   kcal_par_100g: number
-  unite_standard: string      // 'g' | 'ml' | 'pièce'
+  unite_standard: string // 'g' | 'ml' | 'pièce'
   notes?: string
 }
 

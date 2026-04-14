@@ -2,17 +2,23 @@ import { describe, it, expect } from 'vitest'
 
 describe('saveTemperatureLog — calcul conformité', () => {
   it('conforme = true si valeur dans [temp_min, temp_max]', () => {
-    const temp_min = 0, temp_max = 4, valeur = 3.5
+    const temp_min = 0,
+      temp_max = 4,
+      valeur = 3.5
     expect(valeur >= temp_min && valeur <= temp_max).toBe(true)
   })
 
   it('conforme = false si valeur hors plage haute', () => {
-    const temp_min = 0, temp_max = 4, valeur = 6.0
+    const temp_min = 0,
+      temp_max = 4,
+      valeur = 6.0
     expect(valeur >= temp_min && valeur <= temp_max).toBe(false)
   })
 
   it('conforme = false si valeur hors plage basse (congélateur)', () => {
-    const temp_min = -25, temp_max = -18, valeur = -10
+    const temp_min = -25,
+      temp_max = -18,
+      valeur = -10
     expect(valeur >= temp_min && valeur <= temp_max).toBe(false)
   })
 

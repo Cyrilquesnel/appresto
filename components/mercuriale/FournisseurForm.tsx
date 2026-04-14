@@ -70,9 +70,7 @@ export function FournisseurForm({ onSuccess, onCancel }: FournisseurFormProps) {
         <span className="text-sm text-gray-500">jours</span>
       </div>
 
-      {create.error && (
-        <p className="text-sm text-red-500">{create.error.message}</p>
-      )}
+      {create.error && <p className="text-sm text-red-500">{create.error.message}</p>}
 
       <div className="flex gap-3">
         <button

@@ -10,7 +10,9 @@ function pushTable(supabase: SupabaseClient) {
 
 export async function POST(req: NextRequest) {
   const supabase = createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
   if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 })
 
   const { data: restaurant } = await supabase
@@ -34,7 +36,7 @@ export async function POST(req: NextRequest) {
       subscription,
       user_agent: req.headers.get('user-agent') ?? '',
     },
-    { onConflict: 'user_id' },
+    { onConflict: 'user_id' }
   )
 
   if (error) return Response.json({ error: error.message }, { status: 500 })
@@ -43,7 +45,9 @@ export async function POST(req: NextRequest) {
 
 export async function DELETE() {
   const supabase = createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
   if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 })
 
   await pushTable(supabase).delete().eq('user_id', user.id)

@@ -5,7 +5,7 @@ const mockCreate = vi.fn().mockResolvedValue({
     {
       type: 'text',
       text: JSON.stringify({
-        'bœuf': {
+        bœuf: {
           allergenes_confirmes: [],
           grammage_portion: 180,
           kcal_par_100g: 250,
@@ -26,22 +26,22 @@ vi.mock('@anthropic-ai/sdk', () => ({
 describe('shouldEnrich', () => {
   it('retourne true si confiance_globale < 0.65', async () => {
     const { shouldEnrich } = await import('@/lib/ai/claude-enrichment')
-    expect(shouldEnrich(0.60, [0.8, 0.9])).toBe(true)
+    expect(shouldEnrich(0.6, [0.8, 0.9])).toBe(true)
   })
 
   it('retourne true si un ingrédient a confiance < 0.65', async () => {
     const { shouldEnrich } = await import('@/lib/ai/claude-enrichment')
-    expect(shouldEnrich(0.80, [0.9, 0.50, 0.85])).toBe(true)
+    expect(shouldEnrich(0.8, [0.9, 0.5, 0.85])).toBe(true)
   })
 
   it('retourne false si tout est >= 0.65', async () => {
     const { shouldEnrich } = await import('@/lib/ai/claude-enrichment')
-    expect(shouldEnrich(0.90, [0.80, 0.85, 0.95])).toBe(false)
+    expect(shouldEnrich(0.9, [0.8, 0.85, 0.95])).toBe(false)
   })
 
   it('retourne false si confiance exactement à 0.65', async () => {
     const { shouldEnrich } = await import('@/lib/ai/claude-enrichment')
-    expect(shouldEnrich(0.65, [0.65, 0.70])).toBe(false)
+    expect(shouldEnrich(0.65, [0.65, 0.7])).toBe(false)
   })
 })
 
@@ -64,9 +64,16 @@ describe('enrichIngredients', () => {
   it('retourne objet vide sur timeout (dégradé gracieux)', async () => {
     // Forcer un délai de 50ms pour que le timeout de 1ms se déclenche avant la réponse
     mockCreate.mockImplementationOnce(
-      () => new Promise((resolve) => setTimeout(() => resolve({
-        content: [{ type: 'text', text: '{}' }],
-      }), 50))
+      () =>
+        new Promise((resolve) =>
+          setTimeout(
+            () =>
+              resolve({
+                content: [{ type: 'text', text: '{}' }],
+              }),
+            50
+          )
+        )
     )
     const { enrichIngredients } = await import('@/lib/ai/claude-enrichment')
     const result = await enrichIngredients(['bœuf'], 1)

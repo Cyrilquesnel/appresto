@@ -13,7 +13,9 @@ function urlBase64ToUint8Array(base64String: string): ArrayBuffer {
 }
 
 export function PushPermissionPrompt() {
-  const [status, setStatus] = useState<NotificationPermission | 'unsupported' | 'loading'>('loading')
+  const [status, setStatus] = useState<NotificationPermission | 'unsupported' | 'loading'>(
+    'loading'
+  )
 
   useEffect(() => {
     if (!('Notification' in window) || !('serviceWorker' in navigator)) {
@@ -51,7 +53,10 @@ export function PushPermissionPrompt() {
   if (status === 'loading' || status === 'granted' || status === 'unsupported') return null
 
   return (
-    <div className="bg-indigo-50 border border-indigo-200 rounded-2xl p-4" data-testid="push-permission-prompt">
+    <div
+      className="bg-indigo-50 border border-indigo-200 rounded-2xl p-4"
+      data-testid="push-permission-prompt"
+    >
       <p className="text-sm font-medium text-indigo-900 mb-3">
         Activez les notifications pour recevoir les alertes PMS et rappels produits
       </p>

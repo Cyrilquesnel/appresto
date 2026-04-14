@@ -3,16 +3,16 @@ import { describe, it, expect, vi } from 'vitest'
 vi.mock('@/lib/supabase/server', () => ({
   createClient: () => ({
     auth: {
-      getUser: vi.fn().mockResolvedValue({ data: { user: null } })
+      getUser: vi.fn().mockResolvedValue({ data: { user: null } }),
     },
     from: vi.fn().mockReturnValue({
       select: vi.fn().mockReturnValue({
         eq: vi.fn().mockReturnValue({
-          single: vi.fn().mockResolvedValue({ data: null })
-        })
-      })
-    })
-  })
+          single: vi.fn().mockResolvedValue({ data: null }),
+        }),
+      }),
+    }),
+  }),
 }))
 
 vi.mock('@upstash/redis', () => ({

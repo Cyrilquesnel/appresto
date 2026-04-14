@@ -6,7 +6,7 @@ import { trpc } from '@/lib/trpc/client'
 import type { RealtimeChannel } from '@supabase/supabase-js'
 
 export function useDashboardRealtime() {
-  const restaurantId = useRestaurantStore(s => s.restaurantId)
+  const restaurantId = useRestaurantStore((s) => s.restaurantId)
   const utils = trpc.useUtils()
 
   useEffect(() => {

@@ -3,11 +3,23 @@ import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer'
 
 const styles = StyleSheet.create({
   page: { padding: 40, fontFamily: 'Helvetica', fontSize: 9, lineHeight: 1.4 },
-  header: { borderBottomWidth: 2, borderBottomColor: '#1a1a2e', paddingBottom: 10, marginBottom: 20 },
+  header: {
+    borderBottomWidth: 2,
+    borderBottomColor: '#1a1a2e',
+    paddingBottom: 10,
+    marginBottom: 20,
+  },
   restaurantName: { fontSize: 16, fontWeight: 'bold', color: '#1a1a2e' },
   headerSub: { fontSize: 9, color: '#666', marginTop: 2 },
   section: { marginBottom: 20 },
-  sectionTitle: { fontSize: 12, fontWeight: 'bold', color: '#1a1a2e', backgroundColor: '#f5f5f5', padding: 6, marginBottom: 8 },
+  sectionTitle: {
+    fontSize: 12,
+    fontWeight: 'bold',
+    color: '#1a1a2e',
+    backgroundColor: '#f5f5f5',
+    padding: 6,
+    marginBottom: 8,
+  },
   table: { borderWidth: 1, borderColor: '#ddd' },
   tableRow: { flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: '#ddd' },
   tableHeader: { flexDirection: 'row', backgroundColor: '#1a1a2e', padding: 4 },
@@ -19,7 +31,16 @@ const styles = StyleSheet.create({
   statNumber: { fontSize: 20, fontWeight: 'bold', color: '#1a1a2e' },
   statLabel: { fontSize: 8, color: '#666' },
   ccpBox: { marginBottom: 10, padding: 8, backgroundColor: '#f9f9f9' },
-  footer: { position: 'absolute', bottom: 20, left: 40, right: 40, flexDirection: 'row', justifyContent: 'space-between', fontSize: 7, color: '#999' },
+  footer: {
+    position: 'absolute',
+    bottom: 20,
+    left: 40,
+    right: 40,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    fontSize: 7,
+    color: '#999',
+  },
 })
 
 function formatDate(isoDate: string): string {
@@ -28,8 +49,11 @@ function formatDate(isoDate: string): string {
 
 function formatDateTime(isoDate: string): string {
   return new Date(isoDate).toLocaleString('fr-FR', {
-    day: '2-digit', month: '2-digit', year: 'numeric',
-    hour: '2-digit', minute: '2-digit',
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
   })
 }
 
@@ -88,7 +112,9 @@ export function DDPPExport({ data }: { data: DDPPData }) {
             Période: {formatDate(periode.debut)} au {formatDate(periode.fin)} ({periode.mois} mois)
           </Text>
           <Text style={styles.headerSub}>Généré le: {formatDateTime(generated_at)}</Text>
-          {restaurant?.adresse && <Text style={styles.headerSub}>{String(restaurant.adresse)}</Text>}
+          {restaurant?.adresse && (
+            <Text style={styles.headerSub}>{String(restaurant.adresse)}</Text>
+          )}
         </View>
 
         <View style={styles.section}>
@@ -121,14 +147,25 @@ export function DDPPExport({ data }: { data: DDPPData }) {
           <View style={styles.table}>
             <View style={styles.tableHeader}>
               <Text style={[styles.tableHeaderCell, { flex: 3 }]}>Date et heure</Text>
-              <Text style={[styles.tableHeaderCell, { flex: 1, textAlign: 'center' }]}>T° (°C)</Text>
-              <Text style={[styles.tableHeaderCell, { flex: 1, textAlign: 'center' }]}>Conforme</Text>
+              <Text style={[styles.tableHeaderCell, { flex: 1, textAlign: 'center' }]}>
+                T° (°C)
+              </Text>
+              <Text style={[styles.tableHeaderCell, { flex: 1, textAlign: 'center' }]}>
+                Conforme
+              </Text>
               <Text style={[styles.tableHeaderCell, { flex: 3 }]}>Action corrective</Text>
             </View>
             {releves.map((r, i) => (
               <View key={i} style={[styles.tableRow, !r.conforme ? styles.nonConforme : {}]}>
-                <Text style={[styles.tableCell, { flex: 3 }]}>{formatDateTime(r.timestamp_releve)}</Text>
-                <Text style={[styles.tableCell, { flex: 1, textAlign: 'center', fontWeight: r.conforme ? 'normal' : 'bold' }]}>
+                <Text style={[styles.tableCell, { flex: 3 }]}>
+                  {formatDateTime(r.timestamp_releve)}
+                </Text>
+                <Text
+                  style={[
+                    styles.tableCell,
+                    { flex: 1, textAlign: 'center', fontWeight: r.conforme ? 'normal' : 'bold' },
+                  ]}
+                >
                   {r.valeur}°C
                 </Text>
                 <Text style={[styles.tableCell, { flex: 1, textAlign: 'center' }]}>
@@ -151,14 +188,24 @@ export function DDPPExport({ data }: { data: DDPPData }) {
           <Text style={styles.sectionTitle}>Plan HACCP — Points de Contrôle Critiques</Text>
           {haccp.map((ccp) => (
             <View key={ccp.id} style={styles.ccpBox}>
-              <Text style={{ fontWeight: 'bold', fontSize: 10 }}>{ccp.ccp_numero} — {ccp.etape_critique}</Text>
-              {ccp.plat_nom && <Text style={{ fontSize: 8, color: '#666' }}>Plat: {ccp.plat_nom}</Text>}
+              <Text style={{ fontWeight: 'bold', fontSize: 10 }}>
+                {ccp.ccp_numero} — {ccp.etape_critique}
+              </Text>
+              {ccp.plat_nom && (
+                <Text style={{ fontSize: 8, color: '#666' }}>Plat: {ccp.plat_nom}</Text>
+              )}
               <Text style={{ fontSize: 8, marginTop: 2 }}>Danger: {ccp.danger}</Text>
               <Text style={{ fontSize: 8, fontWeight: 'bold', marginTop: 2, color: '#e94560' }}>
-                Limite critique: {ccp.temperature_critique ? `${ccp.temperature_critique}°C — ` : ''}{ccp.limite_critique}
+                Limite critique:{' '}
+                {ccp.temperature_critique ? `${ccp.temperature_critique}°C — ` : ''}
+                {ccp.limite_critique}
               </Text>
-              <Text style={{ fontSize: 8, marginTop: 1 }}>Surveillance: {ccp.mesure_surveillance}</Text>
-              <Text style={{ fontSize: 8, marginTop: 1 }}>Action corrective: {ccp.action_corrective}</Text>
+              <Text style={{ fontSize: 8, marginTop: 1 }}>
+                Surveillance: {ccp.mesure_surveillance}
+              </Text>
+              <Text style={{ fontSize: 8, marginTop: 1 }}>
+                Action corrective: {ccp.action_corrective}
+              </Text>
             </View>
           ))}
         </Page>

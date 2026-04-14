@@ -26,9 +26,20 @@ describe('fiches.create — calcul allergènes', () => {
 
   it('gère les 14 allergènes réglementaires', () => {
     const allergenesMajeurs = [
-      'gluten', 'crustaces', 'oeufs', 'poisson', 'arachides',
-      'soja', 'lait', 'fruits_coque', 'celeri', 'moutarde',
-      'sesame', 'so2', 'lupin', 'mollusques',
+      'gluten',
+      'crustaces',
+      'oeufs',
+      'poisson',
+      'arachides',
+      'soja',
+      'lait',
+      'fruits_coque',
+      'celeri',
+      'moutarde',
+      'sesame',
+      'so2',
+      'lupin',
+      'mollusques',
     ]
     expect(allergenesMajeurs).toHaveLength(14)
   })

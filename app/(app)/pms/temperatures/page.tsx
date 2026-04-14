@@ -11,7 +11,7 @@ export default function TemperaturesPage() {
   const { data: logs } = trpc.pms.getTemperatureLogs.useQuery({ jours: 7 })
   const utils = trpc.useUtils()
 
-  const nonConformes = logs?.filter(l => !l.conforme).length ?? 0
+  const nonConformes = logs?.filter((l) => !l.conforme).length ?? 0
 
   if (isLoading) {
     return (
@@ -27,11 +27,13 @@ export default function TemperaturesPage() {
         <div>
           <h1 className="text-xl font-bold text-gray-900">Températures</h1>
           {nonConformes > 0 && (
-            <p className="text-sm text-red-500 font-medium">{nonConformes} non-conforme(s) cette semaine</p>
+            <p className="text-sm text-red-500 font-medium">
+              {nonConformes} non-conforme(s) cette semaine
+            </p>
           )}
         </div>
         <button
-          onClick={() => setShowSetup(v => !v)}
+          onClick={() => setShowSetup((v) => !v)}
           className="px-3 py-2 bg-indigo-600 text-white text-sm font-medium rounded-xl"
         >
           {showSetup ? 'Fermer' : '+ Équipement'}
@@ -56,7 +58,7 @@ export default function TemperaturesPage() {
       )}
 
       <div className="space-y-4">
-        {equipements?.map(equipement => (
+        {equipements?.map((equipement) => (
           <TemperatureLogger
             key={equipement.id}
             equipement={equipement}
@@ -71,10 +73,14 @@ export default function TemperaturesPage() {
             Historique 7 jours
           </h2>
           <div className="space-y-2">
-            {logs.slice(0, 10).map(log => {
-              const equipNom = (log.equipement as unknown as { nom: string } | null)?.nom ?? 'Équipement'
+            {logs.slice(0, 10).map((log) => {
+              const equipNom =
+                (log.equipement as unknown as { nom: string } | null)?.nom ?? 'Équipement'
               const date = new Date(log.timestamp_releve).toLocaleString('fr-FR', {
-                day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit',
+                day: '2-digit',
+                month: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
               })
               return (
                 <div

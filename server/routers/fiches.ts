@@ -66,9 +66,7 @@ export const fichesRouter = router({
         ordre: index,
       }))
 
-      const { error: fichesError } = await ctx.supabase
-        .from('fiche_technique')
-        .insert(lignes)
+      const { error: fichesError } = await ctx.supabase.from('fiche_technique').insert(lignes)
 
       if (fichesError) {
         throw new Error(`Erreur création fiche: ${fichesError.message}`)
@@ -90,13 +88,15 @@ export const fichesRouter = router({
     .query(async ({ ctx, input }) => {
       const { data: plat } = await ctx.supabase
         .from('plats')
-        .select(`
+        .select(
+          `
           *,
           fiche_technique (
             id, nom_ingredient, grammage, unite, ordre,
             ingredient_id, fournisseur_id_habituel
           )
-        `)
+        `
+        )
         .eq('id', input.platId)
         .eq('restaurant_id', ctx.restaurantId)
         .single()

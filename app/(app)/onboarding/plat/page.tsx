@@ -12,7 +12,9 @@ export default function OnboardingPlatPage() {
     >
       <div className="text-white mb-8">
         <h1 className="text-2xl font-bold mb-2">Ajoutez votre premier plat</h1>
-        <p className="opacity-80">Photographiez un plat — l&apos;IA analyse automatiquement les ingrédients</p>
+        <p className="opacity-80">
+          Photographiez un plat — l&apos;IA analyse automatiquement les ingrédients
+        </p>
         <div className="flex gap-1 mt-4">
           <div className="h-1 flex-1 bg-white rounded-full" />
           <div className="h-1 flex-1 bg-white rounded-full" />

@@ -34,9 +34,8 @@ export function TemperatureLogger({ equipement, onLogged }: TemperatureLoggerPro
   })
 
   const parsed = parseFloat(value)
-  const isHorsPlage = value !== '' && !isNaN(parsed) && (
-    parsed < equipement.temp_min || parsed > equipement.temp_max
-  )
+  const isHorsPlage =
+    value !== '' && !isNaN(parsed) && (parsed < equipement.temp_min || parsed > equipement.temp_max)
 
   const handleSubmit = () => {
     log.mutate({
@@ -62,7 +61,7 @@ export function TemperatureLogger({ equipement, onLogged }: TemperatureLoggerPro
         <input
           type="number"
           value={value}
-          onChange={e => setValue(e.target.value)}
+          onChange={(e) => setValue(e.target.value)}
           step={0.1}
           placeholder="Température (°C)"
           className={`w-full px-4 py-6 text-4xl font-bold text-center rounded-2xl border-2 focus:outline-none ${
@@ -85,7 +84,7 @@ export function TemperatureLogger({ equipement, onLogged }: TemperatureLoggerPro
       {isHorsPlage && (
         <textarea
           value={actionCorrective}
-          onChange={e => setActionCorrective(e.target.value)}
+          onChange={(e) => setActionCorrective(e.target.value)}
           placeholder="Action corrective prise (obligatoire si hors plage)"
           className="w-full px-4 py-3 rounded-xl border border-red-300 text-sm mb-3"
           rows={2}
@@ -112,9 +111,7 @@ export function TemperatureLogger({ equipement, onLogged }: TemperatureLoggerPro
         </button>
       )}
 
-      {log.isError && (
-        <p className="text-sm text-red-500 text-center mt-2">{log.error.message}</p>
-      )}
+      {log.isError && <p className="text-sm text-red-500 text-center mt-2">{log.error.message}</p>}
     </div>
   )
 }
