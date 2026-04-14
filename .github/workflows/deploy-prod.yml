@@ -19,7 +19,7 @@ jobs:
         with:
           version: latest
       - name: Push migrations to production
-        run: supabase db push --db-url "$SUPABASE_DB_URL"
+        run: supabase db push --db-url "$(echo -n "$SUPABASE_DB_URL" | tr -d '[:space:]')"
         env:
           SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
 
