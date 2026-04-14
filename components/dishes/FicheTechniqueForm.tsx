@@ -82,7 +82,15 @@ export function FicheTechniqueForm({
     <form onSubmit={handleSubmit} className="space-y-6" data-testid="fiche-technique-form">
       {photoUrl && (
         // eslint-disable-next-line @next/next/no-img-element
-        <img src={photoUrl} alt="Photo du plat" className="w-full h-48 object-cover rounded-2xl" />
+        <img
+          src={
+            photoUrl.startsWith('http') || photoUrl.startsWith('blob')
+              ? photoUrl
+              : `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/dish-photos/${photoUrl}`
+          }
+          alt="Photo du plat"
+          className="w-full h-48 object-cover rounded-2xl"
+        />
       )}
 
       <div>

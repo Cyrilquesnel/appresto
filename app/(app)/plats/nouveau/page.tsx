@@ -83,7 +83,7 @@ export default function NouveauPlatPage() {
         </div>
         <FicheTechniqueForm
           initialIngredients={validatedIngredients}
-          photoUrl={preview ?? undefined}
+          photoUrl={result.image_url}
           typePlat={result.type_plat}
         />
       </div>
