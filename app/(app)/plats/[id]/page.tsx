@@ -57,11 +57,7 @@ export default async function PlatDetailPage({ params }: Props) {
 
       {photoUrl && (
         // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={photoUrl}
-          alt={plat.nom}
-          className="w-full h-48 object-cover rounded-2xl mb-4"
-        />
+        <img src={photoUrl} alt={plat.nom} className="w-full h-48 object-cover rounded-2xl mb-4" />
       )}
 
       {plat.cout_de_revient && (
