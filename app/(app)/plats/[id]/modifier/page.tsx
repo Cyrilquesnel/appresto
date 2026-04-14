@@ -49,6 +49,12 @@ export default function ModifierPlatPage() {
         <h1 className="text-xl font-bold">Modifier — {plat.nom}</h1>
       </div>
 
+      {update.isError && (
+        <p className="mb-4 text-red-600 text-sm text-center bg-red-50 rounded-xl p-3">
+          Erreur : {update.error.message}
+        </p>
+      )}
+
       <FicheTechniqueForm
         initialNom={plat.nom}
         initialStatut={(plat.statut as 'brouillon' | 'actif') ?? 'brouillon'}

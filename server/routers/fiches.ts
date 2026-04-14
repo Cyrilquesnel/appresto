@@ -146,7 +146,11 @@ export const fichesRouter = router({
 
       if (ingredients) {
         // Remplacer toutes les lignes fiche_technique
-        await ctx.supabase.from('fiche_technique').delete().eq('plat_id', platId)
+        await ctx.supabase
+          .from('fiche_technique')
+          .delete()
+          .eq('plat_id', platId)
+          .eq('restaurant_id', ctx.restaurantId)
         const lignes = ingredients.map((ing, index) => ({
           restaurant_id: ctx.restaurantId,
           plat_id: platId,

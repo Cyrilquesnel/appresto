@@ -29,6 +29,12 @@ export default async function PlatDetailPage({ params }: Props) {
 
   if (!plat) notFound()
 
+  const photoUrl = plat.photo_url
+    ? plat.photo_url.startsWith('http')
+      ? plat.photo_url
+      : supabase.storage.from('dish-photos').getPublicUrl(plat.photo_url).data.publicUrl
+    : null
+
   const lignes = plat.fiche_technique
     ? [...plat.fiche_technique].sort((a, b) => a.ordre - b.ordre)
     : []
@@ -49,10 +55,10 @@ export default async function PlatDetailPage({ params }: Props) {
         </span>
       </div>
 
-      {plat.photo_url && (
+      {photoUrl && (
         // eslint-disable-next-line @next/next/no-img-element
         <img
-          src={plat.photo_url}
+          src={photoUrl}
           alt={plat.nom}
           className="w-full h-48 object-cover rounded-2xl mb-4"
         />
