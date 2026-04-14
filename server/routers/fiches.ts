@@ -9,6 +9,9 @@ const IngredientLineSchema = z.object({
   fournisseur_id_habituel: z.string().uuid().optional(),
   allergenes: z.array(z.string()).default([]),
   is_manual: z.boolean().default(false),
+  fournisseur_id: z.string().uuid().optional(),
+  prix_achat: z.number().positive().optional(),
+  unite_achat: z.string().optional(),
 })
 
 export const fichesRouter = router({
@@ -70,6 +73,22 @@ export const fichesRouter = router({
 
       if (fichesError) {
         throw new Error(`Erreur création fiche: ${fichesError.message}`)
+      }
+
+      // Upsert mercuriale pour les ingrédients avec prix_achat
+      for (const ing of ingredients) {
+        if (ing.prix_achat && ing.fournisseur_id && ing.ingredient_id) {
+          await ctx.supabase.from('mercuriale').upsert(
+            {
+              ingredient_id: ing.ingredient_id,
+              fournisseur_id: ing.fournisseur_id,
+              prix: ing.prix_achat,
+              unite: ing.unite_achat ?? 'kg',
+              est_actif: true,
+            },
+            { onConflict: 'ingredient_id,fournisseur_id' }
+          )
+        }
       }
 
       // INSERT fiche_technique_versions (snapshot initial)
@@ -184,7 +203,73 @@ export const fichesRouter = router({
       .from('plats')
       .select('id, nom, photo_url, statut, cout_de_revient, allergenes, created_at')
       .eq('restaurant_id', ctx.restaurantId)
+      .is('deleted_at', null)
       .order('created_at', { ascending: false })
     return data ?? []
   }),
+
+  importBulk: protectedProcedure
+    .input(
+      z.object({
+        plats: z.array(
+          z.object({
+            nom: z.string().min(1),
+            prix_vente_ht: z.number().positive().optional(),
+            ingredients: z.array(
+              z.object({
+                nom: z.string().min(1),
+                grammage: z.number().positive(),
+                unite: z.string().default('g'),
+              })
+            ),
+          })
+        ),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const results: { nom: string; success: boolean; error?: string }[] = []
+      for (const plat of input.plats) {
+        try {
+          const { data: platData, error: platError } = await ctx.supabase
+            .from('plats')
+            .insert({
+              restaurant_id: ctx.restaurantId,
+              nom: plat.nom,
+              prix_vente_ht: plat.prix_vente_ht ?? null,
+              statut: 'brouillon',
+            })
+            .select('id')
+            .single()
+          if (platError || !platData) throw new Error(platError?.message ?? 'Erreur création plat')
+
+          const lignes = plat.ingredients.map((ing, i) => ({
+            restaurant_id: ctx.restaurantId,
+            plat_id: platData.id,
+            nom_ingredient: ing.nom,
+            grammage: ing.grammage,
+            unite: ing.unite,
+            ordre: i,
+          }))
+          const { error: fichesError } = await ctx.supabase.from('fiche_technique').insert(lignes)
+          if (fichesError) throw new Error(fichesError.message)
+
+          results.push({ nom: plat.nom, success: true })
+        } catch (e) {
+          results.push({ nom: plat.nom, success: false, error: (e as Error).message })
+        }
+      }
+      return results
+    }),
+
+  archive: protectedProcedure
+    .input(z.object({ platId: z.string().uuid() }))
+    .mutation(async ({ ctx, input }) => {
+      const { error } = await ctx.supabase
+        .from('plats')
+        .update({ statut: 'archive', deleted_at: new Date().toISOString() })
+        .eq('id', input.platId)
+        .eq('restaurant_id', ctx.restaurantId)
+      if (error) throw new Error(error.message)
+      return { success: true }
+    }),
 })

@@ -187,6 +187,21 @@ export const dashboardRouter = router({
         moisCourant = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`
       }
 
+      const { data: restaurantIngredients } = await ctx.supabase
+        .from('restaurant_ingredients')
+        .select('id')
+        .eq('restaurant_id', ctx.restaurantId)
+
+      const ingredientIds = restaurantIngredients?.map((r) => r.id) ?? []
+      const { count: nb_ingredients_avec_prix } =
+        ingredientIds.length > 0
+          ? await ctx.supabase
+              .from('mercuriale')
+              .select('*', { count: 'exact', head: true })
+              .in('ingredient_id', ingredientIds)
+              .eq('est_actif', true)
+          : { count: 0 }
+
       const [ventesResult, chargesResult, platsResult] = await Promise.all([
         ctx.supabase
           .from('ventes')
@@ -260,6 +275,7 @@ export const dashboardRouter = router({
         periode: input.periode,
         date_debut: dateDebut,
         date_fin: dateFin,
+        nb_ingredients_avec_prix: nb_ingredients_avec_prix ?? 0,
       }
     }),
 

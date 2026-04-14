@@ -76,6 +76,26 @@ export default function DashboardPage() {
         charges_fixes={kpis?.charges_fixes ?? null}
       />
 
+      {/* Mercuriale */}
+      {(kpis?.nb_ingredients_avec_prix ?? 0) > 0 ? (
+        <Link
+          href="/mercuriale"
+          className="block bg-blue-50 rounded-2xl p-4 border border-blue-100"
+        >
+          <p className="text-xs text-gray-500 uppercase tracking-wide">Mercuriale</p>
+          <p className="text-2xl font-bold text-blue-700 mt-1">{kpis!.nb_ingredients_avec_prix}</p>
+          <p className="text-xs text-gray-400">ingrédients avec prix actif → voir la mercuriale</p>
+        </Link>
+      ) : (
+        <Link
+          href="/mercuriale"
+          className="block bg-gray-50 rounded-2xl p-4 border border-dashed border-gray-200"
+        >
+          <p className="text-sm text-gray-500">Aucun prix en mercuriale</p>
+          <p className="text-xs text-indigo-500 mt-1">→ Ajouter des prix</p>
+        </Link>
+      )}
+
       {/* Actions rapides */}
       <div className="grid grid-cols-2 gap-3">
         <Link

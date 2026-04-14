@@ -11,14 +11,22 @@ export default async function PlatsPage() {
     <div className="p-4">
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-xl font-bold">Mes plats</h1>
-        <a
-          href="/plats/nouveau"
-          className="px-4 py-2 rounded-lg text-white text-sm font-medium"
-          style={{ backgroundColor: 'var(--color-accent)' }}
-          data-testid="add-dish-btn"
-        >
-          + Nouveau
-        </a>
+        <div className="flex gap-2">
+          <a
+            href="/plats/importer"
+            className="px-3 py-2 rounded-lg text-sm font-medium border border-gray-300 text-gray-700 hover:bg-gray-50"
+          >
+            Import CSV
+          </a>
+          <a
+            href="/plats/nouveau"
+            className="px-4 py-2 rounded-lg text-white text-sm font-medium"
+            style={{ backgroundColor: 'var(--color-accent)' }}
+            data-testid="add-dish-btn"
+          >
+            + Nouveau
+          </a>
+        </div>
       </div>
       {(!plats || plats.length === 0) && (
         <p className="text-gray-500 text-center mt-8">

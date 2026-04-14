@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect, notFound } from 'next/navigation'
 import { AllergenesDisplay } from '@/components/dishes/AllergenesDisplay'
+import { ArchiveButton } from '@/components/dishes/ArchiveButton'
 import Link from 'next/link'
 
 interface Props {
@@ -107,6 +108,7 @@ export default async function PlatDetailPage({ params }: Props) {
       >
         Modifier la fiche
       </Link>
+      <ArchiveButton platId={plat.id} />
     </div>
   )
 }

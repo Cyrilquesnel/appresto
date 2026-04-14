@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { IngredientSearch } from './IngredientSearch'
+import { FournisseurSelect } from './FournisseurSelect'
 
 export interface ValidatedIngredient {
   id?: string
@@ -10,6 +11,9 @@ export interface ValidatedIngredient {
   allergenes: string[]
   confiance?: number
   isManual?: boolean
+  fournisseur_id?: string
+  prix_achat?: number
+  unite_achat?: string
 }
 
 interface IngredientValidatorProps {
@@ -20,6 +24,7 @@ interface IngredientValidatorProps {
 export function IngredientValidator({ initialIngredients, onChange }: IngredientValidatorProps) {
   const [ingredients, setIngredients] = useState<ValidatedIngredient[]>(initialIngredients)
   const [showSearch, setShowSearch] = useState(false)
+  const [editingIndex, setEditingIndex] = useState<number | null>(null)
 
   const update = (updated: ValidatedIngredient[]) => {
     setIngredients(updated)
@@ -32,6 +37,22 @@ export function IngredientValidator({ initialIngredients, onChange }: Ingredient
 
   const updateGrammage = (index: number, grammage: number) => {
     update(ingredients.map((ing, i) => (i === index ? { ...ing, grammage } : ing)))
+  }
+
+  const updateNom = (index: number, nom: string) => {
+    update(ingredients.map((ing, i) => (i === index ? { ...ing, nom } : ing)))
+  }
+
+  const updateFournisseur = (index: number, fournisseur_id: string | undefined) => {
+    update(ingredients.map((ing, i) => (i === index ? { ...ing, fournisseur_id } : ing)))
+  }
+
+  const updatePrix = (index: number, prix_achat: number) => {
+    update(ingredients.map((ing, i) => (i === index ? { ...ing, prix_achat } : ing)))
+  }
+
+  const updateUniteAchat = (index: number, unite_achat: string) => {
+    update(ingredients.map((ing, i) => (i === index ? { ...ing, unite_achat } : ing)))
   }
 
   const addFromSearch = (ingredient: { id?: string; nom: string; allergenes: string[] }) => {
@@ -56,7 +77,25 @@ export function IngredientValidator({ initialIngredients, onChange }: Ingredient
           data-testid={`ingredient-row-${index}`}
         >
           <div className="flex-1 min-w-0">
-            <p className="font-medium text-gray-900 truncate">{ing.nom}</p>
+            {editingIndex === index ? (
+              <input
+                type="text"
+                autoFocus
+                value={ing.nom}
+                onChange={(e) => updateNom(index, e.target.value)}
+                onBlur={() => setEditingIndex(null)}
+                onKeyDown={(e) => e.key === 'Enter' && setEditingIndex(null)}
+                className="font-medium text-gray-900 w-full border-b border-indigo-400 outline-none bg-transparent"
+              />
+            ) : (
+              <p
+                className="font-medium text-gray-900 truncate cursor-pointer hover:text-indigo-600"
+                onClick={() => setEditingIndex(index)}
+                title="Cliquer pour modifier"
+              >
+                {ing.nom}
+              </p>
+            )}
             {ing.allergenes.length > 0 && (
               <p className="text-xs text-amber-600 truncate">
                 Allergènes: {ing.allergenes.join(', ')}
@@ -88,6 +127,38 @@ export function IngredientValidator({ initialIngredients, onChange }: Ingredient
               ⚠
             </span>
           )}
+          <details className="mt-2 w-full">
+            <summary className="text-xs text-gray-400 cursor-pointer select-none">
+              + Prix &amp; fournisseur
+            </summary>
+            <div className="mt-2 space-y-2">
+              <FournisseurSelect
+                value={ing.fournisseur_id}
+                onChange={(id) => updateFournisseur(index, id)}
+              />
+              <div className="flex gap-2">
+                <input
+                  type="number"
+                  placeholder="Prix HT"
+                  value={ing.prix_achat ?? ''}
+                  onChange={(e) => updatePrix(index, parseFloat(e.target.value))}
+                  className="flex-1 px-2 py-1 border border-gray-200 rounded text-sm"
+                  min={0}
+                  step={0.01}
+                />
+                <select
+                  value={ing.unite_achat ?? 'kg'}
+                  onChange={(e) => updateUniteAchat(index, e.target.value)}
+                  className="px-2 py-1 border border-gray-200 rounded text-sm bg-white"
+                >
+                  <option value="kg">kg</option>
+                  <option value="L">L</option>
+                  <option value="g">g</option>
+                  <option value="pc">pc</option>
+                </select>
+              </div>
+            </div>
+          </details>
         </div>
       ))}
 
