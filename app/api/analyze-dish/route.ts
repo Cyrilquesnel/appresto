@@ -40,16 +40,18 @@ export async function POST(request: NextRequest) {
   const imageBuffer = Buffer.from(await file.arrayBuffer())
   const imageBase64 = imageBuffer.toString('base64')
 
-  // Upload storage avec service client (bypasse RLS)
+  // Upload storage + analyse Gemini en parallèle
   const storagePath = `${restaurantId}/${Date.now()}.jpg`
   const serviceClient = createServiceClient()
-  serviceClient.storage
-    .from('dish-photos')
-    .upload(storagePath, imageBuffer, { contentType: file.type })
-    .catch((err: unknown) => console.error('[analyze-dish] Storage upload error:', err))
-
-  // Analyse Gemini
-  const geminiResult = await analyzeWithRetry(imageBase64, file.type)
+  const [geminiResult] = await Promise.all([
+    analyzeWithRetry(imageBase64, file.type),
+    serviceClient.storage
+      .from('dish-photos')
+      .upload(storagePath, imageBuffer, { contentType: file.type })
+      .then(({ error }) => {
+        if (error) console.error('[analyze-dish] Storage upload error:', error.message)
+      }),
+  ])
 
   // Enrichissement Claude Haiku (conditionnel — uniquement si confiance faible)
   const ingredientsConfiance = geminiResult.ingredients_detectes.map((i) => i.confiance)
