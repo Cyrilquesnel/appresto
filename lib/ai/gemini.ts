@@ -58,10 +58,11 @@ export interface GeminiDishResult {
 
 export async function analyzeDishPhoto(
   imageBase64: string,
-  mimeType: string
+  mimeType: string,
+  modelName = 'gemini-2.5-flash'
 ): Promise<GeminiDishResult> {
   const model = genAI.getGenerativeModel({
-    model: 'gemini-2.5-flash',
+    model: modelName,
     generationConfig: {
       responseMimeType: 'application/json',
       responseSchema: ingredientSchema,
@@ -85,19 +86,30 @@ export async function analyzeWithRetry(
   mimeType: string,
   maxRetries = 3
 ): Promise<GeminiDishResult> {
+  const models = ['gemini-2.5-flash', 'gemini-2.0-flash']
   let lastError: Error = new Error('Gemini: max retries exceeded')
-  for (let i = 0; i < maxRetries; i++) {
-    try {
-      return await analyzeDishPhoto(imageBase64, mimeType)
-    } catch (error: unknown) {
-      lastError = error as Error
-      const status = (error as { status?: number }).status
-      if (status === 429 || status === 503) {
-        await new Promise((r) => setTimeout(r, 1000 * Math.pow(2, i)))
-        continue
+
+  for (const modelName of models) {
+    for (let i = 0; i < maxRetries; i++) {
+      try {
+        if (modelName !== 'gemini-2.5-flash') {
+          console.log(`[gemini] fallback sur ${modelName} (attempt ${i + 1})`)
+        }
+        return await analyzeDishPhoto(imageBase64, mimeType, modelName)
+      } catch (error: unknown) {
+        lastError = error as Error
+        const status = (error as { status?: number }).status
+        if (status === 429 || status === 503) {
+          if (i < maxRetries - 1) {
+            await new Promise((r) => setTimeout(r, 1000 * Math.pow(2, i)))
+          }
+          continue
+        }
+        throw error
       }
-      throw error
     }
+    console.warn(`[gemini] ${modelName} indisponible après ${maxRetries} tentatives, fallback suivant`)
   }
+
   throw lastError
 }
