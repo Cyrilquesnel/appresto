@@ -108,7 +108,9 @@ export async function analyzeWithRetry(
         throw error
       }
     }
-    console.warn(`[gemini] ${modelName} indisponible après ${maxRetries} tentatives, fallback suivant`)
+    console.warn(
+      `[gemini] ${modelName} indisponible après ${maxRetries} tentatives, fallback suivant`
+    )
   }
 
   throw lastError
