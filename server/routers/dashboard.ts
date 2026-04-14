@@ -41,6 +41,7 @@ export const dashboardRouter = router({
           restaurant_id: ctx.restaurantId,
           date: input.date,
           service: input.service,
+          quantite: input.nb_couverts,
           nb_couverts: input.nb_couverts,
           panier_moyen: input.panier_moyen,
           montant_total: montant,
