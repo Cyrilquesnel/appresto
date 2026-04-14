@@ -3,6 +3,7 @@ import { createClient } from '@/lib/supabase/server'
 import { OfflineBadge } from '@/components/pms/OfflineBadge'
 import { SWRegistrar } from '@/components/SWRegistrar'
 import { RestaurantInitializer } from '@/components/RestaurantInitializer'
+import { PushPrompt } from '@/components/PushPrompt'
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
   const supabase = createClient()
@@ -18,6 +19,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
       <SWRegistrar />
       <main className="pb-20">{children}</main>
       <OfflineBadge />
+      <PushPrompt />
       <nav
         className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50"
         style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}

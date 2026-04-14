@@ -6,6 +6,7 @@ import { SeuilRentabiliteCard } from '@/components/dashboard/SeuilRentabiliteCar
 import { ChargesCard } from '@/components/dashboard/ChargesCard'
 import { VentesSemaineChart } from '@/components/dashboard/VentesSemaineChart'
 import { RealtimeIndicator } from '@/components/dashboard/RealtimeIndicator'
+import { RappelBadge } from '@/components/dashboard/RappelBadge'
 import { useDashboardRealtime } from '@/hooks/useDashboardRealtime'
 import { OnboardingProgress } from '@/components/onboarding/OnboardingProgress'
 
@@ -95,6 +96,25 @@ export default function DashboardPage() {
           <p className="text-xs text-indigo-500 mt-1">→ Ajouter des prix</p>
         </Link>
       )}
+
+      {/* Alertes RappelConso */}
+      <RappelBadge />
+
+      {/* Analytiques */}
+      <Link
+        href="/dashboard/analytiques"
+        className="block bg-white rounded-2xl p-4 border border-gray-200 hover:border-indigo-300 transition-colors"
+      >
+        <div className="flex justify-between items-center">
+          <div>
+            <p className="text-xs text-gray-500 uppercase tracking-wide">Analytiques</p>
+            <p className="text-sm font-semibold text-gray-800 mt-0.5">
+              Food cost par plat · Top/Flop
+            </p>
+          </div>
+          <span className="text-gray-400">→</span>
+        </div>
+      </Link>
 
       {/* Actions rapides */}
       <div className="grid grid-cols-2 gap-3">

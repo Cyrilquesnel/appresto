@@ -375,6 +375,72 @@ export const dashboardRouter = router({
       return { success: true }
     }),
 
+  // ═══ ANALYTIQUES PAR PLAT ═══
+  getTopFlop: protectedProcedure
+    .input(
+      z.object({
+        date_debut: z.string(),
+        date_fin: z.string(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const [ventesResult, platsResult] = await Promise.all([
+        ctx.supabase
+          .from('ventes')
+          .select('plat_id, quantite, montant_total')
+          .eq('restaurant_id', ctx.restaurantId)
+          .gte('date', input.date_debut)
+          .lte('date', input.date_fin)
+          .not('plat_id', 'is', null),
+        ctx.supabase
+          .from('plats')
+          .select('id, nom, cout_de_revient, prix_vente_ht')
+          .eq('restaurant_id', ctx.restaurantId)
+          .is('deleted_at', null),
+      ])
+
+      const platsMap = Object.fromEntries((platsResult.data ?? []).map((p) => [p.id, p]))
+
+      // Agréger par plat
+      const aggregated = new Map<
+        string,
+        { plat_id: string; nom: string; quantite: number; ca: number; cout_total: number }
+      >()
+
+      for (const v of ventesResult.data ?? []) {
+        if (!v.plat_id) continue
+        const existing = aggregated.get(v.plat_id)
+        const plat = platsMap[v.plat_id]
+        const nom = plat?.nom ?? 'Plat inconnu'
+        const cout = plat?.cout_de_revient ?? null
+        const qte = v.quantite ?? 0
+        if (existing) {
+          existing.quantite += qte
+          existing.ca += v.montant_total ?? 0
+          existing.cout_total += cout != null ? cout * qte : 0
+        } else {
+          aggregated.set(v.plat_id, {
+            plat_id: v.plat_id,
+            nom,
+            quantite: qte,
+            ca: v.montant_total ?? 0,
+            cout_total: cout != null ? cout * qte : 0,
+          })
+        }
+      }
+
+      return Array.from(aggregated.values())
+        .map((p) => ({
+          ...p,
+          ca: Math.round(p.ca * 100) / 100,
+          cout_total: Math.round(p.cout_total * 100) / 100,
+          food_cost_pct:
+            p.ca > 0 && p.cout_total > 0 ? Math.round((p.cout_total / p.ca) * 10000) / 100 : null,
+          marge: Math.round((p.ca - p.cout_total) * 100) / 100,
+        }))
+        .sort((a, b) => b.ca - a.ca)
+    }),
+
   getVentesSemaine: protectedProcedure.query(async ({ ctx }) => {
     const today = new Date()
     const dates = Array.from({ length: 7 }, (_, i) => {
