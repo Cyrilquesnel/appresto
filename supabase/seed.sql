@@ -1,1 +1,1 @@
-ok
+-- Seed file (vide — les données initiales sont dans les migrations)
