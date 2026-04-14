@@ -59,9 +59,7 @@ if (missingOptional.length > 0) {
 if (missing.length > 0) {
   console.error('\n❌ Variables requises manquantes :')
   missing.forEach((key) => console.error(`   - ${key}`))
-  console.error(
-    `\n${missing.length} variable(s) requise(s) non définie(s). Déploiement annulé.\n`
-  )
+  console.error(`\n${missing.length} variable(s) requise(s) non définie(s). Déploiement annulé.\n`)
   process.exit(1)
 }
 
