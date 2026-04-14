@@ -37,145 +37,231 @@ ALTER TABLE formations_hygiene ENABLE ROW LEVEL SECURITY;
 ALTER TABLE subscriptions ENABLE ROW LEVEL SECURITY;
 
 -- RESTAURANTS (owner uniquement)
+DROP POLICY IF EXISTS "restaurants_select" ON restaurants;
 CREATE POLICY "restaurants_select" ON restaurants FOR SELECT USING (owner_id = auth.uid() OR id = get_user_restaurant_id());
+DROP POLICY IF EXISTS "restaurants_insert" ON restaurants;
 CREATE POLICY "restaurants_insert" ON restaurants FOR INSERT WITH CHECK (owner_id = auth.uid());
+DROP POLICY IF EXISTS "restaurants_update" ON restaurants;
 CREATE POLICY "restaurants_update" ON restaurants FOR UPDATE USING (owner_id = auth.uid());
 
 -- RESTAURANT_USERS
+DROP POLICY IF EXISTS "restaurant_users_select" ON restaurant_users;
 CREATE POLICY "restaurant_users_select" ON restaurant_users FOR SELECT USING (user_id = auth.uid() OR restaurant_id = get_user_restaurant_id());
+DROP POLICY IF EXISTS "restaurant_users_insert" ON restaurant_users;
 CREATE POLICY "restaurant_users_insert" ON restaurant_users FOR INSERT WITH CHECK (restaurant_id = get_user_restaurant_id() OR user_id = auth.uid());
 
 -- INGREDIENTS CATALOG (lecture publique authentifiée)
+DROP POLICY IF EXISTS "catalog_select" ON ingredients_catalog;
 CREATE POLICY "catalog_select" ON ingredients_catalog FOR SELECT TO authenticated USING (true);
 
 -- RESTAURANT_INGREDIENTS
+DROP POLICY IF EXISTS "ri_select" ON restaurant_ingredients;
 CREATE POLICY "ri_select" ON restaurant_ingredients FOR SELECT USING (restaurant_id = get_user_restaurant_id());
+DROP POLICY IF EXISTS "ri_insert" ON restaurant_ingredients;
 CREATE POLICY "ri_insert" ON restaurant_ingredients FOR INSERT WITH CHECK (restaurant_id = get_user_restaurant_id());
+DROP POLICY IF EXISTS "ri_update" ON restaurant_ingredients;
 CREATE POLICY "ri_update" ON restaurant_ingredients FOR UPDATE USING (restaurant_id = get_user_restaurant_id());
+DROP POLICY IF EXISTS "ri_delete" ON restaurant_ingredients;
 CREATE POLICY "ri_delete" ON restaurant_ingredients FOR DELETE USING (restaurant_id = get_user_restaurant_id());
 
 -- PLATS
+DROP POLICY IF EXISTS "plats_select" ON plats;
 CREATE POLICY "plats_select" ON plats FOR SELECT USING (restaurant_id = get_user_restaurant_id());
+DROP POLICY IF EXISTS "plats_insert" ON plats;
 CREATE POLICY "plats_insert" ON plats FOR INSERT WITH CHECK (restaurant_id = get_user_restaurant_id());
+DROP POLICY IF EXISTS "plats_update" ON plats;
 CREATE POLICY "plats_update" ON plats FOR UPDATE USING (restaurant_id = get_user_restaurant_id()) WITH CHECK (restaurant_id = get_user_restaurant_id());
+DROP POLICY IF EXISTS "plats_delete" ON plats;
 CREATE POLICY "plats_delete" ON plats FOR DELETE USING (restaurant_id = get_user_restaurant_id());
 
 -- FICHE_TECHNIQUE (via plat)
+DROP POLICY IF EXISTS "fiche_technique_select" ON fiche_technique;
 CREATE POLICY "fiche_technique_select" ON fiche_technique FOR SELECT USING (plat_id IN (SELECT id FROM plats WHERE restaurant_id = get_user_restaurant_id()));
+DROP POLICY IF EXISTS "fiche_technique_insert" ON fiche_technique;
 CREATE POLICY "fiche_technique_insert" ON fiche_technique FOR INSERT WITH CHECK (plat_id IN (SELECT id FROM plats WHERE restaurant_id = get_user_restaurant_id()));
+DROP POLICY IF EXISTS "fiche_technique_update" ON fiche_technique;
 CREATE POLICY "fiche_technique_update" ON fiche_technique FOR UPDATE USING (plat_id IN (SELECT id FROM plats WHERE restaurant_id = get_user_restaurant_id()));
+DROP POLICY IF EXISTS "fiche_technique_delete" ON fiche_technique;
 CREATE POLICY "fiche_technique_delete" ON fiche_technique FOR DELETE USING (plat_id IN (SELECT id FROM plats WHERE restaurant_id = get_user_restaurant_id()));
 
 -- FICHE_TECHNIQUE_VERSIONS (SELECT + INSERT seulement)
+DROP POLICY IF EXISTS "fiche_versions_select" ON fiche_technique_versions;
 CREATE POLICY "fiche_versions_select" ON fiche_technique_versions FOR SELECT USING (plat_id IN (SELECT id FROM plats WHERE restaurant_id = get_user_restaurant_id()));
+DROP POLICY IF EXISTS "fiche_versions_insert" ON fiche_technique_versions;
 CREATE POLICY "fiche_versions_insert" ON fiche_technique_versions FOR INSERT WITH CHECK (plat_id IN (SELECT id FROM plats WHERE restaurant_id = get_user_restaurant_id()));
 
 -- FICHE_MISE_EN_PLACE
+DROP POLICY IF EXISTS "fiche_mep_select" ON fiche_mise_en_place;
 CREATE POLICY "fiche_mep_select" ON fiche_mise_en_place FOR SELECT USING (plat_id IN (SELECT id FROM plats WHERE restaurant_id = get_user_restaurant_id()));
+DROP POLICY IF EXISTS "fiche_mep_insert" ON fiche_mise_en_place;
 CREATE POLICY "fiche_mep_insert" ON fiche_mise_en_place FOR INSERT WITH CHECK (plat_id IN (SELECT id FROM plats WHERE restaurant_id = get_user_restaurant_id()));
+DROP POLICY IF EXISTS "fiche_mep_update" ON fiche_mise_en_place;
 CREATE POLICY "fiche_mep_update" ON fiche_mise_en_place FOR UPDATE USING (plat_id IN (SELECT id FROM plats WHERE restaurant_id = get_user_restaurant_id()));
 
 -- FOURNISSEURS
+DROP POLICY IF EXISTS "fournisseurs_select" ON fournisseurs;
 CREATE POLICY "fournisseurs_select" ON fournisseurs FOR SELECT USING (restaurant_id = get_user_restaurant_id());
+DROP POLICY IF EXISTS "fournisseurs_insert" ON fournisseurs;
 CREATE POLICY "fournisseurs_insert" ON fournisseurs FOR INSERT WITH CHECK (restaurant_id = get_user_restaurant_id());
+DROP POLICY IF EXISTS "fournisseurs_update" ON fournisseurs;
 CREATE POLICY "fournisseurs_update" ON fournisseurs FOR UPDATE USING (restaurant_id = get_user_restaurant_id());
+DROP POLICY IF EXISTS "fournisseurs_delete" ON fournisseurs;
 CREATE POLICY "fournisseurs_delete" ON fournisseurs FOR DELETE USING (restaurant_id = get_user_restaurant_id());
 
 -- MERCURIALE
+DROP POLICY IF EXISTS "mercuriale_select" ON mercuriale;
 CREATE POLICY "mercuriale_select" ON mercuriale FOR SELECT USING (ingredient_id IN (SELECT id FROM restaurant_ingredients WHERE restaurant_id = get_user_restaurant_id()));
+DROP POLICY IF EXISTS "mercuriale_insert" ON mercuriale;
 CREATE POLICY "mercuriale_insert" ON mercuriale FOR INSERT WITH CHECK (ingredient_id IN (SELECT id FROM restaurant_ingredients WHERE restaurant_id = get_user_restaurant_id()));
+DROP POLICY IF EXISTS "mercuriale_update" ON mercuriale;
 CREATE POLICY "mercuriale_update" ON mercuriale FOR UPDATE USING (ingredient_id IN (SELECT id FROM restaurant_ingredients WHERE restaurant_id = get_user_restaurant_id()));
 
 -- BONS DE COMMANDE
+DROP POLICY IF EXISTS "bons_select" ON bons_de_commande;
 CREATE POLICY "bons_select" ON bons_de_commande FOR SELECT USING (restaurant_id = get_user_restaurant_id());
+DROP POLICY IF EXISTS "bons_insert" ON bons_de_commande;
 CREATE POLICY "bons_insert" ON bons_de_commande FOR INSERT WITH CHECK (restaurant_id = get_user_restaurant_id());
+DROP POLICY IF EXISTS "bons_update" ON bons_de_commande;
 CREATE POLICY "bons_update" ON bons_de_commande FOR UPDATE USING (restaurant_id = get_user_restaurant_id());
+DROP POLICY IF EXISTS "bons_delete" ON bons_de_commande;
 CREATE POLICY "bons_delete" ON bons_de_commande FOR DELETE USING (restaurant_id = get_user_restaurant_id());
 
 -- BON LIGNES (via bon)
+DROP POLICY IF EXISTS "bon_lignes_select" ON bon_de_commande_lignes;
 CREATE POLICY "bon_lignes_select" ON bon_de_commande_lignes FOR SELECT USING (bon_id IN (SELECT id FROM bons_de_commande WHERE restaurant_id = get_user_restaurant_id()));
+DROP POLICY IF EXISTS "bon_lignes_insert" ON bon_de_commande_lignes;
 CREATE POLICY "bon_lignes_insert" ON bon_de_commande_lignes FOR INSERT WITH CHECK (bon_id IN (SELECT id FROM bons_de_commande WHERE restaurant_id = get_user_restaurant_id()));
+DROP POLICY IF EXISTS "bon_lignes_update" ON bon_de_commande_lignes;
 CREATE POLICY "bon_lignes_update" ON bon_de_commande_lignes FOR UPDATE USING (bon_id IN (SELECT id FROM bons_de_commande WHERE restaurant_id = get_user_restaurant_id()));
+DROP POLICY IF EXISTS "bon_lignes_delete" ON bon_de_commande_lignes;
 CREATE POLICY "bon_lignes_delete" ON bon_de_commande_lignes FOR DELETE USING (bon_id IN (SELECT id FROM bons_de_commande WHERE restaurant_id = get_user_restaurant_id()));
 
 -- VENTES
+DROP POLICY IF EXISTS "ventes_select" ON ventes;
 CREATE POLICY "ventes_select" ON ventes FOR SELECT USING (restaurant_id = get_user_restaurant_id());
+DROP POLICY IF EXISTS "ventes_insert" ON ventes;
 CREATE POLICY "ventes_insert" ON ventes FOR INSERT WITH CHECK (restaurant_id = get_user_restaurant_id());
+DROP POLICY IF EXISTS "ventes_update" ON ventes;
 CREATE POLICY "ventes_update" ON ventes FOR UPDATE USING (restaurant_id = get_user_restaurant_id());
+DROP POLICY IF EXISTS "ventes_delete" ON ventes;
 CREATE POLICY "ventes_delete" ON ventes FOR DELETE USING (restaurant_id = get_user_restaurant_id());
 
 -- CHARGES
+DROP POLICY IF EXISTS "charges_select" ON charges;
 CREATE POLICY "charges_select" ON charges FOR SELECT USING (restaurant_id = get_user_restaurant_id());
+DROP POLICY IF EXISTS "charges_insert" ON charges;
 CREATE POLICY "charges_insert" ON charges FOR INSERT WITH CHECK (restaurant_id = get_user_restaurant_id());
+DROP POLICY IF EXISTS "charges_update" ON charges;
 CREATE POLICY "charges_update" ON charges FOR UPDATE USING (restaurant_id = get_user_restaurant_id());
+DROP POLICY IF EXISTS "charges_delete" ON charges;
 CREATE POLICY "charges_delete" ON charges FOR DELETE USING (restaurant_id = get_user_restaurant_id());
 
 -- MASSE SALARIALE
+DROP POLICY IF EXISTS "masse_select" ON masse_salariale;
 CREATE POLICY "masse_select" ON masse_salariale FOR SELECT USING (restaurant_id = get_user_restaurant_id());
+DROP POLICY IF EXISTS "masse_insert" ON masse_salariale;
 CREATE POLICY "masse_insert" ON masse_salariale FOR INSERT WITH CHECK (restaurant_id = get_user_restaurant_id());
+DROP POLICY IF EXISTS "masse_update" ON masse_salariale;
 CREATE POLICY "masse_update" ON masse_salariale FOR UPDATE USING (restaurant_id = get_user_restaurant_id());
 
 -- INVENTAIRE REEL
+DROP POLICY IF EXISTS "inventaire_select" ON inventaire_reel;
 CREATE POLICY "inventaire_select" ON inventaire_reel FOR SELECT USING (restaurant_id = get_user_restaurant_id());
+DROP POLICY IF EXISTS "inventaire_insert" ON inventaire_reel;
 CREATE POLICY "inventaire_insert" ON inventaire_reel FOR INSERT WITH CHECK (restaurant_id = get_user_restaurant_id());
 
 -- PUSH SUBSCRIPTIONS
+DROP POLICY IF EXISTS "push_sub_select" ON push_subscriptions;
 CREATE POLICY "push_sub_select" ON push_subscriptions FOR SELECT USING (user_id = auth.uid());
+DROP POLICY IF EXISTS "push_sub_insert" ON push_subscriptions;
 CREATE POLICY "push_sub_insert" ON push_subscriptions FOR INSERT WITH CHECK (user_id = auth.uid());
+DROP POLICY IF EXISTS "push_sub_update" ON push_subscriptions;
 CREATE POLICY "push_sub_update" ON push_subscriptions FOR UPDATE USING (user_id = auth.uid());
+DROP POLICY IF EXISTS "push_sub_delete" ON push_subscriptions;
 CREATE POLICY "push_sub_delete" ON push_subscriptions FOR DELETE USING (user_id = auth.uid());
 
 -- EVENTS
+DROP POLICY IF EXISTS "events_select" ON events;
 CREATE POLICY "events_select" ON events FOR SELECT USING (restaurant_id = get_user_restaurant_id());
+DROP POLICY IF EXISTS "events_insert" ON events;
 CREATE POLICY "events_insert" ON events FOR INSERT WITH CHECK (restaurant_id = get_user_restaurant_id());
 
 -- EQUIPEMENTS
+DROP POLICY IF EXISTS "equipements_select" ON equipements;
 CREATE POLICY "equipements_select" ON equipements FOR SELECT USING (restaurant_id = get_user_restaurant_id());
+DROP POLICY IF EXISTS "equipements_insert" ON equipements;
 CREATE POLICY "equipements_insert" ON equipements FOR INSERT WITH CHECK (restaurant_id = get_user_restaurant_id());
+DROP POLICY IF EXISTS "equipements_update" ON equipements;
 CREATE POLICY "equipements_update" ON equipements FOR UPDATE USING (restaurant_id = get_user_restaurant_id());
+DROP POLICY IF EXISTS "equipements_delete" ON equipements;
 CREATE POLICY "equipements_delete" ON equipements FOR DELETE USING (restaurant_id = get_user_restaurant_id());
 
 -- TEMPERATURE LOGS : INSERT SEULEMENT (immuabilité légale HACCP)
+DROP POLICY IF EXISTS "temp_logs_select" ON temperature_logs;
 CREATE POLICY "temp_logs_select" ON temperature_logs FOR SELECT USING (restaurant_id = get_user_restaurant_id());
+DROP POLICY IF EXISTS "temp_logs_insert" ON temperature_logs;
 CREATE POLICY "temp_logs_insert" ON temperature_logs FOR INSERT WITH CHECK (restaurant_id = get_user_restaurant_id());
 -- PAS de UPDATE ni DELETE
 
 -- NETTOYAGE CHECKLISTS
+DROP POLICY IF EXISTS "nettoyage_checklists_select" ON nettoyage_checklists;
 CREATE POLICY "nettoyage_checklists_select" ON nettoyage_checklists FOR SELECT USING (restaurant_id = get_user_restaurant_id());
+DROP POLICY IF EXISTS "nettoyage_checklists_insert" ON nettoyage_checklists;
 CREATE POLICY "nettoyage_checklists_insert" ON nettoyage_checklists FOR INSERT WITH CHECK (restaurant_id = get_user_restaurant_id());
+DROP POLICY IF EXISTS "nettoyage_checklists_update" ON nettoyage_checklists;
 CREATE POLICY "nettoyage_checklists_update" ON nettoyage_checklists FOR UPDATE USING (restaurant_id = get_user_restaurant_id());
 
 -- NETTOYAGE COMPLETIONS : INSERT SEULEMENT (immuabilité légale)
+DROP POLICY IF EXISTS "nettoyage_completions_select" ON nettoyage_completions;
 CREATE POLICY "nettoyage_completions_select" ON nettoyage_completions FOR SELECT USING (restaurant_id = get_user_restaurant_id());
+DROP POLICY IF EXISTS "nettoyage_completions_insert" ON nettoyage_completions;
 CREATE POLICY "nettoyage_completions_insert" ON nettoyage_completions FOR INSERT WITH CHECK (restaurant_id = get_user_restaurant_id());
 -- PAS de UPDATE ni DELETE
 
 -- RECEPTIONS
+DROP POLICY IF EXISTS "receptions_select" ON receptions;
 CREATE POLICY "receptions_select" ON receptions FOR SELECT USING (restaurant_id = get_user_restaurant_id());
+DROP POLICY IF EXISTS "receptions_insert" ON receptions;
 CREATE POLICY "receptions_insert" ON receptions FOR INSERT WITH CHECK (restaurant_id = get_user_restaurant_id());
+DROP POLICY IF EXISTS "receptions_update" ON receptions;
 CREATE POLICY "receptions_update" ON receptions FOR UPDATE USING (restaurant_id = get_user_restaurant_id());
 
 -- RECEPTION ITEMS (via reception)
+DROP POLICY IF EXISTS "reception_items_select" ON reception_items;
 CREATE POLICY "reception_items_select" ON reception_items FOR SELECT USING (reception_id IN (SELECT id FROM receptions WHERE restaurant_id = get_user_restaurant_id()));
+DROP POLICY IF EXISTS "reception_items_insert" ON reception_items;
 CREATE POLICY "reception_items_insert" ON reception_items FOR INSERT WITH CHECK (reception_id IN (SELECT id FROM receptions WHERE restaurant_id = get_user_restaurant_id()));
 
 -- HACCP
+DROP POLICY IF EXISTS "haccp_select" ON haccp_points_critiques;
 CREATE POLICY "haccp_select" ON haccp_points_critiques FOR SELECT USING (restaurant_id = get_user_restaurant_id());
+DROP POLICY IF EXISTS "haccp_insert" ON haccp_points_critiques;
 CREATE POLICY "haccp_insert" ON haccp_points_critiques FOR INSERT WITH CHECK (restaurant_id = get_user_restaurant_id());
+DROP POLICY IF EXISTS "haccp_update" ON haccp_points_critiques;
 CREATE POLICY "haccp_update" ON haccp_points_critiques FOR UPDATE USING (restaurant_id = get_user_restaurant_id());
+DROP POLICY IF EXISTS "haccp_delete" ON haccp_points_critiques;
 CREATE POLICY "haccp_delete" ON haccp_points_critiques FOR DELETE USING (restaurant_id = get_user_restaurant_id());
 
 -- RAPPEL ALERTS
+DROP POLICY IF EXISTS "rappel_select" ON rappel_alerts;
 CREATE POLICY "rappel_select" ON rappel_alerts FOR SELECT USING (restaurant_id = get_user_restaurant_id());
+DROP POLICY IF EXISTS "rappel_insert" ON rappel_alerts;
 CREATE POLICY "rappel_insert" ON rappel_alerts FOR INSERT WITH CHECK (restaurant_id = get_user_restaurant_id());
+DROP POLICY IF EXISTS "rappel_update" ON rappel_alerts;
 CREATE POLICY "rappel_update" ON rappel_alerts FOR UPDATE USING (restaurant_id = get_user_restaurant_id());
 
 -- FORMATIONS HYGIENE
+DROP POLICY IF EXISTS "formations_select" ON formations_hygiene;
 CREATE POLICY "formations_select" ON formations_hygiene FOR SELECT USING (restaurant_id = get_user_restaurant_id());
+DROP POLICY IF EXISTS "formations_insert" ON formations_hygiene;
 CREATE POLICY "formations_insert" ON formations_hygiene FOR INSERT WITH CHECK (restaurant_id = get_user_restaurant_id());
+DROP POLICY IF EXISTS "formations_update" ON formations_hygiene;
 CREATE POLICY "formations_update" ON formations_hygiene FOR UPDATE USING (restaurant_id = get_user_restaurant_id());
 
 -- SUBSCRIPTIONS
+DROP POLICY IF EXISTS "sub_select" ON subscriptions;
 CREATE POLICY "sub_select" ON subscriptions FOR SELECT USING (restaurant_id = get_user_restaurant_id());
+DROP POLICY IF EXISTS "sub_insert" ON subscriptions;
 CREATE POLICY "sub_insert" ON subscriptions FOR INSERT WITH CHECK (restaurant_id = get_user_restaurant_id());
+DROP POLICY IF EXISTS "sub_update" ON subscriptions;
 CREATE POLICY "sub_update" ON subscriptions FOR UPDATE USING (restaurant_id = get_user_restaurant_id());

@@ -5,7 +5,7 @@ CREATE EXTENSION IF NOT EXISTS pg_net;
 -- CORE : Multi-tenant
 -- ══════════════════════════════════════════════
 
-CREATE TABLE restaurants (
+CREATE TABLE IF NOT EXISTS restaurants (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   nom TEXT NOT NULL,
   type TEXT CHECK (type IN ('restaurant', 'food_truck', 'traiteur', 'brasserie')),
@@ -16,7 +16,7 @@ CREATE TABLE restaurants (
   deleted_at TIMESTAMPTZ
 );
 
-CREATE TABLE restaurant_users (
+CREATE TABLE IF NOT EXISTS restaurant_users (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   restaurant_id UUID REFERENCES restaurants(id) ON DELETE CASCADE,
   user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
@@ -29,7 +29,7 @@ CREATE TABLE restaurant_users (
 -- CATALOGUE INGRÉDIENTS
 -- ══════════════════════════════════════════════
 
-CREATE TABLE ingredients_catalog (
+CREATE TABLE IF NOT EXISTS ingredients_catalog (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   nom TEXT NOT NULL,
   categorie TEXT,
@@ -42,9 +42,9 @@ CREATE TABLE ingredients_catalog (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE INDEX idx_ingredients_catalog_search ON ingredients_catalog USING GIN (search_vector);
+CREATE INDEX IF NOT EXISTS idx_ingredients_catalog_search ON ingredients_catalog USING GIN (search_vector);
 
-CREATE TABLE restaurant_ingredients (
+CREATE TABLE IF NOT EXISTS restaurant_ingredients (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   restaurant_id UUID REFERENCES restaurants(id) ON DELETE CASCADE,
   catalog_id UUID REFERENCES ingredients_catalog(id),
@@ -56,7 +56,7 @@ CREATE TABLE restaurant_ingredients (
   CONSTRAINT nom_required CHECK (catalog_id IS NOT NULL OR nom_custom IS NOT NULL)
 );
 
-CREATE VIEW ingredients_view AS
+CREATE OR REPLACE VIEW ingredients_view AS
 SELECT
   ri.id, ri.restaurant_id,
   COALESCE(ri.nom_custom, ic.nom) AS nom,
@@ -71,7 +71,7 @@ WHERE ri.deleted_at IS NULL;
 -- PILIER OPÉRER
 -- ══════════════════════════════════════════════
 
-CREATE TABLE plats (
+CREATE TABLE IF NOT EXISTS plats (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   restaurant_id UUID REFERENCES restaurants(id) ON DELETE CASCADE,
   nom TEXT NOT NULL,
@@ -84,7 +84,7 @@ CREATE TABLE plats (
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE TABLE fiche_technique (
+CREATE TABLE IF NOT EXISTS fiche_technique (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   plat_id UUID REFERENCES plats(id) ON DELETE CASCADE,
   ingredient_id UUID REFERENCES restaurant_ingredients(id),
@@ -95,7 +95,7 @@ CREATE TABLE fiche_technique (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE TABLE fiche_technique_versions (
+CREATE TABLE IF NOT EXISTS fiche_technique_versions (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   plat_id UUID REFERENCES plats(id) ON DELETE CASCADE,
   version_number INTEGER NOT NULL,
@@ -105,7 +105,7 @@ CREATE TABLE fiche_technique_versions (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE TABLE fiche_mise_en_place (
+CREATE TABLE IF NOT EXISTS fiche_mise_en_place (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   plat_id UUID REFERENCES plats(id) ON DELETE CASCADE,
   etapes JSONB DEFAULT '[]',
@@ -118,7 +118,7 @@ CREATE TABLE fiche_mise_en_place (
 -- PILIER ACHETER
 -- ══════════════════════════════════════════════
 
-CREATE TABLE fournisseurs (
+CREATE TABLE IF NOT EXISTS fournisseurs (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   restaurant_id UUID REFERENCES restaurants(id) ON DELETE CASCADE,
   nom TEXT NOT NULL,
@@ -133,7 +133,7 @@ CREATE TABLE fournisseurs (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE TABLE mercuriale (
+CREATE TABLE IF NOT EXISTS mercuriale (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   ingredient_id UUID REFERENCES restaurant_ingredients(id) ON DELETE CASCADE,
   fournisseur_id UUID REFERENCES fournisseurs(id),
@@ -145,9 +145,9 @@ CREATE TABLE mercuriale (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE INDEX idx_mercuriale_ingredient_actif ON mercuriale(ingredient_id, est_actif);
+CREATE INDEX IF NOT EXISTS idx_mercuriale_ingredient_actif ON mercuriale(ingredient_id, est_actif);
 
-CREATE TABLE bons_de_commande (
+CREATE TABLE IF NOT EXISTS bons_de_commande (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   restaurant_id UUID REFERENCES restaurants(id) ON DELETE CASCADE,
   fournisseur_id UUID REFERENCES fournisseurs(id),
@@ -160,7 +160,7 @@ CREATE TABLE bons_de_commande (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE TABLE bon_de_commande_lignes (
+CREATE TABLE IF NOT EXISTS bon_de_commande_lignes (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   bon_id UUID REFERENCES bons_de_commande(id) ON DELETE CASCADE,
   ingredient_id UUID REFERENCES restaurant_ingredients(id),
@@ -175,7 +175,7 @@ CREATE TABLE bon_de_commande_lignes (
 -- PILIER PILOTER
 -- ══════════════════════════════════════════════
 
-CREATE TABLE ventes (
+CREATE TABLE IF NOT EXISTS ventes (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   restaurant_id UUID REFERENCES restaurants(id) ON DELETE CASCADE,
   plat_id UUID REFERENCES plats(id),
@@ -189,7 +189,7 @@ CREATE TABLE ventes (
   UNIQUE(restaurant_id, external_id, source)
 );
 
-CREATE TABLE charges (
+CREATE TABLE IF NOT EXISTS charges (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   restaurant_id UUID REFERENCES restaurants(id) ON DELETE CASCADE,
   type TEXT,
@@ -201,7 +201,7 @@ CREATE TABLE charges (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE TABLE masse_salariale (
+CREATE TABLE IF NOT EXISTS masse_salariale (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   restaurant_id UUID REFERENCES restaurants(id) ON DELETE CASCADE,
   mois DATE NOT NULL,
@@ -212,7 +212,7 @@ CREATE TABLE masse_salariale (
   UNIQUE(restaurant_id, mois)
 );
 
-CREATE TABLE inventaire_reel (
+CREATE TABLE IF NOT EXISTS inventaire_reel (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   restaurant_id UUID REFERENCES restaurants(id) ON DELETE CASCADE,
   ingredient_id UUID REFERENCES restaurant_ingredients(id),
@@ -224,7 +224,7 @@ CREATE TABLE inventaire_reel (
 );
 
 -- Push subscriptions
-CREATE TABLE push_subscriptions (
+CREATE TABLE IF NOT EXISTS push_subscriptions (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
   restaurant_id UUID REFERENCES restaurants(id) ON DELETE CASCADE,
@@ -234,7 +234,7 @@ CREATE TABLE push_subscriptions (
 );
 
 -- EVENT LOG
-CREATE TABLE events (
+CREATE TABLE IF NOT EXISTS events (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   restaurant_id UUID REFERENCES restaurants(id) ON DELETE CASCADE,
   type TEXT NOT NULL,
@@ -243,4 +243,4 @@ CREATE TABLE events (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE INDEX idx_events_restaurant_type ON events(restaurant_id, type, created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_events_restaurant_type ON events(restaurant_id, type, created_at DESC);

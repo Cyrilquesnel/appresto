@@ -1,4 +1,4 @@
-CREATE TABLE equipements (
+CREATE TABLE IF NOT EXISTS equipements (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   restaurant_id UUID REFERENCES restaurants(id) ON DELETE CASCADE,
   nom TEXT NOT NULL,
@@ -10,7 +10,7 @@ CREATE TABLE equipements (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE TABLE temperature_logs (
+CREATE TABLE IF NOT EXISTS temperature_logs (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   equipement_id UUID REFERENCES equipements(id) ON DELETE CASCADE,
   restaurant_id UUID REFERENCES restaurants(id) ON DELETE CASCADE,
@@ -21,9 +21,9 @@ CREATE TABLE temperature_logs (
   -- JAMAIS de UPDATE ni DELETE sur cette table (légal HACCP)
 );
 
-CREATE INDEX idx_temp_logs_restaurant_date ON temperature_logs(restaurant_id, created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_temp_logs_restaurant_date ON temperature_logs(restaurant_id, created_at DESC);
 
-CREATE TABLE nettoyage_checklists (
+CREATE TABLE IF NOT EXISTS nettoyage_checklists (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   restaurant_id UUID REFERENCES restaurants(id) ON DELETE CASCADE,
   nom TEXT NOT NULL,
@@ -33,7 +33,7 @@ CREATE TABLE nettoyage_checklists (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE TABLE nettoyage_completions (
+CREATE TABLE IF NOT EXISTS nettoyage_completions (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   checklist_id UUID REFERENCES nettoyage_checklists(id) ON DELETE CASCADE,
   restaurant_id UUID REFERENCES restaurants(id) ON DELETE CASCADE,
@@ -47,7 +47,7 @@ CREATE TABLE nettoyage_completions (
   -- JAMAIS de UPDATE ni DELETE
 );
 
-CREATE TABLE receptions (
+CREATE TABLE IF NOT EXISTS receptions (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   restaurant_id UUID REFERENCES restaurants(id) ON DELETE CASCADE,
   fournisseur_id UUID REFERENCES fournisseurs(id),
@@ -58,7 +58,7 @@ CREATE TABLE receptions (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE TABLE reception_items (
+CREATE TABLE IF NOT EXISTS reception_items (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   reception_id UUID REFERENCES receptions(id) ON DELETE CASCADE,
   ingredient_id UUID REFERENCES restaurant_ingredients(id),
@@ -72,7 +72,7 @@ CREATE TABLE reception_items (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE TABLE haccp_points_critiques (
+CREATE TABLE IF NOT EXISTS haccp_points_critiques (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   restaurant_id UUID REFERENCES restaurants(id) ON DELETE CASCADE,
   plat_id UUID REFERENCES plats(id),
@@ -84,7 +84,7 @@ CREATE TABLE haccp_points_critiques (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE TABLE rappel_alerts (
+CREATE TABLE IF NOT EXISTS rappel_alerts (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   restaurant_id UUID REFERENCES restaurants(id) ON DELETE CASCADE,
   rappelconso_id TEXT NOT NULL,
@@ -97,7 +97,7 @@ CREATE TABLE rappel_alerts (
   UNIQUE(restaurant_id, rappelconso_id)
 );
 
-CREATE TABLE formations_hygiene (
+CREATE TABLE IF NOT EXISTS formations_hygiene (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   restaurant_id UUID REFERENCES restaurants(id) ON DELETE CASCADE,
   user_id UUID REFERENCES auth.users(id),
@@ -108,7 +108,7 @@ CREATE TABLE formations_hygiene (
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE TABLE subscriptions (
+CREATE TABLE IF NOT EXISTS subscriptions (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   restaurant_id UUID REFERENCES restaurants(id) ON DELETE CASCADE,
   stripe_subscription_id TEXT UNIQUE,
