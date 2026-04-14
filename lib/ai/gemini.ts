@@ -61,7 +61,7 @@ export async function analyzeDishPhoto(
   mimeType: string
 ): Promise<GeminiDishResult> {
   const model = genAI.getGenerativeModel({
-    model: 'gemini-1.5-flash-002',
+    model: 'gemini-2.0-flash',
     generationConfig: {
       responseMimeType: 'application/json',
       responseSchema: ingredientSchema,
