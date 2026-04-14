@@ -1,4 +1,5 @@
 'use client'
+import { useState } from 'react'
 import Link from 'next/link'
 import { trpc } from '@/lib/trpc/client'
 import { FoodCostCard } from '@/components/dashboard/FoodCostCard'
@@ -13,7 +14,8 @@ import { OnboardingProgress } from '@/components/onboarding/OnboardingProgress'
 export default function DashboardPage() {
   useDashboardRealtime()
 
-  const { data: kpis, isLoading } = trpc.dashboard.get.useQuery({ periode: 'mois' })
+  const [periode, setPeriode] = useState<'mois' | 'semaine'>('mois')
+  const { data: kpis, isLoading } = trpc.dashboard.get.useQuery({ periode })
   const { data: semaine } = trpc.dashboard.getVentesSemaine.useQuery()
 
   const moisCourant = new Date().toISOString().slice(0, 7)
@@ -35,7 +37,22 @@ export default function DashboardPage() {
         <h1 className="text-xl font-bold text-gray-900">Dashboard</h1>
         <div className="flex items-center gap-2">
           <RealtimeIndicator />
-          <span className="text-xs text-gray-400">Ce mois-ci</span>
+          <div className="flex rounded-xl overflow-hidden border border-gray-200 text-xs font-medium">
+            <button
+              type="button"
+              onClick={() => setPeriode('mois')}
+              className={`px-3 py-1.5 transition-colors ${periode === 'mois' ? 'bg-indigo-600 text-white' : 'bg-white text-gray-600'}`}
+            >
+              Mois
+            </button>
+            <button
+              type="button"
+              onClick={() => setPeriode('semaine')}
+              className={`px-3 py-1.5 transition-colors ${periode === 'semaine' ? 'bg-indigo-600 text-white' : 'bg-white text-gray-600'}`}
+            >
+              Semaine
+            </button>
+          </div>
         </div>
       </div>
 

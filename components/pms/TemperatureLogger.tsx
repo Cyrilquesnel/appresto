@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { trpc } from '@/lib/trpc/client'
+import { queuePMSRecord, requestBackgroundSync } from '@/lib/pms-offline'
 
 interface EquipementForLogger {
   id: string
@@ -19,6 +20,7 @@ export function TemperatureLogger({ equipement, onLogged }: TemperatureLoggerPro
   const [value, setValue] = useState('')
   const [actionCorrective, setActionCorrective] = useState('')
   const [result, setResult] = useState<{ conforme: boolean } | null>(null)
+  const [queuedOffline, setQueuedOffline] = useState(false)
 
   const log = trpc.pms.saveTemperatureLog.useMutation({
     onSuccess: (data) => {
@@ -37,12 +39,47 @@ export function TemperatureLogger({ equipement, onLogged }: TemperatureLoggerPro
   const isHorsPlage =
     value !== '' && !isNaN(parsed) && (parsed < equipement.temp_min || parsed > equipement.temp_max)
 
-  const handleSubmit = () => {
-    log.mutate({
-      equipement_id: equipement.id,
-      valeur: parsed,
-      action_corrective: actionCorrective || undefined,
-    })
+  const handleSubmit = async () => {
+    try {
+      log.mutate({
+        equipement_id: equipement.id,
+        valeur: parsed,
+        action_corrective: actionCorrective || undefined,
+      })
+    } catch {
+      // Réseau indisponible — mise en file d'attente offline
+      await queuePMSRecord({
+        url: '/api/trpc/pms.saveTemperatureLog',
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          equipement_id: equipement.id,
+          valeur: parsed,
+          action_corrective: actionCorrective || null,
+        }),
+        type: 'temperature',
+      })
+      await requestBackgroundSync()
+      setQueuedOffline(true)
+      setTimeout(() => {
+        onLogged(true)
+        setQueuedOffline(false)
+        setValue('')
+      }, 2000)
+    }
+  }
+
+  if (queuedOffline) {
+    return (
+      <div className="bg-white rounded-2xl p-4 border border-amber-200 shadow-sm">
+        <div className="py-4 rounded-2xl text-center font-bold text-lg bg-amber-100 text-amber-700">
+          📶 Hors ligne — enregistré localement
+        </div>
+        <p className="text-xs text-amber-600 text-center mt-2">
+          Sera synchronisé automatiquement à la reconnexion
+        </p>
+      </div>
+    )
   }
 
   return (

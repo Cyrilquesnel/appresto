@@ -5,6 +5,7 @@ import { NextRequest } from 'next/server'
 import { renderToBuffer } from '@react-pdf/renderer'
 import { BonDeCommandePDF } from '@/components/pdf/BonDeCommande'
 import { DDPPExport } from '@/components/pdf/DDPPExport'
+import { FicheTechniquePDF } from '@/components/pdf/FicheTechnique'
 import { createElement } from 'react'
 import { createClient } from '@/lib/supabase/server'
 
@@ -37,6 +38,19 @@ export async function POST(req: NextRequest) {
       headers: {
         'Content-Type': 'application/pdf',
         'Content-Disposition': `attachment; filename="registre-haccp-${new Date().toISOString().split('T')[0]}.pdf"`,
+      },
+    })
+  }
+
+  if (type === 'fiche-technique') {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const element = createElement(FicheTechniquePDF, { fiche: data }) as any
+    const buffer = await renderToBuffer(element)
+    const filename = `fiche-${(data.nom as string).toLowerCase().replace(/\s+/g, '-')}.pdf`
+    return new Response(new Uint8Array(buffer), {
+      headers: {
+        'Content-Type': 'application/pdf',
+        'Content-Disposition': `attachment; filename="${filename}"`,
       },
     })
   }

@@ -4,6 +4,7 @@ import { OfflineBadge } from '@/components/pms/OfflineBadge'
 import { SWRegistrar } from '@/components/SWRegistrar'
 import { RestaurantInitializer } from '@/components/RestaurantInitializer'
 import { PushPrompt } from '@/components/PushPrompt'
+import { PMSNavLink } from '@/components/PMSNavLink'
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
   const supabase = createClient()
@@ -37,10 +38,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
             <span className="text-xl">📦</span>
             <span>Commandes</span>
           </a>
-          <a href="/pms" className="flex flex-col items-center text-xs text-gray-600">
-            <span className="text-xl">🌡</span>
-            <span>PMS</span>
-          </a>
+          <PMSNavLink />
           <a href="/abonnement" className="flex flex-col items-center text-xs text-gray-600">
             <span className="text-xl">💳</span>
             <span>Plan</span>

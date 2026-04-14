@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import { redirect, notFound } from 'next/navigation'
 import { AllergenesDisplay } from '@/components/dishes/AllergenesDisplay'
 import { ArchiveButton } from '@/components/dishes/ArchiveButton'
+import { ExportPDFButton } from '@/components/dishes/ExportPDFButton'
 import Link from 'next/link'
 
 interface Props {
@@ -108,6 +109,22 @@ export default async function PlatDetailPage({ params }: Props) {
       >
         Modifier la fiche
       </Link>
+      <ExportPDFButton
+        fiche={{
+          nom: plat.nom,
+          type_plat: plat.type_plat,
+          statut: plat.statut,
+          cout_de_revient: plat.cout_de_revient ?? null,
+          prix_vente_ht: plat.prix_vente_ht ?? null,
+          allergenes: plat.allergenes ?? [],
+          ingredients: lignes.map((l) => ({
+            nom_ingredient: l.nom_ingredient ?? '',
+            grammage: l.grammage,
+            unite: l.unite,
+          })),
+          date_export: new Date().toLocaleDateString('fr-FR'),
+        }}
+      />
       <ArchiveButton platId={plat.id} />
     </div>
   )
