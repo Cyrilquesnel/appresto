@@ -105,7 +105,7 @@
 | 7.2 | Sentry + PostHog | ✅ TERMINÉ | 2026-04-13 — Sentry client/server/edge + withSentryConfig + lib/posthog (EU + sanitize PII) + PostHogProvider + 5 tests |
 | 7.3 | BetterUptime + Crons | ✅ TERMINÉ | 2026-04-13 — lib/betteruptime (3 heartbeats typés) + wire dans rappelconso/temperatures/onboarding + 4 tests |
 | 7.4 | pgTAP — Tests RLS Complets | ✅ TERMINÉ | 2026-04-14 — 3 fichiers SQL (46 tests) : rls_isolation (24), rls_immutability (12), rls_storage (10) |
-| 7.5 | Déploiement Vercel Production | ⬜ À FAIRE | |
+| 7.5 | Déploiement Vercel Production | ✅ TERMINÉ | 2026-04-14 — vercel.json (fra1 EU + 6 security headers + cache policies) + next.config allowedOrigins dynamique + scripts/check-env.js + deploy-prod.yml mis à jour |
 | 7.R | Régression Phase 7 | ⬜ À FAIRE | |
 
 ---
@@ -136,10 +136,10 @@
 ## Statistiques
 
 - **Total tasks**: 44
-- **Complètes**: 39
+- **Complètes**: 40
 - **En cours**: 0
-- **Restantes**: 5
-- **Progression**: 89%
+- **Restantes**: 4
+- **Progression**: 91%
 
 ---
 

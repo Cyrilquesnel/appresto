@@ -37,6 +37,8 @@ jobs:
         run: npm install -g vercel@latest
       - name: Pull Vercel environment
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Validate env vars
+        run: node scripts/check-env.js
       - name: Build
         run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
       - name: Deploy
