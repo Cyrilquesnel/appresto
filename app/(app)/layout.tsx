@@ -39,6 +39,10 @@ export default async function AppLayout({ children }: { children: React.ReactNod
             <span className="text-xl">🌡</span>
             <span>PMS</span>
           </a>
+          <a href="/abonnement" className="flex flex-col items-center text-xs text-gray-600">
+            <span className="text-xl">💳</span>
+            <span>Plan</span>
+          </a>
         </div>
       </nav>
     </div>

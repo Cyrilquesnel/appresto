@@ -44,6 +44,13 @@ const REQUIRED = [
 
 // Optionnelles mais on les signale si absentes
 const OPTIONAL = [
+  // Stripe — optionnel en beta, requis en commercialisation
+  'STRIPE_SECRET_KEY',
+  'STRIPE_WEBHOOK_SECRET',
+  'NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY',
+  'STRIPE_PRICE_STARTER',
+  'STRIPE_PRICE_PRO',
+  'STRIPE_PRICE_MULTI',
   'WHATSAPP_ACCESS_TOKEN',
   'WHATSAPP_PHONE_NUMBER_ID',
   'BETTERUPTIME_HEARTBEAT_RAPPELCONSO',
