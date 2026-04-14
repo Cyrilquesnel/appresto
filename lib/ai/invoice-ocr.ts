@@ -52,7 +52,7 @@ export async function extractInvoiceData(
   mimeType: string
 ): Promise<InvoiceData> {
   const model = genAI.getGenerativeModel({
-    model: 'gemini-1.5-flash-latest',
+    model: 'gemini-1.5-flash-002',
     generationConfig: {
       responseMimeType: 'application/json',
       responseSchema: INVOICE_SCHEMA,
