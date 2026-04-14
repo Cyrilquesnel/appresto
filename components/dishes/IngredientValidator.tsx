@@ -74,6 +74,7 @@ export function IngredientValidator({ initialIngredients, onChange }: Ingredient
             />
             <span className="text-xs text-gray-500">{ing.unite}</span>
             <button
+              type="button"
               onClick={() => remove(index)}
               className="p-1 text-red-500 hover:bg-red-50 rounded-lg"
               aria-label={`Supprimer ${ing.nom}`}
@@ -97,6 +98,7 @@ export function IngredientValidator({ initialIngredients, onChange }: Ingredient
             placeholder="Rechercher un ingrédient à ajouter..."
           />
           <button
+            type="button"
             onClick={() => setShowSearch(false)}
             className="mt-2 text-sm text-gray-500 hover:text-gray-700"
           >
@@ -105,6 +107,7 @@ export function IngredientValidator({ initialIngredients, onChange }: Ingredient
         </div>
       ) : (
         <button
+          type="button"
           onClick={() => setShowSearch(true)}
           className="w-full py-3 border-2 border-dashed border-gray-200 rounded-xl text-gray-500 hover:border-gray-400 hover:text-gray-700 transition-colors"
           data-testid="add-ingredient-button"
