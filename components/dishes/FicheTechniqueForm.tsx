@@ -5,20 +5,41 @@ import { useRouter } from 'next/navigation'
 import { IngredientValidator, type ValidatedIngredient } from './IngredientValidator'
 import { AllergenesDisplay } from './AllergenesDisplay'
 
+interface SubmitData {
+  nom: string
+  statut: 'brouillon' | 'actif'
+  prix_vente_ht?: number
+  ingredients: ValidatedIngredient[]
+}
+
 interface FicheTechniqueFormProps {
   initialIngredients?: ValidatedIngredient[]
   photoUrl?: string
   typePlat?: string
+  // Edit mode props
+  initialNom?: string
+  initialStatut?: 'brouillon' | 'actif'
+  initialPrix?: number
+  onSubmit?: (data: SubmitData) => Promise<void>
+  isSubmitting?: boolean
+  submitLabel?: string
 }
 
 export function FicheTechniqueForm({
   initialIngredients = [],
   photoUrl,
   typePlat,
+  initialNom = '',
+  initialStatut = 'brouillon',
+  initialPrix,
+  onSubmit,
+  isSubmitting,
+  submitLabel,
 }: FicheTechniqueFormProps) {
   const router = useRouter()
-  const [nom, setNom] = useState('')
-  const [prixVente, setPrixVente] = useState('')
+  const [nom, setNom] = useState(initialNom)
+  const [statut, setStatut] = useState<'brouillon' | 'actif'>(initialStatut)
+  const [prixVente, setPrixVente] = useState(initialPrix != null ? String(initialPrix) : '')
   const [ingredients, setIngredients] = useState<ValidatedIngredient[]>(initialIngredients)
 
   const allergenesCalcules = Array.from(new Set(ingredients.flatMap((ing) => ing.allergenes)))
@@ -27,25 +48,34 @@ export function FicheTechniqueForm({
     onSuccess: ({ plat_id }) => router.push(`/plats/${plat_id}`),
   })
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    createFiche.mutate({
-      plat: {
+    if (onSubmit) {
+      await onSubmit({
         nom,
-        photo_url: photoUrl,
-        type_plat: typePlat,
+        statut,
         prix_vente_ht: prixVente ? parseFloat(prixVente) : undefined,
-        statut: 'brouillon',
-      },
-      ingredients: ingredients.map((ing) => ({
-        ingredient_id: ing.id,
-        nom: ing.nom,
-        grammage: ing.grammage,
-        unite: ing.unite,
-        allergenes: ing.allergenes,
-        is_manual: ing.isManual ?? false,
-      })),
-    })
+        ingredients,
+      })
+    } else {
+      createFiche.mutate({
+        plat: {
+          nom,
+          photo_url: photoUrl,
+          type_plat: typePlat,
+          prix_vente_ht: prixVente ? parseFloat(prixVente) : undefined,
+          statut: 'brouillon',
+        },
+        ingredients: ingredients.map((ing) => ({
+          ingredient_id: ing.id,
+          nom: ing.nom,
+          grammage: ing.grammage,
+          unite: ing.unite,
+          allergenes: ing.allergenes,
+          is_manual: ing.isManual ?? false,
+        })),
+      })
+    }
   }
 
   return (
@@ -96,13 +126,27 @@ export function FicheTechniqueForm({
         </div>
       )}
 
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">Statut</label>
+        <select
+          value={statut}
+          onChange={(e) => setStatut(e.target.value as 'brouillon' | 'actif')}
+          className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-900 focus:outline-none focus:ring-2"
+        >
+          <option value="brouillon">Brouillon</option>
+          <option value="actif">Actif</option>
+        </select>
+      </div>
+
       <button
         type="submit"
-        disabled={!nom || ingredients.length === 0 || createFiche.isPending}
+        disabled={!nom || ingredients.length === 0 || (isSubmitting ?? createFiche.isPending)}
         className="w-full py-4 bg-green-600 text-white font-semibold rounded-2xl disabled:opacity-50 active:scale-95 transition-transform"
         data-testid="save-fiche-button"
       >
-        {createFiche.isPending ? 'Enregistrement...' : 'Sauvegarder la fiche'}
+        {(isSubmitting ?? createFiche.isPending)
+          ? 'Enregistrement...'
+          : (submitLabel ?? 'Sauvegarder la fiche')}
       </button>
 
       {createFiche.isError && (
