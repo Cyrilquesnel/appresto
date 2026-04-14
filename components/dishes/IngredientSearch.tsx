@@ -12,7 +12,7 @@ interface IngredientSearchResult {
 }
 
 interface IngredientSearchProps {
-  onSelect: (ingredient: { id: string; nom: string; allergenes: string[] }) => void
+  onSelect: (ingredient: { id?: string; nom: string; allergenes: string[] }) => void
   placeholder?: string
 }
 
@@ -58,8 +58,18 @@ export function IngredientSearch({
         </ul>
       )}
       {results?.length === 0 && debouncedQuery.length >= 2 && !isLoading && (
-        <div className="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-xl shadow p-3 text-sm text-gray-500">
-          Aucun résultat — l&apos;ingrédient sera créé manuellement
+        <div className="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-xl shadow p-3 text-sm">
+          <p className="text-gray-500 mb-2">Aucun résultat pour &quot;{debouncedQuery}&quot;</p>
+          <button
+            type="button"
+            onClick={() => {
+              onSelect({ nom: debouncedQuery, allergenes: [] })
+              setQuery('')
+            }}
+            className="w-full text-left px-3 py-2 bg-gray-50 hover:bg-gray-100 rounded-lg text-gray-800 font-medium"
+          >
+            + Ajouter &quot;{debouncedQuery}&quot; manuellement
+          </button>
         </div>
       )}
     </div>

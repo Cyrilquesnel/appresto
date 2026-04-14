@@ -34,7 +34,7 @@ export function IngredientValidator({ initialIngredients, onChange }: Ingredient
     update(ingredients.map((ing, i) => (i === index ? { ...ing, grammage } : ing)))
   }
 
-  const addFromSearch = (ingredient: { id: string; nom: string; allergenes: string[] }) => {
+  const addFromSearch = (ingredient: { id?: string; nom: string; allergenes: string[] }) => {
     const newIng: ValidatedIngredient = {
       id: ingredient.id,
       nom: ingredient.nom,
