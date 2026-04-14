@@ -4,6 +4,17 @@
 // Utilisé en CI (deploy-prod.yml) avant de déployer en production.
 // Usage : node scripts/check-env.js
 
+// Charger le fichier env de Vercel si présent (CI après vercel pull)
+const fs = require('fs')
+const path = require('path')
+const vercelEnvFile = path.join(__dirname, '../.vercel/.env.production.local')
+if (fs.existsSync(vercelEnvFile)) {
+  for (const line of fs.readFileSync(vercelEnvFile, 'utf8').split('\n')) {
+    const match = line.match(/^([^=\s#][^=]*)=(.*)$/)
+    if (match && !process.env[match[1]]) process.env[match[1]] = match[2]
+  }
+}
+
 const REQUIRED = [
   // Supabase
   'NEXT_PUBLIC_SUPABASE_URL',
