@@ -262,6 +262,16 @@ export const dashboardRouter = router({
       }
     }),
 
+  // ═══ RESTAURANT ═══
+  getMyRestaurant: protectedProcedure.query(async ({ ctx }) => {
+    const { data } = await ctx.supabase
+      .from('restaurants')
+      .select('id, nom')
+      .eq('id', ctx.restaurantId)
+      .single()
+    return { id: data?.id ?? null, nom: data?.nom ?? null }
+  }),
+
   // ═══ ONBOARDING ═══
   getOnboardingStatus: protectedProcedure.query(async ({ ctx }) => {
     const { data: restaurant } = await ctx.supabase

@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { OfflineBadge } from '@/components/pms/OfflineBadge'
 import { SWRegistrar } from '@/components/SWRegistrar'
+import { RestaurantInitializer } from '@/components/RestaurantInitializer'
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
   const supabase = createClient()
@@ -13,6 +14,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <RestaurantInitializer />
       <SWRegistrar />
       <main className="pb-20">{children}</main>
       <OfflineBadge />
