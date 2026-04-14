@@ -52,7 +52,9 @@ jobs:
       - name: Smoke test /api/health
         run: |
           sleep 5
-          status=$(curl -s -o /dev/null -w "%{http_code}" "${{ steps.deploy.outputs.url }}/api/health")
+          status=$(curl -s -o /dev/null -w "%{http_code}" \
+            -H "x-vercel-protection-bypass: ${{ secrets.VERCEL_PROTECTION_BYPASS }}" \
+            "${{ steps.deploy.outputs.url }}/api/health")
           if [ "$status" != "200" ]; then
             echo "Health check failed: HTTP $status"
             exit 1
