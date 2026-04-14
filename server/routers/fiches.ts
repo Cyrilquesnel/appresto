@@ -75,19 +75,43 @@ export const fichesRouter = router({
         throw new Error(`Erreur création fiche: ${fichesError.message}`)
       }
 
-      // Upsert mercuriale pour les ingrédients avec prix_achat
+      // Upsert mercuriale pour tous les ingrédients avec prix_achat + fournisseur_id
       for (const ing of ingredients) {
-        if (ing.prix_achat && ing.fournisseur_id && ing.ingredient_id) {
-          await ctx.supabase.from('mercuriale').upsert(
-            {
-              ingredient_id: ing.ingredient_id,
-              fournisseur_id: ing.fournisseur_id,
-              prix: ing.prix_achat,
-              unite: ing.unite_achat ?? 'kg',
-              est_actif: true,
-            },
-            { onConflict: 'ingredient_id,fournisseur_id' }
-          )
+        if (!ing.prix_achat || !ing.fournisseur_id) continue
+
+        let ingredientId = ing.ingredient_id
+
+        // Si l'ingrédient n'est pas encore dans restaurant_ingredients, on le crée
+        if (!ingredientId) {
+          const { data: newIng } = await ctx.supabase
+            .from('restaurant_ingredients')
+            .insert({
+              restaurant_id: ctx.restaurantId,
+              nom_custom: ing.nom,
+              allergenes_override: ing.allergenes ?? [],
+            })
+            .select('id')
+            .single()
+          ingredientId = newIng?.id
+        }
+
+        if (ingredientId) {
+          // Désactiver l'ancien prix actif pour cet ingrédient
+          await ctx.supabase
+            .from('mercuriale')
+            .update({ est_actif: false })
+            .eq('ingredient_id', ingredientId)
+            .eq('est_actif', true)
+
+          // Insérer le nouveau prix actif
+          await ctx.supabase.from('mercuriale').insert({
+            ingredient_id: ingredientId,
+            fournisseur_id: ing.fournisseur_id,
+            prix: ing.prix_achat,
+            unite: ing.unite_achat ?? 'kg',
+            est_actif: true,
+            date_maj: new Date().toISOString(),
+          })
         }
       }
 

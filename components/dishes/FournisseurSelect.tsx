@@ -9,7 +9,16 @@ interface FournisseurSelectProps {
 export function FournisseurSelect({ value, onChange }: FournisseurSelectProps) {
   const { data: fournisseurs } = trpc.commandes.listFournisseurs.useQuery()
 
-  if (!fournisseurs || fournisseurs.length === 0) return null
+  if (!fournisseurs || fournisseurs.length === 0) {
+    return (
+      <p className="text-xs text-gray-400">
+        Aucun fournisseur —{' '}
+        <a href="/mercuriale/fournisseurs" className="text-indigo-500 underline">
+          en ajouter un
+        </a>
+      </p>
+    )
+  }
 
   return (
     <select

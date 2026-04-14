@@ -73,61 +73,66 @@ export function IngredientValidator({ initialIngredients, onChange }: Ingredient
       {ingredients.map((ing, index) => (
         <div
           key={index}
-          className="flex items-center gap-3 p-3 bg-white rounded-xl border border-gray-200"
+          className="p-3 bg-white rounded-xl border border-gray-200"
           data-testid={`ingredient-row-${index}`}
         >
-          <div className="flex-1 min-w-0">
-            {editingIndex === index ? (
+          {/* Ligne principale : nom + grammage + supprimer */}
+          <div className="flex items-center gap-3">
+            <div className="flex-1 min-w-0">
+              {editingIndex === index ? (
+                <input
+                  type="text"
+                  autoFocus
+                  value={ing.nom}
+                  onChange={(e) => updateNom(index, e.target.value)}
+                  onBlur={() => setEditingIndex(null)}
+                  onKeyDown={(e) => e.key === 'Enter' && setEditingIndex(null)}
+                  className="font-medium text-gray-900 w-full border-b border-indigo-400 outline-none bg-transparent"
+                />
+              ) : (
+                <p
+                  className="font-medium text-gray-900 truncate cursor-pointer hover:text-indigo-600"
+                  onClick={() => setEditingIndex(index)}
+                  title="Cliquer pour modifier"
+                >
+                  {ing.nom || <span className="text-gray-400 italic">Ingrédient {index + 1}</span>}
+                </p>
+              )}
+              {ing.allergenes.length > 0 && (
+                <p className="text-xs text-amber-600 truncate">
+                  Allergènes: {ing.allergenes.join(', ')}
+                </p>
+              )}
+            </div>
+            <div className="flex items-center gap-2 shrink-0">
+              {ing.confiance !== undefined && ing.confiance < 0.65 && (
+                <span className="text-xs text-amber-500" title="Confiance faible">
+                  ⚠
+                </span>
+              )}
               <input
-                type="text"
-                autoFocus
-                value={ing.nom}
-                onChange={(e) => updateNom(index, e.target.value)}
-                onBlur={() => setEditingIndex(null)}
-                onKeyDown={(e) => e.key === 'Enter' && setEditingIndex(null)}
-                className="font-medium text-gray-900 w-full border-b border-indigo-400 outline-none bg-transparent"
+                type="number"
+                value={ing.grammage}
+                onChange={(e) => updateGrammage(index, Number(e.target.value))}
+                min={1}
+                className="w-20 px-2 py-1 text-center border border-gray-200 rounded-lg text-sm"
+                data-testid={`ingredient-grammage-${index}`}
               />
-            ) : (
-              <p
-                className="font-medium text-gray-900 truncate cursor-pointer hover:text-indigo-600"
-                onClick={() => setEditingIndex(index)}
-                title="Cliquer pour modifier"
+              <span className="text-xs text-gray-500">{ing.unite}</span>
+              <button
+                type="button"
+                onClick={() => remove(index)}
+                className="p-1 text-red-500 hover:bg-red-50 rounded-lg"
+                aria-label={`Supprimer ${ing.nom}`}
+                data-testid={`ingredient-remove-${index}`}
               >
-                {ing.nom}
-              </p>
-            )}
-            {ing.allergenes.length > 0 && (
-              <p className="text-xs text-amber-600 truncate">
-                Allergènes: {ing.allergenes.join(', ')}
-              </p>
-            )}
+                ✕
+              </button>
+            </div>
           </div>
-          <div className="flex items-center gap-2 shrink-0">
-            <input
-              type="number"
-              value={ing.grammage}
-              onChange={(e) => updateGrammage(index, Number(e.target.value))}
-              min={1}
-              className="w-20 px-2 py-1 text-center border border-gray-200 rounded-lg text-sm"
-              data-testid={`ingredient-grammage-${index}`}
-            />
-            <span className="text-xs text-gray-500">{ing.unite}</span>
-            <button
-              type="button"
-              onClick={() => remove(index)}
-              className="p-1 text-red-500 hover:bg-red-50 rounded-lg"
-              aria-label={`Supprimer ${ing.nom}`}
-              data-testid={`ingredient-remove-${index}`}
-            >
-              ✕
-            </button>
-          </div>
-          {ing.confiance !== undefined && ing.confiance < 0.65 && (
-            <span className="text-xs text-amber-500 ml-1" title="Confiance faible">
-              ⚠
-            </span>
-          )}
-          <details className="mt-2 w-full">
+
+          {/* Prix & fournisseur en dessous */}
+          <details className="mt-2">
             <summary className="text-xs text-gray-400 cursor-pointer select-none">
               + Prix &amp; fournisseur
             </summary>

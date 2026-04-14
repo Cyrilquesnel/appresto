@@ -34,14 +34,14 @@ export default async function AppLayout({ children }: { children: React.ReactNod
             <span className="text-xl">🍽</span>
             <span>Plats</span>
           </a>
-          <a href="/commandes" className="flex flex-col items-center text-xs text-gray-600">
-            <span className="text-xl">📦</span>
-            <span>Commandes</span>
+          <a href="/mercuriale" className="flex flex-col items-center text-xs text-gray-600">
+            <span className="text-xl">🛒</span>
+            <span>Achats</span>
           </a>
           <PMSNavLink />
-          <a href="/abonnement" className="flex flex-col items-center text-xs text-gray-600">
-            <span className="text-xl">💳</span>
-            <span>Plan</span>
+          <a href="/settings" className="flex flex-col items-center text-xs text-gray-600">
+            <span className="text-xl">⚙️</span>
+            <span>Réglages</span>
           </a>
         </div>
       </nav>

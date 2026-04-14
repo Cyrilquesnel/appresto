@@ -26,6 +26,12 @@ export default function PlatsPage() {
         <h1 className="text-xl font-bold">Mes plats</h1>
         <div className="flex gap-2">
           <Link
+            href="/plats/allergenes"
+            className="px-3 py-2 rounded-lg text-sm font-medium border border-gray-300 text-gray-700 hover:bg-gray-50"
+          >
+            Allergènes
+          </Link>
+          <Link
             href="/plats/importer"
             className="px-3 py-2 rounded-lg text-sm font-medium border border-gray-300 text-gray-700 hover:bg-gray-50"
           >

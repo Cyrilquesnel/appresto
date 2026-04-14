@@ -73,6 +73,9 @@ export function FicheTechniqueForm({
           unite: ing.unite,
           allergenes: ing.allergenes,
           is_manual: ing.isManual ?? false,
+          fournisseur_id: ing.fournisseur_id,
+          prix_achat: ing.prix_achat,
+          unite_achat: ing.unite_achat,
         })),
       })
     }
