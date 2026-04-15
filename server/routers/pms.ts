@@ -375,15 +375,16 @@ export const pmsRouter = router({
       })
     }
 
-    const { data: plats } = await ctx.supabase
+    const { data: plats, error: platsError } = await ctx.supabase
       .from('plats')
       .select(
-        `id, nom, type_plat, fiche_technique(nom_ingredient, ingredient:restaurant_ingredients(allergenes))`
+        `id, nom, type_plat, fiche_technique(ingredient:restaurant_ingredients(nom_custom, allergenes_override))`
       )
       .eq('restaurant_id', ctx.restaurantId)
       .eq('statut', 'actif')
       .limit(20)
 
+    if (platsError) throw new Error(platsError.message)
     if (!plats || plats.length === 0) throw new Error('Aucun plat actif trouvé')
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -393,12 +394,11 @@ export const pmsRouter = router({
       type_plat: p.type_plat,
       ingredients: (
         p.fiche_technique as Array<{
-          nom_ingredient: string
-          ingredient: { allergenes: string[] } | null
+          ingredient: { nom_custom: string | null; allergenes_override: string[] | null } | null
         }>
       ).map((ft) => ({
-        nom: ft.nom_ingredient,
-        allergenes: ft.ingredient?.allergenes ?? [],
+        nom: ft.ingredient?.nom_custom ?? 'Ingrédient inconnu',
+        allergenes: ft.ingredient?.allergenes_override ?? [],
       })),
     }))
 
