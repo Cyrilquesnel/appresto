@@ -140,7 +140,7 @@ export default function AbonnementPage() {
       </div>
 
       <p className="text-xs text-gray-400 text-center">
-        14 jours d'essai gratuit · Sans engagement · Paiement sécurisé par Stripe
+        14 jours d&apos;essai gratuit · Sans engagement · Paiement sécurisé par Stripe
       </p>
 
       {error && <p className="text-sm text-red-500 text-center">{error}</p>}
