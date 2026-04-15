@@ -22,7 +22,6 @@ export function DishCamera({ onCapture, preview }: Props) {
         ref={inputRef}
         type="file"
         accept="image/*"
-        capture="environment"
         onChange={handleCapture}
         className="hidden"
         data-testid="dish-file-input"
