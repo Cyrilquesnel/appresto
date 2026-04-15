@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS beta_sessions (
 
 ALTER TABLE beta_sessions ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "beta_sessions_own" ON beta_sessions;
 CREATE POLICY "beta_sessions_own"
   ON beta_sessions FOR ALL
   USING (user_id = auth.uid());
