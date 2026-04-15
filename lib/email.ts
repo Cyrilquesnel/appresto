@@ -1,7 +1,9 @@
 import { Resend } from 'resend'
 import type { BonDeCommandeData } from '@/lib/whatsapp'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+function getResend() {
+  return new Resend(process.env.RESEND_API_KEY)
+}
 
 // ─── Beta Daily Report ────────────────────────────────────────────────────────
 
@@ -46,7 +48,9 @@ export async function sendBetaDailyReport(
   const totalErrors = users.reduce((s, u) => s + u.error_count, 0)
   const avgDuration =
     activeYesterday.length > 0
-      ? (activeYesterday.reduce((s, u) => s + u.avg_session_min, 0) / activeYesterday.length).toFixed(1)
+      ? (
+          activeYesterday.reduce((s, u) => s + u.avg_session_min, 0) / activeYesterday.length
+        ).toFixed(1)
       : '0'
 
   // Agrégat des features sur tous les users
@@ -70,7 +74,9 @@ export async function sendBetaDailyReport(
   const negatifs: string[] = []
 
   if (newUsers.length > 0)
-    positifs.push(`${newUsers.length} nouveau${newUsers.length > 1 ? 'x' : ''} testeur${newUsers.length > 1 ? 's' : ''} inscrit${newUsers.length > 1 ? 's' : ''}`)
+    positifs.push(
+      `${newUsers.length} nouveau${newUsers.length > 1 ? 'x' : ''} testeur${newUsers.length > 1 ? 's' : ''} inscrit${newUsers.length > 1 ? 's' : ''}`
+    )
   if (activeYesterday.length > 0)
     positifs.push(`${activeYesterday.length}/${totalUsers} testeurs actifs hier`)
   if (Number(avgDuration) > 3)
@@ -78,19 +84,27 @@ export async function sendBetaDailyReport(
 
   const topFeature = Object.entries(featureTotals).sort((a, b) => b[1] - a[1])[0]
   if (topFeature)
-    positifs.push(`Feature la plus utilisée : ${FEATURE_LABELS[topFeature[0]] ?? topFeature[0]} (${topFeature[1]} fois)`)
+    positifs.push(
+      `Feature la plus utilisée : ${FEATURE_LABELS[topFeature[0]] ?? topFeature[0]} (${topFeature[1]} fois)`
+    )
 
   const inactiveUsers = users.filter((u) => u.sessions_count === 0 && u.total_events_count === 0)
   if (inactiveUsers.length > 0)
-    negatifs.push(`${inactiveUsers.length} testeur${inactiveUsers.length > 1 ? 's' : ''} inactif${inactiveUsers.length > 1 ? 's' : ''} hier`)
+    negatifs.push(
+      `${inactiveUsers.length} testeur${inactiveUsers.length > 1 ? 's' : ''} inactif${inactiveUsers.length > 1 ? 's' : ''} hier`
+    )
   if (totalErrors > 0)
-    negatifs.push(`${totalErrors} erreur${totalErrors > 1 ? 's' : ''} remontée${totalErrors > 1 ? 's' : ''}`)
+    negatifs.push(
+      `${totalErrors} erreur${totalErrors > 1 ? 's' : ''} remontée${totalErrors > 1 ? 's' : ''}`
+    )
   if (Number(avgDuration) > 0 && Number(avgDuration) < 2)
     negatifs.push(`Durée moyenne de session faible : ${avgDuration} min`)
 
   const featuresUnused = Object.keys(FEATURE_LABELS).filter((f) => !featureTotals[f])
   if (featuresUnused.length > 0)
-    negatifs.push(`Features non testées : ${featuresUnused.map((f) => FEATURE_LABELS[f]).join(', ')}`)
+    negatifs.push(
+      `Features non testées : ${featuresUnused.map((f) => FEATURE_LABELS[f]).join(', ')}`
+    )
 
   // HTML users table rows
   const usersRows = users
@@ -229,7 +243,7 @@ export async function sendBetaDailyReport(
     </div>
   `
 
-  const { error } = await resend.emails.send({
+  const { error } = await getResend().emails.send({
     from: 'beta@onrush.app',
     to: adminEmail,
     subject: `[Beta] Rapport du ${now.toLocaleDateString('fr-FR')} — ${totalUsers}/20 testeurs · ${activeYesterday.length} actifs`,
@@ -293,7 +307,7 @@ export async function sendBonDeCommandeEmail(
     ? [{ filename: `bon-de-commande-${bon.id}.pdf`, content: pdfBuffer }]
     : []
 
-  const { error } = await resend.emails.send({
+  const { error } = await getResend().emails.send({
     from: 'commandes@onrush.app',
     to: recipientEmail,
     subject: `Bon de commande ${bon.restaurant_nom} — ${bon.fournisseur.nom}`,
