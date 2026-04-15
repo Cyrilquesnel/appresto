@@ -133,38 +133,24 @@ export const commandesRouter = router({
     }),
 
   getAllIngredientsMercuriale: protectedProcedure.query(async ({ ctx }) => {
-    // 1. Récupère tous les ingrédients utilisés dans des fiches recettes de ce restaurant
-    const { data: fichesIngs } = await ctx.supabase
-      .from('fiche_technique')
+    // 1. Tous les ingrédients du restaurant (créés via fiches recettes)
+    const { data: ingredients } = await ctx.supabase
+      .from('restaurant_ingredients')
       .select(
         `
-        ingredient_id,
-        ingredient:restaurant_ingredients(
-          id, nom_custom, deleted_at,
-          catalog:ingredients_catalog(nom, unite_standard)
-        ),
-        plat:plats(restaurant_id)
+        id, nom_custom, deleted_at,
+        catalog:ingredients_catalog(nom, unite_standard)
       `
       )
-      .eq('plat.restaurant_id', ctx.restaurantId)
+      .eq('restaurant_id', ctx.restaurantId)
+      .is('deleted_at', null)
+      .order('nom_custom')
 
-    if (!fichesIngs?.length) return []
+    if (!ingredients?.length) return []
 
-    // Déduplique par ingredient_id
-    const seen = new Set<string>()
-    const uniqueIngs = fichesIngs.filter((f) => {
-      if (!f.ingredient_id || seen.has(f.ingredient_id)) return false
-      const ing = f.ingredient as unknown as { deleted_at?: string | null } | null
-      if (ing?.deleted_at) return false
-      seen.add(f.ingredient_id)
-      return true
-    })
+    const ingredientIds = ingredients.map((i) => i.id)
 
-    if (!uniqueIngs.length) return []
-
-    const ingredientIds = uniqueIngs.map((f) => f.ingredient_id!)
-
-    // 2. Récupère les prix actifs pour ces ingrédients
+    // 2. Prix actifs pour ces ingrédients
     const { data: prix } = await ctx.supabase
       .from('mercuriale')
       .select(
@@ -177,10 +163,7 @@ export const commandesRouter = router({
       .in('ingredient_id', ingredientIds)
       .eq('est_actif', true)
 
-    // 3. Fusionne : chaque ingrédient avec son prix actif (ou null)
-    const prixByIngredient = new Map((prix ?? []).map((p) => [p.ingredient_id, p]))
-
-    // 4. Récupère aussi les fournisseurs disponibles pour le selector
+    // 3. Fournisseurs disponibles pour le selector
     const { data: fournisseurs } = await ctx.supabase
       .from('fournisseurs')
       .select('id, nom')
@@ -188,23 +171,20 @@ export const commandesRouter = router({
       .is('deleted_at', null)
       .order('nom')
 
-    return uniqueIngs.map((f) => {
-      const ing = f.ingredient as unknown as {
-        id: string
-        nom_custom: string | null
-        deleted_at: string | null
-        catalog: { nom: string; unite_standard: string | null } | null
-      } | null
-      const prix_actif = prixByIngredient.get(f.ingredient_id!) ?? null
+    const prixByIngredient = new Map((prix ?? []).map((p) => [p.ingredient_id, p]))
+
+    return ingredients.map((ing) => {
+      const catalog = ing.catalog as { nom: string; unite_standard: string | null } | null
+      const prix_actif = prixByIngredient.get(ing.id) ?? null
       const fournisseur_actif =
         (prix_actif?.fournisseur as { id: string; nom: string } | null) ?? null
       return {
-        ingredient_id: f.ingredient_id!,
-        nom: ing?.nom_custom ?? ing?.catalog?.nom ?? '—',
-        unite_standard: ing?.catalog?.unite_standard ?? 'kg',
+        ingredient_id: ing.id,
+        nom: ing.nom_custom ?? catalog?.nom ?? '—',
+        unite_standard: catalog?.unite_standard ?? 'kg',
         mercuriale_id: prix_actif?.id ?? null,
         prix: prix_actif?.prix ?? null,
-        unite: prix_actif?.unite ?? ing?.catalog?.unite_standard ?? 'kg',
+        unite: prix_actif?.unite ?? catalog?.unite_standard ?? 'kg',
         unite_commande: prix_actif?.unite_commande ?? null,
         colisage: prix_actif?.colisage ?? null,
         reference_fournisseur: prix_actif?.reference_fournisseur ?? null,
