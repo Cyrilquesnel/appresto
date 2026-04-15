@@ -6,9 +6,11 @@ CREATE EXTENSION IF NOT EXISTS pg_trgm;
 CREATE EXTENSION IF NOT EXISTS unaccent;
 
 -- Trigram index on nom_custom for fast similarity queries
+-- Note: unaccent() is not IMMUTABLE so cannot be used in index expression.
+-- The similarity queries still benefit from this index via pg_trgm.
 CREATE INDEX IF NOT EXISTS idx_ri_nom_custom_trgm
   ON restaurant_ingredients
-  USING GIN (unaccent(nom_custom) gin_trgm_ops)
+  USING GIN (nom_custom gin_trgm_ops)
   WHERE deleted_at IS NULL;
 
 -- Replace search_ingredients():

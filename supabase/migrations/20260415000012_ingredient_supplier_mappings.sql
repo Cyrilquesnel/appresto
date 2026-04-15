@@ -9,10 +9,8 @@ CREATE TABLE IF NOT EXISTS ingredient_supplier_mappings (
   fournisseur_id   UUID        REFERENCES fournisseurs(id) ON DELETE SET NULL,
   -- Raw designation as it appears on the invoice (used for exact lookup)
   designation_raw  TEXT        NOT NULL,
-  -- Normalized for fuzzy lookup (unaccented, lowercased, trimmed)
-  designation_norm TEXT        GENERATED ALWAYS AS (
-    unaccent(lower(trim(designation_raw)))
-  ) STORED,
+  -- Normalized for fuzzy lookup (lowercased, trimmed — set by app on insert)
+  designation_norm TEXT        GENERATED ALWAYS AS (lower(trim(designation_raw))) STORED,
   confirmed_by     UUID        REFERENCES auth.users(id),
   confirmed_at     TIMESTAMPTZ DEFAULT NOW(),
   usage_count      INTEGER     DEFAULT 1,
