@@ -159,7 +159,7 @@ export function FicheTechniquePDF({ fiche }: { fiche: FicheTechniqueData }) {
 
         {/* Footer */}
         <View style={styles.footer} fixed>
-          <Text style={styles.footerText}>Mise en Place — Fiche technique</Text>
+          <Text style={styles.footerText}>Le Rush — Fiche technique</Text>
           <Text style={styles.footerText}>
             {fiche.date_export ?? new Date().toLocaleDateString('fr-FR')}
           </Text>

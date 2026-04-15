@@ -29,7 +29,7 @@ self.addEventListener('notificationclick', (event) => {
 })
 
 // ═══ OFFLINE SYNC ═══
-const DB_NAME = 'mise-en-place-sync'
+const DB_NAME = 'onrush-sync'
 const STORE_NAME = 'pms-queue'
 const SYNC_TAG = 'pms-sync'
 

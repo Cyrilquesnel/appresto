@@ -1,4 +1,4 @@
-const DB_NAME = 'mise-en-place-sync'
+const DB_NAME = 'onrush-sync'
 const STORE_NAME = 'pms-queue'
 export const SYNC_TAG = 'pms-sync'
 

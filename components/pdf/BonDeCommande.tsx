@@ -102,7 +102,7 @@ export function BonDeCommandePDF({ bon }: { bon: BonDeCommandeData }) {
           </View>
         )}
 
-        <Text style={styles.footer}>Bon de commande généré par Mise en Place — miseenplace.fr</Text>
+        <Text style={styles.footer}>Bon de commande généré par Le Rush — onrush.app</Text>
       </Page>
     </Document>
   )

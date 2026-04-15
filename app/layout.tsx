@@ -7,12 +7,12 @@ import { IOSInstallPrompt } from '@/components/IOSInstallPrompt'
 import { PostHogProvider } from '@/components/PostHogProvider'
 
 export const metadata: Metadata = {
-  title: 'Mise en Place',
-  description: 'Gestion restauration — fiches techniques, commandes, PMS',
+  title: 'Le Rush',
+  description: 'Le copilote des pros de la restauration — fiches techniques, commandes, PMS',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
-    title: 'Mise en Place',
+    title: 'Le Rush',
   },
   manifest: '/manifest.json',
   other: {

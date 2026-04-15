@@ -33,11 +33,11 @@ export function IOSInstallPrompt() {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src="/icons/icon-192.png"
-          alt="Mise en Place"
+          alt="Le Rush"
           className="w-12 h-12 rounded-xl flex-shrink-0"
         />
         <div className="flex-1">
-          <p className="font-semibold text-gray-900 text-sm">Installer Mise en Place</p>
+          <p className="font-semibold text-gray-900 text-sm">Installer Le Rush</p>
           <p className="text-xs text-gray-500 mt-1">
             Appuyez sur{' '}
             <span className="inline-flex items-center gap-1">

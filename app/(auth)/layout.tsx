@@ -6,7 +6,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
           className="text-2xl font-bold text-center mb-8"
           style={{ color: 'var(--color-primary)' }}
         >
-          Mise en Place
+          Le Rush
         </h1>
         {children}
       </div>

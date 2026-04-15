@@ -37,7 +37,7 @@ ${lignesText}
 
 *Total HT: ${bon.total_ht.toFixed(2)} €*${notes}
 
-_Généré via Mise en Place_`
+_Généré via Le Rush_`
 }
 
 export async function sendBonDeCommande(

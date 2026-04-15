@@ -127,7 +127,7 @@ export default function ImporterVentesPage() {
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
-    a.download = 'modele-ventes-mise-en-place.csv'
+    a.download = 'modele-ventes-lerush.csv'
     a.click()
     URL.revokeObjectURL(url)
   }

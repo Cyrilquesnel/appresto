@@ -27,7 +27,7 @@ export default function OnboardingPage() {
       data-testid="onboarding-step-1"
     >
       <div className="text-white mb-8">
-        <h1 className="text-3xl font-bold mb-2">Bienvenue sur Mise en Place</h1>
+        <h1 className="text-3xl font-bold mb-2">Bienvenue sur Le Rush</h1>
         <p className="text-lg opacity-80">Configurez votre restaurant en 2 minutes</p>
         <div className="flex gap-1 mt-4">
           <div className="h-1 flex-1 bg-white rounded-full" />

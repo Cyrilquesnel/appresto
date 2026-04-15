@@ -176,7 +176,7 @@ export function DDPPExport({ data }: { data: DDPPData }) {
             ))}
           </View>
           <View style={styles.footer} fixed>
-            <Text>Mise en Place — Registre HACCP</Text>
+            <Text>Le Rush — Registre HACCP</Text>
             <Text render={({ pageNumber, totalPages }) => `${pageNumber} / ${totalPages}`} />
           </View>
         </Page>

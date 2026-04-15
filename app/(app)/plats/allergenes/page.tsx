@@ -147,7 +147,7 @@ export default function AllergenesPage() {
           </div>
 
           <p className="mt-6 text-xs text-gray-400 print:mt-8">
-            Document généré automatiquement par Mise en Place · {today}
+            Document généré automatiquement par Le Rush · {today}
           </p>
         </div>
       )}

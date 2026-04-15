@@ -28,7 +28,7 @@ export async function fetchRecentRappels(limit = 100): Promise<RappelConsoRecord
   url.searchParams.set('where', `date_debut_fev >= "${sevenDaysAgo.toISOString().split('T')[0]}"`)
 
   const response = await fetch(url.toString(), {
-    headers: { 'User-Agent': 'MiseEnPlace/1.0 contact@miseenplace.fr' },
+    headers: { 'User-Agent': 'LeRush/1.0 contact@onrush.app' },
     signal: AbortSignal.timeout(30000),
   })
 

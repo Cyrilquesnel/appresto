@@ -6,7 +6,7 @@ test('manifest.json accessible et valide', async ({ page }) => {
 
   const manifest = await response.json()
   expect(manifest.display).toBe('standalone')
-  expect(manifest.name).toBe('Mise en Place')
+  expect(manifest.name).toBe('Le Rush')
   expect(manifest.share_target).toBeDefined()
   expect(manifest.icons.length).toBeGreaterThan(0)
   expect(manifest.start_url).toBe('/dashboard')

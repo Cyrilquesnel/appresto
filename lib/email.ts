@@ -49,7 +49,7 @@ export async function sendBonDeCommandeEmail(
         </tfoot>
       </table>
       ${notesHtml}
-      <p style="color:#999;font-size:12px;margin-top:32px;">Généré via Mise en Place — miseenplace.fr</p>
+      <p style="color:#999;font-size:12px;margin-top:32px;">Généré via Le Rush — onrush.app</p>
     </div>
   `
 
@@ -58,7 +58,7 @@ export async function sendBonDeCommandeEmail(
     : []
 
   const { error } = await resend.emails.send({
-    from: 'commandes@miseenplace.fr',
+    from: 'commandes@onrush.app',
     to: recipientEmail,
     subject: `Bon de commande ${bon.restaurant_nom} — ${bon.fournisseur.nom}`,
     html: htmlBody,
