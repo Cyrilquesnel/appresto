@@ -1,7 +1,7 @@
 import webpush from 'web-push'
 
 webpush.setVapidDetails(
-  'mailto:contact@miseenplace.fr',
+  'mailto:contact@onrush.app',
   process.env.VAPID_PUBLIC_KEY!,
   process.env.VAPID_PRIVATE_KEY!
 )
@@ -31,7 +31,7 @@ export async function sendPushNotification(
 
 export async function sendPMSReminder(subscription: webpush.PushSubscription): Promise<void> {
   await sendPushNotification(subscription, {
-    title: 'Mise en Place — PMS',
+    title: 'Le Rush — PMS',
     body: "N'oubliez pas de relever vos températures",
     icon: '/icons/icon-192.png',
     badge: '/icons/badge-72.png',
@@ -65,7 +65,7 @@ export async function sendOnboardingNotification(
     j3: { body: 'Générez votre premier bon de commande en 2 minutes', url: '/commandes/nouveau' },
   }
   await sendPushNotification(subscription, {
-    title: 'Mise en Place',
+    title: 'Le Rush',
     body: messages[type].body,
     icon: '/icons/icon-192.png',
     data: { url: messages[type].url, type: `onboarding-${type}` },
