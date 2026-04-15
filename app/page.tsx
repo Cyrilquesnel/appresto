@@ -12,9 +12,7 @@ export default function Home() {
           >
             Bêta privée
           </span>
-          <h1 className="text-4xl sm:text-5xl font-bold text-white leading-tight mb-4">
-            Le Rush
-          </h1>
+          <h1 className="text-4xl sm:text-5xl font-bold text-white leading-tight mb-4">Le Rush</h1>
           <p className="text-lg text-gray-400 max-w-sm mx-auto leading-relaxed">
             Le copilote des pros de la restauration — fiches techniques, commandes fournisseurs et
             conformité HACCP en un seul endroit.

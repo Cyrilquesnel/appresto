@@ -18,7 +18,9 @@ export default async function AppLayout({ children }: { children: React.ReactNod
     <div className="min-h-screen bg-gray-50">
       <RestaurantInitializer />
       <SWRegistrar />
-      <main className="pb-20" style={{ paddingTop: 'env(safe-area-inset-top)' }}>{children}</main>
+      <main className="pb-20" style={{ paddingTop: 'env(safe-area-inset-top)' }}>
+        {children}
+      </main>
       <OfflineBadge />
       <PushPrompt />
       <BottomNav />

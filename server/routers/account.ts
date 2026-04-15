@@ -45,7 +45,7 @@ export const accountRouter = router({
   changeEmail: protectedProcedure
     .input(
       z.object({
-        new_email: z.string().email("Adresse email invalide"),
+        new_email: z.string().email('Adresse email invalide'),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -57,7 +57,10 @@ export const accountRouter = router({
       }
 
       // Supabase envoie automatiquement un email de confirmation sur les deux adresses
-      return { success: true, message: 'Email de confirmation envoyé sur votre ancienne et nouvelle adresse' }
+      return {
+        success: true,
+        message: 'Email de confirmation envoyé sur votre ancienne et nouvelle adresse',
+      }
     }),
 
   /**

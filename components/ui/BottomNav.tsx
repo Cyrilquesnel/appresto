@@ -34,8 +34,23 @@ export function BottomNav() {
   return (
     <>
       {/* Hidden file inputs — règle iOS Safari */}
-      <input ref={cameraInputRef} type="file" accept="image/*" capture="environment" onChange={handleFile} className="hidden" aria-hidden="true" />
-      <input ref={galleryInputRef} type="file" accept="image/*" onChange={handleFile} className="hidden" aria-hidden="true" />
+      <input
+        ref={cameraInputRef}
+        type="file"
+        accept="image/*"
+        capture="environment"
+        onChange={handleFile}
+        className="hidden"
+        aria-hidden="true"
+      />
+      <input
+        ref={galleryInputRef}
+        type="file"
+        accept="image/*"
+        onChange={handleFile}
+        className="hidden"
+        aria-hidden="true"
+      />
 
       <nav
         className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50"
@@ -80,7 +95,11 @@ export function BottomNav() {
 
       {/* Backdrop */}
       {sheetOpen && (
-        <div className="fixed inset-0 z-[60] bg-black/40" onClick={() => setSheetOpen(false)} aria-hidden="true" />
+        <div
+          className="fixed inset-0 z-[60] bg-black/40"
+          onClick={() => setSheetOpen(false)}
+          aria-hidden="true"
+        />
       )}
 
       {/* Bottom sheet */}

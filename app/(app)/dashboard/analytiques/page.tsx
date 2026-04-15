@@ -155,10 +155,7 @@ export default function AnalytiquesPage() {
 
               {/* Barre CA */}
               <div className="mt-2 h-1 bg-gray-100 rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-accent/70 rounded-full"
-                  style={{ width: `${partCA}%` }}
-                />
+                <div className="h-full bg-accent/70 rounded-full" style={{ width: `${partCA}%` }} />
               </div>
 
               {/* Marge */}

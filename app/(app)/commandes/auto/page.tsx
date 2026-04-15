@@ -46,9 +46,7 @@ export default function CommandeAutoPage() {
               setTimeout(() => refetch(), 0)
             }}
             className={`flex-1 py-2 rounded-xl text-sm font-medium transition-colors ${
-              jours === j
-                ? 'bg-accent text-white'
-                : 'bg-white border border-gray-200 text-gray-600'
+              jours === j ? 'bg-accent text-white' : 'bg-white border border-gray-200 text-gray-600'
             }`}
           >
             {j} jours

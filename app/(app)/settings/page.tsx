@@ -165,7 +165,9 @@ export default function SettingsPage() {
         <details className="group">
           <summary className="flex justify-between items-center cursor-pointer list-none py-1">
             <span className="text-sm font-medium text-gray-700">Changer le mot de passe</span>
-            <span className="text-gray-400 text-xs transition-transform group-open:rotate-180">▼</span>
+            <span className="text-gray-400 text-xs transition-transform group-open:rotate-180">
+              ▼
+            </span>
           </summary>
           <div className="mt-3 space-y-2">
             <input
@@ -208,7 +210,9 @@ export default function SettingsPage() {
         <details className="group">
           <summary className="flex justify-between items-center cursor-pointer list-none py-1">
             <span className="text-sm font-medium text-gray-700">Changer l&apos;email</span>
-            <span className="text-gray-400 text-xs transition-transform group-open:rotate-180">▼</span>
+            <span className="text-gray-400 text-xs transition-transform group-open:rotate-180">
+              ▼
+            </span>
           </summary>
           <div className="mt-3 space-y-2">
             <input
@@ -277,9 +281,7 @@ export default function SettingsPage() {
                 </button>
                 <button
                   type="button"
-                  disabled={
-                    deleteConfirmText !== 'SUPPRIMER MON COMPTE' || deleteAccount.isPending
-                  }
+                  disabled={deleteConfirmText !== 'SUPPRIMER MON COMPTE' || deleteAccount.isPending}
                   onClick={handleDeleteAccount}
                   className="flex-1 py-2.5 rounded-xl bg-red-600 text-white text-sm font-semibold disabled:opacity-40"
                 >
@@ -297,7 +299,9 @@ export default function SettingsPage() {
         <div className="flex items-center justify-between">
           <div>
             <p className="text-sm text-gray-700">Notifications push</p>
-            <p className="text-xs text-gray-400 mt-0.5">Alertes rappels produits, températures PMS</p>
+            <p className="text-xs text-gray-400 mt-0.5">
+              Alertes rappels produits, températures PMS
+            </p>
           </div>
           {pushPermission !== null && (
             <span

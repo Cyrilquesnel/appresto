@@ -51,4 +51,3 @@ export function DishCamera({ onCapture, preview }: Props) {
     </div>
   )
 }
-
