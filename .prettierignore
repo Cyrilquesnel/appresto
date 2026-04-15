@@ -23,6 +23,9 @@ tests/fixtures/
 supabase/migrations/
 supabase/seed.sql
 
+# Playwright MCP cache
+.playwright-mcp/
+
 # Claude Code docs (manually formatted)
 .claude/orchestration-mise-en-place/
 .claude/skills/
