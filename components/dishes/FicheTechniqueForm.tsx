@@ -4,6 +4,8 @@ import { trpc } from '@/lib/trpc/client'
 import { useRouter } from 'next/navigation'
 import { IngredientValidator, type ValidatedIngredient } from './IngredientValidator'
 import { AllergenesDisplay } from './AllergenesDisplay'
+import { IngredientLinkModal } from './IngredientLinkModal'
+import type { IngredientLinkSuggestion } from '@/server/routers/fiches'
 
 interface SubmitData {
   nom: string
@@ -41,11 +43,18 @@ export function FicheTechniqueForm({
   const [statut, setStatut] = useState<'brouillon' | 'actif'>(initialStatut)
   const [prixVente, setPrixVente] = useState(initialPrix != null ? String(initialPrix) : '')
   const [ingredients, setIngredients] = useState<ValidatedIngredient[]>(initialIngredients)
+  const [linkModal, setLinkModal] = useState<{ platId: string; suggestions: IngredientLinkSuggestion[] } | null>(null)
 
   const allergenesCalcules = Array.from(new Set(ingredients.flatMap((ing) => ing.allergenes)))
 
   const createFiche = trpc.fiches.create.useMutation({
-    onSuccess: ({ plat_id }) => router.push(`/plats/${plat_id}`),
+    onSuccess: ({ plat_id, ai_suggestions }) => {
+      if (ai_suggestions && ai_suggestions.length > 0) {
+        setLinkModal({ platId: plat_id, suggestions: ai_suggestions })
+      } else {
+        router.push(`/plats/${plat_id}`)
+      }
+    },
   })
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -162,6 +171,14 @@ export function FicheTechniqueForm({
 
       {createFiche.isError && (
         <p className="text-red-600 text-sm text-center">Erreur: {createFiche.error.message}</p>
+      )}
+
+      {linkModal && (
+        <IngredientLinkModal
+          platId={linkModal.platId}
+          suggestions={linkModal.suggestions}
+          onDone={() => router.push(`/plats/${linkModal.platId}`)}
+        />
       )}
     </form>
   )

@@ -1,6 +1,7 @@
 import { router, protectedProcedure } from '../trpc'
 import { z } from 'zod'
 import type { SupabaseClient } from '@supabase/supabase-js'
+import { claudeMatchIngredients } from '@/lib/ai/ingredient-matcher'
 
 const IngredientLineSchema = z.object({
   ingredient_id: z.string().uuid().optional(),
@@ -47,6 +48,64 @@ async function resolveIngredientId(
   }
 
   return data.id
+}
+
+export interface IngredientLinkSuggestion {
+  from_ingredient_id: string
+  from_nom: string
+  to_ingredient_id: string
+  to_nom: string
+  confidence: number
+}
+
+// Après insertion des fiches, cherche les ingrédients sans prix dans la mercuriale
+// et propose des liens via Claude avec les ingrédients mercuriale existants.
+async function findMercurialeLinks(
+  supabase: SupabaseClient,
+  restaurantId: string,
+  newIngredients: { id: string; nom: string }[]
+): Promise<IngredientLinkSuggestion[]> {
+  if (newIngredients.length === 0) return []
+
+  // Ingrédients qui ont déjà un prix actif en mercuriale
+  const { data: withPrices } = await supabase
+    .from('mercuriale')
+    .select('ingredient_id, restaurant_ingredients!inner(id, nom_custom)')
+    .eq('restaurant_id', restaurantId)
+    .eq('est_actif', true)
+
+  if (!withPrices?.length) return []
+
+  const mercurialeIngredients = withPrices
+    .map((row) => {
+      const ri = Array.isArray(row.restaurant_ingredients)
+        ? row.restaurant_ingredients[0]
+        : row.restaurant_ingredients
+      return ri ? { id: ri.id as string, nom: ri.nom_custom as string } : null
+    })
+    .filter(Boolean) as { id: string; nom: string }[]
+
+  // Exclure les ingrédients qui sont déjà dans la mercuriale
+  const newWithoutPrice = newIngredients.filter(
+    (n) => !mercurialeIngredients.some((m) => m.id === n.id)
+  )
+  if (newWithoutPrice.length === 0) return []
+
+  const suggestions = await claudeMatchIngredients(
+    newWithoutPrice.map((n) => n.nom),
+    mercurialeIngredients
+  )
+
+  return suggestions.map((s) => {
+    const source = newWithoutPrice.find((n) => n.nom === s.designation)!
+    return {
+      from_ingredient_id: source.id,
+      from_nom: source.nom,
+      to_ingredient_id: s.ingredient_id,
+      to_nom: s.ingredient_nom,
+      confidence: s.confidence,
+    }
+  })
 }
 
 export const fichesRouter = router({
@@ -147,7 +206,18 @@ export const fichesRouter = router({
         modifie_par: ctx.user.id,
       })
 
-      return { plat_id: platData.id }
+      // Suggestions IA : lier les nouveaux ingrédients sans prix à la mercuriale existante
+      const newIngredients = ingredients.map((ing, i) => ({
+        id: resolvedIds[i],
+        nom: ing.nom,
+      }))
+      const aiSuggestions = await findMercurialeLinks(
+        ctx.supabase,
+        ctx.restaurantId,
+        newIngredients
+      )
+
+      return { plat_id: platData.id, ai_suggestions: aiSuggestions }
     }),
 
   get: protectedProcedure
@@ -318,6 +388,54 @@ export const fichesRouter = router({
         }
       }
       return results
+    }),
+
+  // Relie un ingrédient fiche (sans mercuriale) à un ingrédient existant qui a un prix.
+  // Met à jour toutes les lignes fiche_technique du plat concerné, puis supprime l'orphelin.
+  linkIngredient: protectedProcedure
+    .input(
+      z.object({
+        plat_id: z.string().uuid(),
+        from_ingredient_id: z.string().uuid(),
+        to_ingredient_id: z.string().uuid(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { plat_id, from_ingredient_id, to_ingredient_id } = input
+
+      // Vérifier ownership du plat
+      const { data: plat } = await ctx.supabase
+        .from('plats')
+        .select('id')
+        .eq('id', plat_id)
+        .eq('restaurant_id', ctx.restaurantId)
+        .single()
+      if (!plat) throw new Error('Plat non trouvé')
+
+      // Remplacer l'ingredient_id sur les lignes de CE plat uniquement
+      const { error } = await ctx.supabase
+        .from('fiche_technique')
+        .update({ ingredient_id: to_ingredient_id })
+        .eq('plat_id', plat_id)
+        .eq('ingredient_id', from_ingredient_id)
+        .eq('restaurant_id', ctx.restaurantId)
+      if (error) throw new Error(error.message)
+
+      // Supprimer l'ingrédient orphelin s'il n'est plus référencé nulle part
+      const { count } = await ctx.supabase
+        .from('fiche_technique')
+        .select('id', { count: 'exact', head: true })
+        .eq('ingredient_id', from_ingredient_id)
+
+      if (count === 0) {
+        await ctx.supabase
+          .from('restaurant_ingredients')
+          .delete()
+          .eq('id', from_ingredient_id)
+          .eq('restaurant_id', ctx.restaurantId)
+      }
+
+      return { success: true }
     }),
 
   archive: protectedProcedure
