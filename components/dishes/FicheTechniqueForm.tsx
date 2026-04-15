@@ -43,7 +43,10 @@ export function FicheTechniqueForm({
   const [statut, setStatut] = useState<'brouillon' | 'actif'>(initialStatut)
   const [prixVente, setPrixVente] = useState(initialPrix != null ? String(initialPrix) : '')
   const [ingredients, setIngredients] = useState<ValidatedIngredient[]>(initialIngredients)
-  const [linkModal, setLinkModal] = useState<{ platId: string; suggestions: IngredientLinkSuggestion[] } | null>(null)
+  const [linkModal, setLinkModal] = useState<{
+    platId: string
+    suggestions: IngredientLinkSuggestion[]
+  } | null>(null)
 
   const allergenesCalcules = Array.from(new Set(ingredients.flatMap((ing) => ing.allergenes)))
 

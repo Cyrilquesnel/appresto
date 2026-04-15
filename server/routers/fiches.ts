@@ -29,7 +29,11 @@ async function resolveIngredientId(
   const { data, error } = await supabase
     .from('restaurant_ingredients')
     .upsert(
-      { restaurant_id: restaurantId, nom_custom: ing.nom, allergenes_override: ing.allergenes ?? [] },
+      {
+        restaurant_id: restaurantId,
+        nom_custom: ing.nom,
+        allergenes_override: ing.allergenes ?? [],
+      },
       { onConflict: 'restaurant_id,nom_custom', ignoreDuplicates: false }
     )
     .select('id')
