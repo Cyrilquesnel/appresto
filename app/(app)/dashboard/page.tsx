@@ -10,6 +10,7 @@ import { RealtimeIndicator } from '@/components/dashboard/RealtimeIndicator'
 import { RappelBadge } from '@/components/dashboard/RappelBadge'
 import { useDashboardRealtime } from '@/hooks/useDashboardRealtime'
 import { OnboardingProgress } from '@/components/onboarding/OnboardingProgress'
+import { ComingSoonFeature } from '@/components/ui/ComingSoonFeature'
 
 export default function DashboardPage() {
   useDashboardRealtime()
@@ -23,7 +24,7 @@ export default function DashboardPage() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin h-8 w-8 border-2 border-indigo-600 rounded-full border-t-transparent" />
+        <div className="animate-spin h-8 w-8 border-2 border-accent rounded-full border-t-transparent" />
       </div>
     )
   }
@@ -41,14 +42,14 @@ export default function DashboardPage() {
             <button
               type="button"
               onClick={() => setPeriode('mois')}
-              className={`px-3 py-1.5 transition-colors ${periode === 'mois' ? 'bg-indigo-600 text-white' : 'bg-white text-gray-600'}`}
+              className={`px-3 py-1.5 transition-colors ${periode === 'mois' ? 'bg-accent text-white' : 'bg-white text-gray-600'}`}
             >
               Mois
             </button>
             <button
               type="button"
               onClick={() => setPeriode('semaine')}
-              className={`px-3 py-1.5 transition-colors ${periode === 'semaine' ? 'bg-indigo-600 text-white' : 'bg-white text-gray-600'}`}
+              className={`px-3 py-1.5 transition-colors ${periode === 'semaine' ? 'bg-accent text-white' : 'bg-white text-gray-600'}`}
             >
               Semaine
             </button>
@@ -57,7 +58,7 @@ export default function DashboardPage() {
       </div>
 
       {/* CA total */}
-      <div className="bg-indigo-700 rounded-2xl p-5 text-white" data-testid="ca-card">
+      <div className="bg-primary rounded-2xl p-5 text-white" data-testid="ca-card">
         <p className="text-xs opacity-70 uppercase tracking-wide">Chiffre d&apos;affaires HT</p>
         <p className="text-4xl font-bold mt-1" data-testid="ca-value">
           {kpis?.ca_total.toFixed(2) ?? '0.00'} €
@@ -110,7 +111,7 @@ export default function DashboardPage() {
           className="block bg-gray-50 rounded-2xl p-4 border border-dashed border-gray-200"
         >
           <p className="text-sm text-gray-500">Aucun prix en mercuriale</p>
-          <p className="text-xs text-indigo-500 mt-1">→ Ajouter des prix</p>
+          <p className="text-xs text-accent/70 mt-1">→ Ajouter des prix</p>
         </Link>
       )}
 
@@ -120,7 +121,7 @@ export default function DashboardPage() {
       {/* Analytiques */}
       <Link
         href="/dashboard/analytiques"
-        className="block bg-white rounded-2xl p-4 border border-gray-200 hover:border-indigo-300 transition-colors"
+        className="block bg-white rounded-2xl p-4 border border-gray-200 hover:border-accent/40 transition-colors"
       >
         <div className="flex justify-between items-center">
           <div>
@@ -133,11 +134,26 @@ export default function DashboardPage() {
         </div>
       </Link>
 
+      {/* Intégration caisse — bientôt */}
+      <ComingSoonFeature eta="T3 2026">
+        <div className="bg-white rounded-2xl p-4 border border-gray-200">
+          <div className="flex justify-between items-center">
+            <div>
+              <p className="text-xs text-gray-500 uppercase tracking-wide">Caisse</p>
+              <p className="text-sm font-semibold text-gray-800 mt-0.5">
+                Lightspeed · Zelty · Cashpad
+              </p>
+            </div>
+            <span className="text-gray-400">→</span>
+          </div>
+        </div>
+      </ComingSoonFeature>
+
       {/* Actions rapides */}
       <div className="grid grid-cols-2 gap-3">
         <Link
           href="/dashboard/saisie-ventes"
-          className="bg-indigo-600 text-white rounded-2xl p-4 text-center font-semibold"
+          className="bg-accent text-white rounded-2xl p-4 text-center font-semibold"
           data-testid="btn-saisie-ventes"
         >
           + Saisir ventes

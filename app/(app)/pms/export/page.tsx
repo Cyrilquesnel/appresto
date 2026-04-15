@@ -63,19 +63,19 @@ export default function ExportPage() {
 
         <div className="grid grid-cols-2 gap-3">
           <div className="bg-gray-50 rounded-xl p-3 text-center">
-            <p className="text-xl font-bold text-indigo-700">{data?.temperatures.length ?? 0}</p>
+            <p className="text-xl font-bold text-accent">{data?.temperatures.length ?? 0}</p>
             <p className="text-xs text-gray-400">Relevés T°</p>
           </div>
           <div className="bg-gray-50 rounded-xl p-3 text-center">
-            <p className="text-xl font-bold text-indigo-700">{data?.checklists.length ?? 0}</p>
+            <p className="text-xl font-bold text-accent">{data?.checklists.length ?? 0}</p>
             <p className="text-xs text-gray-400">Checklists</p>
           </div>
           <div className="bg-gray-50 rounded-xl p-3 text-center">
-            <p className="text-xl font-bold text-indigo-700">{data?.receptions.length ?? 0}</p>
+            <p className="text-xl font-bold text-accent">{data?.receptions.length ?? 0}</p>
             <p className="text-xs text-gray-400">Réceptions</p>
           </div>
           <div className="bg-gray-50 rounded-xl p-3 text-center">
-            <p className="text-xl font-bold text-indigo-700">{data?.haccp.length ?? 0}</p>
+            <p className="text-xl font-bold text-accent">{data?.haccp.length ?? 0}</p>
             <p className="text-xs text-gray-400">Points CCP</p>
           </div>
         </div>

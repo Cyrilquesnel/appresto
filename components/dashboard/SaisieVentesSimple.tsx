@@ -106,7 +106,7 @@ export function SaisieVentesSimple({ onSuccess }: SaisieVentesSimpleProps) {
             type="button"
             onClick={() => setPeriode(p)}
             className={`flex-1 py-2 rounded-xl text-sm font-medium transition-colors ${
-              periode === p ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-600'
+              periode === p ? 'bg-accent text-white' : 'bg-gray-100 text-gray-600'
             }`}
           >
             {p.charAt(0).toUpperCase() + p.slice(1)}
@@ -193,7 +193,7 @@ export function SaisieVentesSimple({ onSuccess }: SaisieVentesSimpleProps) {
       <button
         type="submit"
         disabled={!couverts || !panierMoyen || isLoading}
-        className="w-full py-4 bg-indigo-600 text-white font-semibold rounded-2xl text-lg disabled:opacity-50 active:scale-95 transition-transform"
+        className="w-full py-4 bg-accent text-white font-semibold rounded-2xl text-lg disabled:opacity-50 active:scale-95 transition-transform"
         data-testid="save-ventes-button"
       >
         {isLoading ? 'Enregistrement...' : '✓ Valider les ventes'}

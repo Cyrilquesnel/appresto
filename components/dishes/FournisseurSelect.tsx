@@ -13,7 +13,7 @@ export function FournisseurSelect({ value, onChange }: FournisseurSelectProps) {
     return (
       <p className="text-xs text-gray-400">
         Aucun fournisseur —{' '}
-        <a href="/mercuriale/fournisseurs" className="text-indigo-500 underline">
+        <a href="/mercuriale/fournisseurs" className="text-accent/70 underline">
           en ajouter un
         </a>
       </p>

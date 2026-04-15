@@ -50,7 +50,7 @@ export default function PMSPage() {
           <Link
             key={m.href}
             href={m.href}
-            className="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm hover:border-indigo-200 transition-colors"
+            className="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm hover:border-accent/30 transition-colors"
           >
             <span className="text-2xl block mb-2">{m.icon}</span>
             <p className="font-semibold text-gray-900 text-sm">{m.title}</p>

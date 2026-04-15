@@ -38,11 +38,11 @@ export function OnboardingProgress() {
 
   return (
     <div
-      className="bg-indigo-50 rounded-2xl p-4 border border-indigo-200 mb-4"
+      className="bg-accent/5 rounded-2xl p-4 border border-accent/30 mb-4"
       data-testid="onboarding-progress"
     >
       <div className="flex items-center justify-between mb-3">
-        <h3 className="font-semibold text-indigo-900">
+        <h3 className="font-semibold text-primary">
           Démarrage ({completedCount}/{steps.length})
         </h3>
         <span className="text-xs text-gray-400">
@@ -51,7 +51,7 @@ export function OnboardingProgress() {
       </div>
       <div className="w-full bg-gray-200 rounded-full h-2 mb-3">
         <div
-          className="bg-indigo-600 h-2 rounded-full transition-all"
+          className="bg-accent h-2 rounded-full transition-all"
           style={{ width: `${(completedCount / steps.length) * 100}%` }}
         />
       </div>
@@ -64,7 +64,7 @@ export function OnboardingProgress() {
             {step.done ? (
               <span className="text-sm text-gray-400 line-through">{step.label}</span>
             ) : (
-              <Link href={step.href} className="text-sm text-indigo-600 hover:underline">
+              <Link href={step.href} className="text-sm text-accent hover:underline">
                 {step.label} →
               </Link>
             )}

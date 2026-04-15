@@ -72,7 +72,7 @@ export function PushPrompt() {
           type="button"
           onClick={handleAllow}
           disabled={loading}
-          className="flex-1 py-2 bg-indigo-600 text-white text-sm font-semibold rounded-xl disabled:opacity-50"
+          className="flex-1 py-2 bg-accent text-white text-sm font-semibold rounded-xl disabled:opacity-50"
         >
           {loading ? 'Activation...' : 'Activer'}
         </button>

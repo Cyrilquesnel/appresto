@@ -84,7 +84,7 @@ export function ChargesCard({ mois, masse_salariale, charges_fixes }: ChargesCar
             type="button"
             onClick={handleSave}
             disabled={saveCharges.isPending}
-            className="w-full mt-2 py-2 bg-indigo-600 text-white font-medium rounded-xl text-sm disabled:opacity-50"
+            className="w-full mt-2 py-2 bg-accent text-white font-medium rounded-xl text-sm disabled:opacity-50"
           >
             {saveCharges.isPending ? 'Sauvegarde...' : 'Enregistrer'}
           </button>

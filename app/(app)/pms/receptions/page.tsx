@@ -20,7 +20,7 @@ export default function ReceptionsPage() {
               setShowForm(false)
               refetch()
             }}
-            className="px-6 py-3 bg-indigo-600 text-white font-medium rounded-xl"
+            className="px-6 py-3 bg-accent text-white font-medium rounded-xl"
           >
             Retour à la liste
           </button>
@@ -41,7 +41,7 @@ export default function ReceptionsPage() {
         <h1 className="text-xl font-bold text-gray-900">Réceptions</h1>
         <button
           onClick={() => setShowForm((v) => !v)}
-          className="px-3 py-2 bg-indigo-600 text-white text-sm font-medium rounded-xl"
+          className="px-3 py-2 bg-accent text-white text-sm font-medium rounded-xl"
         >
           {showForm ? 'Annuler' : '+ Nouvelle'}
         </button>
@@ -56,7 +56,7 @@ export default function ReceptionsPage() {
 
       {isLoading && (
         <div className="flex justify-center py-8">
-          <div className="animate-spin h-6 w-6 border-2 border-indigo-600 rounded-full border-t-transparent" />
+          <div className="animate-spin h-6 w-6 border-2 border-accent rounded-full border-t-transparent" />
         </div>
       )}
 

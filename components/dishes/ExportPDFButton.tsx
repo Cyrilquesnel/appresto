@@ -33,7 +33,7 @@ export function ExportPDFButton({ fiche }: { fiche: FicheTechniqueData }) {
       type="button"
       onClick={handleExport}
       disabled={loading}
-      className="block w-full text-center py-3 border border-indigo-300 rounded-xl text-indigo-600 hover:bg-indigo-50 text-sm font-medium disabled:opacity-50 mt-2"
+      className="block w-full text-center py-3 border border-accent/40 rounded-xl text-accent hover:bg-accent/5 text-sm font-medium disabled:opacity-50 mt-2"
     >
       {loading ? 'Génération PDF...' : '↓ Exporter en PDF'}
     </button>

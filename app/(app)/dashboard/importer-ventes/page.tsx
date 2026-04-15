@@ -140,17 +140,17 @@ export default function ImporterVentesPage() {
       </p>
 
       {/* Template download */}
-      <div className="bg-indigo-50 border border-indigo-100 rounded-xl p-4 mb-6">
+      <div className="bg-accent/5 border border-accent/15 rounded-xl p-4 mb-6">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <p className="font-medium text-indigo-900 text-sm">Modèle CSV vierge</p>
-            <p className="text-xs text-indigo-600 mt-0.5">
+            <p className="font-medium text-primary text-sm">Modèle CSV vierge</p>
+            <p className="text-xs text-accent mt-0.5">
               Colonnes : date, service (midi/soir/continu), nb_couverts, panier_moyen, notes
             </p>
           </div>
           <button
             onClick={downloadTemplate}
-            className="shrink-0 px-3 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg"
+            className="shrink-0 px-3 py-2 bg-accent text-white text-sm font-medium rounded-lg"
           >
             ↓ Télécharger
           </button>
@@ -177,7 +177,7 @@ export default function ImporterVentesPage() {
         onDrop={handleDrop}
         onDragOver={(e) => e.preventDefault()}
         onClick={() => fileRef.current?.click()}
-        className="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center cursor-pointer hover:border-indigo-400 transition-colors mb-6"
+        className="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center cursor-pointer hover:border-accent/60 transition-colors mb-6"
       >
         <p className="text-3xl mb-2">📂</p>
         <p className="font-medium text-gray-700">

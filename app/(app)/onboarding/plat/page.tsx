@@ -7,7 +7,7 @@ export default function OnboardingPlatPage() {
 
   return (
     <div
-      className="min-h-screen bg-gradient-to-b from-indigo-700 to-indigo-600 flex flex-col justify-center px-6 py-12"
+      className="min-h-screen bg-gradient-to-b from-primary to-accent flex flex-col justify-center px-6 py-12"
       data-testid="onboarding-step-2"
     >
       <div className="text-white mb-8">
@@ -25,7 +25,7 @@ export default function OnboardingPlatPage() {
       <div className="bg-white rounded-3xl p-6 space-y-4">
         <Link
           href="/plats/nouveau?from=onboarding"
-          className="w-full py-6 bg-indigo-600 text-white font-semibold rounded-2xl flex items-center justify-center gap-3 text-lg"
+          className="w-full py-6 bg-accent text-white font-semibold rounded-2xl flex items-center justify-center gap-3 text-lg"
           data-testid="take-photo-cta"
         >
           <span className="text-3xl">📸</span>

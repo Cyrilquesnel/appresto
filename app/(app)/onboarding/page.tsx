@@ -23,7 +23,7 @@ export default function OnboardingPage() {
 
   return (
     <div
-      className="min-h-screen bg-gradient-to-b from-indigo-700 to-indigo-600 flex flex-col justify-center px-6 py-12"
+      className="min-h-screen bg-gradient-to-b from-primary to-accent flex flex-col justify-center px-6 py-12"
       data-testid="onboarding-step-1"
     >
       <div className="text-white mb-8">
@@ -45,7 +45,7 @@ export default function OnboardingPage() {
               onClick={() => setSelected(type.value)}
               className={`p-4 rounded-2xl border-2 flex flex-col items-center gap-2 transition-all ${
                 selected === type.value
-                  ? 'border-indigo-500 bg-indigo-50'
+                  ? 'border-accent/80 bg-accent/5'
                   : 'border-gray-100 hover:border-gray-200'
               }`}
               data-testid={`type-${type.value}`}
@@ -59,7 +59,7 @@ export default function OnboardingPage() {
         <button
           onClick={() => selected && complete.mutate({ type_etablissement: selected })}
           disabled={!selected || complete.isPending}
-          className="w-full py-4 bg-indigo-600 text-white font-semibold rounded-2xl disabled:opacity-50 mt-4"
+          className="w-full py-4 bg-accent text-white font-semibold rounded-2xl disabled:opacity-50 mt-4"
           data-testid="continue-onboarding"
         >
           {complete.isPending ? 'Enregistrement...' : 'Continuer →'}

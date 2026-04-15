@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { DishCamera } from '@/components/dishes/DishCamera'
 import {
   IngredientValidator,
@@ -7,6 +7,7 @@ import {
 } from '@/components/dishes/IngredientValidator'
 import { FicheTechniqueForm } from '@/components/dishes/FicheTechniqueForm'
 import { useRestaurantStore } from '@/lib/store'
+import { useDishCaptureStore } from '@/lib/store/dish-capture'
 import type { DetectedIngredient } from '@/lib/ai/gemini'
 
 type Step = 'capture' | 'validate' | 'fiche'
@@ -37,6 +38,16 @@ export default function NouveauPlatPage() {
   const [validatedIngredients, setValidatedIngredients] = useState<ValidatedIngredient[]>([])
   const [error, setError] = useState<string | null>(null)
   const restaurantId = useRestaurantStore((s) => s.restaurantId)
+
+  // Si l'utilisateur a capturé une photo depuis le FAB (layout), l'injecter directement
+  useEffect(() => {
+    const pending = useDishCaptureStore.getState().pendingFile
+    if (pending) {
+      useDishCaptureStore.getState().clear()
+      handleCapture(pending)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const handleCapture = async (file: File) => {
     setPreview(URL.createObjectURL(file))

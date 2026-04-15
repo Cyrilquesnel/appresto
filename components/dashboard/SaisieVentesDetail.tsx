@@ -163,7 +163,7 @@ export function SaisieVentesDetail({ onSuccess }: SaisieVentesDetailProps) {
           logVentes.mutate({ mode: 'detail', date, service, lignes })
         }}
         disabled={lignes.length === 0 || logVentes.isPending}
-        className="w-full py-4 bg-indigo-600 text-white font-semibold rounded-2xl text-lg disabled:opacity-50 active:scale-95 transition-transform"
+        className="w-full py-4 bg-accent text-white font-semibold rounded-2xl text-lg disabled:opacity-50 active:scale-95 transition-transform"
         data-testid="save-ventes-button"
       >
         {logVentes.isPending ? 'Enregistrement...' : '✓ Valider les ventes'}

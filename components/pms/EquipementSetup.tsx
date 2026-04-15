@@ -65,7 +65,7 @@ export function EquipementSetup({ onSuccess }: { onSuccess: () => void }) {
               onClick={() => handleTypeChange(t)}
               className={`py-2 rounded-xl text-sm font-medium border ${
                 type === t
-                  ? 'bg-indigo-600 text-white border-indigo-600'
+                  ? 'bg-accent text-white border-accent'
                   : 'bg-white border-gray-200 text-gray-600'
               }`}
             >
@@ -113,7 +113,7 @@ export function EquipementSetup({ onSuccess }: { onSuccess: () => void }) {
       <button
         type="submit"
         disabled={!nom || create.isPending}
-        className="w-full py-4 bg-indigo-600 text-white font-semibold rounded-2xl disabled:opacity-50"
+        className="w-full py-4 bg-accent text-white font-semibold rounded-2xl disabled:opacity-50"
       >
         {create.isPending ? 'Ajout...' : "Ajouter l'équipement"}
       </button>

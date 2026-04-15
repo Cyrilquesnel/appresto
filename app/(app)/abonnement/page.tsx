@@ -59,11 +59,11 @@ export default function AbonnementPage() {
 
       {/* Abonnement actif */}
       {sub && (
-        <div className="bg-indigo-50 rounded-2xl p-4 border border-indigo-100">
+        <div className="bg-accent/5 rounded-2xl p-4 border border-accent/15">
           <div className="flex justify-between items-start">
             <div>
               <p className="text-xs text-gray-500 uppercase tracking-wide">Plan actuel</p>
-              <p className="text-lg font-bold text-indigo-700 capitalize">{sub.plan}</p>
+              <p className="text-lg font-bold text-accent capitalize">{sub.plan}</p>
               <p className="text-xs text-gray-500 mt-1 capitalize">
                 Statut : {sub.statut === 'trialing' ? "Période d'essai" : sub.statut}
               </p>
@@ -82,7 +82,7 @@ export default function AbonnementPage() {
               type="button"
               onClick={() => createPortal.mutate({ returnUrl: `${appUrl}/abonnement` })}
               disabled={createPortal.isPending}
-              className="text-xs text-indigo-600 hover:underline disabled:opacity-50"
+              className="text-xs text-accent hover:underline disabled:opacity-50"
             >
               Gérer →
             </button>
@@ -98,7 +98,7 @@ export default function AbonnementPage() {
             <div
               key={key}
               className={`rounded-2xl p-4 border ${
-                isCurrentPlan ? 'border-indigo-400 bg-indigo-50' : 'border-gray-200 bg-white'
+                isCurrentPlan ? 'border-accent/60 bg-accent/5' : 'border-gray-200 bg-white'
               }`}
             >
               <div className="flex justify-between items-start mb-2">
@@ -106,7 +106,7 @@ export default function AbonnementPage() {
                   <p className="font-bold text-gray-900">
                     {plan.nom}
                     {isCurrentPlan && (
-                      <span className="ml-2 text-xs bg-indigo-600 text-white px-2 py-0.5 rounded-full">
+                      <span className="ml-2 text-xs bg-accent text-white px-2 py-0.5 rounded-full">
                         Actuel
                       </span>
                     )}
@@ -129,7 +129,7 @@ export default function AbonnementPage() {
                   type="button"
                   onClick={() => handleCheckout(key)}
                   disabled={loading !== null}
-                  className="w-full py-2 bg-indigo-600 text-white text-sm font-semibold rounded-xl disabled:opacity-50 hover:bg-indigo-700 transition-colors"
+                  className="w-full py-2 bg-accent text-white text-sm font-semibold rounded-xl disabled:opacity-50 hover:bg-accent transition-colors"
                 >
                   {loading === key ? 'Chargement...' : `Choisir ${plan.nom}`}
                 </button>

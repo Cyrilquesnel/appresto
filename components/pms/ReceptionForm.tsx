@@ -217,7 +217,7 @@ export function ReceptionForm({ initialItems = [], fournisseurId, onSuccess }: R
       <button
         type="submit"
         disabled={!canSubmit || createReception.isPending}
-        className="w-full py-4 bg-indigo-700 text-white font-semibold rounded-2xl disabled:opacity-50"
+        className="w-full py-4 bg-accent text-white font-semibold rounded-2xl disabled:opacity-50"
         data-testid="save-reception-button"
       >
         {createReception.isPending ? 'Enregistrement...' : 'Enregistrer la réception'}

@@ -78,6 +78,6 @@ export async function enrichIngredients(
  * Appelé uniquement si confiance_globale < 0.65 ou si des ingrédients individuels ont confiance < 0.65.
  */
 export function shouldEnrich(confianceGlobale: number, ingredientsConfiance: number[]): boolean {
-  if (confianceGlobale < 0.65) return true
-  return ingredientsConfiance.some((c) => c < 0.65)
+  if (confianceGlobale < 0.55) return true
+  return ingredientsConfiance.some((c) => c < 0.55)
 }

@@ -76,7 +76,7 @@ export default function AnalytiquesPage() {
             type="button"
             onClick={() => setTri(key)}
             className={`shrink-0 px-3 py-1.5 rounded-xl text-xs font-medium transition-colors ${
-              tri === key ? 'bg-indigo-600 text-white' : 'bg-gray-100 text-gray-600'
+              tri === key ? 'bg-accent text-white' : 'bg-gray-100 text-gray-600'
             }`}
           >
             {label}
@@ -86,7 +86,7 @@ export default function AnalytiquesPage() {
 
       {isLoading && (
         <div className="flex justify-center py-8">
-          <div className="animate-spin h-6 w-6 border-2 border-indigo-600 rounded-full border-t-transparent" />
+          <div className="animate-spin h-6 w-6 border-2 border-accent rounded-full border-t-transparent" />
         </div>
       )}
 
@@ -111,7 +111,7 @@ export default function AnalytiquesPage() {
             <div
               key={plat.plat_id}
               className={`rounded-2xl p-4 border ${
-                i === 0 ? 'border-indigo-200 bg-indigo-50' : 'border-gray-200 bg-white'
+                i === 0 ? 'border-accent/30 bg-accent/5' : 'border-gray-200 bg-white'
               }`}
             >
               <div className="flex items-start justify-between gap-2">
@@ -156,7 +156,7 @@ export default function AnalytiquesPage() {
               {/* Barre CA */}
               <div className="mt-2 h-1 bg-gray-100 rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-indigo-400 rounded-full"
+                  className="h-full bg-accent/70 rounded-full"
                   style={{ width: `${partCA}%` }}
                 />
               </div>

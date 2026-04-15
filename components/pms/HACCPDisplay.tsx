@@ -27,7 +27,7 @@ export function HACCPDisplay() {
         <button
           onClick={() => generate.mutate()}
           disabled={!data?.can_generate || generate.isPending}
-          className="px-4 py-2 bg-indigo-700 text-white rounded-xl text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+          className="px-4 py-2 bg-accent text-white rounded-xl text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed"
           title={!data?.can_generate ? `Créez ${3 - (data?.plats_count ?? 0)} plat(s) de plus` : ''}
           data-testid="generate-haccp-button"
         >
@@ -58,7 +58,7 @@ export function HACCPDisplay() {
             className="w-full p-4 flex items-center justify-between text-left"
           >
             <div className="flex items-center gap-2">
-              <span className="text-xs font-mono bg-indigo-700 text-white px-2 py-0.5 rounded-full">
+              <span className="text-xs font-mono bg-accent text-white px-2 py-0.5 rounded-full">
                 {point.ccp_numero}
               </span>
               <span className="font-semibold text-gray-900">{point.etape_critique}</span>
@@ -69,7 +69,7 @@ export function HACCPDisplay() {
           {expanded === point.id && (
             <div className="px-4 pb-4 space-y-3 text-sm border-t border-gray-100">
               {point.plat_nom && (
-                <p className="text-indigo-600 font-medium pt-2">Plat: {point.plat_nom}</p>
+                <p className="text-accent font-medium pt-2">Plat: {point.plat_nom}</p>
               )}
               <div>
                 <p className="text-xs text-gray-400 uppercase font-medium">Danger</p>

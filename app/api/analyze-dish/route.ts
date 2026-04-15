@@ -63,7 +63,7 @@ export async function POST(request: NextRequest) {
   > = {}
   if (needsEnrichment) {
     const lowConfidenceNames = geminiResult.ingredients_detectes
-      .filter((i) => i.confiance < 0.65)
+      .filter((i) => i.confiance < 0.55)
       .map((i) => i.nom)
 
     console.log(

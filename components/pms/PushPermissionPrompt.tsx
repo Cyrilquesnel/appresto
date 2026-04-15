@@ -54,15 +54,15 @@ export function PushPermissionPrompt() {
 
   return (
     <div
-      className="bg-indigo-50 border border-indigo-200 rounded-2xl p-4"
+      className="bg-accent/5 border border-accent/30 rounded-2xl p-4"
       data-testid="push-permission-prompt"
     >
-      <p className="text-sm font-medium text-indigo-900 mb-3">
+      <p className="text-sm font-medium text-primary mb-3">
         Activez les notifications pour recevoir les alertes PMS et rappels produits
       </p>
       <button
         onClick={subscribe}
-        className="w-full py-2 bg-indigo-600 text-white text-sm font-semibold rounded-xl"
+        className="w-full py-2 bg-accent text-white text-sm font-semibold rounded-xl"
         data-testid="enable-push"
       >
         Activer les notifications

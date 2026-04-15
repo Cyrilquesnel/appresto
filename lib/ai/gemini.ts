@@ -56,6 +56,46 @@ export interface GeminiDishResult {
   remarques?: string
 }
 
+const SYSTEM_INSTRUCTION = `Tu es un expert en cuisine professionnelle française et en réglementation INCO (information consommateurs).
+Tu analyses des photos de plats de restaurant pour construire des fiches techniques HACCP et calculer les food costs.
+Règles absolues :
+- Identifie UNIQUEMENT ce qui est visuellement certain et clairement visible
+- Pour les grammages, utilise les portions standards restaurant professionnel (pas ménager)
+- Les 14 codes allergènes réglementaires EU uniquement : gluten, crustaces, oeufs, poisson, arachides, soja, lait, fruits_a_coque, celeri, moutarde, sesame, sulfites, lupin, mollusques
+- confiance = 1.0 signifie certitude absolue, confiance < 0.6 → mettre visible: false
+- Ne devine jamais un ingrédient non visible`
+
+const FEW_SHOT_PROMPT = `Analyse la photo de plat fournie et identifie les ingrédients visibles.
+
+EXEMPLES DE BONNE ANALYSE :
+
+Exemple 1 — Steak-frites :
+{
+  "type_plat": "Plat principal viande",
+  "ingredients_detectes": [
+    {"nom": "entrecôte", "categorie": "viande", "visible": true, "grammage_suggere": 250, "allergenes": [], "confiance": 0.95},
+    {"nom": "frites", "categorie": "feculent", "visible": true, "grammage_suggere": 150, "allergenes": ["gluten"], "confiance": 0.98},
+    {"nom": "beurre maître d'hôtel", "categorie": "sauce", "visible": true, "grammage_suggere": 20, "allergenes": ["lait"], "confiance": 0.85}
+  ],
+  "confiance_globale": 0.93,
+  "remarques": "Sauce visible mais composition incertaine"
+}
+
+Exemple 2 — Salade niçoise :
+{
+  "type_plat": "Entrée salade",
+  "ingredients_detectes": [
+    {"nom": "thon", "categorie": "poisson", "visible": true, "grammage_suggere": 80, "allergenes": ["poisson"], "confiance": 0.9},
+    {"nom": "oeuf dur", "categorie": "autre", "visible": true, "grammage_suggere": 50, "allergenes": ["oeufs"], "confiance": 0.98},
+    {"nom": "haricots verts", "categorie": "legume", "visible": true, "grammage_suggere": 60, "allergenes": [], "confiance": 0.92},
+    {"nom": "olives noires", "categorie": "legume", "visible": true, "grammage_suggere": 20, "allergenes": [], "confiance": 0.95},
+    {"nom": "anchois", "categorie": "poisson", "visible": false, "grammage_suggere": 10, "allergenes": ["poisson"], "confiance": 0.5}
+  ],
+  "confiance_globale": 0.85
+}
+
+MAINTENANT analyse la photo fournie. Sois aussi précis et exhaustif que possible.`
+
 export async function analyzeDishPhoto(
   imageBase64: string,
   mimeType: string,
@@ -63,18 +103,16 @@ export async function analyzeDishPhoto(
 ): Promise<GeminiDishResult> {
   const model = genAI.getGenerativeModel({
     model: modelName,
+    systemInstruction: SYSTEM_INSTRUCTION,
     generationConfig: {
       responseMimeType: 'application/json',
       responseSchema: ingredientSchema,
+      temperature: 0,
     },
   })
 
   const result = await model.generateContent([
-    `Tu es un expert en restauration professionnelle française.
-Analyse cette photo de plat et identifie les ingrédients visibles.
-Détecte uniquement ce qui est clairement visible. Ne devine pas les ingrédients cachés.
-Indique ta confiance honnêtement (0.0 à 1.0).
-Pour les allergènes, utilise : gluten, crustaces, oeufs, poisson, arachides, soja, lait, fruits_a_coque, celeri, moutarde, sesame, sulfites, lupin, mollusques`,
+    FEW_SHOT_PROMPT,
     { inlineData: { mimeType, data: imageBase64 } },
   ])
 

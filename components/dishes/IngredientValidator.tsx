@@ -87,11 +87,11 @@ export function IngredientValidator({ initialIngredients, onChange }: Ingredient
                   onChange={(e) => updateNom(index, e.target.value)}
                   onBlur={() => setEditingIndex(null)}
                   onKeyDown={(e) => e.key === 'Enter' && setEditingIndex(null)}
-                  className="font-medium text-gray-900 w-full border-b border-indigo-400 outline-none bg-transparent"
+                  className="font-medium text-gray-900 w-full border-b border-accent/60 outline-none bg-transparent"
                 />
               ) : (
                 <p
-                  className="font-medium text-gray-900 truncate cursor-pointer hover:text-indigo-600"
+                  className="font-medium text-gray-900 truncate cursor-pointer hover:text-accent"
                   onClick={() => setEditingIndex(index)}
                   title="Cliquer pour modifier"
                 >

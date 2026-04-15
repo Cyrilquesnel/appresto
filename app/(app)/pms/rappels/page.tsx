@@ -50,7 +50,7 @@ export default function RappelsPage() {
                     href={alert.lien_info}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-xs text-indigo-600 underline mt-1 inline-block"
+                    className="text-xs text-accent underline mt-1 inline-block"
                   >
                     Plus d&apos;infos →
                   </a>
@@ -60,7 +60,7 @@ export default function RappelsPage() {
                 <button
                   onClick={() => markTraite.mutate({ alertId: alert.id })}
                   disabled={markTraite.isPending}
-                  className="px-3 py-1 text-xs bg-indigo-700 text-white rounded-full shrink-0"
+                  className="px-3 py-1 text-xs bg-accent text-white rounded-full shrink-0"
                 >
                   Traité
                 </button>

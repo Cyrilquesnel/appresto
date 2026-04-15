@@ -141,7 +141,7 @@ export function TemperatureLogger({ equipement, onLogged }: TemperatureLoggerPro
         <button
           onClick={handleSubmit}
           disabled={!value || isNaN(parsed) || log.isPending || (isHorsPlage && !actionCorrective)}
-          className="w-full py-4 bg-indigo-700 text-white font-semibold rounded-2xl text-lg disabled:opacity-50 active:scale-95 transition-transform"
+          className="w-full py-4 bg-accent text-white font-semibold rounded-2xl text-lg disabled:opacity-50 active:scale-95 transition-transform"
           data-testid={`save-temp-${equipement.id}`}
         >
           {log.isPending ? '⏳ Enregistrement...' : '✓ Valider'}

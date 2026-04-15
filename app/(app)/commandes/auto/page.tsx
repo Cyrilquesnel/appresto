@@ -47,7 +47,7 @@ export default function CommandeAutoPage() {
             }}
             className={`flex-1 py-2 rounded-xl text-sm font-medium transition-colors ${
               jours === j
-                ? 'bg-indigo-600 text-white'
+                ? 'bg-accent text-white'
                 : 'bg-white border border-gray-200 text-gray-600'
             }`}
           >
@@ -58,15 +58,15 @@ export default function CommandeAutoPage() {
 
       {isLoading && (
         <div className="flex justify-center py-12">
-          <div className="animate-spin h-8 w-8 border-2 border-indigo-600 rounded-full border-t-transparent" />
+          <div className="animate-spin h-8 w-8 border-2 border-accent rounded-full border-t-transparent" />
         </div>
       )}
 
       {!isLoading && data && (
         <>
           {/* Résumé */}
-          <div className="bg-indigo-50 rounded-2xl p-4 mb-4">
-            <p className="text-sm text-indigo-700">
+          <div className="bg-accent/5 rounded-2xl p-4 mb-4">
+            <p className="text-sm text-accent">
               Basé sur <strong>{data.nb_plats} plats</strong> vendus ces{' '}
               <strong>{data.jours} derniers jours</strong>
             </p>
@@ -105,7 +105,7 @@ export default function CommandeAutoPage() {
                     <button
                       onClick={() => handleCreateBon(suggestion)}
                       disabled={generateBon.isPending}
-                      className="px-3 py-1.5 bg-indigo-600 text-white text-xs font-semibold rounded-xl disabled:opacity-50"
+                      className="px-3 py-1.5 bg-accent text-white text-xs font-semibold rounded-xl disabled:opacity-50"
                     >
                       Commander →
                     </button>

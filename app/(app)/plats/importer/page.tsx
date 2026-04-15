@@ -104,7 +104,7 @@ export default function ImporterPage() {
         )}
         <Link
           href="/plats"
-          className="block w-full text-center py-3 bg-indigo-600 text-white font-semibold rounded-2xl"
+          className="block w-full text-center py-3 bg-accent text-white font-semibold rounded-2xl"
         >
           Voir les fiches
         </Link>
@@ -148,7 +148,7 @@ export default function ImporterPage() {
           type="file"
           accept=".csv,text/csv"
           onChange={handleFile}
-          className="block w-full text-sm text-gray-500 file:mr-4 file:py-3 file:px-4 file:rounded-2xl file:border-0 file:bg-indigo-50 file:text-indigo-700 file:font-semibold hover:file:bg-indigo-100 cursor-pointer"
+          className="block w-full text-sm text-gray-500 file:mr-4 file:py-3 file:px-4 file:rounded-2xl file:border-0 file:bg-accent/5 file:text-accent file:font-semibold hover:file:bg-accent/10 cursor-pointer"
         />
       </label>
 
@@ -186,7 +186,7 @@ export default function ImporterPage() {
             type="button"
             onClick={() => importBulk.mutate({ plats })}
             disabled={importBulk.isPending}
-            className="w-full py-4 bg-indigo-600 text-white font-semibold rounded-2xl text-lg disabled:opacity-50 active:scale-95 transition-transform"
+            className="w-full py-4 bg-accent text-white font-semibold rounded-2xl text-lg disabled:opacity-50 active:scale-95 transition-transform"
           >
             {importBulk.isPending
               ? 'Import en cours...'

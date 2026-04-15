@@ -28,7 +28,7 @@ export function VentesSemaineChart({ data }: VentesSemaineChartProps) {
             <div key={d.date} className="flex-1 flex flex-col items-center gap-1">
               <div className="w-full flex items-end" style={{ height: '48px' }}>
                 <div
-                  className="w-full rounded-t bg-indigo-500"
+                  className="w-full rounded-t bg-accent/50"
                   style={{ height: `${Math.max(pct, d.montant > 0 ? 4 : 0)}%` }}
                   title={`${d.montant.toFixed(0)} €`}
                 />

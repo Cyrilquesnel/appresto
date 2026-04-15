@@ -19,7 +19,7 @@ export default function CommandesPage() {
         <div className="flex gap-2">
           <Link
             href="/commandes/auto"
-            className="px-3 py-2 rounded-xl border border-indigo-200 text-indigo-600 font-medium text-sm"
+            className="px-3 py-2 rounded-xl border border-accent/30 text-accent font-medium text-sm"
           >
             Auto ✨
           </Link>

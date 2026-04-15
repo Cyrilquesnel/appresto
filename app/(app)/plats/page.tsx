@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { trpc } from '@/lib/trpc/client'
+import { ComingSoonFeature } from '@/components/ui/ComingSoonFeature'
 
 type Statut = 'tous' | 'actif' | 'brouillon'
 
@@ -37,9 +38,17 @@ export default function PlatsPage() {
           >
             Import CSV
           </Link>
+          <ComingSoonFeature>
+            <button
+              type="button"
+              className="px-3 py-2 rounded-lg text-sm font-medium border border-gray-300 text-gray-700"
+            >
+              🎤 Vocal
+            </button>
+          </ComingSoonFeature>
           <Link
             href="/plats/nouveau"
-            className="px-4 py-2 rounded-lg text-white text-sm font-medium bg-indigo-600"
+            className="px-4 py-2 rounded-lg text-white text-sm font-medium bg-accent"
             data-testid="add-dish-btn"
           >
             + Nouveau
@@ -56,7 +65,7 @@ export default function PlatsPage() {
             onClick={() => setFiltre(f.value)}
             className={`flex-1 py-2 transition-colors ${
               filtre === f.value
-                ? 'bg-indigo-600 text-white'
+                ? 'bg-accent text-white'
                 : 'bg-white text-gray-600 hover:bg-gray-50'
             }`}
           >
@@ -67,7 +76,7 @@ export default function PlatsPage() {
 
       {isLoading && (
         <div className="flex justify-center py-8">
-          <div className="animate-spin h-6 w-6 border-2 border-indigo-600 rounded-full border-t-transparent" />
+          <div className="animate-spin h-6 w-6 border-2 border-accent rounded-full border-t-transparent" />
         </div>
       )}
 
@@ -83,7 +92,7 @@ export default function PlatsPage() {
         <Link
           key={plat.id}
           href={`/plats/${plat.id}`}
-          className="block border rounded-xl p-3 mb-3 hover:border-indigo-200 transition-colors"
+          className="block border rounded-xl p-3 mb-3 hover:border-accent/30 transition-colors"
         >
           <div className="flex justify-between items-start">
             <span className="font-medium">{plat.nom}</span>

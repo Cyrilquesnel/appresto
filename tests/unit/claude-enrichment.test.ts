@@ -24,24 +24,24 @@ vi.mock('@anthropic-ai/sdk', () => ({
 }))
 
 describe('shouldEnrich', () => {
-  it('retourne true si confiance_globale < 0.65', async () => {
+  it('retourne true si confiance_globale < 0.55', async () => {
     const { shouldEnrich } = await import('@/lib/ai/claude-enrichment')
-    expect(shouldEnrich(0.6, [0.8, 0.9])).toBe(true)
+    expect(shouldEnrich(0.5, [0.8, 0.9])).toBe(true)
   })
 
-  it('retourne true si un ingrédient a confiance < 0.65', async () => {
+  it('retourne true si un ingrédient a confiance < 0.55', async () => {
     const { shouldEnrich } = await import('@/lib/ai/claude-enrichment')
-    expect(shouldEnrich(0.8, [0.9, 0.5, 0.85])).toBe(true)
+    expect(shouldEnrich(0.8, [0.9, 0.4, 0.85])).toBe(true)
   })
 
-  it('retourne false si tout est >= 0.65', async () => {
+  it('retourne false si tout est >= 0.55', async () => {
     const { shouldEnrich } = await import('@/lib/ai/claude-enrichment')
     expect(shouldEnrich(0.9, [0.8, 0.85, 0.95])).toBe(false)
   })
 
-  it('retourne false si confiance exactement à 0.65', async () => {
+  it('retourne false si confiance exactement à 0.55', async () => {
     const { shouldEnrich } = await import('@/lib/ai/claude-enrichment')
-    expect(shouldEnrich(0.65, [0.65, 0.7])).toBe(false)
+    expect(shouldEnrich(0.55, [0.55, 0.7])).toBe(false)
   })
 })
 

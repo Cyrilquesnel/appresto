@@ -14,7 +14,7 @@ export default function SaisieVentesPage() {
         <div className="text-6xl mb-4">✅</div>
         <h2 className="text-2xl font-bold mb-2">Ventes enregistrées !</h2>
         <p className="text-3xl font-bold text-green-600 mb-6">{success.toFixed(2)} € HT</p>
-        <button onClick={() => setSuccess(null)} className="text-indigo-600 hover:underline">
+        <button onClick={() => setSuccess(null)} className="text-accent hover:underline">
           Saisir un autre service
         </button>
       </div>
