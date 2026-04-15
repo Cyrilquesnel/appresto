@@ -900,6 +900,115 @@ export interface Database {
         }
         Relationships: []
       }
+      events: {
+        Row: {
+          id: string
+          restaurant_id: string | null
+          type: string
+          payload: Json
+          user_id: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          restaurant_id?: string | null
+          type: string
+          payload?: Json
+          user_id?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          restaurant_id?: string | null
+          type?: string
+          payload?: Json
+          user_id?: string | null
+          created_at?: string
+        }
+        Relationships: []
+      }
+      beta_sessions: {
+        Row: {
+          id: string
+          restaurant_id: string
+          user_id: string
+          started_at: string
+          last_active_at: string
+          pages_visited: string[]
+          duration_seconds: number | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          restaurant_id: string
+          user_id: string
+          started_at?: string
+          last_active_at?: string
+          pages_visited?: string[]
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          restaurant_id?: string
+          user_id?: string
+          started_at?: string
+          last_active_at?: string
+          pages_visited?: string[]
+          created_at?: string
+        }
+        Relationships: []
+      }
+      feature_flags: {
+        Row: {
+          id: string
+          restaurant_id: string | null
+          flag: string
+          enabled: boolean
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          restaurant_id?: string | null
+          flag: string
+          enabled?: boolean
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          restaurant_id?: string | null
+          flag?: string
+          enabled?: boolean
+          created_at?: string
+        }
+        Relationships: []
+      }
+      beta_invitations: {
+        Row: {
+          id: string
+          email: string
+          invited_at: string
+          accepted_at: string | null
+          restaurant_id: string | null
+          notes: string | null
+        }
+        Insert: {
+          id?: string
+          email: string
+          invited_at?: string
+          accepted_at?: string | null
+          restaurant_id?: string | null
+          notes?: string | null
+        }
+        Update: {
+          id?: string
+          email?: string
+          invited_at?: string
+          accepted_at?: string | null
+          restaurant_id?: string | null
+          notes?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       get_user_restaurant_id: {
@@ -909,6 +1018,24 @@ export interface Database {
       search_ingredients: {
         Args: { p_query: string; p_restaurant_id: string; p_limit?: number }
         Returns: Array<{ id: string; nom: string; source: string; allergenes: string[]; score: number }>
+      }
+      is_beta_open: {
+        Args: Record<string, never>
+        Returns: boolean
+      }
+      get_beta_stats: {
+        Args: { p_hours?: number }
+        Returns: Array<{
+          restaurant_id: string
+          restaurant_nom: string
+          restaurant_created_at: string
+          owner_id: string
+          sessions_count: number
+          avg_session_min: number
+          total_events_count: number
+          feature_counts: Json
+          error_count: number
+        }>
       }
     }
   }

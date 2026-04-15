@@ -5,6 +5,7 @@ import { SWRegistrar } from '@/components/SWRegistrar'
 import { RestaurantInitializer } from '@/components/RestaurantInitializer'
 import { PushPrompt } from '@/components/PushPrompt'
 import { BottomNav } from '@/components/ui/BottomNav'
+import { BetaSessionTracker } from '@/components/BetaSessionTracker'
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
   const supabase = createClient()
@@ -17,6 +18,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   return (
     <div className="min-h-screen bg-gray-50">
       <RestaurantInitializer />
+      <BetaSessionTracker />
       <SWRegistrar />
       <main className="pb-20" style={{ paddingTop: 'env(safe-area-inset-top)' }}>
         {children}

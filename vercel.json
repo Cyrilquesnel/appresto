@@ -13,6 +13,10 @@
     {
       "path": "/api/cron/onboarding-notifications",
       "schedule": "0 10 * * *"
+    },
+    {
+      "path": "/api/cron/beta-report",
+      "schedule": "0 7 * * *"
     }
   ],
   "headers": [

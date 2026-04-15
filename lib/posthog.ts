@@ -26,10 +26,24 @@ export function initPostHog() {
   })
 }
 
-export function trackEvent(event: AnalyticsEvent, properties?: Record<string, unknown>) {
+export function trackEvent(
+  event: AnalyticsEvent,
+  properties?: Record<string, unknown> & { restaurantId?: string }
+) {
   if (typeof window === 'undefined') return
   if (!posthog.__loaded) return
-  posthog.capture(event, sanitizeProperties(properties))
+
+  const { restaurantId, ...rest } = properties ?? {}
+  posthog.capture(event, sanitizeProperties(rest))
+
+  // Dual-write vers Supabase pour le rapport beta
+  if (restaurantId) {
+    fetch('/api/beta/track', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ type: event, restaurant_id: restaurantId, payload: rest }),
+    }).catch(() => {})
+  }
 }
 
 export function identifyUser(userId: string, traits?: Record<string, unknown>) {

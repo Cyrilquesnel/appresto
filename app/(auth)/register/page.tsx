@@ -18,6 +18,16 @@ export default function RegisterPage() {
     setLoading(true)
     setError(null)
 
+    // Vérification limite beta (20 places)
+    const { data: betaOpen, error: betaError } = await supabase.rpc('is_beta_open')
+    if (betaError || !betaOpen) {
+      setError(
+        "Les inscriptions beta sont fermées — 20/20 places occupées. Rejoignez la liste d'attente sur onrush.app"
+      )
+      setLoading(false)
+      return
+    }
+
     const { data, error: signUpError } = await supabase.auth.signUp({ email, password })
     if (signUpError) {
       setError(signUpError.message)

@@ -1,9 +1,10 @@
-export type HeartbeatKey = 'rappelconso' | 'temperatures' | 'onboarding'
+export type HeartbeatKey = 'rappelconso' | 'temperatures' | 'onboarding' | 'beta-report'
 
 const ENV_KEYS: Record<HeartbeatKey, string> = {
   rappelconso: 'BETTERUPTIME_HEARTBEAT_RAPPELCONSO',
   temperatures: 'BETTERUPTIME_HEARTBEAT_TEMPERATURES',
   onboarding: 'BETTERUPTIME_HEARTBEAT_ONBOARDING',
+  'beta-report': 'BETTERUPTIME_HEARTBEAT_BETA_REPORT',
 }
 
 export async function pingHeartbeat(key: HeartbeatKey): Promise<void> {
