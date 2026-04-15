@@ -29,15 +29,19 @@ CREATE INDEX IF NOT EXISTS idx_ism_ingredient
 
 ALTER TABLE ingredient_supplier_mappings ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "ism_select" ON ingredient_supplier_mappings;
 CREATE POLICY "ism_select" ON ingredient_supplier_mappings
   FOR SELECT USING (restaurant_id = get_user_restaurant_id());
 
+DROP POLICY IF EXISTS "ism_insert" ON ingredient_supplier_mappings;
 CREATE POLICY "ism_insert" ON ingredient_supplier_mappings
   FOR INSERT WITH CHECK (restaurant_id = get_user_restaurant_id());
 
+DROP POLICY IF EXISTS "ism_update" ON ingredient_supplier_mappings;
 CREATE POLICY "ism_update" ON ingredient_supplier_mappings
   FOR UPDATE USING (restaurant_id = get_user_restaurant_id());
 
+DROP POLICY IF EXISTS "ism_delete" ON ingredient_supplier_mappings;
 CREATE POLICY "ism_delete" ON ingredient_supplier_mappings
   FOR DELETE USING (restaurant_id = get_user_restaurant_id());
 

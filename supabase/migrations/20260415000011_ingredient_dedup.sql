@@ -17,9 +17,11 @@ CREATE TABLE IF NOT EXISTS ingredient_merge_log (
 
 ALTER TABLE ingredient_merge_log ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "merge_log_select" ON ingredient_merge_log;
 CREATE POLICY "merge_log_select" ON ingredient_merge_log
   FOR SELECT USING (restaurant_id = get_user_restaurant_id());
 
+DROP POLICY IF EXISTS "merge_log_insert" ON ingredient_merge_log;
 CREATE POLICY "merge_log_insert" ON ingredient_merge_log
   FOR INSERT WITH CHECK (restaurant_id = get_user_restaurant_id());
 
