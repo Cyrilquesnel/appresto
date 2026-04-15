@@ -1,6 +1,7 @@
 'use client'
 import { useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { Camera, ImageIcon } from 'lucide-react'
 import { compressImage } from '@/lib/utils/image'
 import { useDishCaptureStore } from '@/lib/store/dish-capture'
 
@@ -51,7 +52,7 @@ export function CameraFAB() {
         className="fixed left-1/2 -translate-x-1/2 z-50 w-14 h-14 rounded-full bg-accent shadow-lg flex items-center justify-center active:scale-95 transition-transform"
         style={{ bottom: 'calc(env(safe-area-inset-bottom) + 3.5rem - 1.75rem)' }}
       >
-        <span className="text-white text-2xl leading-none">📷</span>
+        <Camera size={24} strokeWidth={1.75} className="text-white" />
       </button>
 
       {/* Backdrop */}
@@ -81,7 +82,7 @@ export function CameraFAB() {
             onClick={() => cameraInputRef.current?.click()}
             className="flex items-center gap-3 w-full py-4 px-4 rounded-2xl bg-gray-50 text-left active:bg-gray-100"
           >
-            <span className="text-2xl">📷</span>
+            <Camera size={24} strokeWidth={1.75} className="text-accent" />
             <div>
               <p className="text-sm font-semibold text-gray-900">Photographier un plat</p>
               <p className="text-xs text-gray-400">Ouvrir la caméra</p>
@@ -93,7 +94,7 @@ export function CameraFAB() {
             onClick={() => galleryInputRef.current?.click()}
             className="flex items-center gap-3 w-full py-4 px-4 rounded-2xl bg-gray-50 text-left active:bg-gray-100"
           >
-            <span className="text-2xl">🖼️</span>
+            <ImageIcon size={24} strokeWidth={1.75} className="text-accent" />
             <div>
               <p className="text-sm font-semibold text-gray-900">Importer depuis la galerie</p>
               <p className="text-xs text-gray-400">Choisir une photo existante</p>

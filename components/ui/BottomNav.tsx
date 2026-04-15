@@ -1,6 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { BarChart3, UtensilsCrossed, ShoppingCart, Settings } from 'lucide-react'
 import { PMSNavLink } from '@/components/PMSNavLink'
 
 export function BottomNav() {
@@ -8,8 +9,8 @@ export function BottomNav() {
 
   const linkClass = (href: string) => {
     const isActive = pathname === href || pathname.startsWith(href + '/')
-    return `flex flex-col items-center text-xs transition-colors ${
-      isActive ? 'text-accent' : 'text-gray-500'
+    return `flex flex-col items-center gap-0.5 text-xs transition-colors ${
+      isActive ? 'text-accent' : 'text-gray-400'
     }`
   }
 
@@ -18,16 +19,16 @@ export function BottomNav() {
       className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50"
       style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
     >
-      <div className="flex items-center justify-around h-14">
+      <div className="flex items-center justify-evenly h-14">
         {/* Dashboard */}
         <Link href="/dashboard" className={linkClass('/dashboard')}>
-          <span className="text-xl">📊</span>
+          <BarChart3 size={22} strokeWidth={1.75} />
           <span>Tableau</span>
         </Link>
 
         {/* Plats */}
         <Link href="/plats" className={linkClass('/plats')}>
-          <span className="text-xl">🍽</span>
+          <UtensilsCrossed size={22} strokeWidth={1.75} />
           <span>Plats</span>
         </Link>
 
@@ -36,7 +37,7 @@ export function BottomNav() {
 
         {/* Achats */}
         <Link href="/mercuriale" className={linkClass('/mercuriale')}>
-          <span className="text-xl">🛒</span>
+          <ShoppingCart size={22} strokeWidth={1.75} />
           <span>Achats</span>
         </Link>
 
@@ -45,7 +46,7 @@ export function BottomNav() {
 
         {/* Paramètres */}
         <Link href="/settings" className={linkClass('/settings')}>
-          <span className="text-xl">⚙️</span>
+          <Settings size={22} strokeWidth={1.75} />
           <span>Réglages</span>
         </Link>
       </div>
