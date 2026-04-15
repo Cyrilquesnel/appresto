@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Background gradient -->
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0d2318"/>
+      <stop offset="100%" style="stop-color:#071410"/>
+    </linearGradient>
+
+    <!-- R glow filter -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Subtle inner glow for R -->
+    <filter id="innerGlow" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+
+    <!-- R gradient fill -->
+    <linearGradient id="rGrad" x1="0%" y1="0%" x2="30%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff"/>
+      <stop offset="60%" style="stop-color:#e8f5ee"/>
+      <stop offset="100%" style="stop-color:#a8d4b8"/>
+    </linearGradient>
+
+    <!-- Green accent gradient for "ush" -->
+    <linearGradient id="ushGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#4ade80"/>
+      <stop offset="100%" style="stop-color:#22c55e"/>
+    </linearGradient>
+
+    <!-- Glow for ush -->
+    <filter id="ushGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="512" height="512" rx="80" fill="url(#bg)"/>
+
+  <!-- Subtle radial glow behind R -->
+  <radialGradient id="centerGlow" cx="45%" cy="50%" r="45%">
+    <stop offset="0%" style="stop-color:#1a4d2e;stop-opacity:0.8"/>
+    <stop offset="100%" style="stop-color:#071410;stop-opacity:0"/>
+  </radialGradient>
+  <rect width="512" height="512" rx="80" fill="url(#centerGlow)"/>
+
+  <!-- Big R — using text with custom font stack -->
+  <!-- R positioned slightly left of center, ush centered vertically next to it -->
+
+  <!-- R shadow/glow layer -->
+  <text
+    x="105"
+    y="360"
+    font-family="'Arial Black', 'Helvetica Neue', Arial, sans-serif"
+    font-weight="900"
+    font-size="340"
+    fill="#2d7a4f"
+    opacity="0.4"
+    filter="url(#glow)"
+  >R</text>
+
+  <!-- R main -->
+  <text
+    x="105"
+    y="360"
+    font-family="'Arial Black', 'Helvetica Neue', Arial, sans-serif"
+    font-weight="900"
+    font-size="340"
+    fill="url(#rGrad)"
+    filter="url(#glow)"
+  >R</text>
+
+  <!-- "ush" — small, vertically centered at mid-height of the R -->
+  <!-- Mid R is roughly at y=190 (360 - 340/2 = 190) -->
+  <text
+    x="315"
+    y="215"
+    font-family="'Arial', 'Helvetica Neue', sans-serif"
+    font-weight="700"
+    font-size="72"
+    fill="url(#ushGrad)"
+    filter="url(#ushGlow)"
+    letter-spacing="2"
+  >ush</text>
+
+  <!-- Thin green accent line under "ush" -->
+  <rect x="315" y="223" width="130" height="3" rx="1.5" fill="#22c55e" opacity="0.6"/>
+</svg>
