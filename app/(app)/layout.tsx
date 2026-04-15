@@ -5,7 +5,6 @@ import { SWRegistrar } from '@/components/SWRegistrar'
 import { RestaurantInitializer } from '@/components/RestaurantInitializer'
 import { PushPrompt } from '@/components/PushPrompt'
 import { BottomNav } from '@/components/ui/BottomNav'
-import { CameraFAB } from '@/components/ui/CameraFAB'
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
   const supabase = createClient()
@@ -23,7 +22,6 @@ export default async function AppLayout({ children }: { children: React.ReactNod
       <OfflineBadge />
       <PushPrompt />
       <BottomNav />
-      <CameraFAB />
     </div>
   )
 }
