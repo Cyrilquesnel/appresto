@@ -279,6 +279,39 @@ export const dashboardRouter = router({
       }
     }),
 
+  // ═══ IMPORT VENTES CSV ═══
+  importVentes: protectedProcedure
+    .input(
+      z.object({
+        lignes: z.array(
+          z.object({
+            date: z.string(),
+            service: z.enum(['midi', 'soir', 'continu']).default('midi'),
+            nb_couverts: z.number().int().min(0),
+            panier_moyen: z.number().min(0),
+            notes: z.string().optional(),
+          })
+        ),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const insertions = input.lignes.map((l) => ({
+        restaurant_id: ctx.restaurantId,
+        date: l.date,
+        service: l.service,
+        nb_couverts: l.nb_couverts,
+        panier_moyen: l.panier_moyen,
+        montant_total: l.nb_couverts * l.panier_moyen,
+        quantite: l.nb_couverts,
+        mode_saisie: 'import_csv',
+        notes: l.notes ?? null,
+        plat_id: null,
+      }))
+      const { error } = await ctx.supabase.from('ventes').insert(insertions)
+      if (error) throw new Error(error.message)
+      return { success: true, nb_lignes: insertions.length }
+    }),
+
   // ═══ RESTAURANT ═══
   getMyRestaurant: protectedProcedure.query(async ({ ctx }) => {
     const { data } = await ctx.supabase

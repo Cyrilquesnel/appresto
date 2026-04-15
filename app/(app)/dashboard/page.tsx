@@ -150,14 +150,22 @@ export default function DashboardPage() {
         </Link>
       </div>
 
-      {/* Export CSV */}
-      <a
-        href={`/api/export/ventes?date_debut=${kpis?.date_debut ?? ''}&date_fin=${kpis?.date_fin ?? ''}`}
-        download
-        className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl border border-gray-200 text-sm text-gray-600 hover:bg-gray-50 transition-colors"
-      >
-        <span>↓</span> Exporter les ventes en CSV
-      </a>
+      {/* Import / Export CSV */}
+      <div className="flex gap-2">
+        <Link
+          href="/dashboard/importer-ventes"
+          className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl border border-gray-200 text-sm text-gray-600 hover:bg-gray-50 transition-colors"
+        >
+          <span>↑</span> Importer ventes
+        </Link>
+        <a
+          href={`/api/export/ventes?date_debut=${kpis?.date_debut ?? ''}&date_fin=${kpis?.date_fin ?? ''}`}
+          download
+          className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl border border-gray-200 text-sm text-gray-600 hover:bg-gray-50 transition-colors"
+        >
+          <span>↓</span> Exporter CSV
+        </a>
+      </div>
     </div>
   )
 }
