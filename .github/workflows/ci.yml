@@ -62,7 +62,7 @@ jobs:
       - name: Start Supabase local
         run: supabase start
       - name: Run migrations
-        run: supabase db reset --no-seed
+        run: supabase db reset --no-seed || (echo "First attempt failed, retrying in 20s..." && sleep 20 && supabase db reset --no-seed)
       - name: Run pgTAP tests
         run: supabase test db
         continue-on-error: true
