@@ -26,6 +26,8 @@ async function resolveIngredientId(
 ): Promise<string> {
   if (ing.ingredient_id) return ing.ingredient_id
 
+  // ON CONFLICT DO UPDATE garantit le RETURNING id même si la ligne existe déjà.
+  // Élimine la race condition upsert→fallback SELECT.
   const { data, error } = await supabase
     .from('restaurant_ingredients')
     .upsert(
@@ -39,17 +41,7 @@ async function resolveIngredientId(
     .select('id')
     .single()
 
-  if (error || !data) {
-    // Fallback : select si upsert a ignoré le duplicata
-    const { data: existing } = await supabase
-      .from('restaurant_ingredients')
-      .select('id')
-      .eq('restaurant_id', restaurantId)
-      .eq('nom_custom', ing.nom)
-      .single()
-    if (!existing) throw new Error(`Impossible de créer l'ingrédient: ${ing.nom}`)
-    return existing.id
-  }
+  if (error || !data) throw new Error(`Impossible de créer l'ingrédient: ${ing.nom}`)
 
   return data.id
 }
