@@ -6,6 +6,7 @@ import { RestaurantInitializer } from '@/components/RestaurantInitializer'
 import { PushPrompt } from '@/components/PushPrompt'
 import { BottomNav } from '@/components/ui/BottomNav'
 import { CameraFAB } from '@/components/ui/CameraFAB'
+import Link from 'next/link'
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
   const supabase = createClient()
@@ -19,7 +20,16 @@ export default async function AppLayout({ children }: { children: React.ReactNod
     <div className="min-h-screen bg-gray-50">
       <RestaurantInitializer />
       <SWRegistrar />
-      <main className="pb-20">{children}</main>
+      {/* Bouton paramètres — accessible depuis toutes les pages */}
+      <Link
+        href="/settings"
+        aria-label="Paramètres"
+        className="fixed top-0 right-0 z-40 flex items-center justify-center w-11 h-11 text-gray-500"
+        style={{ top: 'env(safe-area-inset-top)' }}
+      >
+        <span className="text-xl">⚙️</span>
+      </Link>
+      <main className="pb-20" style={{ paddingTop: 'calc(env(safe-area-inset-top) + 2.75rem)' }}>{children}</main>
       <OfflineBadge />
       <PushPrompt />
       <BottomNav />
