@@ -11,6 +11,33 @@ export const platsRouter = router({
     return data ?? []
   }),
 
+  updateStatut: protectedProcedure
+    .input(
+      z.object({
+        id: z.string().uuid(),
+        statut: z.enum(['actif', 'brouillon']),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { error } = await ctx.supabase
+        .from('plats')
+        .update({ statut: input.statut })
+        .eq('id', input.id)
+        .eq('restaurant_id', ctx.restaurantId)
+      if (error) throw new Error(error.message)
+    }),
+
+  delete: protectedProcedure
+    .input(z.object({ id: z.string().uuid() }))
+    .mutation(async ({ ctx, input }) => {
+      const { error } = await ctx.supabase
+        .from('plats')
+        .delete()
+        .eq('id', input.id)
+        .eq('restaurant_id', ctx.restaurantId)
+      if (error) throw new Error(error.message)
+    }),
+
   searchIngredients: protectedProcedure
     .input(
       z.object({

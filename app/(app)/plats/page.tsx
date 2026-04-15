@@ -3,6 +3,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { trpc } from '@/lib/trpc/client'
 import { ComingSoonFeature } from '@/components/ui/ComingSoonFeature'
+import { SwipePlatCard } from '@/components/dishes/SwipePlatCard'
 
 type Statut = 'tous' | 'actif' | 'brouillon'
 
@@ -83,29 +84,7 @@ export default function PlatsPage() {
       )}
 
       {platsFiltres.map((plat) => (
-        <Link
-          key={plat.id}
-          href={`/plats/${plat.id}`}
-          className="block border rounded-xl p-3 mb-3 hover:border-accent/30 transition-colors"
-        >
-          <div className="flex justify-between items-start">
-            <span className="font-medium">{plat.nom}</span>
-            {plat.cout_de_revient && (
-              <span className="text-sm text-gray-500">{plat.cout_de_revient.toFixed(2)} €</span>
-            )}
-          </div>
-          <div className="flex items-center gap-2 mt-1">
-            <span
-              className={`text-xs px-2 py-0.5 rounded-full font-medium ${
-                plat.statut === 'actif'
-                  ? 'bg-green-100 text-green-700'
-                  : 'bg-gray-100 text-gray-500'
-              }`}
-            >
-              {plat.statut === 'actif' ? 'Actif' : 'Brouillon'}
-            </span>
-          </div>
-        </Link>
+        <SwipePlatCard key={plat.id} plat={plat} onMutated={() => {}} />
       ))}
     </div>
   )
