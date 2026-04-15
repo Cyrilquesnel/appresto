@@ -82,9 +82,12 @@ export const commandesRouter = router({
     .input(
       z.object({
         ingredient_id: z.string().uuid(),
-        fournisseur_id: z.string().uuid(),
+        fournisseur_id: z.string().uuid().nullable().optional(),
         prix: z.number().positive(),
         unite: z.string().min(1).max(20).default('kg'),
+        unite_commande: z.string().max(50).optional(),
+        colisage: z.number().positive().optional(),
+        reference_fournisseur: z.string().max(100).optional(),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -113,9 +116,12 @@ export const commandesRouter = router({
         .from('mercuriale')
         .insert({
           ingredient_id: input.ingredient_id,
-          fournisseur_id: input.fournisseur_id,
+          fournisseur_id: input.fournisseur_id ?? null,
           prix: input.prix,
           unite: input.unite,
+          unite_commande: input.unite_commande ?? null,
+          colisage: input.colisage ?? null,
+          reference_fournisseur: input.reference_fournisseur ?? null,
           est_actif: true,
           date_maj: new Date().toISOString(),
         })
@@ -125,6 +131,84 @@ export const commandesRouter = router({
       if (error) throw new Error(error.message)
       return { id: data.id }
     }),
+
+  getAllIngredientsMercuriale: protectedProcedure.query(async ({ ctx }) => {
+    // 1. Récupère tous les ingrédients utilisés dans des fiches recettes de ce restaurant
+    const { data: fichesIngs } = await ctx.supabase
+      .from('fiche_technique')
+      .select(`
+        ingredient_id,
+        ingredient:restaurant_ingredients(
+          id, nom_custom, deleted_at,
+          catalog:ingredients_catalog(nom, unite_standard)
+        ),
+        plat:plats(restaurant_id)
+      `)
+      .eq('plat.restaurant_id', ctx.restaurantId)
+
+    if (!fichesIngs?.length) return []
+
+    // Déduplique par ingredient_id
+    const seen = new Set<string>()
+    const uniqueIngs = fichesIngs.filter((f) => {
+      if (!f.ingredient_id || seen.has(f.ingredient_id)) return false
+      const ing = f.ingredient as unknown as { deleted_at?: string | null } | null
+      if (ing?.deleted_at) return false
+      seen.add(f.ingredient_id)
+      return true
+    })
+
+    if (!uniqueIngs.length) return []
+
+    const ingredientIds = uniqueIngs.map((f) => f.ingredient_id!)
+
+    // 2. Récupère les prix actifs pour ces ingrédients
+    const { data: prix } = await ctx.supabase
+      .from('mercuriale')
+      .select(`
+        id, prix, unite, unite_commande, colisage, reference_fournisseur, date_maj,
+        ingredient_id,
+        fournisseur:fournisseurs(id, nom)
+      `)
+      .in('ingredient_id', ingredientIds)
+      .eq('est_actif', true)
+
+    // 3. Fusionne : chaque ingrédient avec son prix actif (ou null)
+    const prixByIngredient = new Map((prix ?? []).map((p) => [p.ingredient_id, p]))
+
+    // 4. Récupère aussi les fournisseurs disponibles pour le selector
+    const { data: fournisseurs } = await ctx.supabase
+      .from('fournisseurs')
+      .select('id, nom')
+      .eq('restaurant_id', ctx.restaurantId)
+      .is('deleted_at', null)
+      .order('nom')
+
+    return uniqueIngs.map((f) => {
+      const ing = f.ingredient as unknown as {
+        id: string
+        nom_custom: string | null
+        deleted_at: string | null
+        catalog: { nom: string; unite_standard: string | null } | null
+      } | null
+      const prix_actif = prixByIngredient.get(f.ingredient_id!) ?? null
+      const fournisseur_actif = prix_actif?.fournisseur as { id: string; nom: string } | null ?? null
+      return {
+        ingredient_id: f.ingredient_id!,
+        nom: ing?.nom_custom ?? ing?.catalog?.nom ?? '—',
+        unite_standard: ing?.catalog?.unite_standard ?? 'kg',
+        mercuriale_id: prix_actif?.id ?? null,
+        prix: prix_actif?.prix ?? null,
+        unite: prix_actif?.unite ?? ing?.catalog?.unite_standard ?? 'kg',
+        unite_commande: prix_actif?.unite_commande ?? null,
+        colisage: prix_actif?.colisage ?? null,
+        reference_fournisseur: prix_actif?.reference_fournisseur ?? null,
+        date_maj: prix_actif?.date_maj ?? null,
+        fournisseur: fournisseur_actif,
+        fournisseurs_disponibles: fournisseurs ?? [],
+      }
+    })
+  }),
 
   getMercuriale: protectedProcedure.query(async ({ ctx }) => {
     // mercuriale n'a pas de restaurant_id → filtrer via restaurant_ingredients

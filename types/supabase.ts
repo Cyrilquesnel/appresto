@@ -236,6 +236,9 @@ export interface Database {
           fournisseur_id: string | null
           prix: number
           unite: string
+          unite_commande: string | null
+          colisage: number | null
+          reference_fournisseur: string | null
           est_actif: boolean
           source: string
           date_maj: string
@@ -247,6 +250,9 @@ export interface Database {
           fournisseur_id?: string | null
           prix: number
           unite: string
+          unite_commande?: string | null
+          colisage?: number | null
+          reference_fournisseur?: string | null
           est_actif?: boolean
           source?: string
           date_maj?: string
@@ -258,6 +264,9 @@ export interface Database {
           fournisseur_id?: string | null
           prix?: number
           unite?: string
+          unite_commande?: string | null
+          colisage?: number | null
+          reference_fournisseur?: string | null
           est_actif?: boolean
           source?: string
           date_maj?: string

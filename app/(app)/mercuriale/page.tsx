@@ -13,7 +13,7 @@ export default function MercurialePage() {
     setInvoiceResult(result)
     // Rafraîchir la mercuriale si des prix ont été mis à jour
     if (result.auto_updated.length > 0) {
-      utils.commandes.getMercuriale.invalidate()
+      utils.commandes.getAllIngredientsMercuriale.invalidate()
     }
   }
 
