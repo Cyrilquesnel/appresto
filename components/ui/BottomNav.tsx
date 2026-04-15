@@ -42,6 +42,12 @@ export function BottomNav() {
 
         {/* PMS — avec badge alertes */}
         <PMSNavLink />
+
+        {/* Paramètres */}
+        <Link href="/settings" className={linkClass('/settings')}>
+          <span className="text-xl">⚙️</span>
+          <span>Réglages</span>
+        </Link>
       </div>
     </nav>
   )
