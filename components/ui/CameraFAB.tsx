@@ -49,7 +49,7 @@ export function CameraFAB() {
         onClick={() => setSheetOpen(true)}
         aria-label="Photographier un plat"
         className="fixed left-1/2 -translate-x-1/2 z-50 w-14 h-14 rounded-full bg-accent shadow-lg flex items-center justify-center active:scale-95 transition-transform"
-        style={{ bottom: 'env(safe-area-inset-bottom)' }}
+        style={{ bottom: 'calc(env(safe-area-inset-bottom) + 3.5rem - 1.75rem)' }}
       >
         <span className="text-white text-2xl leading-none">📷</span>
       </button>
