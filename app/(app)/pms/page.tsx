@@ -38,6 +38,12 @@ export default function PMSPage() {
       title: 'Export DDPP',
       desc: 'Registre HACCP — Mode Inspecteur',
     },
+    {
+      href: '/plats/allergenes',
+      icon: '⚠️',
+      title: 'Allergènes',
+      desc: 'Feuille conformité Décret 2015-447',
+    },
   ]
 
   return (
