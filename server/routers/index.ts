@@ -6,6 +6,7 @@ import { dashboardRouter } from './dashboard'
 import { pmsRouter } from './pms'
 import { stripeRouter } from './stripe'
 import { accountRouter } from './account'
+import { ingredientsRouter } from './ingredients'
 
 export const appRouter = router({
   plats: platsRouter,
@@ -15,6 +16,7 @@ export const appRouter = router({
   pms: pmsRouter,
   stripe: stripeRouter,
   account: accountRouter,
+  ingredients: ingredientsRouter,
 })
 
 export type AppRouter = typeof appRouter

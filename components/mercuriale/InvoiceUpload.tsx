@@ -2,24 +2,29 @@
 import { useState, useRef } from 'react'
 import { useRestaurantStore } from '@/stores/restaurant'
 
+export interface InvoiceLigne {
+  designation: string
+  dlc?: string
+  numero_lot?: string
+  quantite: number
+  unite: string
+  prix_unitaire_ht: number
+  ingredient_id: string | null
+  matched: boolean
+  match_source?: 'mapping' | 'fuzzy' | 'ai' | 'none'
+  ai_confidence?: number
+}
+
 export interface InvoiceResult {
   invoice: {
     fournisseur_nom?: string
     date_facture?: string
     numero_facture?: string
-    lignes: Array<{
-      designation: string
-      dlc?: string
-      numero_lot?: string
-      quantite: number
-      unite: string
-      prix_unitaire_ht: number
-      ingredient_id: string | null
-      matched: boolean
-    }>
+    lignes: InvoiceLigne[]
   }
   auto_updated: string[]
   requires_manual: number
+  ai_suggested?: InvoiceLigne[]
 }
 
 interface InvoiceUploadProps {

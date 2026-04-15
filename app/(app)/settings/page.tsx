@@ -317,6 +317,19 @@ export default function SettingsPage() {
         </div>
       </div>
 
+      {/* ─── Ingrédients ─── */}
+      <div className="bg-white rounded-2xl border border-gray-200 p-4">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="font-semibold text-gray-900">Ingrédients</h2>
+            <p className="text-sm text-gray-500 mt-1">Détecter et fusionner les doublons</p>
+          </div>
+          <a href="/settings/ingredients" className="text-sm text-accent font-medium">
+            Gérer →
+          </a>
+        </div>
+      </div>
+
       {/* ─── Multi-établissements — bientôt ─── */}
       <ComingSoonFeature eta="T4 2026">
         <div className="bg-white rounded-2xl border border-gray-200 p-4">

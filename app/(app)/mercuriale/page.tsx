@@ -3,17 +3,22 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { MercurialeTable } from '@/components/mercuriale/MercurialeTable'
 import { InvoiceUpload, type InvoiceResult } from '@/components/mercuriale/InvoiceUpload'
+import { InvoiceReviewModal } from '@/components/mercuriale/InvoiceReviewModal'
 import { trpc } from '@/lib/trpc/client'
 
 export default function MercurialePage() {
   const [invoiceResult, setInvoiceResult] = useState<InvoiceResult | null>(null)
+  const [showAiReview, setShowAiReview] = useState(false)
   const utils = trpc.useUtils()
 
   function handleInvoiceResult(result: InvoiceResult) {
     setInvoiceResult(result)
-    // Rafraîchir la mercuriale si des prix ont été mis à jour
     if (result.auto_updated.length > 0) {
       utils.commandes.getAllIngredientsMercuriale.invalidate()
+    }
+    // Ouvrir la modal de révision si des suggestions IA sont disponibles
+    if ((result.ai_suggested?.length ?? 0) > 0) {
+      setShowAiReview(true)
     }
   }
 
@@ -93,6 +98,17 @@ export default function MercurialePage() {
       )}
 
       <MercurialeTable />
+
+      {showAiReview && invoiceResult && (invoiceResult.ai_suggested?.length ?? 0) > 0 && (
+        <InvoiceReviewModal
+          fournisseurId={null}
+          aiSuggested={invoiceResult.ai_suggested!}
+          onConfirmed={(count) => {
+            if (count > 0) utils.commandes.getAllIngredientsMercuriale.invalidate()
+          }}
+          onClose={() => setShowAiReview(false)}
+        />
+      )}
     </div>
   )
 }
