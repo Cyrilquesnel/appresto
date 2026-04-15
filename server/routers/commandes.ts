@@ -136,14 +136,16 @@ export const commandesRouter = router({
     // 1. Récupère tous les ingrédients utilisés dans des fiches recettes de ce restaurant
     const { data: fichesIngs } = await ctx.supabase
       .from('fiche_technique')
-      .select(`
+      .select(
+        `
         ingredient_id,
         ingredient:restaurant_ingredients(
           id, nom_custom, deleted_at,
           catalog:ingredients_catalog(nom, unite_standard)
         ),
         plat:plats(restaurant_id)
-      `)
+      `
+      )
       .eq('plat.restaurant_id', ctx.restaurantId)
 
     if (!fichesIngs?.length) return []
@@ -165,11 +167,13 @@ export const commandesRouter = router({
     // 2. Récupère les prix actifs pour ces ingrédients
     const { data: prix } = await ctx.supabase
       .from('mercuriale')
-      .select(`
+      .select(
+        `
         id, prix, unite, unite_commande, colisage, reference_fournisseur, date_maj,
         ingredient_id,
         fournisseur:fournisseurs(id, nom)
-      `)
+      `
+      )
       .in('ingredient_id', ingredientIds)
       .eq('est_actif', true)
 
@@ -192,7 +196,8 @@ export const commandesRouter = router({
         catalog: { nom: string; unite_standard: string | null } | null
       } | null
       const prix_actif = prixByIngredient.get(f.ingredient_id!) ?? null
-      const fournisseur_actif = prix_actif?.fournisseur as { id: string; nom: string } | null ?? null
+      const fournisseur_actif =
+        (prix_actif?.fournisseur as { id: string; nom: string } | null) ?? null
       return {
         ingredient_id: f.ingredient_id!,
         nom: ing?.nom_custom ?? ing?.catalog?.nom ?? '—',

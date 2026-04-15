@@ -25,11 +25,24 @@ const UNITES = ['kg', 'L', 'pièce', 'botte', 'boîte', 'sachet', 'barquette']
 
 function formatDate(iso: string | null): string {
   if (!iso) return ''
-  return new Date(iso).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: '2-digit' })
+  return new Date(iso).toLocaleDateString('fr-FR', {
+    day: '2-digit',
+    month: '2-digit',
+    year: '2-digit',
+  })
 }
 
 function exportCSV(data: IngredientMercuriale[]) {
-  const header = ['Ingrédient', 'Fournisseur', 'Prix HT', 'Unité', 'Unité commande', 'Colisage', 'Référence', 'Dernière MAJ']
+  const header = [
+    'Ingrédient',
+    'Fournisseur',
+    'Prix HT',
+    'Unité',
+    'Unité commande',
+    'Colisage',
+    'Référence',
+    'Dernière MAJ',
+  ]
   const rows = data.map((item) => [
     item.nom,
     item.fournisseur?.nom ?? '',
@@ -62,13 +75,7 @@ type EditState = {
   reference_fournisseur: string
 }
 
-function IngredientCard({
-  item,
-  onSaved,
-}: {
-  item: IngredientMercuriale
-  onSaved: () => void
-}) {
+function IngredientCard({ item, onSaved }: { item: IngredientMercuriale; onSaved: () => void }) {
   const [editing, setEditing] = useState(false)
   const [form, setForm] = useState<EditState>({
     prix: item.prix != null ? item.prix.toString() : '',
@@ -115,7 +122,10 @@ function IngredientCard({
   const hasPrix = item.prix != null
 
   return (
-    <div className="bg-white rounded-xl border border-gray-100 p-4" data-testid={`ingredient-card-${item.ingredient_id}`}>
+    <div
+      className="bg-white rounded-xl border border-gray-100 p-4"
+      data-testid={`ingredient-card-${item.ingredient_id}`}
+    >
       {!editing ? (
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
@@ -180,7 +190,9 @@ function IngredientCard({
                 className="w-full px-2 py-1.5 rounded-lg border border-gray-200 text-sm focus:outline-none"
               >
                 {UNITES.map((u) => (
-                  <option key={u} value={u}>{u}</option>
+                  <option key={u} value={u}>
+                    {u}
+                  </option>
                 ))}
               </select>
             </div>
@@ -196,7 +208,9 @@ function IngredientCard({
             >
               <option value="">— Aucun fournisseur —</option>
               {item.fournisseurs_disponibles.map((four) => (
-                <option key={four.id} value={four.id}>{four.nom}</option>
+                <option key={four.id} value={four.id}>
+                  {four.nom}
+                </option>
               ))}
             </select>
           </div>
@@ -256,9 +270,7 @@ function IngredientCard({
             </button>
           </div>
 
-          {setPrice.error && (
-            <p className="text-xs text-red-500">{setPrice.error.message}</p>
-          )}
+          {setPrice.error && <p className="text-xs text-red-500">{setPrice.error.message}</p>}
         </div>
       )}
     </div>
@@ -286,7 +298,9 @@ export function MercurialeTable() {
       {/* Header stats + export */}
       <div className="flex items-center justify-between mb-4">
         <p className="text-sm text-gray-500">
-          <span className="font-semibold text-gray-900">{priced.length}/{all.length}</span>{' '}
+          <span className="font-semibold text-gray-900">
+            {priced.length}/{all.length}
+          </span>{' '}
           ingrédients pricés
         </p>
         {all.length > 0 && (
@@ -326,11 +340,7 @@ export function MercurialeTable() {
       {/* Liste */}
       <div className="space-y-2">
         {filtered.map((item) => (
-          <IngredientCard
-            key={item.ingredient_id}
-            item={item}
-            onSaved={() => refetch()}
-          />
+          <IngredientCard key={item.ingredient_id} item={item} onSaved={() => refetch()} />
         ))}
       </div>
 
@@ -342,7 +352,9 @@ export function MercurialeTable() {
 
       {all.length > 0 && filtered.length === 0 && (
         <div className="text-center py-8 text-gray-400 text-sm">
-          {tab === 'manquants' ? 'Tous les ingrédients ont un prix !' : 'Aucun ingrédient pricé pour le moment.'}
+          {tab === 'manquants'
+            ? 'Tous les ingrédients ont un prix !'
+            : 'Aucun ingrédient pricé pour le moment.'}
         </div>
       )}
     </div>
