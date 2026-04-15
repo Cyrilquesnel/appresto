@@ -1,5 +1,6 @@
 import { router, protectedProcedure } from '../trpc'
 import { z } from 'zod'
+import type { SupabaseClient } from '@supabase/supabase-js'
 
 const IngredientLineSchema = z.object({
   ingredient_id: z.string().uuid().optional(),
@@ -13,6 +14,40 @@ const IngredientLineSchema = z.object({
   prix_achat: z.number().positive().optional(),
   unite_achat: z.string().optional(),
 })
+
+// Garantit qu'un ingredient_id existe toujours avant l'INSERT fiche_technique.
+// Si ingredient_id est fourni, le retourne tel quel.
+// Sinon, upsert dans restaurant_ingredients avec nom_custom.
+async function resolveIngredientId(
+  supabase: SupabaseClient,
+  restaurantId: string,
+  ing: { ingredient_id?: string; nom: string; allergenes?: string[] }
+): Promise<string> {
+  if (ing.ingredient_id) return ing.ingredient_id
+
+  const { data, error } = await supabase
+    .from('restaurant_ingredients')
+    .upsert(
+      { restaurant_id: restaurantId, nom_custom: ing.nom, allergenes_override: ing.allergenes ?? [] },
+      { onConflict: 'restaurant_id,nom_custom', ignoreDuplicates: false }
+    )
+    .select('id')
+    .single()
+
+  if (error || !data) {
+    // Fallback : select si upsert a ignoré le duplicata
+    const { data: existing } = await supabase
+      .from('restaurant_ingredients')
+      .select('id')
+      .eq('restaurant_id', restaurantId)
+      .eq('nom_custom', ing.nom)
+      .single()
+    if (!existing) throw new Error(`Impossible de créer l'ingrédient: ${ing.nom}`)
+    return existing.id
+  }
+
+  return data.id
+}
 
 export const fichesRouter = router({
   create: protectedProcedure
@@ -57,11 +92,16 @@ export const fichesRouter = router({
         throw new Error(`Erreur création plat: ${platError?.message}`)
       }
 
+      // Résoudre les ingredient_id (crée dans restaurant_ingredients si absent)
+      const resolvedIds = await Promise.all(
+        ingredients.map((ing) => resolveIngredientId(ctx.supabase, ctx.restaurantId, ing))
+      )
+
       // INSERT fiche_technique lignes
       const lignes = ingredients.map((ing, index) => ({
         restaurant_id: ctx.restaurantId,
         plat_id: platData.id,
-        ingredient_id: ing.ingredient_id ?? null,
+        ingredient_id: resolvedIds[index],
         nom_ingredient: ing.nom,
         grammage: ing.grammage,
         unite: ing.unite,
@@ -76,43 +116,27 @@ export const fichesRouter = router({
       }
 
       // Upsert mercuriale pour tous les ingrédients avec prix_achat + fournisseur_id
-      for (const ing of ingredients) {
+      for (let i = 0; i < ingredients.length; i++) {
+        const ing = ingredients[i]
         if (!ing.prix_achat || !ing.fournisseur_id) continue
+        const ingredientId = resolvedIds[i]
 
-        let ingredientId = ing.ingredient_id
+        // Désactiver l'ancien prix actif pour cet ingrédient
+        await ctx.supabase
+          .from('mercuriale')
+          .update({ est_actif: false })
+          .eq('ingredient_id', ingredientId)
+          .eq('est_actif', true)
 
-        // Si l'ingrédient n'est pas encore dans restaurant_ingredients, on le crée
-        if (!ingredientId) {
-          const { data: newIng } = await ctx.supabase
-            .from('restaurant_ingredients')
-            .insert({
-              restaurant_id: ctx.restaurantId,
-              nom_custom: ing.nom,
-              allergenes_override: ing.allergenes ?? [],
-            })
-            .select('id')
-            .single()
-          ingredientId = newIng?.id
-        }
-
-        if (ingredientId) {
-          // Désactiver l'ancien prix actif pour cet ingrédient
-          await ctx.supabase
-            .from('mercuriale')
-            .update({ est_actif: false })
-            .eq('ingredient_id', ingredientId)
-            .eq('est_actif', true)
-
-          // Insérer le nouveau prix actif
-          await ctx.supabase.from('mercuriale').insert({
-            ingredient_id: ingredientId,
-            fournisseur_id: ing.fournisseur_id,
-            prix: ing.prix_achat,
-            unite: ing.unite_achat ?? 'kg',
-            est_actif: true,
-            date_maj: new Date().toISOString(),
-          })
-        }
+        // Insérer le nouveau prix actif
+        await ctx.supabase.from('mercuriale').insert({
+          ingredient_id: ingredientId,
+          fournisseur_id: ing.fournisseur_id,
+          prix: ing.prix_achat,
+          unite: ing.unite_achat ?? 'kg',
+          est_actif: true,
+          date_maj: new Date().toISOString(),
+        })
       }
 
       // INSERT fiche_technique_versions (snapshot initial)
@@ -188,6 +212,11 @@ export const fichesRouter = router({
       }
 
       if (ingredients) {
+        // Résoudre les ingredient_id avant suppression/réinsertion
+        const resolvedIds = await Promise.all(
+          ingredients.map((ing) => resolveIngredientId(ctx.supabase, ctx.restaurantId, ing))
+        )
+
         // Remplacer toutes les lignes fiche_technique
         await ctx.supabase
           .from('fiche_technique')
@@ -197,7 +226,7 @@ export const fichesRouter = router({
         const lignes = ingredients.map((ing, index) => ({
           restaurant_id: ctx.restaurantId,
           plat_id: platId,
-          ingredient_id: ing.ingredient_id ?? null,
+          ingredient_id: resolvedIds[index],
           nom_ingredient: ing.nom,
           grammage: ing.grammage,
           unite: ing.unite,
@@ -266,9 +295,15 @@ export const fichesRouter = router({
             .single()
           if (platError || !platData) throw new Error(platError?.message ?? 'Erreur création plat')
 
+          const resolvedIds = await Promise.all(
+            plat.ingredients.map((ing) =>
+              resolveIngredientId(ctx.supabase, ctx.restaurantId, { nom: ing.nom })
+            )
+          )
           const lignes = plat.ingredients.map((ing, i) => ({
             restaurant_id: ctx.restaurantId,
             plat_id: platData.id,
+            ingredient_id: resolvedIds[i],
             nom_ingredient: ing.nom,
             grammage: ing.grammage,
             unite: ing.unite,

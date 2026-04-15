@@ -40,7 +40,8 @@ export function IngredientValidator({ initialIngredients, onChange }: Ingredient
   }
 
   const updateNom = (index: number, nom: string) => {
-    update(ingredients.map((ing, i) => (i === index ? { ...ing, nom } : ing)))
+    // Effacer l'id : le nom modifié manuellement devient un nouvel ingrédient côté serveur
+    update(ingredients.map((ing, i) => (i === index ? { ...ing, nom, id: undefined } : ing)))
   }
 
   const updateFournisseur = (index: number, fournisseur_id: string | undefined) => {
