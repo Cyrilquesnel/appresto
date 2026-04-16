@@ -2,6 +2,7 @@
 import { useRef } from 'react'
 import { trpc } from '@/lib/trpc/client'
 
+// Codes identiques à AllergenesDisplay.tsx — source de vérité pour les valeurs stockées en DB
 const ALLERGENES_14 = [
   { key: 'gluten', label: 'Gluten' },
   { key: 'crustaces', label: 'Crustacés' },
@@ -10,11 +11,11 @@ const ALLERGENES_14 = [
   { key: 'arachides', label: 'Arachides' },
   { key: 'soja', label: 'Soja' },
   { key: 'lait', label: 'Lait' },
-  { key: 'fruits_a_coque', label: 'Fruits à coque' },
+  { key: 'fruits_coque', label: 'Fruits à coque' },
   { key: 'celeri', label: 'Céleri' },
   { key: 'moutarde', label: 'Moutarde' },
   { key: 'sesame', label: 'Sésame' },
-  { key: 'sulfites', label: 'Sulfites' },
+  { key: 'so2', label: 'SO₂/Sulfites' },
   { key: 'lupin', label: 'Lupin' },
   { key: 'mollusques', label: 'Mollusques' },
 ] as const
@@ -114,11 +115,7 @@ export default function AllergenesPage() {
                         {plat.nom}
                       </td>
                       {ALLERGENES_14.map((a) => {
-                        const present = allergenes.some(
-                          (al) =>
-                            al.toLowerCase().replace(/[^a-z]/g, '') === a.key.replace(/_/g, '') ||
-                            al.toLowerCase().includes(a.key.replace(/_/g, ''))
-                        )
+                        const present = allergenes.includes(a.key)
                         return (
                           <td key={a.key} className="border border-gray-300 text-center py-2">
                             {present ? (
