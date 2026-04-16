@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { extractInvoiceData, matchIngredient } from '@/lib/ai/invoice-ocr'
-import { extractInvoiceDataMindee } from '@/lib/ai/mindee-ocr'
 import { claudeMatchIngredients } from '@/lib/ai/ingredient-matcher'
 import { invoiceOCRLimiter } from '@/lib/upstash'
 
@@ -65,32 +64,32 @@ export async function POST(req: NextRequest) {
   const arrayBuffer = await file.arrayBuffer()
   const buffer = Buffer.from(arrayBuffer)
 
-  // ── COUCHE OCR : Mindee (primaire) → Gemini (fallback) ───────────────────
-  // Mindee : spécialisé factures françaises, supporte PDF multi-pages
-  // Gemini : généraliste mais robuste, fallback si Mindee indispo ou échec
+  // ── COUCHE OCR : Gemini Vision (gemini-2.0-flash → gemini-2.0-flash-lite) ─
+  // Gemini supporte PDF + images inline nativement.
+  // Mindee v1 (InvoiceV4) retiré : clé v2 incompatible avec InvoiceV4.
 
   let invoiceData
-  let ocrSource: 'mindee' | 'gemini' = 'mindee'
+  const ocrSource = 'gemini'
 
-  const mindeeResult = await extractInvoiceDataMindee(buffer, file.name || 'facture.pdf')
+  // Normalise le MIME type : iOS peut envoyer application/octet-stream pour les PDFs
+  const mimeType =
+    file.type === 'application/octet-stream' && file.name?.toLowerCase().endsWith('.pdf')
+      ? 'application/pdf'
+      : file.type
 
-  if (mindeeResult) {
-    invoiceData = mindeeResult
-  } else {
-    // Fallback Gemini (gemini-2.0-flash → gemini-1.5-flash)
-    ocrSource = 'gemini'
-    try {
-      const imageBase64 = buffer.toString('base64')
-      invoiceData = await extractInvoiceData(imageBase64, file.type)
-    } catch (err) {
-      const message = err instanceof Error ? err.message : 'Erreur inconnue'
-      return NextResponse.json(
-        {
-          error: `Impossible d'analyser ce fichier. ${message}. Vérifiez que la facture est lisible et réessayez.`,
-        },
-        { status: 422 }
-      )
-    }
+  console.log(`[OCR] fichier=${file.name} type=${file.type} mimeNorm=${mimeType} size=${file.size}`)
+
+  try {
+    const imageBase64 = buffer.toString('base64')
+    invoiceData = await extractInvoiceData(imageBase64, mimeType)
+  } catch (err) {
+    const message = err instanceof Error ? err.message : 'Erreur inconnue'
+    return NextResponse.json(
+      {
+        error: `Impossible d'analyser ce fichier. ${message}. Vérifiez que la facture est lisible et réessayez.`,
+      },
+      { status: 422 }
+    )
   }
 
   if (!invoiceData.lignes?.length) {
