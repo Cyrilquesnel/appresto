@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { trpc } from '@/lib/trpc/client'
 import { useRouter } from 'next/navigation'
 import { IngredientValidator, type ValidatedIngredient } from './IngredientValidator'
@@ -23,6 +23,7 @@ interface FicheTechniqueFormProps {
   initialStatut?: 'brouillon' | 'actif'
   initialPrix?: number
   onSubmit?: (data: SubmitData) => Promise<void>
+  onDirtyChange?: (isDirty: boolean) => void
   isSubmitting?: boolean
   submitLabel?: string
 }
@@ -35,6 +36,7 @@ export function FicheTechniqueForm({
   initialStatut = 'brouillon',
   initialPrix,
   onSubmit,
+  onDirtyChange,
   isSubmitting,
   submitLabel,
 }: FicheTechniqueFormProps) {
@@ -43,6 +45,19 @@ export function FicheTechniqueForm({
   const [statut, setStatut] = useState<'brouillon' | 'actif'>(initialStatut)
   const [prixVente, setPrixVente] = useState(initialPrix != null ? String(initialPrix) : '')
   const [ingredients, setIngredients] = useState<ValidatedIngredient[]>(initialIngredients)
+  const [dirty, setDirty] = useState(false)
+
+  // Notifie le parent dès qu'une modification est faite
+  const markDirty = () => {
+    if (!dirty) {
+      setDirty(true)
+      onDirtyChange?.(true)
+    }
+  }
+
+  useEffect(() => {
+    if (dirty) onDirtyChange?.(true)
+  }, [dirty, onDirtyChange])
   const [linkModal, setLinkModal] = useState<{
     platId: string
     suggestions: IngredientLinkSuggestion[]
@@ -113,7 +128,10 @@ export function FicheTechniqueForm({
         <input
           type="text"
           value={nom}
-          onChange={(e) => setNom(e.target.value)}
+          onChange={(e) => {
+            setNom(e.target.value)
+            markDirty()
+          }}
           required
           placeholder="ex: Magret de canard sauce orange"
           className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-900 focus:outline-none focus:ring-2"
@@ -128,7 +146,10 @@ export function FicheTechniqueForm({
         <input
           type="number"
           value={prixVente}
-          onChange={(e) => setPrixVente(e.target.value)}
+          onChange={(e) => {
+            setPrixVente(e.target.value)
+            markDirty()
+          }}
           min={0}
           step={0.01}
           placeholder="ex: 18.50"
@@ -139,7 +160,13 @@ export function FicheTechniqueForm({
 
       <div>
         <h3 className="text-sm font-medium text-gray-700 mb-3">Ingrédients</h3>
-        <IngredientValidator ingredients={ingredients} onChange={setIngredients} />
+        <IngredientValidator
+          ingredients={ingredients}
+          onChange={(v) => {
+            setIngredients(v)
+            markDirty()
+          }}
+        />
       </div>
 
       {allergenesCalcules.length > 0 && (
@@ -153,7 +180,10 @@ export function FicheTechniqueForm({
         <label className="block text-sm font-medium text-gray-700 mb-1">Statut</label>
         <select
           value={statut}
-          onChange={(e) => setStatut(e.target.value as 'brouillon' | 'actif')}
+          onChange={(e) => {
+            setStatut(e.target.value as 'brouillon' | 'actif')
+            markDirty()
+          }}
           className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-900 focus:outline-none focus:ring-2"
         >
           <option value="brouillon">Brouillon</option>

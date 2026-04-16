@@ -1,15 +1,38 @@
 'use client'
 import { useParams, useRouter } from 'next/navigation'
+import { useEffect, useRef, useState } from 'react'
 import { trpc } from '@/lib/trpc/client'
 import { FicheTechniqueForm } from '@/components/dishes/FicheTechniqueForm'
 
 export default function ModifierPlatPage() {
   const { id } = useParams<{ id: string }>()
   const router = useRouter()
-  const { data: plat, isLoading } = trpc.fiches.get.useQuery({ platId: id })
+  const [isDirty, setIsDirty] = useState(false)
+  const formRef = useRef<HTMLFormElement>(null)
+
+  // Empêche React Query de refetcher en arrière-plan et de déclencher un remount du formulaire
+  const { data: plat, isLoading } = trpc.fiches.get.useQuery(
+    { platId: id },
+    { refetchOnWindowFocus: false, staleTime: 5 * 60 * 1000 }
+  )
   const update = trpc.fiches.update.useMutation({
-    onSuccess: () => router.push(`/plats/${id}`),
+    onSuccess: () => {
+      setIsDirty(false)
+      router.push(`/plats/${id}`)
+    },
   })
+
+  // Avertissement si l'utilisateur quitte avec des modifications non sauvegardées
+  useEffect(() => {
+    const handler = (e: BeforeUnloadEvent) => {
+      if (isDirty) {
+        e.preventDefault()
+        e.returnValue = ''
+      }
+    }
+    window.addEventListener('beforeunload', handler)
+    return () => window.removeEventListener('beforeunload', handler)
+  }, [isDirty])
 
   if (isLoading) {
     return (
@@ -55,11 +78,14 @@ export default function ModifierPlatPage() {
         </p>
       )}
 
+      {/* key={plat.id} garantit un remount propre si l'ID change — jamais de state résiduel */}
       <FicheTechniqueForm
+        key={plat.id}
         initialNom={plat.nom}
         initialStatut={(plat.statut as 'brouillon' | 'actif') ?? 'brouillon'}
         initialPrix={plat.prix_vente_ht ?? undefined}
         initialIngredients={initialIngredients}
+        onDirtyChange={setIsDirty}
         onSubmit={async (data) => {
           await update.mutateAsync({
             platId: id,
