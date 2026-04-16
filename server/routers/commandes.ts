@@ -225,7 +225,8 @@ export const commandesRouter = router({
       ctx.supabase
         .from('fiche_technique')
         .select('ingredient_id')
-        .in('ingredient_id', ingredientIds),
+        .in('ingredient_id', ingredientIds)
+        .is('deleted_at', null),
     ])
 
     // 3. Fournisseurs disponibles
@@ -502,6 +503,7 @@ export const commandesRouter = router({
         .in('plat_id', platIds)
         .eq('restaurant_id', ctx.restaurantId)
         .not('ingredient_id', 'is', null)
+        .is('deleted_at', null)
 
       if (!lignesFiches || lignesFiches.length === 0) {
         return { suggestions: [], jours: input.jours, nb_plats: platIds.length }

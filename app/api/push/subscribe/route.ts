@@ -50,6 +50,7 @@ export async function DELETE() {
   } = await supabase.auth.getUser()
   if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 })
 
-  await pushTable(supabase).delete().eq('user_id', user.id)
+  const { error } = await pushTable(supabase).delete().eq('user_id', user.id)
+  if (error) return Response.json({ error: error.message }, { status: 500 })
   return Response.json({ success: true })
 }

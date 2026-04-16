@@ -204,13 +204,18 @@ export async function POST(req: NextRequest) {
         ligne.prix_unitaire_ht > 0 &&
         (ligne.match_source === 'mapping' || ligne.match_source === 'fuzzy')
       ) {
-        await supabase
+        const { error: updateErr } = await supabase
           .from('mercuriale')
           .update({ est_actif: false })
           .eq('ingredient_id', ligne.ingredient_id)
           .eq('est_actif', true)
 
-        await supabase.from('mercuriale').insert({
+        if (updateErr) {
+          console.error('[Mercuriale] update est_actif=false failed:', updateErr.message)
+          continue
+        }
+
+        const { error: insertErr } = await supabase.from('mercuriale').insert({
           ingredient_id: ligne.ingredient_id,
           fournisseur_id: fournisseurId,
           prix: ligne.prix_unitaire_ht,
@@ -219,6 +224,17 @@ export async function POST(req: NextRequest) {
           source: 'ocr',
           date_maj: new Date().toISOString(),
         })
+
+        if (insertErr) {
+          console.error('[Mercuriale] insert failed:', insertErr.message)
+          // Réactiver l'ancienne ligne pour éviter de se retrouver sans prix actif
+          await supabase
+            .from('mercuriale')
+            .update({ est_actif: true })
+            .eq('ingredient_id', ligne.ingredient_id)
+            .eq('est_actif', false)
+          continue
+        }
 
         autoUpdates.push(ligne.designation)
 

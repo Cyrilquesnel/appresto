@@ -438,7 +438,7 @@ export const fichesRouter = router({
       if (count === 0) {
         await ctx.supabase
           .from('restaurant_ingredients')
-          .delete()
+          .update({ deleted_at: new Date().toISOString() })
           .eq('id', from_ingredient_id)
           .eq('restaurant_id', ctx.restaurantId)
       }

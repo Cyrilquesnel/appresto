@@ -4,6 +4,8 @@ import { analyzeWithRetry } from '@/lib/ai/gemini'
 import { enrichIngredients, shouldEnrich } from '@/lib/ai/claude-enrichment'
 import { createClient, createServiceClient } from '@/lib/supabase/server'
 
+export const maxDuration = 60
+
 export async function POST(request: NextRequest) {
   const supabase = createClient()
   const {
