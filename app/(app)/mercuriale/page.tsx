@@ -4,11 +4,13 @@ import Link from 'next/link'
 import { MercurialeTable } from '@/components/mercuriale/MercurialeTable'
 import { InvoiceUpload, type InvoiceResult } from '@/components/mercuriale/InvoiceUpload'
 import { InvoiceReviewModal } from '@/components/mercuriale/InvoiceReviewModal'
+import { InvoiceManualReviewModal } from '@/components/mercuriale/InvoiceManualReviewModal'
 import { trpc } from '@/lib/trpc/client'
 
 export default function MercurialePage() {
   const [invoiceResult, setInvoiceResult] = useState<InvoiceResult | null>(null)
   const [showAiReview, setShowAiReview] = useState(false)
+  const [showManualReview, setShowManualReview] = useState(false)
   const utils = trpc.useUtils()
 
   function handleInvoiceResult(result: InvoiceResult) {
@@ -16,11 +18,16 @@ export default function MercurialePage() {
     if (result.auto_updated.length > 0) {
       utils.commandes.getAllIngredientsMercuriale.invalidate()
     }
-    // Ouvrir la modal de révision si des suggestions IA sont disponibles
     if ((result.ai_suggested?.length ?? 0) > 0) {
       setShowAiReview(true)
     }
+    // Ouvrir la modal manuelle si des lignes non reconnues
+    if (result.requires_manual > 0) {
+      setShowManualReview(true)
+    }
   }
+
+  const unmatchedLignes = invoiceResult?.invoice.lignes.filter((l) => !l.matched) ?? []
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-6">
@@ -107,6 +114,14 @@ export default function MercurialePage() {
             if (count > 0) utils.commandes.getAllIngredientsMercuriale.invalidate()
           }}
           onClose={() => setShowAiReview(false)}
+        />
+      )}
+
+      {showManualReview && unmatchedLignes.length > 0 && (
+        <InvoiceManualReviewModal
+          lignes={unmatchedLignes}
+          onSaved={() => utils.commandes.getAllIngredientsMercuriale.invalidate()}
+          onClose={() => setShowManualReview(false)}
         />
       )}
     </div>
