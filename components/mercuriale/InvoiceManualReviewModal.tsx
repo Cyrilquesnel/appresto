@@ -30,6 +30,10 @@ export function InvoiceManualReviewModal({ lignes, onSaved, onClose }: Props) {
     onSuccess: () => utils.commandes.getAllIngredientsMercuriale.invalidate(),
   })
 
+  const createIngredient = trpc.commandes.createIngredient.useMutation({
+    onSuccess: () => utils.commandes.getAllIngredientsMercuriale.invalidate(),
+  })
+
   const ingredientList = useMemo(
     () => (allIngredients ?? []).map((i) => ({ id: i.ingredient_id, nom: i.nom })),
     [allIngredients]
@@ -61,6 +65,19 @@ export function InvoiceManualReviewModal({ lignes, onSaved, onClose }: Props) {
     const cond = Math.max(1, val)
     const newPrix = lignes[i].prix_unitaire_ht / cond
     update(i, { conditionnement: cond, prix: Math.round(newPrix * 100) / 100 })
+  }
+
+  async function handleCreate(i: number) {
+    const s = states[i]
+    const nom = s.search.trim()
+    if (!nom) return
+    setSaving(i)
+    try {
+      const { id } = await createIngredient.mutateAsync({ nom })
+      selectIngredient(i, id, nom)
+    } finally {
+      setSaving(null)
+    }
   }
 
   async function handleSave(i: number) {
@@ -141,7 +158,7 @@ export function InvoiceManualReviewModal({ lignes, onSaved, onClose }: Props) {
                     className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-accent"
                   />
                   {/* Suggestions inline — évite le clipping overflow sur iOS */}
-                  {filtered.length > 0 && !s.ingredientId && (
+                  {s.search.trim().length >= 1 && !s.ingredientId && (
                     <div className="mt-1 border border-gray-200 rounded-xl overflow-hidden divide-y divide-gray-100">
                       {filtered.map((ing) => (
                         <button
@@ -153,6 +170,17 @@ export function InvoiceManualReviewModal({ lignes, onSaved, onClose }: Props) {
                           {ing.nom}
                         </button>
                       ))}
+                      {/* Aucun résultat → proposer la création */}
+                      {filtered.length === 0 && (
+                        <button
+                          type="button"
+                          disabled={saving === i}
+                          onClick={() => handleCreate(i)}
+                          className="w-full text-left px-3 py-2.5 text-sm bg-orange-50 text-orange-600 font-medium active:bg-orange-100"
+                        >
+                          {saving === i ? 'Création…' : `+ Créer « ${s.search.trim()} »`}
+                        </button>
+                      )}
                     </div>
                   )}
                 </div>

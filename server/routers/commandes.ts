@@ -78,6 +78,29 @@ export const commandesRouter = router({
   // MERCURIALE
   // ═══════════════════════════════════════════
 
+  createIngredient: protectedProcedure
+    .input(z.object({ nom: z.string().min(1).max(200) }))
+    .mutation(async ({ ctx, input }) => {
+      // Vérifie si un ingrédient avec ce nom existe déjà (évite les doublons)
+      const { data: existing } = await ctx.supabase
+        .from('restaurant_ingredients')
+        .select('id')
+        .eq('restaurant_id', ctx.restaurantId)
+        .eq('nom_custom', input.nom.trim())
+        .is('deleted_at', null)
+        .limit(1)
+        .single()
+      if (existing) return { id: existing.id }
+
+      const { data, error } = await ctx.supabase
+        .from('restaurant_ingredients')
+        .insert({ restaurant_id: ctx.restaurantId, nom_custom: input.nom.trim() })
+        .select('id')
+        .single()
+      if (error || !data) throw new Error(`Impossible de créer l'ingrédient: ${error?.message}`)
+      return { id: data.id }
+    }),
+
   setMercurialePrice: protectedProcedure
     .input(
       z.object({
