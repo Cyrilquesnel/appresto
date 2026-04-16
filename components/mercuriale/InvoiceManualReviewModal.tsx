@@ -130,7 +130,7 @@ export function InvoiceManualReviewModal({ lignes, onSaved, onClose }: Props) {
                 <p className="text-xs font-mono text-orange-500 truncate">{ligne.designation}</p>
 
                 {/* Recherche ingrédient */}
-                <div className="relative">
+                <div>
                   <input
                     type="text"
                     placeholder="Rechercher un ingrédient…"
@@ -140,14 +140,15 @@ export function InvoiceManualReviewModal({ lignes, onSaved, onClose }: Props) {
                     }
                     className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-accent"
                   />
+                  {/* Suggestions inline — évite le clipping overflow sur iOS */}
                   {filtered.length > 0 && !s.ingredientId && (
-                    <div className="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-xl shadow-lg z-10 mt-1 overflow-hidden">
+                    <div className="mt-1 border border-gray-200 rounded-xl overflow-hidden divide-y divide-gray-100">
                       {filtered.map((ing) => (
                         <button
                           key={ing.id}
                           type="button"
                           onClick={() => selectIngredient(i, ing.id, ing.nom)}
-                          className="w-full text-left px-3 py-2 text-sm hover:bg-gray-50 truncate"
+                          className="w-full text-left px-3 py-2.5 text-sm bg-white active:bg-gray-50"
                         >
                           {ing.nom}
                         </button>
