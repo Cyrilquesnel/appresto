@@ -103,11 +103,10 @@ export default function IngredientsDeduplicationPage() {
                   onClick={() => handleMerge(pair.id_a, pair.id_b)}
                   className="flex flex-col items-center gap-1.5 p-3 rounded-xl border-2 border-transparent bg-gray-50 hover:border-accent/40 hover:bg-accent/5 transition-colors text-left disabled:opacity-50"
                 >
-                  <span className="text-xs text-gray-400 self-start">Garder</span>
                   <span className="font-semibold text-gray-900 text-sm leading-tight">
                     {pair.nom_a}
                   </span>
-                  <span className="text-xs text-gray-400 self-start">→ supprimer l&apos;autre</span>
+                  <span className="text-xs text-gray-400 self-start">Supprimer</span>
                 </button>
 
                 <button
@@ -116,11 +115,10 @@ export default function IngredientsDeduplicationPage() {
                   onClick={() => handleMerge(pair.id_b, pair.id_a)}
                   className="flex flex-col items-center gap-1.5 p-3 rounded-xl border-2 border-transparent bg-gray-50 hover:border-accent/40 hover:bg-accent/5 transition-colors text-left disabled:opacity-50"
                 >
-                  <span className="text-xs text-gray-400 self-start">Garder</span>
                   <span className="font-semibold text-gray-900 text-sm leading-tight">
                     {pair.nom_b}
                   </span>
-                  <span className="text-xs text-gray-400 self-start">→ supprimer l&apos;autre</span>
+                  <span className="text-xs text-gray-400 self-start">Supprimer</span>
                 </button>
               </div>
 
