@@ -49,7 +49,7 @@ const INVOICE_SCHEMA: Schema = {
   required: ['lignes'],
 }
 
-const MODELS = ['gemini-2.5-flash-preview-04-17', 'gemini-2.0-flash', 'gemini-1.5-pro'] as const
+const MODELS = ['gemini-2.0-flash', 'gemini-1.5-flash-latest'] as const
 
 /**
  * Extrait les données d'une facture via Gemini Vision.
@@ -64,16 +64,13 @@ export async function extractInvoiceData(
 
   for (const modelName of MODELS) {
     try {
-      const model = genAI.getGenerativeModel(
-        {
-          model: modelName,
-          generationConfig: {
-            responseMimeType: 'application/json',
-            responseSchema: INVOICE_SCHEMA,
-          },
+      const model = genAI.getGenerativeModel({
+        model: modelName,
+        generationConfig: {
+          responseMimeType: 'application/json',
+          responseSchema: INVOICE_SCHEMA,
         },
-        { apiVersion: 'v1' } // v1beta déprécie les modèles stables
-      )
+      })
 
       const result = await model.generateContent([
         { inlineData: { data: imageBase64, mimeType } },
