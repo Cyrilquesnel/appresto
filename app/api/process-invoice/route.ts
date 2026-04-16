@@ -1,12 +1,25 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { extractInvoiceData, matchIngredient } from '@/lib/ai/invoice-ocr'
+import { extractInvoiceDataMindee } from '@/lib/ai/mindee-ocr'
 import { claudeMatchIngredients } from '@/lib/ai/ingredient-matcher'
 import { invoiceOCRLimiter } from '@/lib/upstash'
 
-export const maxDuration = 30
+export const maxDuration = 60 // PDFs lourds peuvent prendre plus de 30s
+
+const ALLOWED_TYPES = [
+  'image/jpeg',
+  'image/jpg',
+  'image/png',
+  'image/webp',
+  'image/heic',
+  'image/heif',
+  'image/gif',
+  'application/pdf',
+]
 
 export async function POST(req: NextRequest) {
+  // ── Auth ──────────────────────────────────────────────────────────────────
   const supabase = createClient()
   const {
     data: { user },
@@ -16,7 +29,7 @@ export async function POST(req: NextRequest) {
   const restaurantId = req.headers.get('x-restaurant-id')
   if (!restaurantId) return NextResponse.json({ error: 'restaurant_id manquant' }, { status: 400 })
 
-  // Rate limit: 50 OCR/jour/restaurant
+  // ── Rate limit ────────────────────────────────────────────────────────────
   if (invoiceOCRLimiter) {
     const { success } = await invoiceOCRLimiter.limit(`invoice_ocr:${restaurantId}`)
     if (!success) {
@@ -27,49 +40,81 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  const formData = await req.formData()
-  const file = formData.get('image') as File | null
-  if (!file) return NextResponse.json({ error: 'Image requise' }, { status: 400 })
+  // ── Validation fichier ────────────────────────────────────────────────────
+  let file: File | null = null
+  try {
+    const formData = await req.formData()
+    file = formData.get('image') as File | null
+  } catch {
+    return NextResponse.json({ error: 'Impossible de lire le fichier envoyé' }, { status: 400 })
+  }
 
-  const ALLOWED_TYPES = [
-    'image/jpeg',
-    'image/jpg',
-    'image/png',
-    'image/webp',
-    'image/heic',
-    'image/heif',
-    'image/gif',
-    'application/pdf',
-  ]
+  if (!file) return NextResponse.json({ error: 'Fichier requis' }, { status: 400 })
+
   if (!ALLOWED_TYPES.includes(file.type)) {
     return NextResponse.json(
-      { error: 'Format non supporté. Acceptés : JPG, PNG, WEBP, HEIC, GIF, PDF' },
+      { error: `Format non supporté (${file.type}). Acceptés : JPG, PNG, WEBP, HEIC, PDF` },
       { status: 400 }
     )
   }
+
   if (file.size > 20 * 1024 * 1024) {
-    return NextResponse.json({ error: 'Fichier trop lourd (max 20 MB)' }, { status: 400 })
+    return NextResponse.json({ error: 'Fichier trop lourd (max 20 Mo)' }, { status: 400 })
   }
 
-  const imageBase64 = Buffer.from(await file.arrayBuffer()).toString('base64')
+  const arrayBuffer = await file.arrayBuffer()
+  const buffer = Buffer.from(arrayBuffer)
 
-  // Extraire données facture via Gemini
-  const invoiceData = await extractInvoiceData(imageBase64, file.type)
+  // ── COUCHE OCR : Mindee (primaire) → Gemini (fallback) ───────────────────
+  // Mindee : spécialisé factures françaises, supporte PDF multi-pages
+  // Gemini : généraliste mais robuste, fallback si Mindee indispo ou échec
 
-  // Trouver le fournisseur via nom extrait (best-effort)
+  let invoiceData
+  let ocrSource: 'mindee' | 'gemini' = 'mindee'
+
+  const mindeeResult = await extractInvoiceDataMindee(buffer, file.name || 'facture.pdf')
+
+  if (mindeeResult) {
+    invoiceData = mindeeResult
+  } else {
+    // Fallback Gemini (gemini-2.0-flash → gemini-1.5-flash)
+    ocrSource = 'gemini'
+    try {
+      const imageBase64 = buffer.toString('base64')
+      invoiceData = await extractInvoiceData(imageBase64, file.type)
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Erreur inconnue'
+      return NextResponse.json(
+        {
+          error: `Impossible d'analyser ce fichier. ${message}. Vérifiez que la facture est lisible et réessayez.`,
+        },
+        { status: 422 }
+      )
+    }
+  }
+
+  if (!invoiceData.lignes?.length) {
+    return NextResponse.json(
+      { error: 'Aucune ligne de produit détectée dans cette facture.' },
+      { status: 422 }
+    )
+  }
+
+  // ── Identification fournisseur ────────────────────────────────────────────
   let fournisseurId: string | null = null
   if (invoiceData.fournisseur_nom) {
+    const prefix = invoiceData.fournisseur_nom.slice(0, 8)
     const { data: fournisseurs } = await supabase
       .from('fournisseurs')
       .select('id')
       .eq('restaurant_id', restaurantId)
-      .ilike('nom', `%${invoiceData.fournisseur_nom.slice(0, 8)}%`)
+      .ilike('nom', `%${prefix}%`)
       .is('deleted_at', null)
       .limit(1)
     fournisseurId = fournisseurs?.[0]?.id ?? null
   }
 
-  // Récupérer ingrédients du restaurant
+  // ── Ingrédients du restaurant ─────────────────────────────────────────────
   const { data: ings } = await supabase
     .from('restaurant_ingredients')
     .select('id, nom_custom, catalog:ingredients_catalog(nom)')
@@ -83,8 +128,7 @@ export async function POST(req: NextRequest) {
     }))
     .filter((i) => i.nom !== '')
 
-  // ── COUCHE 1 — Mappings confirmés (mémoire persistante) ──────────────────
-  // Fournisseur connu → 100% automatique après 1ère confirmation
+  // ── COUCHE 1 — Mappings persistants (fournisseur connu) ───────────────────
   const mappingIndex = new Map<string, string>()
   if (fournisseurId) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -98,7 +142,7 @@ export async function POST(req: NextRequest) {
     )
   }
 
-  // ── COUCHE 2 — JS fuzzy (exact, partial, reverse substring) ──────────────
+  // ── COUCHE 2 — Matching multi-stratégie (exact + Levenshtein + tokens) ────
   type MatchedLigne = (typeof invoiceData.lignes)[number] & {
     ingredient_id: string | null
     matched: boolean
@@ -109,7 +153,7 @@ export async function POST(req: NextRequest) {
   const lignesAvecMatch: MatchedLigne[] = invoiceData.lignes.map((ligne) => {
     const norm = ligne.designation.toLowerCase().trim()
 
-    // Mapping persistant (exact sur designation_norm)
+    // Mapping persistant exact
     if (mappingIndex.has(norm)) {
       return {
         ...ligne,
@@ -119,7 +163,7 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // JS fuzzy fallback
+    // Fuzzy amélioré : normalisation + Levenshtein + tokens
     const fuzzyId = matchIngredient(ligne.designation, ingredients)
     if (fuzzyId) {
       return { ...ligne, ingredient_id: fuzzyId, matched: true, match_source: 'fuzzy' }
@@ -128,31 +172,33 @@ export async function POST(req: NextRequest) {
     return { ...ligne, ingredient_id: null, matched: false, match_source: 'none' }
   })
 
-  // ── COUCHE 3 — Claude Haiku (sémantique, pour les lignes non matchées) ────
+  // ── COUCHE 3 — Claude Haiku (sémantique, lignes non matchées) ─────────────
   const unmatched = lignesAvecMatch.filter((l) => l.match_source === 'none')
-  if (unmatched.length > 0) {
-    const suggestions = await claudeMatchIngredients(
-      unmatched.map((l) => l.designation),
-      ingredients
-    )
-
-    suggestions.forEach((s) => {
-      const ligne = lignesAvecMatch.find((l) => l.designation === s.designation)
-      if (ligne) {
-        ligne.ingredient_id = s.ingredient_id
-        ligne.matched = true
-        ligne.match_source = 'ai'
-        ligne.ai_confidence = s.confidence
-      }
-    })
+  if (unmatched.length > 0 && ingredients.length > 0) {
+    try {
+      const suggestions = await claudeMatchIngredients(
+        unmatched.map((l) => l.designation),
+        ingredients
+      )
+      suggestions.forEach((s) => {
+        const ligne = lignesAvecMatch.find((l) => l.designation === s.designation)
+        if (ligne) {
+          ligne.ingredient_id = s.ingredient_id
+          ligne.matched = true
+          ligne.match_source = 'ai'
+          ligne.ai_confidence = s.confidence
+        }
+      })
+    } catch {
+      // Claude Haiku indisponible → on continue sans matching IA
+    }
   }
 
-  // ── Mise à jour automatique mercuriale (couche 1 + 2 uniquement) ──────────
-  // Suggestions IA (couche 3) requièrent confirmation utilisateur avant mise à jour
+  // ── Mise à jour automatique mercuriale (couches 1 + 2 uniquement) ─────────
   const autoUpdates: string[] = []
-  if (fournisseurId) {
-    const mappingDesignationsUsed: string[] = []
+  const mappingDesignationsUsed: string[] = []
 
+  if (fournisseurId) {
     for (const ligne of lignesAvecMatch) {
       if (
         ligne.ingredient_id &&
@@ -183,7 +229,6 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Incrémenter usage_count pour les mappings utilisés
     if (mappingDesignationsUsed.length > 0) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       await (supabase as any).rpc('increment_mapping_usage', {
@@ -197,9 +242,8 @@ export async function POST(req: NextRequest) {
   return NextResponse.json({
     invoice: { ...invoiceData, lignes: lignesAvecMatch },
     auto_updated: autoUpdates,
-    // Suggestions IA : à confirmer en 1 tap → sauvegarde dans ingredient_supplier_mappings
     ai_suggested: lignesAvecMatch.filter((l) => l.match_source === 'ai'),
-    // Vraiment inconnus : saisie manuelle requise
     requires_manual: lignesAvecMatch.filter((l) => !l.matched).length,
+    ocr_source: ocrSource, // debug info
   })
 }
