@@ -244,7 +244,7 @@ export async function sendBetaDailyReport(
   `
 
   const { error } = await getResend().emails.send({
-    from: 'beta@onrush.app',
+    from: 'beta@evolutiongeo.fr',
     to: adminEmail,
     subject: `[Beta] Rapport du ${now.toLocaleDateString('fr-FR')} — ${totalUsers}/20 testeurs · ${activeYesterday.length} actifs`,
     html,
@@ -308,7 +308,7 @@ export async function sendBonDeCommandeEmail(
     : []
 
   const { error } = await getResend().emails.send({
-    from: 'commandes@onrush.app',
+    from: 'commandes@evolutiongeo.fr',
     to: recipientEmail,
     subject: `Bon de commande ${bon.restaurant_nom} — ${bon.fournisseur.nom}`,
     html: htmlBody,
