@@ -3,11 +3,14 @@ import { useParams, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { trpc } from '@/lib/trpc/client'
 import { FicheTechniqueForm } from '@/components/dishes/FicheTechniqueForm'
+import { useNavigationGuard } from '@/lib/store/navigation-guard'
 
 export default function ModifierPlatPage() {
   const { id } = useParams<{ id: string }>()
   const router = useRouter()
   const [isDirty, setIsDirty] = useState(false)
+  const { setDirty, clear } = useNavigationGuard()
+
   // Empêche React Query de refetcher en arrière-plan et de déclencher un remount du formulaire
   const { data: plat, isLoading } = trpc.fiches.get.useQuery(
     { platId: id },
@@ -16,11 +19,22 @@ export default function ModifierPlatPage() {
   const update = trpc.fiches.update.useMutation({
     onSuccess: () => {
       setIsDirty(false)
+      clear()
       router.push(`/plats/${id}`)
     },
   })
 
-  // Avertissement si l'utilisateur quitte avec des modifications non sauvegardées
+  // Sync dirty state avec le store global (intercepte la nav via BottomNav)
+  useEffect(() => {
+    setDirty(isDirty)
+  }, [isDirty, setDirty])
+
+  // Nettoyer quand on quitte la page
+  useEffect(() => {
+    return () => clear()
+  }, [clear])
+
+  // Avertissement si l'utilisateur ferme l'onglet/navigateur
   useEffect(() => {
     const handler = (e: BeforeUnloadEvent) => {
       if (isDirty) {
@@ -64,7 +78,15 @@ export default function ModifierPlatPage() {
   return (
     <div className="p-4 max-w-lg mx-auto">
       <div className="flex items-center gap-3 mb-6">
-        <button onClick={() => router.back()} className="text-gray-500 hover:text-gray-700">
+        <button
+          onClick={() => {
+            if (isDirty && !window.confirm('Modifications non sauvegardées. Quitter quand même ?'))
+              return
+            clear()
+            router.back()
+          }}
+          className="text-gray-500 hover:text-gray-700"
+        >
           ←
         </button>
         <h1 className="text-xl font-bold">Modifier — {plat.nom}</h1>

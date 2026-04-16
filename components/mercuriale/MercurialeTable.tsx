@@ -77,6 +77,8 @@ type EditState = {
 
 function IngredientCard({ item, onSaved }: { item: IngredientMercuriale; onSaved: () => void }) {
   const [editing, setEditing] = useState(false)
+  const [confirmDelete, setConfirmDelete] = useState(false)
+  const [showAdvanced, setShowAdvanced] = useState(false)
   const [form, setForm] = useState<EditState>({
     prix: item.prix != null ? item.prix.toString() : '',
     unite: item.unite,
@@ -93,6 +95,13 @@ function IngredientCard({ item, onSaved }: { item: IngredientMercuriale; onSaved
     },
   })
 
+  const deletePrice = trpc.commandes.deleteMercurialePrice.useMutation({
+    onSuccess: () => {
+      setConfirmDelete(false)
+      onSaved()
+    },
+  })
+
   function startEdit() {
     setForm({
       prix: item.prix != null ? item.prix.toString() : '',
@@ -102,6 +111,7 @@ function IngredientCard({ item, onSaved }: { item: IngredientMercuriale; onSaved
       colisage: item.colisage != null ? item.colisage.toString() : '',
       reference_fournisseur: item.reference_fournisseur ?? '',
     })
+    setShowAdvanced(false)
     setEditing(true)
   }
 
@@ -127,46 +137,98 @@ function IngredientCard({ item, onSaved }: { item: IngredientMercuriale; onSaved
       data-testid={`ingredient-card-${item.ingredient_id}`}
     >
       {!editing ? (
-        <div className="flex items-start justify-between gap-3">
-          <div className="min-w-0">
-            <p className="font-medium text-sm text-gray-900 truncate">{item.nom}</p>
-            <p className="text-xs text-gray-400 truncate mt-0.5">{item.fournisseur?.nom ?? '—'}</p>
-          </div>
-          <div className="flex items-center gap-2 flex-shrink-0">
-            {hasPrix ? (
-              <>
+        <>
+          <div className="flex items-start justify-between gap-3">
+            <div className="min-w-0">
+              <p className="font-medium text-sm text-gray-900 truncate">{item.nom}</p>
+              <p className="text-xs text-gray-400 truncate mt-0.5">
+                {item.fournisseur?.nom ?? '—'}
+              </p>
+            </div>
+            <div className="flex items-center gap-3 flex-shrink-0">
+              {hasPrix ? (
                 <span className="font-mono text-sm font-semibold text-gray-900">
                   {item.prix!.toFixed(2)} €/{item.unite}
                 </span>
-                <button
-                  onClick={startEdit}
-                  className="text-xs text-accent hover:underline"
-                  data-testid={`edit-prix-${item.ingredient_id}`}
-                >
-                  Modifier
-                </button>
-              </>
-            ) : (
-              <>
+              ) : (
                 <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-red-50 text-red-600">
                   Prix manquant
                 </span>
-                <button
-                  onClick={startEdit}
-                  className="text-xs text-accent hover:underline"
-                  data-testid={`add-prix-${item.ingredient_id}`}
+              )}
+              <button
+                onClick={startEdit}
+                className="text-gray-400 hover:text-accent transition-colors"
+                aria-label="Modifier"
+                data-testid={`edit-prix-${item.ingredient_id}`}
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 >
-                  Ajouter un prix
+                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                  <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                </svg>
+              </button>
+              {hasPrix && (
+                <button
+                  onClick={() => setConfirmDelete(true)}
+                  className="text-gray-300 hover:text-red-500 transition-colors"
+                  aria-label="Supprimer le prix"
+                  data-testid={`delete-prix-${item.ingredient_id}`}
+                >
+                  <svg
+                    width="15"
+                    height="15"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <polyline points="3 6 5 6 21 6" />
+                    <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
+                    <path d="M10 11v6M14 11v6" />
+                    <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" />
+                  </svg>
                 </button>
-              </>
-            )}
+              )}
+            </div>
           </div>
-        </div>
+
+          {/* Confirmation suppression inline */}
+          {confirmDelete && (
+            <div className="mt-3 pt-3 border-t border-gray-100 flex items-center justify-between gap-3">
+              <p className="text-xs text-gray-600">Supprimer le prix ?</p>
+              <div className="flex gap-2">
+                <button
+                  onClick={() => deletePrice.mutate({ ingredient_id: item.ingredient_id })}
+                  disabled={deletePrice.isPending}
+                  className="text-xs text-white bg-red-500 px-3 py-1.5 rounded-lg font-medium disabled:opacity-50"
+                >
+                  {deletePrice.isPending ? '…' : 'Oui'}
+                </button>
+                <button
+                  onClick={() => setConfirmDelete(false)}
+                  className="text-xs text-gray-500 border border-gray-200 px-3 py-1.5 rounded-lg"
+                >
+                  Annuler
+                </button>
+              </div>
+            </div>
+          )}
+        </>
       ) : (
         <div className="space-y-3">
           <p className="font-medium text-sm text-gray-900">{item.nom}</p>
 
-          {/* Ligne prix + unité */}
+          {/* Prix + unité — champs essentiels */}
           <div className="flex gap-2">
             <div className="flex-1">
               <label className="text-xs text-gray-500 mb-1 block">Prix HT (€)</label>
@@ -198,60 +260,71 @@ function IngredientCard({ item, onSaved }: { item: IngredientMercuriale; onSaved
             </div>
           </div>
 
-          {/* Fournisseur */}
-          <div>
-            <label className="text-xs text-gray-500 mb-1 block">Fournisseur (optionnel)</label>
-            <select
-              value={form.fournisseur_id}
-              onChange={(e) => setForm((f) => ({ ...f, fournisseur_id: e.target.value }))}
-              className="w-full px-2 py-1.5 rounded-lg border border-gray-200 text-sm focus:outline-none"
-            >
-              <option value="">— Aucun fournisseur —</option>
-              {item.fournisseurs_disponibles.map((four) => (
-                <option key={four.id} value={four.id}>
-                  {four.nom}
-                </option>
-              ))}
-            </select>
-          </div>
+          {/* Options avancées repliées */}
+          <button
+            type="button"
+            onClick={() => setShowAdvanced((v) => !v)}
+            className="text-xs text-gray-400 hover:text-gray-600 flex items-center gap-1"
+          >
+            <span>{showAdvanced ? '▾' : '▸'}</span>
+            Options avancées (fournisseur, colisage, référence)
+          </button>
 
-          {/* Unité commande + colisage */}
-          <div className="flex gap-2">
-            <div className="flex-1">
-              <label className="text-xs text-gray-500 mb-1 block">Unité commande (opt.)</label>
-              <input
-                type="text"
-                value={form.unite_commande}
-                onChange={(e) => setForm((f) => ({ ...f, unite_commande: e.target.value }))}
-                placeholder="ex: colis, carton"
-                className="w-full px-2 py-1.5 rounded-lg border border-gray-200 text-sm focus:outline-none"
-              />
+          {showAdvanced && (
+            <div className="space-y-3">
+              <div>
+                <label className="text-xs text-gray-500 mb-1 block">Fournisseur</label>
+                <select
+                  value={form.fournisseur_id}
+                  onChange={(e) => setForm((f) => ({ ...f, fournisseur_id: e.target.value }))}
+                  className="w-full px-2 py-1.5 rounded-lg border border-gray-200 text-sm focus:outline-none"
+                >
+                  <option value="">— Aucun fournisseur —</option>
+                  {item.fournisseurs_disponibles.map((four) => (
+                    <option key={four.id} value={four.id}>
+                      {four.nom}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="flex gap-2">
+                <div className="flex-1">
+                  <label className="text-xs text-gray-500 mb-1 block">Unité commande</label>
+                  <input
+                    type="text"
+                    value={form.unite_commande}
+                    onChange={(e) => setForm((f) => ({ ...f, unite_commande: e.target.value }))}
+                    placeholder="ex: colis, carton"
+                    className="w-full px-2 py-1.5 rounded-lg border border-gray-200 text-sm focus:outline-none"
+                  />
+                </div>
+                <div className="w-28">
+                  <label className="text-xs text-gray-500 mb-1 block">Colisage</label>
+                  <input
+                    type="number"
+                    value={form.colisage}
+                    onChange={(e) => setForm((f) => ({ ...f, colisage: e.target.value }))}
+                    step="0.1"
+                    min="0.1"
+                    placeholder="ex: 5"
+                    className="w-full px-2 py-1.5 rounded-lg border border-gray-200 text-sm focus:outline-none"
+                  />
+                </div>
+              </div>
+              <div>
+                <label className="text-xs text-gray-500 mb-1 block">Référence fournisseur</label>
+                <input
+                  type="text"
+                  value={form.reference_fournisseur}
+                  onChange={(e) =>
+                    setForm((f) => ({ ...f, reference_fournisseur: e.target.value }))
+                  }
+                  placeholder="Code article"
+                  className="w-full px-2 py-1.5 rounded-lg border border-gray-200 text-sm focus:outline-none"
+                />
+              </div>
             </div>
-            <div className="w-28">
-              <label className="text-xs text-gray-500 mb-1 block">Colisage (opt.)</label>
-              <input
-                type="number"
-                value={form.colisage}
-                onChange={(e) => setForm((f) => ({ ...f, colisage: e.target.value }))}
-                step="0.1"
-                min="0.1"
-                placeholder="ex: 5"
-                className="w-full px-2 py-1.5 rounded-lg border border-gray-200 text-sm focus:outline-none"
-              />
-            </div>
-          </div>
-
-          {/* Référence fournisseur */}
-          <div>
-            <label className="text-xs text-gray-500 mb-1 block">Référence fournisseur (opt.)</label>
-            <input
-              type="text"
-              value={form.reference_fournisseur}
-              onChange={(e) => setForm((f) => ({ ...f, reference_fournisseur: e.target.value }))}
-              placeholder="Code article"
-              className="w-full px-2 py-1.5 rounded-lg border border-gray-200 text-sm focus:outline-none"
-            />
-          </div>
+          )}
 
           {/* Actions */}
           <div className="flex gap-2 pt-1">

@@ -132,6 +132,30 @@ export const commandesRouter = router({
       return { id: data.id }
     }),
 
+  deleteMercurialePrice: protectedProcedure
+    .input(z.object({ ingredient_id: z.string().uuid() }))
+    .mutation(async ({ ctx, input }) => {
+      // Vérifier que l'ingrédient appartient à ce restaurant
+      const { data: ingredient } = await ctx.supabase
+        .from('restaurant_ingredients')
+        .select('id')
+        .eq('id', input.ingredient_id)
+        .eq('restaurant_id', ctx.restaurantId)
+        .is('deleted_at', null)
+        .single()
+
+      if (!ingredient) throw new Error('Ingrédient introuvable ou non autorisé')
+
+      // Désactiver tous les prix actifs — l'ingrédient repasse en "prix manquant"
+      await ctx.supabase
+        .from('mercuriale')
+        .update({ est_actif: false })
+        .eq('ingredient_id', input.ingredient_id)
+        .eq('est_actif', true)
+
+      return { success: true }
+    }),
+
   getAllIngredientsMercuriale: protectedProcedure.query(async ({ ctx }) => {
     // 1. Tous les ingrédients du restaurant (créés via fiches recettes)
     const { data: ingredients } = await ctx.supabase
