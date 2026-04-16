@@ -9,7 +9,7 @@ export interface BonLigneData {
 
 export interface BonDeCommandeData {
   id: string
-  fournisseur: { nom: string; contact_whatsapp?: string | null }
+  fournisseur: { nom: string; contact_whatsapp?: string | null; contact_email?: string | null }
   date_livraison_souhaitee?: string | null
   lignes: BonLigneData[]
   total_ht: number

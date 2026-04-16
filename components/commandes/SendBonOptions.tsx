@@ -38,6 +38,29 @@ export function SendBonOptions({ bon, onSent }: SendBonOptionsProps) {
     }
   }
 
+  async function sendEmail() {
+    setLoading('email')
+    setError(null)
+    try {
+      const res = await fetch('/api/send-bon/email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-restaurant-id': restaurantId ?? '',
+        },
+        body: JSON.stringify({ bon_id: bon.id }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error ?? 'Erreur envoi email')
+      await updateStatut.mutateAsync({ bonId: bon.id, statut: 'envoye', envoye_via: 'email' })
+      onSent()
+    } catch (e) {
+      setError((e as Error).message)
+    } finally {
+      setLoading(null)
+    }
+  }
+
   async function downloadPDF() {
     setLoading('pdf')
     setError(null)
@@ -82,16 +105,16 @@ export function SendBonOptions({ bon, onSent }: SendBonOptionsProps) {
       )}
 
       {/* Email — PRIORITÉ 2 */}
-      {bon.fournisseur.contact_whatsapp === null &&
-        (bon as { fournisseur: { contact_email?: string | null } }).fournisseur.contact_email && (
-          <button
-            disabled={!!loading}
-            className="w-full py-4 bg-blue-600 text-white font-semibold rounded-2xl disabled:opacity-50"
-            data-testid="send-email-button"
-          >
-            {loading === 'email' ? 'Envoi...' : 'Envoyer par email'}
-          </button>
-        )}
+      {bon.fournisseur.contact_email && (
+        <button
+          onClick={sendEmail}
+          disabled={!!loading}
+          className="w-full py-4 bg-blue-600 text-white font-semibold rounded-2xl disabled:opacity-50"
+          data-testid="send-email-button"
+        >
+          {loading === 'email' ? 'Envoi...' : 'Envoyer par email'}
+        </button>
+      )}
 
       {/* PDF — PRIORITÉ 3 */}
       <button
