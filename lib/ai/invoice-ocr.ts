@@ -64,13 +64,16 @@ export async function extractInvoiceData(
 
   for (const modelName of MODELS) {
     try {
-      const model = genAI.getGenerativeModel({
-        model: modelName,
-        generationConfig: {
-          responseMimeType: 'application/json',
-          responseSchema: INVOICE_SCHEMA,
+      const model = genAI.getGenerativeModel(
+        {
+          model: modelName,
+          generationConfig: {
+            responseMimeType: 'application/json',
+            responseSchema: INVOICE_SCHEMA,
+          },
         },
-      })
+        { apiVersion: 'v1' } // v1beta déprécie les modèles stables
+      )
 
       const result = await model.generateContent([
         { inlineData: { data: imageBase64, mimeType } },
