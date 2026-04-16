@@ -17,17 +17,15 @@ export interface ValidatedIngredient {
 }
 
 interface IngredientValidatorProps {
-  initialIngredients: ValidatedIngredient[]
+  ingredients: ValidatedIngredient[]
   onChange: (ingredients: ValidatedIngredient[]) => void
 }
 
-export function IngredientValidator({ initialIngredients, onChange }: IngredientValidatorProps) {
-  const [ingredients, setIngredients] = useState<ValidatedIngredient[]>(initialIngredients)
+export function IngredientValidator({ ingredients, onChange }: IngredientValidatorProps) {
   const [showSearch, setShowSearch] = useState(false)
   const [editingIndex, setEditingIndex] = useState<number | null>(null)
 
   const update = (updated: ValidatedIngredient[]) => {
-    setIngredients(updated)
     onChange(updated)
   }
 

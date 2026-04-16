@@ -269,7 +269,11 @@ export const fichesRouter = router({
         if (ingredients) {
           const allergenesSet = new Set<string>()
           ingredients.forEach((ing) => ing.allergenes.forEach((a) => allergenesSet.add(a)))
-          allergenesUpdate.allergenes = Array.from(allergenesSet)
+          const calculated = Array.from(allergenesSet)
+          // Ne pas écraser les allergènes existants si le formulaire d'édition ne les transmet pas
+          if (calculated.length > 0) {
+            allergenesUpdate.allergenes = calculated
+          }
         }
         await ctx.supabase
           .from('plats')

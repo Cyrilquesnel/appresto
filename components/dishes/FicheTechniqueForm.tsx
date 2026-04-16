@@ -76,7 +76,7 @@ export function FicheTechniqueForm({
           photo_url: photoUrl,
           type_plat: typePlat,
           prix_vente_ht: prixVente ? parseFloat(prixVente) : undefined,
-          statut: 'brouillon',
+          statut,
         },
         ingredients: ingredients.map((ing) => ({
           ingredient_id: ing.id,
@@ -139,7 +139,7 @@ export function FicheTechniqueForm({
 
       <div>
         <h3 className="text-sm font-medium text-gray-700 mb-3">Ingrédients</h3>
-        <IngredientValidator initialIngredients={ingredients} onChange={setIngredients} />
+        <IngredientValidator ingredients={ingredients} onChange={setIngredients} />
       </div>
 
       {allergenesCalcules.length > 0 && (

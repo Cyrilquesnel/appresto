@@ -7,6 +7,7 @@ export const platsRouter = router({
       .from('plats')
       .select('*')
       .eq('restaurant_id', ctx.restaurantId)
+      .is('deleted_at', null)
       .order('created_at', { ascending: false })
     return data ?? []
   }),

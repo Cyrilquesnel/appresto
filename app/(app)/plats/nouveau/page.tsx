@@ -128,7 +128,7 @@ export default function NouveauPlatPage() {
         </p>
 
         <IngredientValidator
-          initialIngredients={validatedIngredients}
+          ingredients={validatedIngredients}
           onChange={setValidatedIngredients}
         />
 
