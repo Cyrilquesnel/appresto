@@ -7,33 +7,64 @@ export default function CommandeAutoPage() {
   const router = useRouter()
   const [jours, setJours] = useState(7)
 
-  const { data, isLoading, refetch } = trpc.commandes.suggestCommande.useQuery({ jours })
-  const generateBon = trpc.commandes.generateBonDeCommande.useMutation({
-    onSuccess: ({ bon_id }) => router.push(`/commandes/${bon_id}`),
-  })
+  const { data, isLoading } = trpc.commandes.suggestCommande.useQuery({ jours })
+  const generateBon = trpc.commandes.generateBonDeCommande.useMutation()
+  const [creating, setCreating] = useState(false)
 
   function handleCreateBon(suggestion: NonNullable<typeof data>['suggestions'][number]) {
     if (!suggestion.fournisseur_id) return
-    generateBon.mutate({
-      fournisseur_id: suggestion.fournisseur_id,
-      lignes: suggestion.lignes
-        .filter((l) => l.ingredient_id)
-        .map((l) => ({
-          ingredient_id: l.ingredient_id,
-          quantite: l.quantite_totale,
-          unite: l.unite,
-          prix_unitaire: l.prix_unitaire ?? undefined,
-        })),
-    })
+    generateBon.mutate(
+      {
+        fournisseur_id: suggestion.fournisseur_id,
+        lignes: suggestion.lignes
+          .filter((l) => l.ingredient_id)
+          .map((l) => ({
+            ingredient_id: l.ingredient_id,
+            quantite: l.quantite_totale,
+            unite: l.unite,
+            prix_unitaire: l.prix_unitaire ?? undefined,
+          })),
+      },
+      { onSuccess: ({ bon_id }) => router.push(`/commandes/${bon_id}`) }
+    )
+  }
+
+  async function handleToutCommander() {
+    if (!data) return
+    setCreating(true)
+    const valides = data.suggestions.filter((s) => s.fournisseur_id)
+    try {
+      await Promise.all(
+        valides.map((suggestion) =>
+          generateBon.mutateAsync({
+            fournisseur_id: suggestion.fournisseur_id!,
+            lignes: suggestion.lignes
+              .filter((l) => l.ingredient_id)
+              .map((l) => ({
+                ingredient_id: l.ingredient_id,
+                quantite: l.quantite_totale,
+                unite: l.unite,
+                prix_unitaire: l.prix_unitaire ?? undefined,
+              })),
+          })
+        )
+      )
+      router.push('/commandes')
+    } finally {
+      setCreating(false)
+    }
   }
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-6">
       <div className="flex items-center gap-3 mb-6">
-        <button onClick={() => router.back()} className="text-gray-500 hover:text-gray-700">
+        <button
+          onClick={() => router.push('/commandes')}
+          className="text-gray-500 hover:text-gray-700"
+        >
           ←
         </button>
-        <h1 className="text-xl font-bold">Commande auto</h1>
+        <h1 className="text-xl font-bold">Commande auto ✨</h1>
       </div>
 
       {/* Sélecteur période */}
@@ -41,10 +72,7 @@ export default function CommandeAutoPage() {
         {[3, 7, 14].map((j) => (
           <button
             key={j}
-            onClick={() => {
-              setJours(j)
-              setTimeout(() => refetch(), 0)
-            }}
+            onClick={() => setJours(j)}
             className={`flex-1 py-2 rounded-xl text-sm font-medium transition-colors ${
               jours === j ? 'bg-accent text-white' : 'bg-white border border-gray-200 text-gray-600'
             }`}
@@ -102,7 +130,7 @@ export default function CommandeAutoPage() {
                   {suggestion.fournisseur_id && (
                     <button
                       onClick={() => handleCreateBon(suggestion)}
-                      disabled={generateBon.isPending}
+                      disabled={generateBon.isPending || creating}
                       className="px-3 py-1.5 bg-accent text-white text-xs font-semibold rounded-xl disabled:opacity-50"
                     >
                       Commander →
@@ -111,25 +139,51 @@ export default function CommandeAutoPage() {
                 </div>
 
                 <div className="divide-y divide-gray-50">
-                  {suggestion.lignes.map((ligne, j) => (
-                    <div key={j} className="px-4 py-2.5 flex justify-between items-center text-sm">
-                      <span className="text-gray-800">{ligne.nom}</span>
-                      <div className="flex items-center gap-3">
-                        <span className="font-mono font-semibold text-gray-900">
-                          {ligne.quantite_totale} {ligne.unite}
-                        </span>
-                        {ligne.prix_unitaire && (
-                          <span className="text-gray-400 text-xs">
-                            {(ligne.quantite_totale * ligne.prix_unitaire).toFixed(2)} €
+                  {suggestion.lignes.map((ligne, j) => {
+                    const stockActuel = (ligne as { stock_actuel?: number }).stock_actuel
+                    return (
+                      <div
+                        key={j}
+                        className="px-4 py-2.5 flex justify-between items-center text-sm"
+                      >
+                        <div className="min-w-0">
+                          <span className="text-gray-800">{ligne.nom}</span>
+                          {stockActuel !== undefined && stockActuel > 0 && (
+                            <span className="text-xs text-gray-400 ml-2">
+                              stock: {stockActuel} {ligne.unite}
+                            </span>
+                          )}
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <span className="font-mono font-semibold text-gray-900">
+                            {ligne.quantite_totale} {ligne.unite}
                           </span>
-                        )}
+                          {ligne.prix_unitaire && (
+                            <span className="text-gray-400 text-xs">
+                              {(ligne.quantite_totale * ligne.prix_unitaire).toFixed(2)} €
+                            </span>
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    )
+                  })}
                 </div>
               </div>
             )
           })}
+
+          {/* Tout commander — quand plusieurs fournisseurs */}
+          {data.suggestions.filter((s) => s.fournisseur_id).length > 1 && (
+            <button
+              onClick={handleToutCommander}
+              disabled={creating || generateBon.isPending}
+              className="w-full py-4 bg-primary text-white font-semibold rounded-2xl text-sm disabled:opacity-50 active:scale-95 transition-transform mt-2"
+            >
+              {creating
+                ? 'Création en cours...'
+                : `Tout commander (${data.suggestions.filter((s) => s.fournisseur_id).length} fournisseurs)`}
+            </button>
+          )}
         </>
       )}
     </div>

@@ -1,13 +1,22 @@
 'use client'
 import { useState } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { MercurialeTable } from '@/components/mercuriale/MercurialeTable'
 import { InvoiceUpload, type InvoiceResult } from '@/components/mercuriale/InvoiceUpload'
 import { InvoiceReviewModal } from '@/components/mercuriale/InvoiceReviewModal'
 import { InvoiceManualReviewModal } from '@/components/mercuriale/InvoiceManualReviewModal'
 import { trpc } from '@/lib/trpc/client'
 
+const ACHATS_TABS = [
+  { label: 'Mercuriale', href: '/mercuriale' },
+  { label: 'Commandes', href: '/commandes' },
+  { label: 'Inventaire', href: '/inventaire' },
+  { label: 'Fournisseurs', href: '/mercuriale/fournisseurs' },
+]
+
 export default function MercurialePage() {
+  const pathname = usePathname()
   const [invoiceResult, setInvoiceResult] = useState<InvoiceResult | null>(null)
   const [showAiReview, setShowAiReview] = useState(false)
   const [showManualReview, setShowManualReview] = useState(false)
@@ -31,15 +40,27 @@ export default function MercurialePage() {
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-6">
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-xl font-bold text-primary">Mercuriale</h1>
-        <Link
-          href="/mercuriale/fournisseurs"
-          className="text-sm text-accent font-medium hover:underline"
-        >
-          Gérer les fournisseurs →
-        </Link>
+      {/* Hub Achats — navigation entre les 3 sections */}
+      <div className="flex gap-2 mb-6">
+        {ACHATS_TABS.map((tab) => {
+          const isActive = pathname === tab.href
+          return (
+            <Link
+              key={tab.href}
+              href={tab.href}
+              className={`flex-1 py-2 text-xs font-semibold rounded-xl text-center transition-colors ${
+                isActive
+                  ? 'bg-accent/10 text-accent border border-accent/30'
+                  : 'bg-white text-gray-600 border border-gray-200'
+              }`}
+            >
+              {tab.label}
+            </Link>
+          )
+        })}
       </div>
+
+      <h1 className="text-xl font-bold text-primary mb-6">Mercuriale</h1>
 
       <p className="text-sm text-gray-500 mb-4">
         Prix actifs par ingrédient. Une modification déclenche le recalcul automatique des coûts de

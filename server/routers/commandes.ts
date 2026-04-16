@@ -555,13 +555,38 @@ export const commandesRouter = router({
 
       const mercurialeMap = new Map((mercuriale ?? []).map((m) => [m.ingredient_id, m]))
 
-      // 4. Calculer les besoins : quantite_vendue × grammage (convertit g→kg si unite=g)
+      // 3.5 Stock actuel (dernier inventaire par ingrédient)
+      // inventaire_reel n'est pas encore dans les types Supabase générés — cast any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const dbAny = ctx.supabase as any
+      let stockRows: Array<{ ingredient_id: string; quantite: number; date: string }> = []
+      if (ingredientIds.length > 0) {
+        const { data } = (await dbAny
+          .from('inventaire_reel')
+          .select('ingredient_id, quantite, date')
+          .in('ingredient_id', ingredientIds)
+          .eq('restaurant_id', ctx.restaurantId)
+          .order('date', { ascending: false })) as {
+          data: Array<{ ingredient_id: string; quantite: number; date: string }> | null
+        }
+        stockRows = data ?? []
+      }
+
+      const stockMap = new Map<string, number>()
+      for (const row of stockRows ?? []) {
+        if (row.ingredient_id && !stockMap.has(row.ingredient_id)) {
+          stockMap.set(row.ingredient_id, row.quantite)
+        }
+      }
+
+      // 4. Calculer les besoins : quantite_vendue × grammage (convertit g→kg si unite=g), déduit le stock
       const besoins = new Map<
         string,
         {
           ingredient_id: string
           nom: string
           quantite_totale: number
+          stock_actuel: number
           unite: string
           prix_unitaire: number | null
           fournisseur_id: string | null
@@ -582,8 +607,7 @@ export const commandesRouter = router({
         const grammage = ligne.grammage ?? 0
         const unite = (ligne.unite as string) ?? 'g'
         // Convertir tout en kg si l'unité est g
-        const quantiteNecessaire =
-          unite === 'g' ? (grammage * qteVendue) / 1000 : grammage * qteVendue
+        const rawNeed = unite === 'g' ? (grammage * qteVendue) / 1000 : grammage * qteVendue
         const uniteFinale = unite === 'g' ? 'kg' : unite
 
         const merc = mercurialeMap.get(ing.id)
@@ -592,15 +616,17 @@ export const commandesRouter = router({
         const fournisseurNom = (merc?.fournisseur as { nom: string } | null)?.nom ?? null
 
         const nom = ing.nom_custom ?? ing.catalog?.nom ?? 'Ingrédient'
+        const stock = stockMap.get(ing.id) ?? 0
 
         const existing = besoins.get(ing.id)
         if (existing) {
-          existing.quantite_totale += quantiteNecessaire
+          existing.quantite_totale += rawNeed
         } else {
           besoins.set(ing.id, {
             ingredient_id: ing.id,
             nom,
-            quantite_totale: quantiteNecessaire,
+            quantite_totale: rawNeed,
+            stock_actuel: stock,
             unite: uniteFinale,
             prix_unitaire: merc?.prix ?? null,
             fournisseur_id: fournisseurId,
@@ -620,6 +646,12 @@ export const commandesRouter = router({
       >()
 
       for (const besoin of Array.from(besoins.values())) {
+        // Soustraire le stock et arrondir au dixième supérieur
+        const quantiteNette = Math.max(0, besoin.quantite_totale - besoin.stock_actuel)
+        const quantiteArrondie = Math.ceil(quantiteNette * 10) / 10
+        // Ignorer les ingrédients déjà couverts par le stock
+        if (quantiteArrondie === 0) continue
+
         const key = besoin.fournisseur_id ?? '__sans_fournisseur__'
         const label = besoin.fournisseur_nom ?? 'Sans fournisseur'
         if (!parFournisseur.has(key)) {
@@ -631,7 +663,7 @@ export const commandesRouter = router({
         }
         parFournisseur.get(key)!.lignes.push({
           ...besoin,
-          quantite_totale: Math.ceil(besoin.quantite_totale * 10) / 10,
+          quantite_totale: quantiteArrondie,
         })
       }
 
@@ -643,6 +675,7 @@ export const commandesRouter = router({
             ingredient_id: string
             nom: string
             quantite_totale: number
+            stock_actuel: number
             unite: string
             prix_unitaire: number | null
             fournisseur_id: string | null
@@ -652,5 +685,97 @@ export const commandesRouter = router({
         jours: input.jours,
         nb_plats: platIds.length,
       }
+    }),
+
+  // ═══════════════════════════════════════════
+  // INVENTAIRE — saisie et consultation stock
+  // ═══════════════════════════════════════════
+
+  'inventaire.list': protectedProcedure.query(async ({ ctx }) => {
+    // Tous les ingrédients visibles avec leur prix mercuriale actif (pour l'unité)
+    const { data: ingredients } = await ctx.supabase
+      .from('restaurant_ingredients')
+      .select('id, nom_custom, catalog:ingredients_catalog(nom)')
+      .eq('restaurant_id', ctx.restaurantId)
+      .is('deleted_at', null)
+      .order('nom_custom', { ascending: true })
+
+    if (!ingredients || ingredients.length === 0) return []
+
+    const ids = ingredients.map((i) => i.id)
+
+    // Unité depuis la mercuriale (prix actif)
+    const { data: mercRows } = await ctx.supabase
+      .from('mercuriale')
+      .select('ingredient_id, unite')
+      .in('ingredient_id', ids)
+      .eq('est_actif', true)
+
+    const uniteMap = new Map((mercRows ?? []).map((m) => [m.ingredient_id, m.unite]))
+
+    // inventaire_reel n'est pas encore dans les types Supabase générés — cast any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const db = ctx.supabase as any
+    const { data: stockRows } = (await db
+      .from('inventaire_reel')
+      .select('ingredient_id, quantite, date')
+      .in('ingredient_id', ids)
+      .eq('restaurant_id', ctx.restaurantId)
+      .order('date', { ascending: false })) as {
+      data: Array<{ ingredient_id: string; quantite: number; date: string }> | null
+    }
+
+    const lastStock = new Map<string, { quantite: number; date: string }>()
+    for (const row of stockRows ?? []) {
+      if (row.ingredient_id && !lastStock.has(row.ingredient_id)) {
+        lastStock.set(row.ingredient_id, { quantite: row.quantite, date: row.date })
+      }
+    }
+
+    return ingredients.map((ing) => {
+      const cat = ing.catalog as { nom: string } | null
+      const stock = lastStock.get(ing.id)
+      return {
+        ingredient_id: ing.id,
+        nom: ing.nom_custom ?? cat?.nom ?? 'Ingrédient',
+        unite: uniteMap.get(ing.id) ?? 'kg',
+        quantite_actuelle: stock?.quantite ?? null,
+        date_inventaire: stock?.date ?? null,
+      }
+    })
+  }),
+
+  'inventaire.save': protectedProcedure
+    .input(
+      z.object({
+        lignes: z
+          .array(
+            z.object({
+              ingredient_id: z.string().uuid(),
+              quantite: z.number().min(0),
+              unite: z.string().min(1).max(20),
+            })
+          )
+          .min(1),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const today = new Date().toISOString().split('T')[0]
+      const rows = input.lignes.map((l) => ({
+        restaurant_id: ctx.restaurantId,
+        ingredient_id: l.ingredient_id,
+        quantite: l.quantite,
+        unite: l.unite,
+        date: today,
+        auteur_id: ctx.user.id,
+      }))
+      // inventaire_reel n'est pas encore dans les types Supabase générés — cast any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const db = ctx.supabase as any
+      const { error } = (await db.from('inventaire_reel').insert(rows)) as {
+        error: { message: string } | null
+      }
+      if (error) throw new Error(error.message)
+      return { saved: rows.length }
     }),
 })

@@ -3,6 +3,7 @@ import { useParams, useRouter } from 'next/navigation'
 import { trpc } from '@/lib/trpc/client'
 import { BonDeCommandePreview } from '@/components/commandes/BonDeCommandePreview'
 import { SendBonOptions } from '@/components/commandes/SendBonOptions'
+import { StatutActions } from '@/components/commandes/StatutActions'
 import type { BonDeCommandeData } from '@/lib/whatsapp'
 
 export default function BonDetailPage() {
@@ -44,6 +45,7 @@ export default function BonDetailPage() {
     fournisseur: {
       nom: fournisseur?.nom ?? '',
       contact_whatsapp: fournisseur?.contact_whatsapp,
+      contact_email: fournisseur?.contact_email,
     },
     date_livraison_souhaitee: bon.date_livraison_souhaitee,
     lignes,
@@ -54,7 +56,10 @@ export default function BonDetailPage() {
 
   return (
     <div className="max-w-2xl mx-auto px-4 py-6 space-y-4">
-      <button onClick={() => router.back()} className="text-gray-400 hover:text-gray-600 text-sm">
+      <button
+        onClick={() => router.push('/commandes')}
+        className="text-gray-400 hover:text-gray-600 text-sm"
+      >
         ← Retour
       </button>
 
@@ -63,11 +68,15 @@ export default function BonDetailPage() {
       {bon.statut === 'brouillon' && <SendBonOptions bon={bonData} onSent={() => refetch()} />}
 
       {bon.statut !== 'brouillon' && (
-        <div className="text-center text-sm text-gray-400 py-2">
-          Bon {bon.statut === 'envoye' ? 'envoyé' : bon.statut === 'confirme' ? 'confirmé' : 'reçu'}
-          {bon.envoye_via ? ` via ${bon.envoye_via}` : ''}
+        <div className="text-xs text-center text-gray-400 py-1">
+          Envoyé{bon.envoye_via ? ` via ${bon.envoye_via}` : ''}
         </div>
       )}
+
+      <StatutActions
+        bon={{ id: bon.id, statut: bon.statut ?? 'brouillon' }}
+        onUpdated={() => refetch()}
+      />
     </div>
   )
 }
