@@ -51,8 +51,9 @@ export async function extractInvoiceDataMindee(
       total_ht_facture: prediction.totalNet?.value ?? undefined,
       lignes,
     }
-  } catch {
+  } catch (err) {
     // Mindee indisponible ou quota dépassé → fallback Gemini
+    console.error('[Mindee] Échec OCR:', err instanceof Error ? err.message : String(err))
     return null
   }
 }

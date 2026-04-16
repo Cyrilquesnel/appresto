@@ -49,7 +49,7 @@ const INVOICE_SCHEMA: Schema = {
   required: ['lignes'],
 }
 
-const MODELS = ['gemini-2.0-flash', 'gemini-1.5-flash'] as const
+const MODELS = ['gemini-2.0-flash', 'gemini-2.0-flash-lite'] as const
 
 /**
  * Extrait les données d'une facture via Gemini Vision.
@@ -91,6 +91,7 @@ Les prix sont en euros HT. Ignore les lignes de total ou de sous-total.`,
       return normalizeInvoiceData(raw)
     } catch (err) {
       lastError = err as Error
+      console.error(`[Gemini OCR] ${modelName} échoué:`, lastError.message)
       continue
     }
   }
