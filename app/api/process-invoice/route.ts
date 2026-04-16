@@ -31,11 +31,24 @@ export async function POST(req: NextRequest) {
   const file = formData.get('image') as File | null
   if (!file) return NextResponse.json({ error: 'Image requise' }, { status: 400 })
 
-  if (!file.type.startsWith('image/')) {
-    return NextResponse.json({ error: 'Fichier image requis' }, { status: 400 })
+  const ALLOWED_TYPES = [
+    'image/jpeg',
+    'image/jpg',
+    'image/png',
+    'image/webp',
+    'image/heic',
+    'image/heif',
+    'image/gif',
+    'application/pdf',
+  ]
+  if (!ALLOWED_TYPES.includes(file.type)) {
+    return NextResponse.json(
+      { error: 'Format non supporté. Acceptés : JPG, PNG, WEBP, HEIC, GIF, PDF' },
+      { status: 400 }
+    )
   }
   if (file.size > 20 * 1024 * 1024) {
-    return NextResponse.json({ error: 'Image trop lourde (max 20MB)' }, { status: 400 })
+    return NextResponse.json({ error: 'Fichier trop lourd (max 20 MB)' }, { status: 400 })
   }
 
   const imageBase64 = Buffer.from(await file.arrayBuffer()).toString('base64')

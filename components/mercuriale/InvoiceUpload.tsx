@@ -63,7 +63,7 @@ export function InvoiceUpload({ onResult }: InvoiceUploadProps) {
       <input
         ref={fileRef}
         type="file"
-        accept="image/*"
+        accept="image/jpeg,image/jpg,image/png,image/webp,image/heic,image/heif,image/gif,application/pdf"
         className="hidden"
         onChange={(e) => e.target.files?.[0] && handleFile(e.target.files[0])}
         data-testid="invoice-upload-input"
