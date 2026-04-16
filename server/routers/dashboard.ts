@@ -101,16 +101,14 @@ export const dashboardRouter = router({
     )
     .mutation(async ({ ctx, input }) => {
       const { mois, ...charges } = input
-      const charges_fixes_total = Object.values(charges).reduce((a: number, b) => a + (b ?? 0), 0)
-      await ctx.supabase.from('charges').upsert(
-        {
-          restaurant_id: ctx.restaurantId,
-          mois,
-          ...charges,
-          charges_fixes_total,
-        },
-        { onConflict: 'restaurant_id,mois' }
-      )
+      // charges_fixes_total est une colonne GENERATED — ne pas la passer
+      const { error } = await ctx.supabase
+        .from('charges')
+        .upsert(
+          { restaurant_id: ctx.restaurantId, mois, ...charges },
+          { onConflict: 'restaurant_id,mois' }
+        )
+      if (error) throw new Error(error.message)
       return { success: true }
     }),
 
