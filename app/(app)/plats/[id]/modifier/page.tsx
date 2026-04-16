@@ -1,6 +1,6 @@
 'use client'
 import { useParams, useRouter } from 'next/navigation'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { trpc } from '@/lib/trpc/client'
 import { FicheTechniqueForm } from '@/components/dishes/FicheTechniqueForm'
 
@@ -8,8 +8,6 @@ export default function ModifierPlatPage() {
   const { id } = useParams<{ id: string }>()
   const router = useRouter()
   const [isDirty, setIsDirty] = useState(false)
-  const formRef = useRef<HTMLFormElement>(null)
-
   // Empêche React Query de refetcher en arrière-plan et de déclencher un remount du formulaire
   const { data: plat, isLoading } = trpc.fiches.get.useQuery(
     { platId: id },
