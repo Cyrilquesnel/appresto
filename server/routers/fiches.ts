@@ -54,6 +54,31 @@ async function resolveIngredientId(
   return data.id
 }
 
+// Fetch les allergènes réels depuis la DB pour une liste d'ingredient_ids.
+// allergenes_override prioritaire sur le catalogue.
+async function fetchAllergenesForIds(
+  supabase: SupabaseClient,
+  ingredientIds: string[]
+): Promise<string[]> {
+  if (!ingredientIds.length) return []
+  const { data } = await supabase
+    .from('restaurant_ingredients')
+    .select('allergenes_override, catalog:ingredients_catalog(allergenes)')
+    .in('id', ingredientIds)
+  const set = new Set<string>()
+  ;(data ?? []).forEach((row) => {
+    // Supabase types the join result as array | object depending on relationship type
+    const catalog = row.catalog as { allergenes: string[] } | { allergenes: string[] }[] | null
+    const catalogAllergenes = Array.isArray(catalog)
+      ? (catalog[0]?.allergenes ?? [])
+      : (catalog?.allergenes ?? [])
+    const allergs: string[] =
+      (row.allergenes_override?.length ?? 0) > 0 ? row.allergenes_override! : catalogAllergenes
+    allergs.forEach((a: string) => set.add(a))
+  })
+  return Array.from(set)
+}
+
 export interface IngredientLinkSuggestion {
   from_ingredient_id: string
   from_nom: string
@@ -130,10 +155,13 @@ export const fichesRouter = router({
     .mutation(async ({ ctx, input }) => {
       const { plat, ingredients } = input
 
-      // Calculer allergènes (union de tous les ingrédients)
-      const allergenesSet = new Set<string>()
-      ingredients.forEach((ing) => ing.allergenes.forEach((a) => allergenesSet.add(a)))
-      const allergenes = Array.from(allergenesSet)
+      // Résoudre les ingredient_id AVANT de calculer les allergènes (source de vérité = DB)
+      const resolvedIds = await Promise.all(
+        ingredients.map((ing) => resolveIngredientId(ctx.supabase, ctx.restaurantId, ing))
+      )
+
+      // Calculer allergènes depuis la DB (pas depuis le client qui peut envoyer [])
+      const allergenes = await fetchAllergenesForIds(ctx.supabase, resolvedIds)
 
       // INSERT plat
       const { data: platData, error: platError } = await ctx.supabase
@@ -154,11 +182,6 @@ export const fichesRouter = router({
       if (platError || !platData) {
         throw new Error(`Erreur création plat: ${platError?.message}`)
       }
-
-      // Résoudre les ingredient_id (crée dans restaurant_ingredients si absent)
-      const resolvedIds = await Promise.all(
-        ingredients.map((ing) => resolveIngredientId(ctx.supabase, ctx.restaurantId, ing))
-      )
 
       // INSERT fiche_technique lignes
       const lignes = ingredients.map((ing, index) => ({
@@ -273,28 +296,20 @@ export const fichesRouter = router({
         .single()
       if (!existing) throw new Error('Plat non trouvé')
 
-      if (plat) {
-        const allergenesUpdate: Partial<{ allergenes: string[] }> = {}
-        if (ingredients) {
-          const allergenesSet = new Set<string>()
-          ingredients.forEach((ing) => ing.allergenes.forEach((a) => allergenesSet.add(a)))
-          const calculated = Array.from(allergenesSet)
-          // Ne pas écraser les allergènes existants si le formulaire d'édition ne les transmet pas
-          if (calculated.length > 0) {
-            allergenesUpdate.allergenes = calculated
-          }
-        }
-        await ctx.supabase
-          .from('plats')
-          .update({ ...plat, ...allergenesUpdate })
-          .eq('id', platId)
-      }
-
       if (ingredients) {
         // Résoudre les ingredient_id avant suppression/réinsertion
         const resolvedIds = await Promise.all(
           ingredients.map((ing) => resolveIngredientId(ctx.supabase, ctx.restaurantId, ing))
         )
+
+        // Calculer allergènes depuis la DB (source de vérité, pas le client)
+        const allergenes = await fetchAllergenesForIds(ctx.supabase, resolvedIds)
+
+        // Mettre à jour le plat avec les nouvelles infos + allergènes recalculés
+        await ctx.supabase
+          .from('plats')
+          .update({ ...(plat ?? {}), allergenes })
+          .eq('id', platId)
 
         // Remplacer toutes les lignes fiche_technique
         await ctx.supabase
@@ -322,9 +337,12 @@ export const fichesRouter = router({
         await ctx.supabase.from('fiche_technique_versions').insert({
           plat_id: platId,
           version_number: (count ?? 0) + 1,
-          ingredients_snapshot: { plat, ingredients },
+          ingredients_snapshot: { plat, ingredients, allergenes },
           modifie_par: ctx.user.id,
         })
+      } else if (plat) {
+        // Mise à jour des métadonnées du plat uniquement (sans toucher aux ingredients/allergènes)
+        await ctx.supabase.from('plats').update(plat).eq('id', platId)
       }
 
       return { success: true }

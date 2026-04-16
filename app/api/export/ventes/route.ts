@@ -44,19 +44,24 @@ export async function GET(req: NextRequest) {
 
   const rows = ventes ?? []
 
-  const header = 'Date,Service,Plat,Couverts,Panier moyen (€),CA (€),Mode,Notes'
+  const csvField = (val: string | number | null | undefined): string => {
+    const s = val == null ? '' : String(val)
+    // Always quote: protects commas, newlines, and double-quotes in any field
+    return `"${s.replace(/"/g, '""')}"`
+  }
+
+  const header = '"Date","Service","Plat","Couverts","Panier moyen (€)","CA (€)","Mode","Notes"'
   const lines = rows.map((v) => {
     const platNom = (v.plat as unknown as { nom: string } | null)?.nom ?? ''
-    const note = (v.notes ?? '').replace(/"/g, '""')
     return [
-      v.date,
-      v.service ?? '',
-      platNom,
-      v.nb_couverts ?? '',
-      v.panier_moyen != null ? v.panier_moyen.toFixed(2) : '',
-      v.montant_total != null ? v.montant_total.toFixed(2) : '',
-      v.mode_saisie ?? '',
-      note ? `"${note}"` : '',
+      csvField(v.date),
+      csvField(v.service),
+      csvField(platNom),
+      csvField(v.nb_couverts),
+      csvField(v.panier_moyen != null ? v.panier_moyen.toFixed(2) : ''),
+      csvField(v.montant_total != null ? v.montant_total.toFixed(2) : ''),
+      csvField(v.mode_saisie),
+      csvField(v.notes),
     ].join(',')
   })
 
