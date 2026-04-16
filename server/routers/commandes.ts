@@ -156,38 +156,79 @@ export const commandesRouter = router({
       return { success: true }
     }),
 
+  maskIngredientMercuriale: protectedProcedure
+    .input(z.object({ ingredient_id: z.string().uuid() }))
+    .mutation(async ({ ctx, input }) => {
+      const { error } = await ctx.supabase
+        .from('restaurant_ingredients')
+        .update({ masque_mercuriale: true })
+        .eq('id', input.ingredient_id)
+        .eq('restaurant_id', ctx.restaurantId)
+        .is('deleted_at', null)
+
+      if (error) throw new Error(error.message)
+      return { success: true }
+    }),
+
+  deleteRestaurantIngredient: protectedProcedure
+    .input(z.object({ ingredient_id: z.string().uuid() }))
+    .mutation(async ({ ctx, input }) => {
+      // Vérifier appartenance au restaurant
+      const { data: ingredient } = await ctx.supabase
+        .from('restaurant_ingredients')
+        .select('id')
+        .eq('id', input.ingredient_id)
+        .eq('restaurant_id', ctx.restaurantId)
+        .is('deleted_at', null)
+        .single()
+
+      if (!ingredient) throw new Error('Ingrédient introuvable ou non autorisé')
+
+      // Soft-delete — les FK avec ON DELETE CASCADE nettoient fiche_technique + mercuriale
+      const { error } = await ctx.supabase
+        .from('restaurant_ingredients')
+        .update({ deleted_at: new Date().toISOString() })
+        .eq('id', input.ingredient_id)
+
+      if (error) throw new Error(error.message)
+      return { success: true }
+    }),
+
   getAllIngredientsMercuriale: protectedProcedure.query(async ({ ctx }) => {
-    // 1. Tous les ingrédients du restaurant (créés via fiches recettes)
+    // 1. Tous les ingrédients visibles du restaurant (non supprimés, non masqués)
     const { data: ingredients } = await ctx.supabase
       .from('restaurant_ingredients')
       .select(
         `
-        id, nom_custom, deleted_at,
+        id, nom_custom, deleted_at, masque_mercuriale,
         catalog:ingredients_catalog(nom, unite_standard)
       `
       )
       .eq('restaurant_id', ctx.restaurantId)
       .is('deleted_at', null)
+      .eq('masque_mercuriale', false)
       .order('nom_custom')
 
     if (!ingredients?.length) return []
 
     const ingredientIds = ingredients.map((i) => i.id)
 
-    // 2. Prix actifs pour ces ingrédients
-    const { data: prix } = await ctx.supabase
-      .from('mercuriale')
-      .select(
-        `
-        id, prix, unite, unite_commande, colisage, reference_fournisseur, date_maj,
-        ingredient_id,
-        fournisseur:fournisseurs(id, nom)
-      `
-      )
-      .in('ingredient_id', ingredientIds)
-      .eq('est_actif', true)
+    // 2. Prix actifs + nb fiches utilisant chaque ingrédient (en parallèle)
+    const [{ data: prix }, { data: fichesCount }] = await Promise.all([
+      ctx.supabase
+        .from('mercuriale')
+        .select(
+          'id, prix, unite, unite_commande, colisage, reference_fournisseur, date_maj, ingredient_id, fournisseur:fournisseurs(id, nom)'
+        )
+        .in('ingredient_id', ingredientIds)
+        .eq('est_actif', true),
+      ctx.supabase
+        .from('fiche_technique')
+        .select('ingredient_id')
+        .in('ingredient_id', ingredientIds),
+    ])
 
-    // 3. Fournisseurs disponibles pour le selector
+    // 3. Fournisseurs disponibles
     const { data: fournisseurs } = await ctx.supabase
       .from('fournisseurs')
       .select('id, nom')
@@ -196,6 +237,13 @@ export const commandesRouter = router({
       .order('nom')
 
     const prixByIngredient = new Map((prix ?? []).map((p) => [p.ingredient_id, p]))
+
+    // Comptage fiches par ingrédient
+    const fichesCountMap = new Map<string, number>()
+    for (const row of fichesCount ?? []) {
+      if (!row.ingredient_id) continue
+      fichesCountMap.set(row.ingredient_id, (fichesCountMap.get(row.ingredient_id) ?? 0) + 1)
+    }
 
     return ingredients.map((ing) => {
       const catalog = ing.catalog as { nom: string; unite_standard: string | null } | null
@@ -215,6 +263,7 @@ export const commandesRouter = router({
         date_maj: prix_actif?.date_maj ?? null,
         fournisseur: fournisseur_actif,
         fournisseurs_disponibles: fournisseurs ?? [],
+        fiches_count: fichesCountMap.get(ing.id) ?? 0,
       }
     })
   }),

@@ -17,6 +17,7 @@ type IngredientMercuriale = {
   date_maj: string | null
   fournisseur: Fournisseur | null
   fournisseurs_disponibles: Fournisseur[]
+  fiches_count: number
 }
 
 type Tab = 'tous' | 'manquants' | 'prices'
@@ -75,9 +76,16 @@ type EditState = {
   reference_fournisseur: string
 }
 
-function IngredientCard({ item, onSaved }: { item: IngredientMercuriale; onSaved: () => void }) {
+function IngredientCard({
+  item,
+  onSaved,
+  onDeleteSheet,
+}: {
+  item: IngredientMercuriale
+  onSaved: () => void
+  onDeleteSheet: (item: IngredientMercuriale) => void
+}) {
   const [editing, setEditing] = useState(false)
-  const [confirmDelete, setConfirmDelete] = useState(false)
   const [showAdvanced, setShowAdvanced] = useState(false)
   const [form, setForm] = useState<EditState>({
     prix: item.prix != null ? item.prix.toString() : '',
@@ -91,13 +99,6 @@ function IngredientCard({ item, onSaved }: { item: IngredientMercuriale; onSaved
   const setPrice = trpc.commandes.setMercurialePrice.useMutation({
     onSuccess: () => {
       setEditing(false)
-      onSaved()
-    },
-  })
-
-  const deletePrice = trpc.commandes.deleteMercurialePrice.useMutation({
-    onSuccess: () => {
-      setConfirmDelete(false)
       onSaved()
     },
   })
@@ -175,54 +176,30 @@ function IngredientCard({ item, onSaved }: { item: IngredientMercuriale; onSaved
                   <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
                 </svg>
               </button>
-              {hasPrix && (
-                <button
-                  onClick={() => setConfirmDelete(true)}
-                  className="text-gray-300 hover:text-red-500 transition-colors"
-                  aria-label="Supprimer le prix"
-                  data-testid={`delete-prix-${item.ingredient_id}`}
+              <button
+                onClick={() => onDeleteSheet(item)}
+                className="text-gray-300 hover:text-red-500 transition-colors"
+                aria-label="Options suppression"
+                data-testid={`delete-${item.ingredient_id}`}
+              >
+                <svg
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 >
-                  <svg
-                    width="15"
-                    height="15"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <polyline points="3 6 5 6 21 6" />
-                    <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
-                    <path d="M10 11v6M14 11v6" />
-                    <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" />
-                  </svg>
-                </button>
-              )}
+                  <polyline points="3 6 5 6 21 6" />
+                  <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
+                  <path d="M10 11v6M14 11v6" />
+                  <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" />
+                </svg>
+              </button>
             </div>
           </div>
-
-          {/* Confirmation suppression inline */}
-          {confirmDelete && (
-            <div className="mt-3 pt-3 border-t border-gray-100 flex items-center justify-between gap-3">
-              <p className="text-xs text-gray-600">Supprimer le prix ?</p>
-              <div className="flex gap-2">
-                <button
-                  onClick={() => deletePrice.mutate({ ingredient_id: item.ingredient_id })}
-                  disabled={deletePrice.isPending}
-                  className="text-xs text-white bg-red-500 px-3 py-1.5 rounded-lg font-medium disabled:opacity-50"
-                >
-                  {deletePrice.isPending ? '…' : 'Oui'}
-                </button>
-                <button
-                  onClick={() => setConfirmDelete(false)}
-                  className="text-xs text-gray-500 border border-gray-200 px-3 py-1.5 rounded-lg"
-                >
-                  Annuler
-                </button>
-              </div>
-            </div>
-          )}
         </>
       ) : (
         <div className="space-y-3">
@@ -353,6 +330,20 @@ function IngredientCard({ item, onSaved }: { item: IngredientMercuriale; onSaved
 export function MercurialeTable() {
   const { data: ingredients, refetch } = trpc.commandes.getAllIngredientsMercuriale.useQuery()
   const [tab, setTab] = useState<Tab>('tous')
+  const [deleteSheet, setDeleteSheet] = useState<IngredientMercuriale | null>(null)
+
+  const maskIngredient = trpc.commandes.maskIngredientMercuriale.useMutation({
+    onSuccess: () => {
+      setDeleteSheet(null)
+      refetch()
+    },
+  })
+  const deleteIngredient = trpc.commandes.deleteRestaurantIngredient.useMutation({
+    onSuccess: () => {
+      setDeleteSheet(null)
+      refetch()
+    },
+  })
 
   const all = ingredients ?? []
   const priced = all.filter((i) => i.prix != null)
@@ -413,8 +404,92 @@ export function MercurialeTable() {
       {/* Liste */}
       <div className="space-y-2">
         {filtered.map((item) => (
-          <IngredientCard key={item.ingredient_id} item={item} onSaved={() => refetch()} />
+          <IngredientCard
+            key={item.ingredient_id}
+            item={item}
+            onSaved={() => refetch()}
+            onDeleteSheet={setDeleteSheet}
+          />
         ))}
+      </div>
+
+      {/* Backdrop bottom sheet suppression */}
+      {deleteSheet && (
+        <div
+          className="fixed inset-0 z-[80] bg-black/40"
+          onClick={() => setDeleteSheet(null)}
+          aria-hidden="true"
+        />
+      )}
+
+      {/* Bottom sheet — options suppression */}
+      <div
+        role="dialog"
+        aria-label="Options de suppression"
+        className={`fixed left-0 right-0 z-[90] bg-white rounded-t-2xl shadow-xl transition-transform duration-300 ${
+          deleteSheet ? 'translate-y-0' : 'translate-y-full'
+        }`}
+        style={{ bottom: 0, paddingBottom: 'env(safe-area-inset-bottom)' }}
+      >
+        {deleteSheet && (
+          <div className="px-6 pb-6">
+            <div className="w-10 h-1 bg-gray-300 rounded-full mx-auto mt-3 mb-5" />
+            <p className="font-semibold text-gray-900 text-sm mb-1 truncate">{deleteSheet.nom}</p>
+            {deleteSheet.fiches_count > 0 && (
+              <p className="text-xs text-gray-500 mb-5">
+                Utilisé dans {deleteSheet.fiches_count} fiche
+                {deleteSheet.fiches_count > 1 ? 's' : ''} recette
+              </p>
+            )}
+            {deleteSheet.fiches_count === 0 && (
+              <p className="text-xs text-gray-400 mb-5">Non utilisé dans les fiches recettes</p>
+            )}
+
+            <div className="flex flex-col gap-3">
+              {/* Option A — Masquer */}
+              <button
+                type="button"
+                onClick={() => maskIngredient.mutate({ ingredient_id: deleteSheet.ingredient_id })}
+                disabled={maskIngredient.isPending || deleteIngredient.isPending}
+                className="w-full text-left py-4 px-4 rounded-2xl bg-gray-50 active:bg-gray-100 disabled:opacity-50"
+              >
+                <p className="text-sm font-semibold text-gray-900">
+                  {maskIngredient.isPending ? 'Masquage…' : '👁 Masquer des Achats'}
+                </p>
+                <p className="text-xs text-gray-500 mt-0.5">
+                  Reste dans vos recettes · Réversible depuis les Réglages
+                </p>
+              </button>
+
+              {/* Option B — Supprimer définitivement */}
+              <button
+                type="button"
+                onClick={() =>
+                  deleteIngredient.mutate({ ingredient_id: deleteSheet.ingredient_id })
+                }
+                disabled={maskIngredient.isPending || deleteIngredient.isPending}
+                className="w-full text-left py-4 px-4 rounded-2xl bg-red-50 active:bg-red-100 disabled:opacity-50"
+              >
+                <p className="text-sm font-semibold text-red-600">
+                  {deleteIngredient.isPending ? 'Suppression…' : '🗑 Supprimer définitivement'}
+                </p>
+                <p className="text-xs text-red-400 mt-0.5">
+                  {deleteSheet.fiches_count > 0
+                    ? `Retire aussi de ${deleteSheet.fiches_count} fiche${deleteSheet.fiches_count > 1 ? 's' : ''} recette · Irréversible`
+                    : 'Irréversible'}
+                </p>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setDeleteSheet(null)}
+                className="w-full py-3 text-sm text-gray-500 font-medium"
+              >
+                Annuler
+              </button>
+            </div>
+          </div>
+        )}
       </div>
 
       {all.length === 0 && (

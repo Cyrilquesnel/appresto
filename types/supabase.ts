@@ -198,6 +198,7 @@ export interface Database {
           kcal_override: number | null
           deleted_at: string | null
           created_at: string
+          masque_mercuriale: boolean
         }
         Insert: {
           id?: string
@@ -208,6 +209,7 @@ export interface Database {
           kcal_override?: number | null
           deleted_at?: string | null
           created_at?: string
+          masque_mercuriale?: boolean
         }
         Update: {
           id?: string
@@ -218,6 +220,7 @@ export interface Database {
           kcal_override?: number | null
           deleted_at?: string | null
           created_at?: string
+          masque_mercuriale?: boolean
         }
         Relationships: [
           {
