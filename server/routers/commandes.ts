@@ -115,6 +115,7 @@ export const commandesRouter = router({
       const { data, error } = await ctx.supabase
         .from('mercuriale')
         .insert({
+          restaurant_id: ctx.restaurantId,
           ingredient_id: input.ingredient_id,
           fournisseur_id: input.fournisseur_id ?? null,
           prix: input.prix,

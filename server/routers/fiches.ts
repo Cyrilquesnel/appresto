@@ -193,6 +193,7 @@ export const fichesRouter = router({
 
         // Insérer le nouveau prix actif
         await ctx.supabase.from('mercuriale').insert({
+          restaurant_id: ctx.restaurantId,
           ingredient_id: ingredientId,
           fournisseur_id: ing.fournisseur_id,
           prix: ing.prix_achat,

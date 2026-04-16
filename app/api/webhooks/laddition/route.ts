@@ -45,10 +45,13 @@ export async function POST(req: NextRequest) {
 
   const supabase = createServiceClient()
 
-  const { data: restaurants } = await supabase.from('restaurants').select('id, parametres')
-  const restaurant = restaurants?.find(
-    (r) => (r.parametres as Record<string, unknown>)?.laddition_place_id === data.place_id
-  )
+  const { data: restaurant } = await supabase
+    .from('restaurants')
+    .select('id')
+    .eq('parametres->>laddition_place_id' as 'id', data.place_id as string)
+    .is('deleted_at', null)
+    .limit(1)
+    .maybeSingle()
 
   if (!restaurant) return NextResponse.json({ error: 'Restaurant not found' }, { status: 404 })
 

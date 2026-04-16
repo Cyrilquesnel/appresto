@@ -216,6 +216,7 @@ export async function POST(req: NextRequest) {
         }
 
         const { error: insertErr } = await supabase.from('mercuriale').insert({
+          restaurant_id: restaurantId,
           ingredient_id: ligne.ingredient_id,
           fournisseur_id: fournisseurId,
           prix: ligne.prix_unitaire_ht,
@@ -244,13 +245,24 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    if (mappingDesignationsUsed.length > 0) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      await (supabase as any).rpc('increment_mapping_usage', {
-        p_restaurant_id: restaurantId,
-        p_fournisseur_id: fournisseurId,
-        p_designations: mappingDesignationsUsed,
-      })
+    if (mappingDesignationsUsed.length > 0 && fournisseurId) {
+      // Sécurité : re-vérifier que fournisseurId appartient bien à ce restaurant
+      // (fournisseurId est déjà issu d'une query filtrée par restaurant_id, mais guard explicite)
+      const { data: fournisseurCheck } = await supabase
+        .from('fournisseurs')
+        .select('id')
+        .eq('id', fournisseurId)
+        .eq('restaurant_id', restaurantId)
+        .single()
+
+      if (fournisseurCheck) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        await (supabase as any).rpc('increment_mapping_usage', {
+          p_restaurant_id: restaurantId,
+          p_fournisseur_id: fournisseurId,
+          p_designations: mappingDesignationsUsed,
+        })
+      }
     }
   }
 

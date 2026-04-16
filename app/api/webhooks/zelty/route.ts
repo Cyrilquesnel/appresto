@@ -37,13 +37,13 @@ export async function POST(req: NextRequest) {
 
   const supabase = createServiceClient()
 
-  // Retrouver le restaurant par zelty_restaurant_id stocké dans parametres
-  const { data: restaurants } = await supabase.from('restaurants').select('id, parametres')
-
-  const restaurant = restaurants?.find(
-    (r) =>
-      (r.parametres as Record<string, unknown>)?.zelty_restaurant_id === payload.restaurant_zelty_id
-  )
+  const { data: restaurant } = await supabase
+    .from('restaurants')
+    .select('id')
+    .eq('parametres->>zelty_restaurant_id' as 'id', payload.restaurant_zelty_id as string)
+    .is('deleted_at', null)
+    .limit(1)
+    .maybeSingle()
 
   if (!restaurant) {
     return NextResponse.json({ error: 'Restaurant not found' }, { status: 404 })

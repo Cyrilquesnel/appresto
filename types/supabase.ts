@@ -235,6 +235,7 @@ export interface Database {
       mercuriale: {
         Row: {
           id: string
+          restaurant_id: string
           ingredient_id: string
           fournisseur_id: string | null
           prix: number
@@ -249,6 +250,7 @@ export interface Database {
         }
         Insert: {
           id?: string
+          restaurant_id: string
           ingredient_id: string
           fournisseur_id?: string | null
           prix: number
@@ -263,6 +265,7 @@ export interface Database {
         }
         Update: {
           id?: string
+          restaurant_id?: string
           ingredient_id?: string
           fournisseur_id?: string | null
           prix?: number
