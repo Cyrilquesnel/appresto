@@ -18,7 +18,7 @@ const IngredientLineSchema = z.object({
 
 // Garantit qu'un ingredient_id existe toujours avant l'INSERT fiche_technique.
 // Si ingredient_id est fourni, le retourne tel quel.
-// Sinon, upsert dans restaurant_ingredients avec nom_custom.
+// Sinon, SELECT existing ou INSERT dans restaurant_ingredients.
 async function resolveIngredientId(
   supabase: SupabaseClient,
   restaurantId: string,
@@ -26,18 +26,26 @@ async function resolveIngredientId(
 ): Promise<string> {
   if (ing.ingredient_id) return ing.ingredient_id
 
-  // ON CONFLICT DO UPDATE garantit le RETURNING id même si la ligne existe déjà.
-  // Élimine la race condition upsert→fallback SELECT.
+  // 1. Cherche un ingrédient existant avec ce nom (non supprimé)
+  const { data: existing } = await supabase
+    .from('restaurant_ingredients')
+    .select('id')
+    .eq('restaurant_id', restaurantId)
+    .eq('nom_custom', ing.nom)
+    .is('deleted_at', null)
+    .limit(1)
+    .single()
+
+  if (existing) return existing.id
+
+  // 2. Crée l'ingrédient s'il n'existe pas
   const { data, error } = await supabase
     .from('restaurant_ingredients')
-    .upsert(
-      {
-        restaurant_id: restaurantId,
-        nom_custom: ing.nom,
-        allergenes_override: ing.allergenes ?? [],
-      },
-      { onConflict: 'restaurant_id,nom_custom', ignoreDuplicates: false }
-    )
+    .insert({
+      restaurant_id: restaurantId,
+      nom_custom: ing.nom,
+      allergenes_override: ing.allergenes ?? [],
+    })
     .select('id')
     .single()
 
