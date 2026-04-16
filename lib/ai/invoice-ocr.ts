@@ -49,7 +49,7 @@ const INVOICE_SCHEMA: Schema = {
   required: ['lignes'],
 }
 
-const MODELS = ['gemini-2.0-flash', 'gemini-2.0-flash-lite'] as const
+const MODELS = ['gemini-2.5-flash-preview-04-17', 'gemini-2.0-flash', 'gemini-1.5-pro'] as const
 
 /**
  * Extrait les données d'une facture via Gemini Vision.
