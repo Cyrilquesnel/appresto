@@ -1,15 +1,18 @@
 // Pipeline D — Génération contenu social media Onrush
 // Cron : 0 6 * * 1 (lundi 6h)
 // Génère 3 posts/semaine (LinkedIn x2 + Instagram x1) via Claude Haiku
+// Génère un carousel visuel par post via Gamma API
 // Stocke en DB + email récap prêt-à-poster
 
 import { NextRequest } from 'next/server'
 import { createServiceClient } from '@/lib/supabase/server'
 import { generateWeeklyPosts } from '@/lib/content/generator'
+import { generateCarousel } from '@/lib/content/gamma'
 import { Resend } from 'resend'
 import { pingHeartbeat } from '@/lib/betteruptime'
 
-export const maxDuration = 60
+// 300s pour laisser le temps aux appels Gamma (3 posts × ~60s polling max)
+export const maxDuration = 300
 export const dynamic = 'force-dynamic'
 
 function getResend() {
@@ -38,14 +41,27 @@ export async function GET(req: NextRequest) {
       )
     }
 
-    // 2. Sauvegarder en base
-    const { error: insertError } = await supabase.from('content_calendar').insert(
-      posts.map((p) => ({
+    // 2. Générer un carousel Gamma pour chaque post
+    console.log('[content-calendar] Génération des carousels Gamma...')
+    const gammaUrls: (string | null)[] = []
+    for (const post of posts) {
+      const url = await generateCarousel(post.content_text)
+      gammaUrls.push(url)
+      if (url) {
+        console.log(`[content-calendar] ✓ Carousel ${post.platform}: ${url}`)
+      }
+    }
+
+    // 3. Sauvegarder en base
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { error: insertError } = await (supabase.from('content_calendar') as any).insert(
+      posts.map((p, i) => ({
         platform: p.platform,
         content_type: p.content_type,
         content_text: p.content_text,
         hashtags: p.hashtags,
         publish_date: p.publish_date,
+        gamma_url: gammaUrls[i] ?? null,
         status: 'draft',
       }))
     )
@@ -54,23 +70,28 @@ export async function GET(req: NextRequest) {
       console.error('[content-calendar] Erreur insert:', insertError)
     }
 
-    // 3. Envoyer l'email récap
+    // 4. Envoyer l'email récap
     await getResend().emails.send({
       from: 'Le Rush Content <noreply@lerush.app>',
       to: adminEmail,
       subject: `✍️ ${posts.length} posts Onrush prêts — semaine du ${posts[0]?.publish_date}`,
-      html: buildEmailHtml(posts),
+      html: buildEmailHtml(posts, gammaUrls),
     })
 
     await pingHeartbeat('content-calendar')
 
-    console.log(`[content-calendar] ✓ ${posts.length} posts générés + email envoyé`)
+    const carouselCount = gammaUrls.filter(Boolean).length
+    console.log(
+      `[content-calendar] ✓ ${posts.length} posts + ${carouselCount} carousels générés + email envoyé`
+    )
     return Response.json({
       generated: posts.length,
-      posts: posts.map((p) => ({
+      carousels: carouselCount,
+      posts: posts.map((p, i) => ({
         platform: p.platform,
         publish_date: p.publish_date,
         preview: p.content_text.slice(0, 60),
+        carousel: gammaUrls[i] ?? null,
       })),
     })
   } catch (error) {
@@ -79,7 +100,10 @@ export async function GET(req: NextRequest) {
   }
 }
 
-function buildEmailHtml(posts: Awaited<ReturnType<typeof generateWeeklyPosts>>): string {
+function buildEmailHtml(
+  posts: Awaited<ReturnType<typeof generateWeeklyPosts>>,
+  gammaUrls: (string | null)[]
+): string {
   const platformIcon = (p: string) => (p === 'instagram' ? '📸' : '💼')
   const platformLabel = (p: string) => (p === 'instagram' ? 'Instagram' : 'LinkedIn')
   const typeLabel: Record<string, string> = {
@@ -95,7 +119,7 @@ function buildEmailHtml(posts: Awaited<ReturnType<typeof generateWeeklyPosts>>):
 <body style="font-family:system-ui,sans-serif;max-width:640px;margin:0 auto;padding:24px;color:#1f2937">
   <h1 style="font-size:20px;margin-bottom:4px">✍️ Posts Onrush — Semaine du ${posts[0]?.publish_date}</h1>
   <p style="color:#6b7280;margin-top:0;margin-bottom:24px">
-    ${posts.length} posts générés par Claude · Copie-colle dans Metricool ou Buffer
+    ${posts.length} posts générés par Claude · Carousels par Gamma · Copie-colle dans Metricool
   </p>
 
   ${posts
@@ -120,6 +144,21 @@ ${post.content_text}
       ${post.hashtags.map((h) => `#${h.replace(/^#/, '')}`).join(' ')}
     </div>`
         : ''
+    }
+
+    ${
+      gammaUrls[i]
+        ? `
+    <div style="margin-top:12px">
+      <a href="${gammaUrls[i]}" target="_blank"
+         style="display:inline-flex;align-items:center;gap:6px;background:#6366f1;color:white;text-decoration:none;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:500">
+        🎨 Voir le carousel Gamma →
+      </a>
+    </div>`
+        : `
+    <div style="margin-top:12px;font-size:12px;color:#d1d5db;font-style:italic">
+      Carousel non disponible
+    </div>`
     }
   </div>
   `
