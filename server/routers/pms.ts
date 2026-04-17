@@ -69,7 +69,9 @@ export const pmsRouter = router({
 
       if (!equipement) throw new Error('Équipement non trouvé')
 
-      const conforme = input.valeur >= equipement.temp_min && input.valeur <= equipement.temp_max
+      const conforme =
+        input.valeur >= (equipement.temp_min ?? -Infinity) &&
+        input.valeur <= (equipement.temp_max ?? Infinity)
 
       const { data, error } = await ctx.supabase
         .from('temperature_logs')
@@ -174,7 +176,7 @@ export const pmsRouter = router({
         .from('nettoyage_checklists')
         .select('*, items:nettoyage_checklist_items(*)')
         .eq('restaurant_id', ctx.restaurantId)
-        .eq('active', true)
+        .eq('actif', true)
         .order('type')
 
       const { data: completions } = await ctx.supabase

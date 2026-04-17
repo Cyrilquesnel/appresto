@@ -33,7 +33,7 @@ export async function GET(req: NextRequest) {
     .select(
       'date, service, nb_couverts, panier_moyen, montant_total, mode_saisie, notes, plat:plats(nom)'
     )
-    .eq('restaurant_id', restaurantUser.restaurant_id)
+    .eq('restaurant_id', restaurantUser.restaurant_id!)
     .gte('date', dateDebut)
     .lte('date', dateFin)
     .order('date', { ascending: false })

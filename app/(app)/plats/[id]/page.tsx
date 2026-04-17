@@ -38,7 +38,7 @@ export default async function PlatDetailPage({ params }: Props) {
     : null
 
   const lignes = plat.fiche_technique
-    ? [...plat.fiche_technique].sort((a, b) => a.ordre - b.ordre)
+    ? [...plat.fiche_technique].sort((a, b) => (a.ordre ?? 0) - (b.ordre ?? 0))
     : []
 
   return (
@@ -120,7 +120,7 @@ export default async function PlatDetailPage({ params }: Props) {
           ingredients: lignes.map((l) => ({
             nom_ingredient: l.nom_ingredient ?? '',
             grammage: l.grammage,
-            unite: l.unite,
+            unite: l.unite ?? '',
           })),
           date_export: new Date().toLocaleDateString('fr-FR'),
         }}

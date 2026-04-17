@@ -89,6 +89,7 @@ BEGIN
 END;
 $$;
 
+DROP TRIGGER IF EXISTS trigger_prospects_updated_at ON prospects;
 CREATE TRIGGER trigger_prospects_updated_at
   BEFORE UPDATE ON prospects
   FOR EACH ROW EXECUTE FUNCTION update_prospects_updated_at();

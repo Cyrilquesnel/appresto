@@ -64,12 +64,12 @@ export default function ModifierPlatPage() {
 
   const initialIngredients = plat.fiche_technique
     ? [...plat.fiche_technique]
-        .sort((a, b) => a.ordre - b.ordre)
+        .sort((a, b) => (a.ordre ?? 0) - (b.ordre ?? 0))
         .map((l) => ({
           id: l.ingredient_id ?? undefined,
           nom: l.nom_ingredient ?? '',
           grammage: l.grammage,
-          unite: l.unite,
+          unite: l.unite ?? '',
           allergenes: [] as string[],
           confiance: 1,
         }))

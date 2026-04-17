@@ -10,7 +10,7 @@ const ACTIONS_WIDTH = 130 // largeur totale des boutons révélés
 interface Plat {
   id: string
   nom: string
-  statut: string
+  statut: string | null
   cout_de_revient?: number | null
 }
 
