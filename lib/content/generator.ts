@@ -67,11 +67,8 @@ Réponds UNIQUEMENT avec un JSON valide, sans markdown ni backticks :
 }`
 
 export async function generateWeeklyPosts(): Promise<GeneratedPost[]> {
-  // Calcule les 3 prochaines dates de publication (lundi, mercredi, vendredi)
   const dates = getNextPublishDates()
   const posts: GeneratedPost[] = []
-
-  // Sélectionne 3 thèmes en rotation basée sur la semaine
   const weekNumber = getWeekNumber(new Date())
   const themeOffset = (weekNumber * 3) % THEMES.length
 
@@ -86,13 +83,10 @@ export async function generateWeeklyPosts(): Promise<GeneratedPost[]> {
     try {
       const post = await generatePost(item.platform, theme.type, theme.angle, item.date)
       posts.push(post)
-      // Petite pause entre les appels
       await new Promise((r) => setTimeout(r, 1000))
     } catch (err) {
-      console.error(
-        `[content-generator] Erreur génération ${item.platform}:`,
-        (err as Error).message
-      )
+      // Re-throw pour remonter l'erreur au cron
+      throw new Error(`Génération ${item.platform} échouée: ${(err as Error).message}`)
     }
   }
 
