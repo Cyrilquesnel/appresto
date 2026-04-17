@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Le Rush — Brand Kit Officiel 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #05060F; font-family: 'Poppins', sans-serif; color: white; }
+
+/* ─── PAGE LAYOUT ─── */
+.page { max-width: 1440px; margin: 0 auto; padding: 0 40px 80px; }
+
+/* ─── COVER ─── */
+.cover {
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center;
+  position: relative; overflow: hidden;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.cover-bg {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(0,35,149,0.08) 0%, transparent 60%),
+              radial-gradient(ellipse 60% 40% at 80% 80%, rgba(237,41,57,0.05) 0%, transparent 50%);
+}
+.cover-grid {
+  position: absolute; inset: 0;
+  background-image: linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.cover-content { position: relative; z-index: 1; }
+.cover-eyebrow { font-size: 10px; letter-spacing: 8px; text-transform: uppercase; color: #374151; margin-bottom: 32px; }
+.cover-logo {
+  font-family: 'Black Han Sans', sans-serif;
+  font-size: 160px; line-height: 1; letter-spacing: -6px;
+  background: linear-gradient(180deg, #002395 0%, #FFFFFF 48%, #ED2939 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.cover-le { font-size: 14px; font-weight: 300; color: rgba(255,255,255,0.2); letter-spacing: 20px; text-transform: uppercase; margin-bottom: -8px; }
+.cover-tagline { font-size: 13px; color: rgba(255,255,255,0.3); letter-spacing: 4px; margin-top: 24px; text-transform: uppercase; }
+.cover-bars { display: flex; gap: 8px; justify-content: center; margin-top: 24px; }
+.cover-bars span { width: 40px; height: 3px; border-radius: 2px; }
+.cover-meta { position: absolute; bottom: 32px; left: 0; right: 0; display: flex; justify-content: space-between; padding: 0 40px; font-size: 10px; color: #374151; letter-spacing: 3px; text-transform: uppercase; }
+
+/* ─── SECTION ─── */
+.section { padding: 80px 0 0; }
+.section + .section { border-top: 1px solid #0A0B14; }
+.sec-label { font-size: 9px; letter-spacing: 8px; text-transform: uppercase; color: #374151; margin-bottom: 8px; }
+.sec-title { font-family: 'Black Han Sans', sans-serif; font-size: 32px; color: white; margin-bottom: 40px; }
+.sec-title span { color: #ED2939; }
+
+/* ─── GRILLES ─── */
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+.g4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; }
+.g5 { display: grid; grid-template-columns: repeat(5,1fr); gap: 12px; }
+.g6 { display: grid; grid-template-columns: repeat(6,1fr); gap: 12px; }
+@media(max-width:1100px){ .g6{grid-template-columns:repeat(3,1fr)} .g5{grid-template-columns:repeat(3,1fr)} }
+@media(max-width:800px){ .g4,.g3{grid-template-columns:1fr 1fr} }
+@media(max-width:540px){ .g2,.g3,.g4,.g5,.g6{grid-template-columns:1fr} }
+
+/* ─── CARDS ─── */
+.card { border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.06); transition: transform 150ms, border-color 150ms; cursor: default; }
+.card:hover { transform: translateY(-2px); border-color: rgba(255,255,255,0.1); }
+.card.lt { border-color: #E5E7EB; }
+.card.lt:hover { border-color: #CBD5E1; }
+.card.featured { border-color: rgba(237,41,57,0.4); }
+.card.featured-lt { border-color: rgba(0,35,149,0.4); }
+
+/* ─── LABELS ─── */
+.lbl-dk { padding: 12px 16px; background: #0A0B14; border-top: 1px solid rgba(255,255,255,0.04); }
+.lbl-dk .name { font-family:'Black Han Sans',sans-serif; font-size:12px; color:white; }
+.lbl-dk .desc { font-size:10px; color:#4B5563; margin-top:2px; }
+.lbl-lt { padding: 12px 16px; background: #F9FAFB; border-top: 1px solid #E5E7EB; }
+.lbl-lt .name { font-family:'Black Han Sans',sans-serif; font-size:12px; color:#111827; }
+.lbl-lt .desc { font-size:10px; color:#9CA3AF; margin-top:2px; }
+
+/* ─── CODE BLOCK ─── */
+.code-block { background: #0A0B14; border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; padding: 16px; margin-top: 8px; position: relative; overflow: hidden; }
+.code-block pre { font-family: 'SF Mono','Fira Code',monospace; font-size: 10px; color: #6B7280; white-space: pre; overflow-x: auto; line-height: 1.6; }
+.code-block .copy-btn { position: absolute; top: 10px; right: 10px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.4); font-size: 9px; letter-spacing: 2px; padding: 4px 10px; border-radius: 4px; cursor: pointer; font-family: 'Poppins',sans-serif; transition: all 150ms; text-transform: uppercase; }
+.code-block .copy-btn:hover { background: rgba(255,255,255,0.1); color: white; }
+
+/* ─── COLOR SWATCH ─── */
+.swatch { display: flex; align-items: center; gap: 16px; padding: 16px; background: #0D0E18; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); }
+.swatch-dot { width: 52px; height: 52px; border-radius: 12px; flex-shrink: 0; }
+.swatch-info .hex { font-family: 'Black Han Sans',sans-serif; font-size: 16px; color: white; }
+.swatch-info .rgb { font-size: 10px; color: #4B5563; margin-top: 2px; font-family: monospace; }
+.swatch-info .name { font-size: 11px; color: #6B7280; margin-top: 4px; }
+
+/* ─── DIVIDER ─── */
+.divider { height: 1px; background: rgba(255,255,255,0.04); margin: 40px 0; }
+
+/* ─── BADGE ─── */
+.badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 100px; font-size: 9px; letter-spacing: 3px; text-transform: uppercase; font-weight: 600; }
+.badge-ok { background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.2); color: #10B981; }
+.badge-warn { background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.2); color: #F59E0B; }
+.badge-no { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.2); color: #EF4444; }
+
+/* ─── DO/DONT ─── */
+.do-dont { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.do-box, .dont-box { border-radius: 12px; overflow: hidden; }
+.do-box { border: 1px solid rgba(16,185,129,0.2); }
+.dont-box { border: 1px solid rgba(239,68,68,0.2); }
+.do-header { background: rgba(16,185,129,0.08); padding: 8px 16px; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: #10B981; font-weight: 600; }
+.dont-header { background: rgba(239,68,68,0.08); padding: 8px 16px; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: #EF4444; font-weight: 600; }
+.rule-body { padding: 16px; background: #0D0E18; font-size: 12px; color: #9CA3AF; line-height: 1.8; }
+.rule-body strong { color: white; }
+
+/* ─── FONT PREVIEW ─── */
+.font-preview-display { font-family: 'Black Han Sans', sans-serif; font-size: 72px; line-height: 1; letter-spacing: -2px; background: linear-gradient(180deg,#002395 0%,#FFFFFF 48%,#ED2939 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.font-preview-body { font-family: 'Poppins', sans-serif; font-size: 16px; line-height: 1.7; color: rgba(255,255,255,0.5); max-width: 540px; }
+
+/* ─── ICON GRID ─── */
+.icon-showcase { display: flex; gap: 16px; align-items: flex-end; flex-wrap: wrap; }
+
+</style>
+</head>
+<body>
+
+<!-- SVG DEFS GLOBAL -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="gD" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#002395"/>
+      <stop offset="48%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#ED2939"/>
+    </linearGradient>
+    <linearGradient id="gDH" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#002395"/>
+      <stop offset="48%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#ED2939"/>
+    </linearGradient>
+    <linearGradient id="gL" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#002395"/>
+      <stop offset="50%" stop-color="#1A1744"/>
+      <stop offset="100%" stop-color="#ED2939"/>
+    </linearGradient>
+    <linearGradient id="gLH" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#002395"/>
+      <stop offset="50%" stop-color="#1A1744"/>
+      <stop offset="100%" stop-color="#ED2939"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+
+<!-- ═══════════════════ COVER ═══════════════════ -->
+<div class="cover">
+  <div class="cover-bg"></div>
+  <div class="cover-grid"></div>
+  <div class="cover-content">
+    <div class="cover-eyebrow">SAS La Fabrique Alimentaire · Brand Kit Officiel</div>
+    <div class="cover-le">LE</div>
+    <div class="cover-logo">RUSH</div>
+    <div class="cover-tagline">Restaurant Operating System</div>
+    <div class="cover-bars">
+      <span style="background:#002395"></span>
+      <span style="background:white;opacity:.7"></span>
+      <span style="background:#ED2939"></span>
+    </div>
+  </div>
+  <div class="cover-meta">
+    <span>Brand Kit · Version 1.0</span>
+    <span>Confidentiel · Usage interne</span>
+    <span>2026</span>
+  </div>
+</div>
+
+
+<div class="page">
+
+<!-- ═══════════════════ 01. LOGO SYSTEM ═══════════════════ -->
+<div class="section">
+  <div class="sec-label">Section 01</div>
+  <div class="sec-title">Système <span>Logo</span></div>
+
+  <!-- Logos principaux -->
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px">
+
+    <!-- Dark gradient -->
+    <div class="card featured">
+      <div style="background:#06081A;padding:40px 32px;display:flex;align-items:center;gap:24px;min-height:140px">
+        <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+          <rect width="56" height="56" rx="12" fill="#1A1744"/>
+          <text text-anchor="middle" x="28" y="44" font-family="Black Han Sans,sans-serif" font-size="46" fill="url(#gD)">R</text>
+        </svg>
+        <div>
+          <div style="font-size:9px;color:rgba(255,255,255,0.2);letter-spacing:6px;margin-bottom:0px">LE</div>
+          <svg width="220" height="52" viewBox="0 0 220 52" fill="none">
+            <text x="0" y="47" font-family="Black Han Sans,sans-serif" font-size="48" fill="url(#gD)">RUSH</text>
+          </svg>
+        </div>
+      </div>
+      <div class="lbl-dk">
+        <div class="name">LOGO PRINCIPAL · DARK</div>
+        <div class="desc">Gradient Bleu→Blanc→Rouge · fond sombre · usage prioritaire</div>
+      </div>
+    </div>
+
+    <!-- Light solid -->
+    <div class="card lt">
+      <div style="background:#FFFFFF;padding:40px 32px;display:flex;align-items:center;gap:24px;min-height:140px">
+        <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+          <rect width="56" height="56" rx="12" fill="#F1F5F9"/>
+          <text text-anchor="middle" x="28" y="44" font-family="Black Han Sans,sans-serif" font-size="46" fill="url(#gL)">R</text>
+        </svg>
+        <div>
+          <div style="font-size:9px;color:#D1D5DB;letter-spacing:6px;margin-bottom:0px">LE</div>
+          <svg width="220" height="52" viewBox="0 0 220 52" fill="none">
+            <text x="0" y="47" font-family="Black Han Sans,sans-serif" font-size="48" fill="#06081A">RUSH</text>
+          </svg>
+        </div>
+      </div>
+      <div class="lbl-lt">
+        <div class="name">LOGO · LIGHT SOLID</div>
+        <div class="desc">RUSH dark navy · R gradient · fond blanc · documents</div>
+      </div>
+    </div>
+
+    <!-- Light gradient -->
+    <div class="card featured-lt lt">
+      <div style="background:#FFFFFF;padding:40px 32px;display:flex;align-items:center;gap:24px;min-height:140px">
+        <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+          <rect width="56" height="56" rx="12" fill="#F1F5F9"/>
+          <text text-anchor="middle" x="28" y="44" font-family="Black Han Sans,sans-serif" font-size="46" fill="url(#gL)">R</text>
+        </svg>
+        <div>
+          <div style="font-size:9px;color:#D1D5DB;letter-spacing:6px;margin-bottom:0px">LE</div>
+          <svg width="220" height="52" viewBox="0 0 220 52" fill="none">
+            <text x="0" y="47" font-family="Black Han Sans,sans-serif" font-size="48" fill="url(#gL)">RUSH</text>
+          </svg>
+        </div>
+      </div>
+      <div class="lbl-lt">
+        <div class="name">LOGO · LIGHT GRADIENT</div>
+        <div class="desc">Gradient Bleu→Navy→Rouge · fond blanc · print premium</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Icône R seule — toutes versions -->
+  <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:12px">
+
+    <div class="card">
+      <div style="background:#06081A;padding:24px;display:flex;align-items:center;justify-content:center;height:120px">
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+          <rect width="80" height="80" rx="18" fill="#1A1744"/>
+          <text text-anchor="middle" x="40" y="62" font-family="Black Han Sans,sans-serif" font-size="66" fill="url(#gD)">R</text>
+        </svg>
+      </div>
+      <div class="lbl-dk"><div class="name">ICÔNE DARK</div><div class="desc">Carré arrondi navy</div></div>
+    </div>
+
+    <div class="card lt">
+      <div style="background:#F1F5F9;padding:24px;display:flex;align-items:center;justify-content:center;height:120px">
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+          <rect width="80" height="80" rx="18" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1"/>
+          <text text-anchor="middle" x="40" y="62" font-family="Black Han Sans,sans-serif" font-size="66" fill="url(#gL)">R</text>
+        </svg>
+      </div>
+      <div class="lbl-lt"><div class="name">ICÔNE LIGHT</div><div class="desc">Carré arrondi blanc</div></div>
+    </div>
+
+    <div class="card">
+      <div style="background:#06081A;padding:24px;display:flex;align-items:center;justify-content:center;height:120px">
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+          <circle cx="40" cy="40" r="40" fill="#1A1744"/>
+          <text text-anchor="middle" x="40" y="62" font-family="Black Han Sans,sans-serif" font-size="66" fill="url(#gD)">R</text>
+        </svg>
+      </div>
+      <div class="lbl-dk"><div class="name">CERCLE DARK</div><div class="desc">Android · profil réseau</div></div>
+    </div>
+
+    <div class="card lt">
+      <div style="background:#F1F5F9;padding:24px;display:flex;align-items:center;justify-content:center;height:120px">
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+          <circle cx="40" cy="40" r="40" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1"/>
+          <text text-anchor="middle" x="40" y="62" font-family="Black Han Sans,sans-serif" font-size="66" fill="url(#gL)">R</text>
+        </svg>
+      </div>
+      <div class="lbl-lt"><div class="name">CERCLE LIGHT</div><div class="desc">Android · profil réseau</div></div>
+    </div>
+
+    <div class="card">
+      <div style="background:#1A1A2E;padding:24px;display:flex;align-items:center;justify-content:center;height:120px">
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+          <rect width="80" height="80" rx="18" fill="#06081A"/>
+          <text text-anchor="middle" x="40" y="62" font-family="Black Han Sans,sans-serif" font-size="66" fill="#FFFFFF">R</text>
+        </svg>
+      </div>
+      <div class="lbl-dk"><div class="name">MONOCHROME ⬜</div><div class="desc">Fallback blanc sur noir</div></div>
+    </div>
+
+    <div class="card lt">
+      <div style="background:#F1F5F9;padding:24px;display:flex;align-items:center;justify-content:center;height:120px">
+        <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+          <rect width="80" height="80" rx="18" fill="#06081A"/>
+          <text text-anchor="middle" x="40" y="62" font-family="Black Han Sans,sans-serif" font-size="66" fill="#FFFFFF">R</text>
+        </svg>
+      </div>
+      <div class="lbl-lt"><div class="name">MONOCHROME ⬛</div><div class="desc">Fallback noir sur blanc</div></div>
+    </div>
+
+  </div>
+
+  <!-- Wordmarks -->
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+
+    <div class="card">
+      <div style="background:#06081A;padding:28px 24px;display:flex;flex-direction:column;align-items:center;justify-content:center;height:140px;gap:4px">
+        <div style="font-size:8px;color:rgba(255,255,255,0.2);letter-spacing:8px">LE</div>
+        <svg width="160" height="48" viewBox="0 0 160 48" fill="none">
+          <text x="0" y="44" font-family="Black Han Sans,sans-serif" font-size="44" fill="url(#gD)">RUSH</text>
+        </svg>
+        <div style="display:flex;gap:4px;margin-top:2px">
+          <div style="width:24px;height:3px;border-radius:2px;background:#002395"></div>
+          <div style="width:24px;height:3px;border-radius:2px;background:white;opacity:.7"></div>
+          <div style="width:24px;height:3px;border-radius:2px;background:#ED2939"></div>
+        </div>
+      </div>
+      <div class="lbl-dk"><div class="name">WORDMARK DARK</div><div class="desc">Gradient + barres tricolores</div></div>
+    </div>
+
+    <div class="card lt">
+      <div style="background:#FFFFFF;padding:28px 24px;display:flex;flex-direction:column;align-items:center;justify-content:center;height:140px;gap:4px">
+        <div style="font-size:8px;color:#D1D5DB;letter-spacing:8px">LE</div>
+        <svg width="160" height="48" viewBox="0 0 160 48" fill="none">
+          <text x="0" y="44" font-family="Black Han Sans,sans-serif" font-size="44" fill="#06081A">RUSH</text>
+        </svg>
+        <div style="display:flex;gap:4px;margin-top:2px">
+          <div style="width:24px;height:3px;border-radius:2px;background:#002395"></div>
+          <div style="width:24px;height:3px;border-radius:2px;background:#9CA3AF;opacity:.4"></div>
+          <div style="width:24px;height:3px;border-radius:2px;background:#ED2939"></div>
+        </div>
+      </div>
+      <div class="lbl-lt"><div class="name">WORDMARK LIGHT SOLID</div><div class="desc">RUSH navy + barres</div></div>
+    </div>
+
+    <div class="card featured-lt lt">
+      <div style="background:#FFFFFF;padding:28px 24px;display:flex;flex-direction:column;align-items:center;justify-content:center;height:140px;gap:4px">
+        <div style="font-size:8px;color:#D1D5DB;letter-spacing:8px">LE</div>
+        <svg width="160" height="48" viewBox="0 0 160 48" fill="none">
+          <text x="0" y="44" font-family="Black Han Sans,sans-serif" font-size="44" fill="url(#gL)">RUSH</text>
+        </svg>
+        <div style="display:flex;gap:4px;margin-top:2px">
+          <div style="width:24px;height:3px;border-radius:2px;background:#002395"></div>
+          <div style="width:24px;height:3px;border-radius:2px;background:#9CA3AF;opacity:.4"></div>
+          <div style="width:24px;height:3px;border-radius:2px;background:#ED2939"></div>
+        </div>
+      </div>
+      <div class="lbl-lt"><div class="name">WORDMARK LIGHT GRADIENT</div><div class="desc">Gradient bleu→navy→rouge + barres</div></div>
+    </div>
+
+  </div>
+
+  <!-- SVG Export codes -->
+  <div style="margin-top:32px">
+    <div style="font-size:10px;letter-spacing:4px;text-transform:uppercase;color:#374151;margin-bottom:16px">Exporter les SVG — copiez le code et sauvegardez en .svg</div>
+    <div class="g2">
+
+      <div>
+        <div style="font-size:10px;color:#6B7280;margin-bottom:6px;letter-spacing:2px">Logo Dark (horizontal)</div>
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">Copier</button>
+          <pre>&lt;svg xmlns="http://www.w3.org/2000/svg" width="320" height="80" viewBox="0 0 320 80"&gt;
+  &lt;defs&gt;
+    &lt;linearGradient id="g" x1="0" y1="0" x2="0" y2="1"&gt;
+      &lt;stop offset="0%" stop-color="#002395"/&gt;
+      &lt;stop offset="48%" stop-color="#FFFFFF"/&gt;
+      &lt;stop offset="100%" stop-color="#ED2939"/&gt;
+    &lt;/linearGradient&gt;
+  &lt;/defs&gt;
+  &lt;rect width="320" height="80" fill="#06081A"/&gt;
+  &lt;rect x="8" y="12" width="56" height="56" rx="12" fill="#1A1744"/&gt;
+  &lt;text text-anchor="middle" x="36" y="56"
+        font-family="Black Han Sans,sans-serif"
+        font-size="46" fill="url(#g)"&gt;R&lt;/text&gt;
+  &lt;text x="78" y="28" font-family="Poppins,sans-serif"
+        font-size="9" font-weight="300" fill="rgba(255,255,255,0.2)"
+        letter-spacing="6"&gt;L E&lt;/text&gt;
+  &lt;text x="76" y="66" font-family="Black Han Sans,sans-serif"
+        font-size="48" fill="url(#g)"&gt;RUSH&lt;/text&gt;
+&lt;/svg&gt;</pre>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size:10px;color:#6B7280;margin-bottom:6px;letter-spacing:2px">Logo Light Gradient (horizontal)</div>
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">Copier</button>
+          <pre>&lt;svg xmlns="http://www.w3.org/2000/svg" width="320" height="80" viewBox="0 0 320 80"&gt;
+  &lt;defs&gt;
+    &lt;linearGradient id="g" x1="0" y1="0" x2="0" y2="1"&gt;
+      &lt;stop offset="0%" stop-color="#002395"/&gt;
+      &lt;stop offset="50%" stop-color="#1A1744"/&gt;
+      &lt;stop offset="100%" stop-color="#ED2939"/&gt;
+    &lt;/linearGradient&gt;
+  &lt;/defs&gt;
+  &lt;rect width="320" height="80" fill="#FFFFFF"/&gt;
+  &lt;rect x="8" y="12" width="56" height="56" rx="12" fill="#F1F5F9"/&gt;
+  &lt;text text-anchor="middle" x="36" y="56"
+        font-family="Black Han Sans,sans-serif"
+        font-size="46" fill="url(#g)"&gt;R&lt;/text&gt;
+  &lt;text x="78" y="28" font-family="Poppins,sans-serif"
+        font-size="9" font-weight="300" fill="#D1D5DB"
+        letter-spacing="6"&gt;L E&lt;/text&gt;
+  &lt;text x="76" y="66" font-family="Black Han Sans,sans-serif"
+        font-size="48" fill="url(#g)"&gt;RUSH&lt;/text&gt;
+&lt;/svg&gt;</pre>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size:10px;color:#6B7280;margin-bottom:6px;letter-spacing:2px">Icône R Dark (carré, 1024px)</div>
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">Copier</button>
+          <pre>&lt;svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024"&gt;
+  &lt;defs&gt;
+    &lt;linearGradient id="g" x1="0" y1="0" x2="0" y2="1"&gt;
+      &lt;stop offset="0%" stop-color="#002395"/&gt;
+      &lt;stop offset="48%" stop-color="#FFFFFF"/&gt;
+      &lt;stop offset="100%" stop-color="#ED2939"/&gt;
+    &lt;/linearGradient&gt;
+  &lt;/defs&gt;
+  &lt;rect width="1024" height="1024" rx="230" fill="#06081A"/&gt;
+  &lt;text text-anchor="middle" x="512" y="790"
+        font-family="Black Han Sans,sans-serif"
+        font-size="860" fill="url(#g)"&gt;R&lt;/text&gt;
+&lt;/svg&gt;</pre>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size:10px;color:#6B7280;margin-bottom:6px;letter-spacing:2px">Icône R Light (carré, 1024px)</div>
+        <div class="code-block">
+          <button class="copy-btn" onclick="copyCode(this)">Copier</button>
+          <pre>&lt;svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024"&gt;
+  &lt;defs&gt;
+    &lt;linearGradient id="g" x1="0" y1="0" x2="0" y2="1"&gt;
+      &lt;stop offset="0%" stop-color="#002395"/&gt;
+      &lt;stop offset="50%" stop-color="#1A1744"/&gt;
+      &lt;stop offset="100%" stop-color="#ED2939"/&gt;
+    &lt;/linearGradient&gt;
+  &lt;/defs&gt;
+  &lt;rect width="1024" height="1024" rx="230" fill="#FFFFFF"/&gt;
+  &lt;text text-anchor="middle" x="512" y="790"
+        font-family="Black Han Sans,sans-serif"
+        font-size="860" fill="url(#g)"&gt;R&lt;/text&gt;
+&lt;/svg&gt;</pre>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════ 02. PALETTE COULEURS ═══════════════════ -->
+<div class="section">
+  <div class="sec-label">Section 02</div>
+  <div class="sec-title">Palette <span>Couleurs</span></div>
+
+  <!-- Couleurs primaires -->
+  <div style="font-size:10px;letter-spacing:4px;text-transform:uppercase;color:#374151;margin-bottom:16px">Couleurs primaires</div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:32px">
+
+    <div class="swatch">
+      <div class="swatch-dot" style="background:#002395"></div>
+      <div class="swatch-info">
+        <div class="hex">#002395</div>
+        <div class="rgb">rgb(0, 35, 149)</div>
+        <div class="name">Bleu France — Gradient top · Accent principal · Lien</div>
+      </div>
+    </div>
+
+    <div class="swatch">
+      <div class="swatch-dot" style="background:#FFFFFF;border:1px solid rgba(255,255,255,0.1)"></div>
+      <div class="swatch-info">
+        <div class="hex">#FFFFFF</div>
+        <div class="rgb">rgb(255, 255, 255)</div>
+        <div class="name">Blanc — Gradient centre (dark) · Fond light · Texte sur sombre</div>
+      </div>
+    </div>
+
+    <div class="swatch">
+      <div class="swatch-dot" style="background:#ED2939"></div>
+      <div class="swatch-info">
+        <div class="hex">#ED2939</div>
+        <div class="rgb">rgb(237, 41, 57)</div>
+        <div class="name">Rouge France — Gradient bottom · CTA · Accent secondaire</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Couleurs de fond -->
+  <div style="font-size:10px;letter-spacing:4px;text-transform:uppercase;color:#374151;margin-bottom:16px">Fonds & Neutres</div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:32px">
+
+    <div class="swatch" style="flex-direction:column;align-items:flex-start;gap:12px">
+      <div style="width:100%;height:48px;border-radius:10px;background:#06081A;border:1px solid rgba(255,255,255,0.1)"></div>
+      <div class="swatch-info">
+        <div class="hex">#06081A</div>
+        <div class="rgb">rgb(6, 8, 26)</div>
+        <div class="name">BG Dark principal</div>
+      </div>
+    </div>
+
+    <div class="swatch" style="flex-direction:column;align-items:flex-start;gap:12px">
+      <div style="width:100%;height:48px;border-radius:10px;background:#1A1744"></div>
+      <div class="swatch-info">
+        <div class="hex">#1A1744</div>
+        <div class="rgb">rgb(26, 23, 68)</div>
+        <div class="name">Navy · Cards · Icon BG</div>
+      </div>
+    </div>
+
+    <div class="swatch" style="flex-direction:column;align-items:flex-start;gap:12px">
+      <div style="width:100%;height:48px;border-radius:10px;background:#F1F5F9;border:1px solid rgba(255,255,255,0.06)"></div>
+      <div class="swatch-info">
+        <div class="hex">#F1F5F9</div>
+        <div class="rgb">rgb(241, 245, 249)</div>
+        <div class="name">BG Subtle light · Icon BG light</div>
+      </div>
+    </div>
+
+    <div class="swatch" style="flex-direction:column;align-items:flex-start;gap:12px">
+      <div style="width:100%;height:48px;border-radius:10px;background:#E5E7EB;border:1px solid rgba(255,255,255,0.06)"></div>
+      <div class="swatch-info">
+        <div class="hex">#E5E7EB</div>
+        <div class="rgb">rgb(229, 231, 235)</div>
+        <div class="name">Bordure light · Séparateur</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Gradients -->
+  <div style="font-size:10px;letter-spacing:4px;text-transform:uppercase;color:#374151;margin-bottom:16px">Gradients officiels</div>
+  <div class="g2">
+
+    <div style="background:#0D0E18;border-radius:12px;border:1px solid rgba(255,255,255,0.06);overflow:hidden">
+      <div style="height:56px;background:linear-gradient(90deg,#002395 0%,#FFFFFF 48%,#ED2939 100%)"></div>
+      <div style="padding:16px">
+        <div style="font-family:'Black Han Sans',sans-serif;font-size:13px;color:white;margin-bottom:4px">Gradient Dark · Horizontal</div>
+        <div style="font-size:10px;color:#4B5563;font-family:monospace">linear-gradient(90deg, #002395 0%, #FFFFFF 48%, #ED2939 100%)</div>
+        <div style="font-size:10px;color:#4B5563;margin-top:4px">Usage : bannière LinkedIn/X, carte de visite dark, loading bar</div>
+      </div>
+    </div>
+
+    <div style="background:#0D0E18;border-radius:12px;border:1px solid rgba(255,255,255,0.06);overflow:hidden">
+      <div style="height:56px;background:linear-gradient(90deg,#002395 0%,#1A1744 50%,#ED2939 100%)"></div>
+      <div style="padding:16px">
+        <div style="font-family:'Black Han Sans',sans-serif;font-size:13px;color:white;margin-bottom:4px">Gradient Light · Horizontal</div>
+        <div style="font-size:10px;color:#4B5563;font-family:monospace">linear-gradient(90deg, #002395 0%, #1A1744 50%, #ED2939 100%)</div>
+        <div style="font-size:10px;color:#4B5563;margin-top:4px">Usage : texte RUSH sur fond blanc, bannière light</div>
+      </div>
+    </div>
+
+    <div style="background:#0D0E18;border-radius:12px;border:1px solid rgba(255,255,255,0.06);overflow:hidden">
+      <div style="height:56px;background:linear-gradient(180deg,#002395 0%,#FFFFFF 48%,#ED2939 100%)"></div>
+      <div style="padding:16px">
+        <div style="font-family:'Black Han Sans',sans-serif;font-size:13px;color:white;margin-bottom:4px">Gradient Dark · Vertical</div>
+        <div style="font-size:10px;color:#4B5563;font-family:monospace">linear-gradient(180deg, #002395 0%, #FFFFFF 48%, #ED2939 100%)</div>
+        <div style="font-size:10px;color:#4B5563;margin-top:4px">Usage : texte RUSH sur fond sombre, logo principal</div>
+      </div>
+    </div>
+
+    <div style="background:#0D0E18;border-radius:12px;border:1px solid rgba(255,255,255,0.06);overflow:hidden">
+      <div style="height:56px;background:linear-gradient(180deg,#002395 0%,#1A1744 50%,#ED2939 100%)"></div>
+      <div style="padding:16px">
+        <div style="font-family:'Black Han Sans',sans-serif;font-size:13px;color:white;margin-bottom:4px">Gradient Light · Vertical</div>
+        <div style="font-size:10px;color:#4B5563;font-family:monospace">linear-gradient(180deg, #002395 0%, #1A1744 50%, #ED2939 100%)</div>
+        <div style="font-size:10px;color:#4B5563;margin-top:4px">Usage : icône R sur fond blanc, wordmark light gradient</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ═══════════════════ 03. TYPOGRAPHIE ═══════════════════ -->
+<div class="section">
+  <div class="sec-label">Section 03</div>
+  <div class="sec-title">Typo<span>graphie</span></div>
+
+  <div class="g2" style="margin-bottom:32px">
+
+    <div style="background:#0D0E18;border-radius:14px;border:1px solid rgba(255,255,255,0.06);padding:32px">
+      <div style="font-size:9px;letter-spacing:6px;color:#374151;text-transform:uppercase;margin-bottom:24px">Police Display — Logos & Titres</div>
+      <div class="font-preview-display">RUSH</div>
+      <div style="margin-top:20px">
+        <div style="font-family:'Black Han Sans',sans-serif;font-size:14px;color:white;margin-bottom:4px">Black Han Sans</div>
+        <div style="font-size:11px;color:#4B5563;line-height:1.8">
+          Google Fonts · Style : Regular 400 (seul style disponible)<br>
+          Utilisation : RUSH, R, titres hero uniquement<br>
+          Import : <span style="font-family:monospace;color:#6B7280">fonts.googleapis.com/css2?family=Black+Han+Sans</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:#0D0E18;border-radius:14px;border:1px solid rgba(255,255,255,0.06);padding:32px">
+      <div style="font-size:9px;letter-spacing:6px;color:#374151;text-transform:uppercase;margin-bottom:24px">Police Corps — UI & Documents</div>
+      <div style="font-family:'Poppins',sans-serif;font-size:36px;font-weight:700;color:white;line-height:1;margin-bottom:8px">Poppins</div>
+      <div class="font-preview-body">Restaurant Operating System — L'outil qui donne un coup d'avance à votre équipe.</div>
+      <div style="margin-top:20px">
+        <div style="font-family:'Poppins',sans-serif;font-size:14px;color:white;margin-bottom:4px">Poppins · 300 / 400 / 600 / 700</div>
+        <div style="font-size:11px;color:#4B5563;line-height:1.8">
+          Google Fonts · Graisses utilisées : Light 300, Regular 400, SemiBold 600, Bold 700<br>
+          Utilisation : navigation, body, labels, sous-titres, UI
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Échelle type -->
+  <div style="background:#0D0E18;border-radius:14px;border:1px solid rgba(255,255,255,0.06);padding:32px">
+    <div style="font-size:9px;letter-spacing:6px;color:#374151;text-transform:uppercase;margin-bottom:24px">Échelle typographique</div>
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div style="display:flex;align-items:baseline;gap:24px;border-bottom:1px solid rgba(255,255,255,0.04);padding-bottom:12px">
+        <div style="width:80px;font-size:10px;color:#374151;font-family:monospace;flex-shrink:0">hero · 96px</div>
+        <div style="font-family:'Black Han Sans',sans-serif;font-size:40px;background:linear-gradient(180deg,#002395 0%,#FFFFFF 48%,#ED2939 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1">RUSH</div>
+      </div>
+      <div style="display:flex;align-items:baseline;gap:24px;border-bottom:1px solid rgba(255,255,255,0.04);padding-bottom:12px">
+        <div style="width:80px;font-size:10px;color:#374151;font-family:monospace;flex-shrink:0">h1 · 36px</div>
+        <div style="font-family:'Poppins',sans-serif;font-size:28px;font-weight:700;color:white;line-height:1">Titre Principal</div>
+      </div>
+      <div style="display:flex;align-items:baseline;gap:24px;border-bottom:1px solid rgba(255,255,255,0.04);padding-bottom:12px">
+        <div style="width:80px;font-size:10px;color:#374151;font-family:monospace;flex-shrink:0">h2 · 24px</div>
+        <div style="font-family:'Poppins',sans-serif;font-size:20px;font-weight:600;color:white;line-height:1">Sous-titre Section</div>
+      </div>
+      <div style="display:flex;align-items:baseline;gap:24px;border-bottom:1px solid rgba(255,255,255,0.04);padding-bottom:12px">
+        <div style="width:80px;font-size:10px;color:#374151;font-family:monospace;flex-shrink:0">body · 16px</div>
+        <div style="font-family:'Poppins',sans-serif;font-size:14px;font-weight:400;color:rgba(255,255,255,0.6);line-height:1.6">Texte de paragraphe — ligne-height 1.6 minimum</div>
+      </div>
+      <div style="display:flex;align-items:baseline;gap:24px;border-bottom:1px solid rgba(255,255,255,0.04);padding-bottom:12px">
+        <div style="width:80px;font-size:10px;color:#374151;font-family:monospace;flex-shrink:0">label · 12px</div>
+        <div style="font-family:'Poppins',sans-serif;font-size:11px;font-weight:600;color:#6B7280;letter-spacing:3px;text-transform:uppercase">LABEL UPPERCASE</div>
+      </div>
+      <div style="display:flex;align-items:baseline;gap:24px">
+        <div style="width:80px;font-size:10px;color:#374151;font-family:monospace;flex-shrink:0">caption · 10px</div>
+        <div style="font-family:'Poppins',sans-serif;font-size:10px;font-weight:400;color:#4B5563">Légende · métadonnée · note légale</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════ 04. FORMATS & APPLICATIONS ═══════════════════ -->
+<div class="section">
+  <div class="sec-label">Section 04</div>
+  <div class="sec-title">Formats & <span>Applications</span></div>
+
+  <!-- Favicons -->
+  <div style="font-size:10px;letter-spacing:4px;text-transform:uppercase;color:#374151;margin-bottom:16px">Favicon · App Icon</div>
+  <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:32px">
+
+    <div class="card">
+      <div style="background:#1A1A2E;padding:16px;display:flex;align-items:center;justify-content:center;height:100px">
+        <svg width="72" height="72" viewBox="0 0 72 72" fill="none">
+          <rect width="72" height="72" rx="16" fill="#06081A"/>
+          <text text-anchor="middle" x="36" y="56" font-family="Black Han Sans,sans-serif" font-size="60" fill="url(#gD)">R</text>
+        </svg>
+      </div>
+      <div class="lbl-dk"><div class="name">512 × 512</div><div class="desc">App Store / Play Store</div></div>
+    </div>
+
+    <div class="card">
+      <div style="background:#1A1A2E;padding:16px;display:flex;align-items:center;justify-content:center;height:100px">
+        <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+          <rect width="56" height="56" rx="12" fill="#06081A"/>
+          <text text-anchor="middle" x="28" y="43" font-family="Black Han Sans,sans-serif" font-size="46" fill="url(#gD)">R</text>
+        </svg>
+      </div>
+      <div class="lbl-dk"><div class="name">192 × 192</div><div class="desc">PWA · Homescreen</div></div>
+    </div>
+
+    <div class="card">
+      <div style="background:#1A1A2E;padding:16px;display:flex;align-items:center;justify-content:center;height:100px">
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+          <rect width="40" height="40" rx="9" fill="#06081A"/>
+          <text text-anchor="middle" x="20" y="31" font-family="Black Han Sans,sans-serif" font-size="33" fill="url(#gD)">R</text>
+        </svg>
+      </div>
+      <div class="lbl-dk"><div class="name">64 × 64</div><div class="desc">Favicon HD</div></div>
+    </div>
+
+    <div class="card">
+      <div style="background:#1A1A2E;padding:16px;display:flex;align-items:center;justify-content:center;height:100px">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <rect width="28" height="28" rx="6" fill="#06081A"/>
+          <text text-anchor="middle" x="14" y="22" font-family="Black Han Sans,sans-serif" font-size="23" fill="url(#gD)">R</text>
+        </svg>
+      </div>
+      <div class="lbl-dk"><div class="name">32 × 32</div><div class="desc">Favicon standard</div></div>
+    </div>
+
+    <div class="card">
+      <div style="background:#1A1A2E;padding:16px;display:flex;align-items:center;justify-content:center;height:100px">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <rect width="16" height="16" rx="3" fill="#1A1744"/>
+          <text text-anchor="middle" x="8" y="12" font-family="Black Han Sans,sans-serif" font-size="13" fill="url(#gD)">R</text>
+        </svg>
+      </div>
+      <div class="lbl-dk"><div class="name">16 × 16</div><div class="desc">Favicon minimal</div></div>
+    </div>
+
+  </div>
+
+  <!-- Digital + Print en une rangée -->
+  <div style="font-size:10px;letter-spacing:4px;text-transform:uppercase;color:#374151;margin-bottom:16px">Digital · Réseaux Sociaux</div>
+  <div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px;margin-bottom:32px">
+
+    <div class="card featured">
+      <div style="background:#06081A;height:120px;display:flex;align-items:center;justify-content:space-between;padding:0 32px;position:relative;overflow:hidden;">
+        <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,35,149,0.12) 0%,transparent 50%,rgba(237,41,57,0.08) 100%)"></div>
+        <div style="position:relative;z-index:1">
+          <div style="font-size:8px;color:rgba(255,255,255,0.2);letter-spacing:8px;margin-bottom:-2px">LE</div>
+          <svg width="200" height="52" viewBox="0 0 200 52" fill="none">
+            <text x="0" y="47" font-family="Black Han Sans,sans-serif" font-size="48" fill="url(#gDH)">RUSH</text>
+          </svg>
+        </div>
+        <div style="position:relative;z-index:1;text-align:right">
+          <div style="font-size:11px;color:rgba(255,255,255,0.3);line-height:1.6">Restaurant<br/>Operating System</div>
+          <div style="display:flex;gap:4px;margin-top:6px;justify-content:flex-end">
+            <div style="width:20px;height:3px;border-radius:2px;background:#002395"></div>
+            <div style="width:20px;height:3px;border-radius:2px;background:white;opacity:.6"></div>
+            <div style="width:20px;height:3px;border-radius:2px;background:#ED2939"></div>
+          </div>
+        </div>
+      </div>
+      <div class="lbl-dk"><div class="name">BANNIÈRE DARK · 1584 × 396</div><div class="desc">LinkedIn · X · couverture</div></div>
+    </div>
+
+    <div class="card">
+      <div style="background:#0A0A18;padding:20px;height:120px;display:flex;align-items:center;justify-content:center;">
+        <svg width="72" height="72" viewBox="0 0 72 72" fill="none">
+          <circle cx="36" cy="36" r="36" fill="#06081A"/>
+          <text text-anchor="middle" x="36" y="56" font-family="Black Han Sans,sans-serif" font-size="58" fill="url(#gD)">R</text>
+        </svg>
+      </div>
+      <div class="lbl-dk"><div class="name">PHOTO PROFIL DARK</div><div class="desc">Cercle · tous réseaux</div></div>
+    </div>
+
+    <div class="card lt">
+      <div style="background:#F1F5F9;padding:20px;height:120px;display:flex;align-items:center;justify-content:center;">
+        <svg width="72" height="72" viewBox="0 0 72 72" fill="none">
+          <circle cx="36" cy="36" r="36" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1"/>
+          <text text-anchor="middle" x="36" y="56" font-family="Black Han Sans,sans-serif" font-size="58" fill="url(#gL)">R</text>
+        </svg>
+      </div>
+      <div class="lbl-lt"><div class="name">PHOTO PROFIL LIGHT</div><div class="desc">Cercle · tous réseaux</div></div>
+    </div>
+
+  </div>
+
+  <!-- Print -->
+  <div style="font-size:10px;letter-spacing:4px;text-transform:uppercase;color:#374151;margin-bottom:16px">Print · Documents Officiels</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px">
+
+    <div class="card featured" style="grid-column:span 2">
+      <div style="background:#1A1A2E;padding:20px;height:160px;display:flex;align-items:center;justify-content:center;">
+        <div style="width:290px;height:128px;background:#06081A;border-radius:10px;border:1px solid rgba(255,255,255,0.07);padding:18px 22px;display:flex;justify-content:space-between;align-items:center;position:relative;overflow:hidden;">
+          <div style="position:absolute;bottom:0;left:0;right:0;height:4px;display:flex">
+            <div style="flex:1;background:#002395"></div>
+            <div style="flex:1;background:white;opacity:.8"></div>
+            <div style="flex:1;background:#ED2939"></div>
+          </div>
+          <div>
+            <div style="font-size:7px;color:rgba(255,255,255,0.2);letter-spacing:5px;margin-bottom:-2px">LE</div>
+            <svg width="110" height="30" viewBox="0 0 110 30" fill="none">
+              <text x="0" y="27" font-family="Black Han Sans,sans-serif" font-size="28" fill="url(#gDH)">RUSH</text>
+            </svg>
+          </div>
+          <div style="text-align:right">
+            <div style="font-size:10px;font-weight:600;color:white;margin-bottom:2px">Jean Dupont</div>
+            <div style="font-size:7px;color:rgba(255,255,255,0.35);line-height:1.7">CEO · La Fabrique Alimentaire<br>jean@lerush.fr · lerush.fr</div>
+          </div>
+        </div>
+      </div>
+      <div class="lbl-dk"><div class="name">CARTE DE VISITE DARK · 85 × 55mm</div><div class="desc">Bande tricolore en bas · recto</div></div>
+    </div>
+
+    <div class="card lt">
+      <div style="background:#F1F5F9;padding:20px;height:160px;display:flex;align-items:center;justify-content:center;">
+        <div style="width:140px;height:128px;background:#FFFFFF;border-radius:10px;border:1px solid #E5E7EB;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px">
+          <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
+            <text text-anchor="middle" x="32" y="50" font-family="Black Han Sans,sans-serif" font-size="54" fill="url(#gL)">R</text>
+          </svg>
+          <div style="display:flex;gap:2px">
+            <div style="width:16px;height:3px;border-radius:1.5px;background:#002395"></div>
+            <div style="width:16px;height:3px;border-radius:1.5px;background:#9CA3AF;opacity:.4"></div>
+            <div style="width:16px;height:3px;border-radius:1.5px;background:#ED2939"></div>
+          </div>
+        </div>
+      </div>
+      <div class="lbl-lt"><div class="name">VERSO LIGHT</div><div class="desc">R centré · fond blanc</div></div>
+    </div>
+
+    <div class="card">
+      <div style="background:#1A1A2E;padding:16px;height:160px;display:flex;align-items:center;justify-content:center;">
+        <svg width="96" height="96" viewBox="0 0 96 96" fill="none">
+          <circle cx="48" cy="48" r="44" fill="none" stroke="#002395" stroke-width="2.5" stroke-dasharray="4 2"/>
+          <circle cx="48" cy="48" r="38" fill="none" stroke="#002395" stroke-width="1.5"/>
+          <text text-anchor="middle" x="48" y="58" font-family="Black Han Sans,sans-serif" font-size="38" fill="#002395">RUSH</text>
+          <text text-anchor="middle" x="48" y="34" font-family="Poppins,sans-serif" font-size="7" font-weight="600" fill="#002395" letter-spacing="6">L E</text>
+          <text text-anchor="middle" x="48" y="72" font-family="Poppins,sans-serif" font-size="6" fill="#002395" letter-spacing="3">RESTAURANT OS</text>
+        </svg>
+      </div>
+      <div class="lbl-dk"><div class="name">TAMPON OFFICIEL</div><div class="desc">Monochrome bleu · cachet</div></div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ═══════════════════ 05. RÈGLES D'USAGE ═══════════════════ -->
+<div class="section">
+  <div class="sec-label">Section 05</div>
+  <div class="sec-title">Règles <span>d'Usage</span></div>
+
+  <div class="do-dont" style="margin-bottom:16px">
+
+    <div class="do-box">
+      <div class="do-header">✓ À FAIRE</div>
+      <div class="rule-body">
+        <strong>Fond sombre</strong> — Toujours utiliser le gradient Bleu→Blanc→Rouge sur fond #06081A ou #1A1744<br>
+        <strong>Fond blanc</strong> — RUSH solid navy ou gradient Bleu→Navy→Rouge<br>
+        <strong>Police unique</strong> — Black Han Sans exclusivement pour RUSH et R<br>
+        <strong>Proportions</strong> — Respecter les proportions du logo, ne jamais étirer<br>
+        <strong>Zone de protection</strong> — Laisser un espace = hauteur du R autour du logo<br>
+        <strong>Barres tricolores</strong> — Toujours dans l'ordre Bleu / Neutre / Rouge
+      </div>
+    </div>
+
+    <div class="dont-box">
+      <div class="dont-header">✗ À NE PAS FAIRE</div>
+      <div class="rule-body">
+        <strong>Gradient dark sur blanc</strong> — Le stop blanc du gradient devient invisible<br>
+        <strong>Changer les couleurs</strong> — Ne jamais modifier les HEX officiels<br>
+        <strong>Rotation du logo</strong> — Le logo ne se retourne pas, ne se penche pas<br>
+        <strong>Autre police</strong> — Aucune substitution de Black Han Sans<br>
+        <strong>Fond coloré</strong> — Pas de logo sur fond couleur autre que les fonds officiels<br>
+        <strong>Gradient horizontal sur logo</strong> — Toujours vertical pour le texte RUSH
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Tailles minimales -->
+  <div style="background:#0D0E18;border-radius:12px;border:1px solid rgba(255,255,255,0.06);padding:24px;margin-bottom:16px">
+    <div style="font-size:9px;letter-spacing:4px;text-transform:uppercase;color:#374151;margin-bottom:20px">Tailles minimales</div>
+    <div style="display:flex;gap:40px;align-items:flex-end;flex-wrap:wrap">
+      <div style="text-align:center">
+        <svg width="80" height="28" viewBox="0 0 80 28" fill="none" style="display:block;margin:0 auto 8px">
+          <text x="0" y="25" font-family="Black Han Sans,sans-serif" font-size="25" fill="url(#gD)">RUSH</text>
+        </svg>
+        <div style="font-size:9px;color:#4B5563">Logo complet<br>min. 80px largeur</div>
+      </div>
+      <div style="text-align:center">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" style="display:block;margin:0 auto 8px">
+          <rect width="32" height="32" rx="7" fill="#06081A"/>
+          <text text-anchor="middle" x="16" y="25" font-family="Black Han Sans,sans-serif" font-size="26" fill="url(#gD)">R</text>
+        </svg>
+        <div style="font-size:9px;color:#4B5563">Icône R<br>min. 32px</div>
+      </div>
+      <div style="text-align:center">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="display:block;margin:0 auto 8px">
+          <rect width="16" height="16" rx="3" fill="#1A1744"/>
+          <text text-anchor="middle" x="8" y="12" font-family="Black Han Sans,sans-serif" font-size="13" fill="url(#gD)">R</text>
+        </svg>
+        <div style="font-size:9px;color:#4B5563">Favicon<br>min. 16px</div>
+      </div>
+      <div style="margin-left:auto;display:flex;flex-direction:column;gap:8px">
+        <div class="badge badge-ok">Contraste 4.5:1 minimum</div>
+        <div class="badge badge-ok">Zone de protection = 1× hauteur R</div>
+        <div class="badge badge-warn">Logo complet déconseillé sous 60px</div>
+        <div class="badge badge-no">Ne jamais déformer les proportions</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Signature email code -->
+  <div style="font-size:10px;letter-spacing:4px;text-transform:uppercase;color:#374151;margin-bottom:12px">Template Signature Email (HTML)</div>
+  <div class="code-block">
+    <button class="copy-btn" onclick="copyCode(this)">Copier</button>
+    <pre>&lt;table cellpadding="0" cellspacing="0" border="0" style="font-family:'Poppins',Arial,sans-serif"&gt;
+  &lt;tr&gt;
+    &lt;td style="border-left:3px solid #002395;padding-left:14px"&gt;
+      &lt;table cellpadding="0" cellspacing="0" border="0"&gt;
+        &lt;tr&gt;
+          &lt;td style="padding-bottom:6px"&gt;
+            &lt;!-- Logo inline SVG -- utilisez une image hébergée en production --&gt;
+            &lt;span style="font-family:'Black Han Sans',sans-serif;font-size:16px;color:#06081A"&gt;LE RUSH&lt;/span&gt;
+            &lt;span style="font-size:9px;color:#9CA3AF;letter-spacing:3px;margin-left:6px"&gt;RESTAURANT OS&lt;/span&gt;
+          &lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td style="font-size:13px;font-weight:600;color:#111827"&gt;Prénom Nom&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td style="font-size:11px;color:#6B7280;line-height:1.6"&gt;
+            Poste · SAS La Fabrique Alimentaire&lt;br&gt;
+            &lt;a href="mailto:prenom@lerush.fr" style="color:#002395"&gt;prenom@lerush.fr&lt;/a&gt; · lerush.fr
+          &lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/table&gt;
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;</pre>
+  </div>
+</div>
+
+
+<!-- ═══════════════════ 06. TOKENS CSS ═══════════════════ -->
+<div class="section">
+  <div class="sec-label">Section 06</div>
+  <div class="sec-title">Design <span>Tokens</span></div>
+
+  <div style="margin-bottom:12px;font-size:12px;color:#6B7280">Fichier disponible : <span style="font-family:monospace;color:#9CA3AF">brand-kit/tokens.css</span> — importez directement dans votre projet.</div>
+  <div class="code-block">
+    <button class="copy-btn" onclick="copyCode(this)">Copier</button>
+    <pre>:root {
+  /* Couleurs primaires */
+  --rush-bleu:   #002395;
+  --rush-blanc:  #FFFFFF;
+  --rush-rouge:  #ED2939;
+
+  /* Fonds */
+  --rush-bg-dark:   #06081A;
+  --rush-bg-navy:   #1A1744;
+  --rush-bg-light:  #FFFFFF;
+  --rush-bg-subtle: #F1F5F9;
+
+  /* Gradients */
+  --rush-gradient-dark:    linear-gradient(180deg, #002395 0%, #FFFFFF 48%, #ED2939 100%);
+  --rush-gradient-dark-h:  linear-gradient(90deg,  #002395 0%, #FFFFFF 48%, #ED2939 100%);
+  --rush-gradient-light:   linear-gradient(180deg, #002395 0%, #1A1744 50%, #ED2939 100%);
+  --rush-gradient-light-h: linear-gradient(90deg,  #002395 0%, #1A1744 50%, #ED2939 100%);
+
+  /* Typographie */
+  --rush-font-display: 'Black Han Sans', sans-serif;
+  --rush-font-body:    'Poppins', sans-serif;
+
+  /* Spacing 8pt */
+  --rush-space-1: 4px;  --rush-space-2: 8px;   --rush-space-3: 12px;
+  --rush-space-4: 16px; --rush-space-6: 24px;  --rush-space-8: 32px;
+  --rush-space-10: 40px; --rush-space-12: 48px; --rush-space-16: 64px;
+
+  /* Border radius */
+  --rush-radius-sm: 6px; --rush-radius-md: 10px;
+  --rush-radius-lg: 14px; --rush-radius-xl: 24px;
+}</pre>
+  </div>
+</div>
+
+</div><!-- /page -->
+
+
+<!-- ─── FOOTER ─── -->
+<div style="background:#0A0B14;border-top:1px solid rgba(255,255,255,0.04);padding:24px 40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-top:80px">
+  <div>
+    <div style="font-size:9px;color:#374151;letter-spacing:4px;text-transform:uppercase;margin-bottom:4px">Le Rush · SAS La Fabrique Alimentaire</div>
+    <div style="font-size:11px;color:#4B5563">Brand Kit Officiel · Version 1.0 · 2026 · Confidentiel</div>
+  </div>
+  <div style="display:flex;gap:24px;align-items:center">
+    <svg width="100" height="26" viewBox="0 0 100 26" fill="none">
+      <text x="0" y="23" font-family="Black Han Sans,sans-serif" font-size="23" fill="url(#gDH)">RUSH</text>
+    </svg>
+    <svg width="100" height="26" viewBox="0 0 100 26" fill="none">
+      <text x="0" y="23" font-family="Black Han Sans,sans-serif" font-size="23" fill="#06081A">RUSH</text>
+    </svg>
+  </div>
+</div>
+
+<script>
+function copyCode(btn) {
+  const pre = btn.closest('.code-block').querySelector('pre');
+  const text = pre.textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = 'Copié !';
+    btn.style.color = '#10B981';
+    btn.style.borderColor = 'rgba(16,185,129,0.3)';
+    setTimeout(() => {
+      btn.textContent = orig;
+      btn.style.color = '';
+      btn.style.borderColor = '';
+    }, 2000);
+  });
+}
+</script>
+</body>
+</html>

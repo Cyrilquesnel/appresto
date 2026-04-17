@@ -17,6 +17,22 @@
     {
       "path": "/api/cron/beta-report",
       "schedule": "0 7 * * *"
+    },
+    {
+      "path": "/api/cron/google-maps-scrape",
+      "schedule": "0 2 * * 1"
+    },
+    {
+      "path": "/api/cron/whatsapp-outreach",
+      "schedule": "0 9 * * 1-5"
+    },
+    {
+      "path": "/api/cron/nurturing-sender",
+      "schedule": "0 10 * * 1-5"
+    },
+    {
+      "path": "/api/cron/prospection-report",
+      "schedule": "0 7 * * 1"
     }
   ],
   "headers": [
@@ -73,6 +89,15 @@
         {
           "key": "Cache-Control",
           "value": "public, max-age=86400"
+        }
+      ]
+    },
+    {
+      "source": "/.well-known/assetlinks.json",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/json"
         }
       ]
     }

@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Le Rush — V3 Direction Finale</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Black+Han+Sans&family=Oswald:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy:  #1A1744;
+    --vp:    #7C3AED;
+    --vl:    #A855F7;
+    --sal:   #F97316;
+    --salp:  #FB923C;
+    --fr-b:  #002395;
+    --fr-w:  #FFFFFF;
+    --fr-r:  #ED2939;
+    --bg:    #0D0B1A;
+  }
+  body {
+    background: var(--bg);
+    font-family: 'Poppins', sans-serif;
+    padding: 60px 20px;
+    color: white;
+  }
+  .header {
+    text-align: center;
+    margin-bottom: 72px;
+  }
+  .header h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 44px;
+    letter-spacing: 2px;
+    color: white;
+    margin-bottom: 8px;
+  }
+  .header h1 span { color: var(--sal); }
+  .header p { font-size: 12px; color: #4B5563; letter-spacing: 3px; text-transform: uppercase; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(440px, 1fr));
+    gap: 24px;
+    max-width: 1360px;
+    margin: 0 auto;
+  }
+  .card {
+    border-radius: 18px;
+    overflow: hidden;
+    background: #13101F;
+    border: 1px solid rgba(255,255,255,0.06);
+    transition: transform 180ms ease, border-color 180ms ease;
+    cursor: pointer;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(124,58,237,.45);
+  }
+  .stage {
+    height: 260px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+  .info {
+    padding: 20px 24px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+  .num { font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--sal); margin-bottom: 3px; }
+  .title { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 20px; color: white; margin-bottom: 4px; letter-spacing: .5px; }
+  .desc { font-size: 12px; color: #6B7280; line-height: 1.65; }
+  .tags { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 10px; }
+  .tag { font-size: 10px; font-weight: 700; padding: 2px 9px; border-radius: 20px; }
+  .tv { background:rgba(124,58,237,.2); color:#A78BFA; }
+  .to { background:rgba(249,115,22,.18); color:#FDBA74; }
+  .tf { background:rgba(0,35,149,.3); color:#93C5FD; }
+  .tr { background:rgba(237,41,57,.2); color:#FCA5A5; }
+  .tw { background:rgba(255,255,255,.1); color:white; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>LE <span>RUSH</span> — V3 DIRECTION FINALE</h1>
+  <p>Typo Navy · Gradient R + Fork · Tricolore FR</p>
+</div>
+
+<div class="grid">
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- 01 · LOCK-UP CLASSIQUE — R+Fork icon | RUSH wordmark  -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="card">
+  <div class="stage" style="background:#0D0B1A;">
+    <svg width="380" height="180" viewBox="0 0 380 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="gr01" x1="0.1" y1="0" x2="0.9" y2="1">
+          <stop offset="0%" stop-color="#A855F7"/>
+          <stop offset="100%" stop-color="#FB923C"/>
+        </linearGradient>
+      </defs>
+      <!-- R GRADIENT -->
+      <text x="14" y="138" font-family="Black Han Sans, sans-serif" font-size="130" fill="url(#gr01)">R</text>
+      <!-- FORK outline à droite du R (dark navy) -->
+      <line x1="114" y1="22" x2="114" y2="68" stroke="#2D2A6E" stroke-width="3.5" stroke-linecap="round"/>
+      <line x1="123" y1="20" x2="123" y2="70" stroke="#2D2A6E" stroke-width="4" stroke-linecap="round"/>
+      <line x1="132" y1="20" x2="132" y2="70" stroke="#2D2A6E" stroke-width="4" stroke-linecap="round"/>
+      <line x1="141" y1="22" x2="141" y2="68" stroke="#2D2A6E" stroke-width="3.5" stroke-linecap="round"/>
+      <path d="M113 70 Q127 78 143 70" stroke="#2D2A6E" stroke-width="3" stroke-linecap="round" fill="none"/>
+      <path d="M127 78 L127 148" stroke="#2D2A6E" stroke-width="4.5" stroke-linecap="round"/>
+      <!-- Séparateur vertical -->
+      <line x1="158" y1="28" x2="158" y2="148" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+      <!-- RUSH wordmark -->
+      <text x="170" y="132" font-family="Black Han Sans, sans-serif" font-size="98" fill="#1A1744">RUSH</text>
+      <!-- LE petit au-dessus -->
+      <text x="172" y="34" font-family="Poppins, sans-serif" font-weight="300" font-size="11" fill="rgba(255,255,255,0.35)" letter-spacing="12">L  E</text>
+      <!-- TRICOLORE sous RUSH -->
+      <rect x="170" y="148" width="57" height="5" rx="2.5" fill="#002395"/>
+      <rect x="230" y="148" width="57" height="5" rx="2.5" fill="white" opacity="0.85"/>
+      <rect x="290" y="148" width="57" height="5" rx="2.5" fill="#ED2939"/>
+    </svg>
+  </div>
+  <div class="info">
+    <div class="num">Variante 01</div>
+    <div class="title">LOCK-UP CLASSIQUE — Icon + Wordmark</div>
+    <div class="desc">R gradient violet→orange + fork navy à droite en icône, "RUSH" Black Han Sans navy à côté. Tricolore pleine largeur en dessous du texte. Composition horizontale propre.</div>
+    <div class="tags"><span class="tag tv">R Gradient</span><span class="tag tw">Fork Navy</span><span class="tag tf">Tricolore</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- 02 · RUSH COMPLET — Le R est gradient, U-S-H navy    -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="card">
+  <div class="stage" style="background:#F8F8FF;">
+    <svg width="380" height="180" viewBox="0 0 380 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="gr02" x1="0.1" y1="0" x2="0.9" y2="1">
+          <stop offset="0%" stop-color="#A855F7"/>
+          <stop offset="100%" stop-color="#FB923C"/>
+        </linearGradient>
+      </defs>
+      <!-- RUSH — R en gradient, USH en navy -->
+      <text x="12" y="130" font-family="Black Han Sans, sans-serif" font-size="120" fill="url(#gr02)">R</text>
+      <text x="100" y="130" font-family="Black Han Sans, sans-serif" font-size="120" fill="#1A1744">USH</text>
+      <!-- LE minuscule -->
+      <text x="14" y="26" font-family="Poppins, sans-serif" font-weight="300" font-size="12" fill="#9CA3AF" letter-spacing="10">L E</text>
+      <!-- Fork outline petite, alignée avec le R, après le H -->
+      <line x1="340" y1="38" x2="340" y2="68" stroke="#1A1744" stroke-width="2.5" stroke-linecap="round" opacity="0.5"/>
+      <line x1="348" y1="36" x2="348" y2="70" stroke="#1A1744" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+      <line x1="356" y1="36" x2="356" y2="70" stroke="#1A1744" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+      <line x1="364" y1="38" x2="364" y2="68" stroke="#1A1744" stroke-width="2.5" stroke-linecap="round" opacity="0.5"/>
+      <path d="M338 70 Q352 77 366 70" stroke="#1A1744" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.5"/>
+      <path d="M352 77 L352 130" stroke="#1A1744" stroke-width="3.5" stroke-linecap="round" opacity="0.5"/>
+      <!-- TRICOLORE sous RUSH pleine largeur -->
+      <rect x="12" y="144" width="105" height="5" rx="2.5" fill="#002395"/>
+      <rect x="122" y="144" width="105" height="5" rx="2.5" fill="#9CA3AF"/>
+      <rect x="232" y="144" width="105" height="5" rx="2.5" fill="#ED2939"/>
+      <!-- RESTAURANT OS -->
+      <text x="12" y="165" font-family="Poppins, sans-serif" font-weight="400" font-size="9" fill="#9CA3AF" letter-spacing="5">RESTAURANT  OS</text>
+    </svg>
+  </div>
+  <div class="info">
+    <div class="num">Variante 02</div>
+    <div class="title">RUSH BICOLOR — R Gradient + USH Navy (Light)</div>
+    <div class="desc">Le mot "RUSH" où seul le R est en gradient violet→orange, USH reste en navy. Fork en filigrane après le H. Version fond blanc, tricolore en pleine largeur. Très pro pour print.</div>
+    <div class="tags"><span class="tag tv">R Gradient</span><span class="tag tw">Light</span><span class="tag tf">Tricolore</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- 03 · STACKED ICON — R+Fork grand, RUSH dessous       -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="card">
+  <div class="stage" style="background:#0D0B1A;">
+    <svg width="380" height="240" viewBox="0 0 380 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="gr03" x1="0.1" y1="0" x2="0.9" y2="1">
+          <stop offset="0%" stop-color="#A855F7"/>
+          <stop offset="100%" stop-color="#FB923C"/>
+        </linearGradient>
+      </defs>
+      <!-- R gradient centré -->
+      <text x="100" y="148" font-family="Black Han Sans, sans-serif" font-size="138" fill="url(#gr03)">R</text>
+      <!-- Fork navy à droite du R -->
+      <line x1="218" y1="24" x2="218" y2="78" stroke="#2A2770" stroke-width="3.5" stroke-linecap="round"/>
+      <line x1="229" y1="21" x2="229" y2="81" stroke="#2A2770" stroke-width="4.5" stroke-linecap="round"/>
+      <line x1="240" y1="21" x2="240" y2="81" stroke="#2A2770" stroke-width="4.5" stroke-linecap="round"/>
+      <line x1="251" y1="24" x2="251" y2="78" stroke="#2A2770" stroke-width="3.5" stroke-linecap="round"/>
+      <path d="M216 80 Q234 90 253 80" stroke="#2A2770" stroke-width="3" stroke-linecap="round" fill="none"/>
+      <path d="M234 90 L234 148" stroke="#2A2770" stroke-width="5" stroke-linecap="round"/>
+      <!-- Séparateur horizontal -->
+      <line x1="60" y1="158" x2="320" y2="158" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+      <!-- RUSH dessous centré -->
+      <text x="190" y="210" font-family="Black Han Sans, sans-serif" font-size="72" fill="#1A1744" text-anchor="middle" letter-spacing="-1">RUSH</text>
+      <!-- LE au-dessus -->
+      <text x="190" y="8" font-family="Poppins, sans-serif" font-weight="300" font-size="11" fill="rgba(255,255,255,0.3)" letter-spacing="14" text-anchor="middle">L  E</text>
+      <!-- TRICOLORE sous RUSH centré -->
+      <rect x="80" y="220" width="43" height="5" rx="2.5" fill="#002395"/>
+      <rect x="127" y="220" width="43" height="5" rx="2.5" fill="white" opacity="0.8"/>
+      <rect x="174" y="220" width="43" height="5" rx="2.5" fill="#ED2939"/>
+    </svg>
+  </div>
+  <div class="info">
+    <div class="num">Variante 03</div>
+    <div class="title">STACKED ICON — R+Fork Haut, RUSH Bas</div>
+    <div class="desc">Composition verticale : R gradient grand + fork navy en haut, "RUSH" navy en dessous. Tricolore sous le wordmark. Format carré idéal maillot centre poitrine / app icon / cap.</div>
+    <div class="tags"><span class="tag tv">Stacked</span><span class="tag to">App Icon</span><span class="tag tf">Maillot</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- 04 · RUSH PLEIN FOND NAVY — Gradient R, tricolore    -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="card">
+  <div class="stage" style="background:#1A1744;">
+    <svg width="380" height="200" viewBox="0 0 380 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="gr04" x1="0.1" y1="0" x2="0.9" y2="1">
+          <stop offset="0%" stop-color="#C084FC"/>
+          <stop offset="100%" stop-color="#FDBA74"/>
+        </linearGradient>
+      </defs>
+      <!-- RUSH entier -->
+      <text x="14" y="148" font-family="Black Han Sans, sans-serif" font-size="128" fill="white">RUSH</text>
+      <!-- R en gradient par-dessus -->
+      <text x="14" y="148" font-family="Black Han Sans, sans-serif" font-size="128" fill="url(#gr04)">R</text>
+      <!-- Fork fine blanche à droite -->
+      <line x1="342" y1="30" x2="342" y2="72" stroke="rgba(255,255,255,0.5)" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="351" y1="27" x2="351" y2="74" stroke="rgba(255,255,255,0.65)" stroke-width="3.5" stroke-linecap="round"/>
+      <line x1="360" y1="27" x2="360" y2="74" stroke="rgba(255,255,255,0.65)" stroke-width="3.5" stroke-linecap="round"/>
+      <line x1="369" y1="30" x2="369" y2="72" stroke="rgba(255,255,255,0.5)" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M340 74 Q355 82 371 74" stroke="rgba(255,255,255,0.5)" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+      <path d="M355 82 L355 148" stroke="rgba(255,255,255,0.5)" stroke-width="4" stroke-linecap="round"/>
+      <!-- LE -->
+      <text x="16" y="30" font-family="Poppins, sans-serif" font-weight="300" font-size="12" fill="rgba(255,255,255,0.5)" letter-spacing="12">L E</text>
+      <!-- TRICOLORE pleine largeur sous texte -->
+      <rect x="14" y="160" width="114" height="6" rx="3" fill="#002395"/>
+      <rect x="132" y="160" width="114" height="6" rx="3" fill="white" opacity="0.9"/>
+      <rect x="250" y="160" width="114" height="6" rx="3" fill="#ED2939"/>
+    </svg>
+  </div>
+  <div class="info">
+    <div class="num">Variante 04</div>
+    <div class="title">RUSH SUR NAVY — Tricolore Pleine Largeur</div>
+    <div class="desc">Fond navy, "RUSH" blanc avec le R en gradient, fork blanche semi-transparente. Barre tricolore pleine largeur exactement comme image 2. Très lisible sur textile dark.</div>
+    <div class="tags"><span class="tag tw">Navy BG</span><span class="tag tv">R Gradient</span><span class="tag tf">Tricolore Large</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- 05 · R + FORK ICON SEUL — Version monogramme         -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="card">
+  <div class="stage" style="background:#0D0B1A;">
+    <svg width="260" height="220" viewBox="0 0 260 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="gr05" x1="0.1" y1="0" x2="0.85" y2="1">
+          <stop offset="0%" stop-color="#A855F7"/>
+          <stop offset="100%" stop-color="#FB923C"/>
+        </linearGradient>
+      </defs>
+      <!-- R gradient large -->
+      <text x="12" y="178" font-family="Black Han Sans, sans-serif" font-size="170" fill="url(#gr05)">R</text>
+      <!-- Fork navy — plus grande, bien visible, à droite -->
+      <line x1="168" y1="24" x2="168" y2="86" stroke="#2D2A6E" stroke-width="4" stroke-linecap="round"/>
+      <line x1="180" y1="20" x2="180" y2="90" stroke="#2D2A6E" stroke-width="5.5" stroke-linecap="round"/>
+      <line x1="192" y1="20" x2="192" y2="90" stroke="#2D2A6E" stroke-width="5.5" stroke-linecap="round"/>
+      <line x1="204" y1="24" x2="204" y2="86" stroke="#2D2A6E" stroke-width="4" stroke-linecap="round"/>
+      <path d="M166 90 Q186 102 206 90" stroke="#2D2A6E" stroke-width="4" stroke-linecap="round" fill="none"/>
+      <path d="M186 102 L186 178" stroke="#2D2A6E" stroke-width="6.5" stroke-linecap="round"/>
+      <!-- Handle fin -->
+      <path d="M182 175 Q186 184 190 175" stroke="#2D2A6E" stroke-width="4" stroke-linecap="round" fill="none"/>
+      <!-- Tricolore sous l'ensemble -->
+      <rect x="12" y="190" width="55" height="5" rx="2.5" fill="#002395"/>
+      <rect x="71" y="190" width="55" height="5" rx="2.5" fill="white" opacity="0.75"/>
+      <rect x="130" y="190" width="55" height="5" rx="2.5" fill="#ED2939"/>
+    </svg>
+  </div>
+  <div class="info">
+    <div class="num">Variante 05</div>
+    <div class="title">R + FORK — Monogramme Solo</div>
+    <div class="desc">Le monogramme pur : grand R gradient avec fork navy solide à droite. Tricolore en signature dessous. Version icon standalone pour favicon, app, broderie centre, bouton de chemise.</div>
+    <div class="tags"><span class="tag tv">Monogramme</span><span class="tag to">Favicon</span><span class="tag tf">FR Signature</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- 06 · LE / RUSH EMPILÉ — Typo imposante               -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="card">
+  <div class="stage" style="background:#F5F4FF;">
+    <svg width="380" height="200" viewBox="0 0 380 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="gr06" x1="0.1" y1="0" x2="0.9" y2="1">
+          <stop offset="0%" stop-color="#A855F7"/>
+          <stop offset="100%" stop-color="#FB923C"/>
+        </linearGradient>
+      </defs>
+      <!-- LE ligne fine -->
+      <text x="16" y="52" font-family="Barlow Condensed, sans-serif" font-weight="700" font-size="40" fill="#9CA3AF" letter-spacing="20">LE</text>
+      <!-- Séparateur -->
+      <line x1="14" y1="60" x2="366" y2="60" stroke="#E5E7EB" stroke-width="1.5"/>
+      <!-- RUSH massif -->
+      <text x="10" y="152" font-family="Black Han Sans, sans-serif" font-size="116" fill="#1A1744">RUSH</text>
+      <!-- R seul en gradient par-dessus -->
+      <text x="10" y="152" font-family="Black Han Sans, sans-serif" font-size="116" fill="url(#gr06)">R</text>
+      <!-- Fork outline légère côté droit, alignée entre LE et RUSH -->
+      <line x1="330" y1="24" x2="330" y2="56" stroke="#D1D5DB" stroke-width="2" stroke-linecap="round"/>
+      <line x1="338" y1="22" x2="338" y2="57" stroke="#D1D5DB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="346" y1="22" x2="346" y2="57" stroke="#D1D5DB" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="354" y1="24" x2="354" y2="56" stroke="#D1D5DB" stroke-width="2" stroke-linecap="round"/>
+      <path d="M328 57 Q342 64 356 57" stroke="#D1D5DB" stroke-width="2" stroke-linecap="round" fill="none"/>
+      <path d="M342 64 L342 90" stroke="#D1D5DB" stroke-width="3" stroke-linecap="round"/>
+      <!-- Tricolore sous RUSH -->
+      <rect x="10" y="163" width="114" height="6" rx="3" fill="#002395"/>
+      <rect x="128" y="163" width="114" height="6" rx="3" fill="#9CA3AF"/>
+      <rect x="246" y="163" width="114" height="6" rx="3" fill="#ED2939"/>
+      <!-- RESTAURANT OS -->
+      <text x="10" y="186" font-family="Poppins, sans-serif" font-weight="400" font-size="9" fill="#9CA3AF" letter-spacing="5">RESTAURANT  OPERATING  SYSTEM</text>
+    </svg>
+  </div>
+  <div class="info">
+    <div class="num">Variante 06</div>
+    <div class="title">LE / RUSH EMPILÉ — Light Version Premium</div>
+    <div class="desc">Version light : "LE" fin au-dessus de la ligne, "RUSH" géant navy en dessous avec R gradient. Fork en watermark léger. Tricolore exact comme image 2. Version cartes de visite premium.</div>
+    <div class="tags"><span class="tag tw">Light</span><span class="tag tv">R Gradient</span><span class="tag tf">Tricolore</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- 07 · RUSH DÉSTRUCTURÉ — Fork intégrée dans le H      -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="card">
+  <div class="stage" style="background:#0D0B1A;">
+    <svg width="380" height="200" viewBox="0 0 380 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="gr07r" x1="0.1" y1="0" x2="0.9" y2="1">
+          <stop offset="0%" stop-color="#A855F7"/>
+          <stop offset="100%" stop-color="#FB923C"/>
+        </linearGradient>
+        <linearGradient id="gr07fork" x1="0.5" y1="0" x2="0.5" y2="1">
+          <stop offset="0%" stop-color="#A855F7" stop-opacity="0.7"/>
+          <stop offset="100%" stop-color="#FB923C" stop-opacity="0.7"/>
+        </linearGradient>
+      </defs>
+      <!-- R gradient -->
+      <text x="10" y="148" font-family="Black Han Sans, sans-serif" font-size="120" fill="url(#gr07r)">R</text>
+      <!-- USH navy -->
+      <text x="96" y="148" font-family="Black Han Sans, sans-serif" font-size="120" fill="#1A1744">US</text>
+      <!-- H remplacé par une fork géante dessinée dans la forme du H -->
+      <!-- Jambe gauche H = tine x3 -->
+      <line x1="278" y1="28" x2="278" y2="148" stroke="#1A1744" stroke-width="22" stroke-linecap="square"/>
+      <!-- Jambe droite H -->
+      <line x1="348" y1="28" x2="348" y2="148" stroke="#1A1744" stroke-width="22" stroke-linecap="square"/>
+      <!-- Traverse H = épaule de fourchette -->
+      <line x1="267" y1="90" x2="359" y2="90" stroke="#1A1744" stroke-width="22" stroke-linecap="square"/>
+      <!-- Tines de fourchette en gradient par dessus le haut du H -->
+      <line x1="278" y1="28" x2="278" y2="72" stroke="url(#gr07fork)" stroke-width="10" stroke-linecap="round"/>
+      <line x1="296" y1="20" x2="296" y2="72" stroke="url(#gr07fork)" stroke-width="10" stroke-linecap="round"/>
+      <line x1="314" y1="20" x2="314" y2="72" stroke="url(#gr07fork)" stroke-width="10" stroke-linecap="round"/>
+      <line x1="332" y1="20" x2="332" y2="72" stroke="url(#gr07fork)" stroke-width="10" stroke-linecap="round"/>
+      <line x1="348" y1="28" x2="348" y2="72" stroke="url(#gr07fork)" stroke-width="10" stroke-linecap="round"/>
+      <!-- Shoulder de la fork -->
+      <path d="M270 72 Q313 82 356 72" stroke="url(#gr07fork)" stroke-width="6" stroke-linecap="round" fill="none"/>
+      <!-- LE -->
+      <text x="12" y="28" font-family="Poppins, sans-serif" font-weight="300" font-size="12" fill="rgba(255,255,255,0.3)" letter-spacing="12">L E</text>
+      <!-- Tricolore -->
+      <rect x="10" y="158" width="113" height="5" rx="2.5" fill="#002395"/>
+      <rect x="126" y="158" width="113" height="5" rx="2.5" fill="white" opacity="0.8"/>
+      <rect x="242" y="158" width="113" height="5" rx="2.5" fill="#ED2939"/>
+    </svg>
+  </div>
+  <div class="info">
+    <div class="num">Variante 07</div>
+    <div class="title">H = FOURCHETTE — RUSH Déstructuré</div>
+    <div class="desc">Le "H" de RUSH est transformé en fourchette : ses barres verticales deviennent les dents, le traverse devient l'épaule. Concept audacieux, signature unique. Immédiatement reconnaissable.</div>
+    <div class="tags"><span class="tag tv">Fork dans H</span><span class="tag to">Concept Fort</span><span class="tag tf">Tricolore</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- 08 · RUSH FRANCE — Bleu fond, blanc rouge fort       -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="card">
+  <div class="stage" style="background:#002395;">
+    <svg width="380" height="200" viewBox="0 0 380 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="gr08" x1="0.1" y1="0" x2="0.9" y2="1">
+          <stop offset="0%" stop-color="#E9D5FF"/>
+          <stop offset="100%" stop-color="#FDBA74"/>
+        </linearGradient>
+      </defs>
+      <!-- R gradient (clair sur bleu) -->
+      <text x="10" y="148" font-family="Black Han Sans, sans-serif" font-size="120" fill="url(#gr08)">R</text>
+      <!-- USH blanc -->
+      <text x="96" y="148" font-family="Black Han Sans, sans-serif" font-size="120" fill="white">USH</text>
+      <!-- Fork rouge France à droite -->
+      <line x1="340" y1="28" x2="340" y2="72" stroke="#ED2939" stroke-width="3" stroke-linecap="round"/>
+      <line x1="350" y1="25" x2="350" y2="75" stroke="#ED2939" stroke-width="4" stroke-linecap="round"/>
+      <line x1="360" y1="25" x2="360" y2="75" stroke="#ED2939" stroke-width="4" stroke-linecap="round"/>
+      <line x1="370" y1="28" x2="370" y2="72" stroke="#ED2939" stroke-width="3" stroke-linecap="round"/>
+      <path d="M338 75 Q355 83 372 75" stroke="#ED2939" stroke-width="3" stroke-linecap="round" fill="none"/>
+      <path d="M355 83 L355 148" stroke="#ED2939" stroke-width="4.5" stroke-linecap="round"/>
+      <!-- LE -->
+      <text x="12" y="28" font-family="Poppins, sans-serif" font-weight="300" font-size="12" fill="rgba(255,255,255,0.5)" letter-spacing="12">L E</text>
+      <!-- Tricolore blanc sur bleu = ligne blanche + rouge -->
+      <rect x="10" y="160" width="170" height="6" rx="3" fill="white" opacity="0.9"/>
+      <rect x="184" y="160" width="170" height="6" rx="3" fill="#ED2939"/>
+      <!-- Tagline -->
+      <text x="10" y="182" font-family="Poppins, sans-serif" font-weight="400" font-size="9" fill="rgba(255,255,255,0.45)" letter-spacing="5">RESTAURANT  OPERATING  SYSTEM</text>
+    </svg>
+  </div>
+  <div class="info">
+    <div class="num">Variante 08</div>
+    <div class="title">RUSH FRANCE — Fond Bleu · Fork Rouge · RUSH Blanc</div>
+    <div class="desc">Le fond est Bleu France, "RUSH" blanc avec R gradient lilas, fork en rouge France. Tricolore naturel sans forcer. Version la plus française, idéale pour les événements sportifs, maillots extérieur.</div>
+    <div class="tags"><span class="tag tf">Bleu France BG</span><span class="tag tr">Fork Rouge</span><span class="tag tw">RUSH Blanc</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- 09 · RUSH CONDENSÉ + FORK GRAND FORMAT               -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="card">
+  <div class="stage" style="background:#0D0B1A;">
+    <svg width="380" height="200" viewBox="0 0 380 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="gr09" x1="0.1" y1="0" x2="0.9" y2="1">
+          <stop offset="0%" stop-color="#A855F7"/>
+          <stop offset="100%" stop-color="#FB923C"/>
+        </linearGradient>
+        <linearGradient id="gr09fork" x1="0.5" y1="0" x2="0.5" y2="1">
+          <stop offset="0%" stop-color="#7C3AED"/>
+          <stop offset="100%" stop-color="#F97316"/>
+        </linearGradient>
+      </defs>
+      <!-- FORK grande à gauche — toute la hauteur -->
+      <line x1="30" y1="10" x2="30" y2="68" stroke="url(#gr09fork)" stroke-width="3.5" stroke-linecap="round"/>
+      <line x1="44" y1="6" x2="44" y2="72" stroke="url(#gr09fork)" stroke-width="5" stroke-linecap="round"/>
+      <line x1="58" y1="6" x2="58" y2="72" stroke="url(#gr09fork)" stroke-width="5" stroke-linecap="round"/>
+      <line x1="72" y1="10" x2="72" y2="68" stroke="url(#gr09fork)" stroke-width="3.5" stroke-linecap="round"/>
+      <path d="M28 72 Q51 84 74 72" stroke="url(#gr09fork)" stroke-width="4" stroke-linecap="round" fill="none"/>
+      <path d="M51 84 L51 186" stroke="url(#gr09fork)" stroke-width="6" stroke-linecap="round"/>
+      <path d="M46 182 Q51 192 56 182" stroke="url(#gr09fork)" stroke-width="4" stroke-linecap="round" fill="none"/>
+      <!-- Séparateur vertical -->
+      <line x1="90" y1="10" x2="90" y2="190" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+      <!-- LE + RUSH empilé à droite -->
+      <text x="100" y="48" font-family="Poppins, sans-serif" font-weight="300" font-size="13" fill="rgba(255,255,255,0.3)" letter-spacing="16">L  E</text>
+      <text x="96" y="148" font-family="Black Han Sans, sans-serif" font-size="120" fill="#1A1744">RUSH</text>
+      <text x="96" y="148" font-family="Black Han Sans, sans-serif" font-size="120" fill="url(#gr09)">R</text>
+      <!-- Tricolore sous RUSH -->
+      <rect x="96" y="157" width="84" height="5" rx="2.5" fill="#002395"/>
+      <rect x="183" y="157" width="84" height="5" rx="2.5" fill="white" opacity="0.7"/>
+      <rect x="270" y="157" width="84" height="5" rx="2.5" fill="#ED2939"/>
+      <!-- Tagline -->
+      <text x="96" y="178" font-family="Poppins, sans-serif" font-weight="400" font-size="9" fill="#4B5563" letter-spacing="4">RESTAURANT  OS</text>
+    </svg>
+  </div>
+  <div class="info">
+    <div class="num">Variante 09</div>
+    <div class="title">FORK PLEINE HAUTEUR + RUSH À DROITE</div>
+    <div class="desc">La fourchette gradient occupe toute la hauteur à gauche comme un élément fort, "RUSH" navy + R gradient à droite. Version la plus proche de la référence image 3. Tricolore signature.</div>
+    <div class="tags"><span class="tag tv">Fork Gradient</span><span class="tag tw">Pleine Hauteur</span><span class="tag tf">Tricolore</span></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- 10 · VERSION FINALE SYNTHÈSE — Les 3 images en 1     -->
+<!-- ══════════════════════════════════════════════════════ -->
+<div class="card" style="border-color:rgba(168,85,247,.4);">
+  <div class="stage" style="background:linear-gradient(160deg,#0F0C22 0%,#150B1A 100%);">
+    <svg width="380" height="200" viewBox="0 0 380 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="gr10R" x1="0.1" y1="0" x2="0.85" y2="1">
+          <stop offset="0%" stop-color="#A855F7"/>
+          <stop offset="100%" stop-color="#FB923C"/>
+        </linearGradient>
+        <linearGradient id="gr10bar" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#002395"/>
+          <stop offset="33.3%" stop-color="#002395"/>
+          <stop offset="33.3%" stop-color="#FFFFFF"/>
+          <stop offset="66.6%" stop-color="#FFFFFF"/>
+          <stop offset="66.6%" stop-color="#ED2939"/>
+          <stop offset="100%" stop-color="#ED2939"/>
+        </linearGradient>
+      </defs>
+
+      <!-- === BLOC GAUCHE : R + FORK === -->
+      <!-- R gradient -->
+      <text x="14" y="148" font-family="Black Han Sans, sans-serif" font-size="130" fill="url(#gr10R)">R</text>
+      <!-- FORK navy — 4 dents nettes à droite du R -->
+      <line x1="118" y1="22" x2="118" y2="72" stroke="#2D2A6E" stroke-width="3.5" stroke-linecap="round"/>
+      <line x1="129" y1="18" x2="129" y2="76" stroke="#2D2A6E" stroke-width="5" stroke-linecap="round"/>
+      <line x1="140" y1="18" x2="140" y2="76" stroke="#2D2A6E" stroke-width="5" stroke-linecap="round"/>
+      <line x1="151" y1="22" x2="151" y2="72" stroke="#2D2A6E" stroke-width="3.5" stroke-linecap="round"/>
+      <!-- Shoulder -->
+      <path d="M116 74 Q135 84 153 74" stroke="#2D2A6E" stroke-width="4" stroke-linecap="round" fill="none"/>
+      <!-- Handle -->
+      <path d="M135 84 L135 148" stroke="#2D2A6E" stroke-width="5.5" stroke-linecap="round"/>
+      <!-- Terminaison handle -->
+      <path d="M131 145 Q135 154 139 145" stroke="#2D2A6E" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+
+      <!-- Séparateur vertical fin -->
+      <line x1="165" y1="20" x2="165" y2="150" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+
+      <!-- === BLOC DROIT : LE + RUSH + TRICOLORE === -->
+      <!-- LE fin -->
+      <text x="176" y="42" font-family="Poppins, sans-serif" font-weight="300" font-size="12" fill="rgba(255,255,255,0.35)" letter-spacing="14">L  E</text>
+      <!-- RUSH navy géant -->
+      <text x="172" y="140" font-family="Black Han Sans, sans-serif" font-size="106" fill="#1A1744">RUSH</text>
+      <!-- TRICOLORE — 3 blocs égaux sous RUSH, pleine largeur du bloc -->
+      <rect x="172" y="150" width="64" height="7" rx="3.5" fill="#002395"/>
+      <rect x="239" y="150" width="64" height="7" rx="3.5" fill="white" opacity="0.9"/>
+      <rect x="306" y="150" width="64" height="7" rx="3.5" fill="#ED2939"/>
+      <!-- RESTAURANT OS -->
+      <text x="172" y="173" font-family="Poppins, sans-serif" font-weight="400" font-size="9" fill="#4B5563" letter-spacing="4">RESTAURANT  OS</text>
+
+      <!-- ⭐ Badge recommandé -->
+      <circle cx="366" cy="20" r="11" fill="#F97316"/>
+      <text x="366" y="25" font-family="sans-serif" font-size="12" fill="white" text-anchor="middle">★</text>
+    </svg>
+  </div>
+  <div class="info">
+    <div class="num">Variante 10 — ⭐ RECOMMANDÉE</div>
+    <div class="title">SYNTHÈSE FINALE — Les 3 Images en 1</div>
+    <div class="desc">Réunit exactement vos 3 références : typo Black Han Sans navy de l'image 1 · tricolore 3 blocs égaux sous RUSH comme image 2 · R gradient violet→orange avec fork navy comme image 3. Version production prête.</div>
+    <div class="tags"><span class="tag tv">⭐ Synthèse</span><span class="tag tw">Black Han Sans</span><span class="tag tf">Tricolore</span><span class="tag to">R+Fork</span></div>
+  </div>
+</div>
+
+</div>
+
+<!-- NOTES TECHNIQUES -->
+<div style="max-width:1360px;margin:56px auto 0;display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px">
+  <div style="padding:24px;background:#13101F;border-radius:16px;border:1px solid rgba(255,255,255,0.06)">
+    <div style="font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#A855F7;margin-bottom:8px">TYPOGRAPHIE</div>
+    <div style="font-family:Black Han Sans,sans-serif;font-size:42px;color:#1A1744;line-height:1">RUSH</div>
+    <div style="font-size:11px;color:#6B7280;margin-top:6px">Black Han Sans — Principale<br/>Barlow Condensed 900 — Alt<br/>Poppins 300 — LE / taglines</div>
+  </div>
+  <div style="padding:24px;background:#13101F;border-radius:16px;border:1px solid rgba(255,255,255,0.06)">
+    <div style="font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#FB923C;margin-bottom:12px">GRADIENT R</div>
+    <div style="height:40px;border-radius:8px;background:linear-gradient(135deg,#A855F7,#FB923C)"></div>
+    <div style="font-size:11px;color:#6B7280;margin-top:8px">#A855F7 → #FB923C<br/>Angle 135° · Top-left → Bottom-right</div>
+  </div>
+  <div style="padding:24px;background:#13101F;border-radius:16px;border:1px solid rgba(255,255,255,0.06)">
+    <div style="font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#93C5FD;margin-bottom:12px">TRICOLORE</div>
+    <div style="display:flex;gap:6px;height:40px">
+      <div style="flex:1;border-radius:6px;background:#002395"></div>
+      <div style="flex:1;border-radius:6px;background:white;border:1px solid rgba(255,255,255,0.15)"></div>
+      <div style="flex:1;border-radius:6px;background:#ED2939"></div>
+    </div>
+    <div style="font-size:11px;color:#6B7280;margin-top:8px">#002395 · #FFFFFF · #ED2939<br/>3 blocs égaux · h:5-7px · radius:2.5-3px</div>
+  </div>
+</div>
+
+<div style="text-align:center;padding:48px;color:#1F2937;font-size:11px;letter-spacing:3px;text-transform:uppercase">
+  Le Rush · Brand Identity V3 · UI/UX Pro Max
+</div>
+
+</body>
+</html>

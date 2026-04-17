@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Le Rush — Typo Only</title>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #080910; font-family: 'Poppins', sans-serif; padding: 56px 20px; }
+
+  h2 {
+    font-family: 'Black Han Sans', sans-serif;
+    font-size: 10px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: #1F2937;
+    text-align: center;
+    margin: 0 auto 24px;
+    max-width: 1300px;
+  }
+
+  .divider { max-width:1300px; margin:48px auto; border:none; border-top:1px solid #0F1015; }
+
+  /* GRILLES */
+  .grid-r    { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:12px; max-width:1300px; margin:0 auto; }
+  .grid-rush { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:12px; max-width:1300px; margin:0 auto; }
+  .grid-wide { display:grid; grid-template-columns:repeat(auto-fill,minmax(380px,1fr)); gap:12px; max-width:1300px; margin:0 auto; }
+
+  .card {
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.05);
+    transition: transform 150ms ease, border-color 150ms ease;
+    cursor: pointer;
+  }
+  .card:hover { transform:translateY(-3px); border-color:rgba(255,255,255,0.12); }
+  .card.pick { border-color: rgba(237,41,57,.45); }
+
+  .stage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .lbl {
+    padding: 10px 14px;
+    border-top: 1px solid rgba(255,255,255,0.04);
+  }
+  .lbl-n { font-size: 9px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:#ED2939; }
+  .lbl-t { font-family:'Black Han Sans',sans-serif; font-size:13px; color:white; }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!--  1. LE R SEUL                                     -->
+<!-- ══════════════════════════════════════════════════ -->
+<h2>— Le R —</h2>
+<div class="grid-r">
+
+  <!-- R·01  Dark + Blanc -->
+  <div class="card">
+    <div class="stage" style="background:#06081A;height:200px;">
+      <svg width="180" height="180" viewBox="0 0 180 180" fill="none">
+        <text x="18" y="158" font-family="Black Han Sans,sans-serif" font-size="160" fill="#FFFFFF">R</text>
+      </svg>
+    </div>
+    <div class="lbl"><div class="lbl-n">R·01</div><div class="lbl-t">DARK · BLANC</div></div>
+  </div>
+
+  <!-- R·02  Blanc + Navy -->
+  <div class="card">
+    <div class="stage" style="background:#FFFFFF;height:200px;">
+      <svg width="180" height="180" viewBox="0 0 180 180" fill="none">
+        <text x="18" y="158" font-family="Black Han Sans,sans-serif" font-size="160" fill="#1A1744">R</text>
+      </svg>
+    </div>
+    <div class="lbl"><div class="lbl-n">R·02</div><div class="lbl-t">BLANC · NAVY</div></div>
+  </div>
+
+  <!-- R·03  Bleu France -->
+  <div class="card">
+    <div class="stage" style="background:#002395;height:200px;">
+      <svg width="180" height="180" viewBox="0 0 180 180" fill="none">
+        <text x="18" y="158" font-family="Black Han Sans,sans-serif" font-size="160" fill="#FFFFFF">R</text>
+      </svg>
+    </div>
+    <div class="lbl"><div class="lbl-n">R·03</div><div class="lbl-t">BLEU FRANCE</div></div>
+  </div>
+
+  <!-- R·04  Rouge France -->
+  <div class="card">
+    <div class="stage" style="background:#ED2939;height:200px;">
+      <svg width="180" height="180" viewBox="0 0 180 180" fill="none">
+        <text x="18" y="158" font-family="Black Han Sans,sans-serif" font-size="160" fill="#FFFFFF">R</text>
+      </svg>
+    </div>
+    <div class="lbl"><div class="lbl-n">R·04</div><div class="lbl-t">ROUGE FRANCE</div></div>
+  </div>
+
+  <!-- R·05  Dark + R outline (contour) -->
+  <div class="card">
+    <div class="stage" style="background:#06081A;height:200px;">
+      <svg width="180" height="180" viewBox="0 0 180 180" fill="none">
+        <text x="18" y="158" font-family="Black Han Sans,sans-serif" font-size="160"
+          fill="none" stroke="#FFFFFF" stroke-width="2">R</text>
+      </svg>
+    </div>
+    <div class="lbl"><div class="lbl-n">R·05</div><div class="lbl-t">OUTLINE</div></div>
+  </div>
+
+  <!-- R·06  Dark + R avec tricolore dessous -->
+  <div class="card">
+    <div class="stage" style="background:#06081A;height:200px;">
+      <svg width="180" height="200" viewBox="0 0 180 200" fill="none">
+        <text x="18" y="158" font-family="Black Han Sans,sans-serif" font-size="160" fill="#FFFFFF">R</text>
+        <rect x="18" y="168" width="42" height="7" rx="3.5" fill="#002395"/>
+        <rect x="63" y="168" width="42" height="7" rx="3.5" fill="#FFFFFF" opacity="0.9"/>
+        <rect x="108" y="168" width="42" height="7" rx="3.5" fill="#ED2939"/>
+      </svg>
+    </div>
+    <div class="lbl"><div class="lbl-n">R·06</div><div class="lbl-t">DARK + TRICOLORE</div></div>
+  </div>
+
+  <!-- R·07  Navy + R rouge -->
+  <div class="card">
+    <div class="stage" style="background:#1A1744;height:200px;">
+      <svg width="180" height="180" viewBox="0 0 180 180" fill="none">
+        <text x="18" y="158" font-family="Black Han Sans,sans-serif" font-size="160" fill="#ED2939">R</text>
+      </svg>
+    </div>
+    <div class="lbl"><div class="lbl-n">R·07</div><div class="lbl-t">NAVY · R ROUGE</div></div>
+  </div>
+
+  <!-- R·08  Blanc + R bleu France -->
+  <div class="card">
+    <div class="stage" style="background:#FFFFFF;height:200px;">
+      <svg width="180" height="180" viewBox="0 0 180 180" fill="none">
+        <text x="18" y="158" font-family="Black Han Sans,sans-serif" font-size="160" fill="#002395">R</text>
+      </svg>
+    </div>
+    <div class="lbl"><div class="lbl-n">R·08</div><div class="lbl-t">BLANC · R BLEU FR</div></div>
+  </div>
+
+</div>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!--  2. RUSH WORDMARK                                 -->
+<!-- ══════════════════════════════════════════════════ -->
+<h2>— RUSH Wordmark —</h2>
+<div class="grid-rush">
+
+  <!-- W·01  Dark · Blanc -->
+  <div class="card pick">
+    <div class="stage" style="background:#06081A;height:160px;">
+      <svg width="300" height="130" viewBox="0 0 300 130" fill="none">
+        <text x="4" y="26" font-family="Poppins,sans-serif" font-weight="300" font-size="11" fill="rgba(255,255,255,0.28)" letter-spacing="12">L  E</text>
+        <text x="0" y="118" font-family="Black Han Sans,sans-serif" font-size="112" fill="#FFFFFF">RUSH</text>
+      </svg>
+    </div>
+    <div class="lbl"><div class="lbl-n">W·01 ⭐</div><div class="lbl-t">DARK · BLANC</div></div>
+  </div>
+
+  <!-- W·02  Blanc · Navy -->
+  <div class="card">
+    <div class="stage" style="background:#FFFFFF;height:160px;">
+      <svg width="300" height="130" viewBox="0 0 300 130" fill="none">
+        <text x="4" y="26" font-family="Poppins,sans-serif" font-weight="300" font-size="11" fill="#9CA3AF" letter-spacing="12">L  E</text>
+        <text x="0" y="118" font-family="Black Han Sans,sans-serif" font-size="112" fill="#1A1744">RUSH</text>
+      </svg>
+    </div>
+    <div class="lbl"><div class="lbl-n">W·02</div><div class="lbl-t">BLANC · NAVY</div></div>
+  </div>
+
+  <!-- W·03  Bleu France · Blanc -->
+  <div class="card">
+    <div class="stage" style="background:#002395;height:160px;">
+      <svg width="300" height="130" viewBox="0 0 300 130" fill="none">
+        <text x="4" y="26" font-family="Poppins,sans-serif" font-weight="300" font-size="11" fill="rgba(255,255,255,0.35)" letter-spacing="12">L  E</text>
+        <text x="0" y="118" font-family="Black Han Sans,sans-serif" font-size="112" fill="#FFFFFF">RUSH</text>
+      </svg>
+    </div>
+    <div class="lbl"><div class="lbl-n">W·03</div><div class="lbl-t">BLEU FRANCE · BLANC</div></div>
+  </div>
+
+  <!-- W·04  Rouge France · Blanc -->
+  <div class="card">
+    <div class="stage" style="background:#ED2939;height:160px;">
+      <svg width="300" height="130" viewBox="0 0 300 130" fill="none">
+        <text x="4" y="26" font-family="Poppins,sans-serif" font-weight="300" font-size="11" fill="rgba(255,255,255,0.4)" letter-spacing="12">L  E</text>
+        <text x="0" y="118" font-family="Black Han Sans,sans-serif" font-size="112" fill="#FFFFFF">RUSH</text>
+      </svg>
+    </div>
+    <div class="lbl"><div class="lbl-n">W·04</div><div class="lbl-t">ROUGE FRANCE · BLANC</div></div>
+  </div>
+
+  <!-- W·05  Navy · Blanc -->
+  <div class="card">
+    <div class="stage" style="background:#1A1744;height:160px;">
+      <svg width="300" height="130" viewBox="0 0 300 130" fill="none">
+        <text x="4" y="26" font-family="Poppins,sans-serif" font-weight="300" font-size="11" fill="rgba(255,255,255,0.28)" letter-spacing="12">L  E</text>
+        <text x="0" y="118" font-family="Black Han Sans,sans-serif" font-size="112" fill="#FFFFFF">RUSH</text>
+      </svg>
+    </div>
+    <div class="lbl"><div class="lbl-n">W·05</div><div class="lbl-t">NAVY · BLANC</div></div>
+  </div>
+
+  <!-- W·06  Dark · RUSH outline -->
+  <div class="card">
+    <div class="stage" style="background:#06081A;height:160px;">
+      <svg width="300" height="130" viewBox="0 0 300 130" fill="none">
+        <text x="4" y="26" font-family="Poppins,sans-serif" font-weight="300" font-size="11" fill="rgba(255,255,255,0.2)" letter-spacing="12">L  E</text>
+        <text x="0" y="118" font-family="Black Han Sans,sans-serif" font-size="112"
+          fill="none" stroke="#FFFFFF" stroke-width="2">RUSH</text>
+      </svg>
+    </div>
+    <div class="lbl"><div class="lbl-n">W·06</div><div class="lbl-t">OUTLINE</div></div>
+  </div>
+
+  <!-- W·07  Dark · RUSH rouge -->
+  <div class="card">
+    <div class="stage" style="background:#06081A;height:160px;">
+      <svg width="300" height="130" viewBox="0 0 300 130" fill="none">
+        <text x="4" y="26" font-family="Poppins,sans-serif" font-weight="300" font-size="11" fill="rgba(255,255,255,0.2)" letter-spacing="12">L  E</text>
+        <text x="0" y="118" font-family="Black Han Sans,sans-serif" font-size="112" fill="#ED2939">RUSH</text>
+      </svg>
+    </div>
+    <div class="lbl"><div class="lbl-n">W·07</div><div class="lbl-t">DARK · ROUGE</div></div>
+  </div>
+
+  <!-- W·08  Blanc · RUSH rouge -->
+  <div class="card">
+    <div class="stage" style="background:#FFFFFF;height:160px;">
+      <svg width="300" height="130" viewBox="0 0 300 130" fill="none">
+        <text x="4" y="26" font-family="Poppins,sans-serif" font-weight="300" font-size="11" fill="#9CA3AF" letter-spacing="12">L  E</text>
+        <text x="0" y="118" font-family="Black Han Sans,sans-serif" font-size="112" fill="#ED2939">RUSH</text>
+      </svg>
+    </div>
+    <div class="lbl"><div class="lbl-n">W·08</div><div class="lbl-t">BLANC · ROUGE</div></div>
+  </div>
+
+</div>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!--  3. RUSH GRADIENT                                 -->
+<!-- ══════════════════════════════════════════════════ -->
+<h2>— RUSH Gradient —</h2>
+<div class="grid-rush">
+
+  <!-- G·01  Tricolore gauche→droite sur dark -->
+  <div class="card pick">
+    <div class="stage" style="background:#06081A;height:160px;">
+      <svg width="300" height="130" viewBox="0 0 300 130" fill="none">
+        <defs>
+          <linearGradient id="gfr1" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%"   stop-color="#002395"/>
+            <stop offset="40%"  stop-color="#FFFFFF"/>
+            <stop offset="100%" stop-color="#ED2939"/>
+          </linearGradient>
+        </defs>
+        <text x="4" y="26" font-family="Poppins,sans-serif" font-weight="300" font-size="11" fill="rgba(255,255,255,0.25)" letter-spacing="12">L  E</text>
+        <text x="0" y="118" font-family="Black Han Sans,sans-serif" font-size="112" fill="url(#gfr1)">RUSH</text>
+      </svg>
+    </div>
+    <div class="lbl"><div class="lbl-n">G·01 ⭐</div><div class="lbl-t">GRADIENT TRICOLORE →</div></div>
+  </div>
+
+  <!-- G·02  Tricolore vertical haut→bas -->
+  <div class="card">
+    <div class="stage" style="background:#06081A;height:160px;">
+      <svg width="300" height="130" viewBox="0 0 300 130" fill="none">
+        <defs>
+          <linearGradient id="gfr2" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%"   stop-color="#002395"/>
+            <stop offset="50%"  stop-color="#FFFFFF"/>
+            <stop offset="100%" stop-color="#ED2939"/>
+          </linearGradient>
+        </defs>
+        <text x="4" y="26" font-family="Poppins,sans-serif" font-weight="300" font-size="11" fill="rgba(255,255,255,0.25)" letter-spacing="12">L  E</text>
+        <text x="0" y="118" font-family="Black Han Sans,sans-serif" font-size="112" fill="url(#gfr2)">RUSH</text>
+      </svg>
+    </div>
+    <div class="lbl"><div class="lbl-n">G·02</div><div class="lbl-t">GRADIENT TRICOLORE ↓</div></div>
+  </div>
+
+  <!-- G·03  Bleu→Blanc sur dark -->
+  <div class="card">
+    <div class="stage" style="background:#06081A;height:160px;">
+      <svg width="300" height="130" viewBox="0 0 300 130" fill="none">
+        <defs>
+          <linearGradient id="gfr3" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#002395"/>
+            <stop offset="100%" stop-color="#FFFFFF"/>
+          </linearGradient>
+        </defs>
+        <text x="4" y="26" font-family="Poppins,sans-serif" font-weight="300" font-size="11" fill="rgba(255,255,255,0.25)" letter-spacing="12">L  E</text>
+        <text x="0" y="118" font-family="Black Han Sans,sans-serif" font-size="112" fill="url(#gfr3)">RUSH</text>
+      </svg>
+    </div>
+    <div class="lbl"><div class="lbl-n">G·03</div><div class="lbl-t">BLEU → BLANC</div></div>
+  </div>
+
+  <!-- G·04  Blanc→Rouge sur dark -->
+  <div class="card">
+    <div class="stage" style="background:#06081A;height:160px;">
+      <svg width="300" height="130" viewBox="0 0 300 130" fill="none">
+        <defs>
+          <linearGradient id="gfr4" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#FFFFFF"/>
+            <stop offset="100%" stop-color="#ED2939"/>
+          </linearGradient>
+        </defs>
+        <text x="4" y="26" font-family="Poppins,sans-serif" font-weight="300" font-size="11" fill="rgba(255,255,255,0.25)" letter-spacing="12">L  E</text>
+        <text x="0" y="118" font-family="Black Han Sans,sans-serif" font-size="112" fill="url(#gfr4)">RUSH</text>
+      </svg>
+    </div>
+    <div class="lbl"><div class="lbl-n">G·04</div><div class="lbl-t">BLANC → ROUGE</div></div>
+  </div>
+
+  <!-- G·05  Tricolore sur fond navy -->
+  <div class="card">
+    <div class="stage" style="background:#1A1744;height:160px;">
+      <svg width="300" height="130" viewBox="0 0 300 130" fill="none">
+        <defs>
+          <linearGradient id="gfr5" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%"   stop-color="#5B8DEF"/>
+            <stop offset="45%"  stop-color="#FFFFFF"/>
+            <stop offset="100%" stop-color="#ED2939"/>
+          </linearGradient>
+        </defs>
+        <text x="4" y="26" font-family="Poppins,sans-serif" font-weight="300" font-size="11" fill="rgba(255,255,255,0.25)" letter-spacing="12">L  E</text>
+        <text x="0" y="118" font-family="Black Han Sans,sans-serif" font-size="112" fill="url(#gfr5)">RUSH</text>
+      </svg>
+    </div>
+    <div class="lbl"><div class="lbl-n">G·05</div><div class="lbl-t">GRADIENT · NAVY BG</div></div>
+  </div>
+
+  <!-- G·06  Gradient outline sur dark -->
+  <div class="card">
+    <div class="stage" style="background:#06081A;height:160px;">
+      <svg width="300" height="130" viewBox="0 0 300 130" fill="none">
+        <defs>
+          <linearGradient id="gfr6" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%"   stop-color="#002395"/>
+            <stop offset="50%"  stop-color="#FFFFFF"/>
+            <stop offset="100%" stop-color="#ED2939"/>
+          </linearGradient>
+        </defs>
+        <text x="4" y="26" font-family="Poppins,sans-serif" font-weight="300" font-size="11" fill="rgba(255,255,255,0.2)" letter-spacing="12">L  E</text>
+        <text x="0" y="118" font-family="Black Han Sans,sans-serif" font-size="112"
+          fill="none" stroke="url(#gfr6)" stroke-width="2">RUSH</text>
+      </svg>
+    </div>
+    <div class="lbl"><div class="lbl-n">G·06</div><div class="lbl-t">OUTLINE GRADIENT</div></div>
+  </div>
+
+</div>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!--  4. RUSH + TRICOLORE DESSOUS                      -->
+<!-- ══════════════════════════════════════════════════ -->
+<h2>— RUSH + Tricolore dessous —</h2>
+<div class="grid-wide">
+
+  <!-- T·01  Dark · tricolore large -->
+  <div class="card pick">
+    <div class="stage" style="background:#06081A;height:180px;">
+      <svg width="380" height="160" viewBox="0 0 380 160" fill="none">
+        <text x="4" y="26" font-family="Poppins,sans-serif" font-weight="300" font-size="11" fill="rgba(255,255,255,0.25)" letter-spacing="12">L  E</text>
+        <text x="0" y="118" font-family="Black Han Sans,sans-serif" font-size="112" fill="#FFFFFF">RUSH</text>
+        <rect x="0"   y="128" width="118" height="9" rx="4.5" fill="#002395"/>
+        <rect x="122" y="128" width="118" height="9" rx="4.5" fill="#FFFFFF" opacity="0.95"/>
+        <rect x="244" y="128" width="118" height="9" rx="4.5" fill="#ED2939"/>
+        <text x="0" y="150" font-family="Poppins,sans-serif" font-weight="300" font-size="9" fill="#374151" letter-spacing="5">RESTAURANT  OPERATING  SYSTEM</text>
+      </svg>
+    </div>
+    <div class="lbl"><div class="lbl-n">T·01 ⭐</div><div class="lbl-t">DARK · TRICOLORE LARGE</div></div>
+  </div>
+
+  <!-- T·02  Blanc · tricolore -->
+  <div class="card">
+    <div class="stage" style="background:#FFFFFF;height:180px;">
+      <svg width="380" height="160" viewBox="0 0 380 160" fill="none">
+        <text x="4" y="26" font-family="Poppins,sans-serif" font-weight="300" font-size="11" fill="#9CA3AF" letter-spacing="12">L  E</text>
+        <text x="0" y="118" font-family="Black Han Sans,sans-serif" font-size="112" fill="#1A1744">RUSH</text>
+        <rect x="0"   y="128" width="118" height="9" rx="4.5" fill="#002395"/>
+        <rect x="122" y="128" width="118" height="9" rx="4.5" fill="#9CA3AF" opacity="0.4"/>
+        <rect x="244" y="128" width="118" height="9" rx="4.5" fill="#ED2939"/>
+        <text x="0" y="150" font-family="Poppins,sans-serif" font-weight="300" font-size="9" fill="#D1D5DB" letter-spacing="5">RESTAURANT  OPERATING  SYSTEM</text>
+      </svg>
+    </div>
+    <div class="lbl"><div class="lbl-n">T·02</div><div class="lbl-t">BLANC · TRICOLORE</div></div>
+  </div>
+
+  <!-- T·03  Navy · tricolore + gradient RUSH -->
+  <div class="card">
+    <div class="stage" style="background:#1A1744;height:180px;">
+      <svg width="380" height="160" viewBox="0 0 380 160" fill="none">
+        <defs>
+          <linearGradient id="gtn3" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%"   stop-color="#002395"/>
+            <stop offset="45%"  stop-color="#FFFFFF"/>
+            <stop offset="100%" stop-color="#ED2939"/>
+          </linearGradient>
+        </defs>
+        <text x="4" y="26" font-family="Poppins,sans-serif" font-weight="300" font-size="11" fill="rgba(255,255,255,0.25)" letter-spacing="12">L  E</text>
+        <text x="0" y="118" font-family="Black Han Sans,sans-serif" font-size="112" fill="url(#gtn3)">RUSH</text>
+        <rect x="0"   y="128" width="118" height="9" rx="4.5" fill="#002395"/>
+        <rect x="122" y="128" width="118" height="9" rx="4.5" fill="#FFFFFF" opacity="0.9"/>
+        <rect x="244" y="128" width="118" height="9" rx="4.5" fill="#ED2939"/>
+        <text x="0" y="150" font-family="Poppins,sans-serif" font-weight="300" font-size="9" fill="#374151" letter-spacing="5">RESTAURANT  OPERATING  SYSTEM</text>
+      </svg>
+    </div>
+    <div class="lbl"><div class="lbl-n">T·03</div><div class="lbl-t">NAVY · GRADIENT + TRICOLORE</div></div>
+  </div>
+
+  <!-- T·04  Bleu France -->
+  <div class="card">
+    <div class="stage" style="background:#002395;height:180px;">
+      <svg width="380" height="160" viewBox="0 0 380 160" fill="none">
+        <text x="4" y="26" font-family="Poppins,sans-serif" font-weight="300" font-size="11" fill="rgba(255,255,255,0.35)" letter-spacing="12">L  E</text>
+        <text x="0" y="118" font-family="Black Han Sans,sans-serif" font-size="112" fill="#FFFFFF">RUSH</text>
+        <rect x="0"   y="128" width="180" height="9" rx="4.5" fill="#FFFFFF" opacity="0.85"/>
+        <rect x="184" y="128" width="178" height="9" rx="4.5" fill="#ED2939"/>
+        <text x="0" y="150" font-family="Poppins,sans-serif" font-weight="300" font-size="9" fill="rgba(255,255,255,0.3)" letter-spacing="5">RESTAURANT  OPERATING  SYSTEM</text>
+      </svg>
+    </div>
+    <div class="lbl"><div class="lbl-n">T·04</div><div class="lbl-t">BLEU FRANCE</div></div>
+  </div>
+
+  <!-- T·05  Rouge France -->
+  <div class="card">
+    <div class="stage" style="background:#ED2939;height:180px;">
+      <svg width="380" height="160" viewBox="0 0 380 160" fill="none">
+        <text x="4" y="26" font-family="Poppins,sans-serif" font-weight="300" font-size="11" fill="rgba(255,255,255,0.4)" letter-spacing="12">L  E</text>
+        <text x="0" y="118" font-family="Black Han Sans,sans-serif" font-size="112" fill="#FFFFFF">RUSH</text>
+        <rect x="0"   y="128" width="180" height="9" rx="4.5" fill="#002395"/>
+        <rect x="184" y="128" width="178" height="9" rx="4.5" fill="#FFFFFF" opacity="0.9"/>
+        <text x="0" y="150" font-family="Poppins,sans-serif" font-weight="300" font-size="9" fill="rgba(255,255,255,0.35)" letter-spacing="5">RESTAURANT  OPERATING  SYSTEM</text>
+      </svg>
+    </div>
+    <div class="lbl"><div class="lbl-n">T·05</div><div class="lbl-t">ROUGE FRANCE</div></div>
+  </div>
+
+  <!-- T·06  Dark · R=Bleu USH=Blanc + tricolore -->
+  <div class="card pick">
+    <div class="stage" style="background:#06081A;height:180px;">
+      <svg width="380" height="160" viewBox="0 0 380 160" fill="none">
+        <text x="4" y="26" font-family="Poppins,sans-serif" font-weight="300" font-size="11" fill="rgba(255,255,255,0.25)" letter-spacing="12">L  E</text>
+        <!-- R BLEU -->
+        <text x="0" y="118" font-family="Black Han Sans,sans-serif" font-size="112" fill="#002395">R</text>
+        <!-- USH BLANC -->
+        <text x="88" y="118" font-family="Black Han Sans,sans-serif" font-size="112" fill="#FFFFFF">USH</text>
+        <rect x="0"   y="128" width="118" height="9" rx="4.5" fill="#002395"/>
+        <rect x="122" y="128" width="118" height="9" rx="4.5" fill="#FFFFFF" opacity="0.95"/>
+        <rect x="244" y="128" width="118" height="9" rx="4.5" fill="#ED2939"/>
+        <text x="0" y="150" font-family="Poppins,sans-serif" font-weight="300" font-size="9" fill="#374151" letter-spacing="5">RESTAURANT  OPERATING  SYSTEM</text>
+      </svg>
+    </div>
+    <div class="lbl"><div class="lbl-n">T·06 ⭐</div><div class="lbl-t">R=BLEU · USH=BLANC</div></div>
+  </div>
+
+  <!-- T·07  Dark · R=Rouge USH=Blanc + tricolore -->
+  <div class="card">
+    <div class="stage" style="background:#06081A;height:180px;">
+      <svg width="380" height="160" viewBox="0 0 380 160" fill="none">
+        <text x="4" y="26" font-family="Poppins,sans-serif" font-weight="300" font-size="11" fill="rgba(255,255,255,0.25)" letter-spacing="12">L  E</text>
+        <text x="0" y="118" font-family="Black Han Sans,sans-serif" font-size="112" fill="#ED2939">R</text>
+        <text x="88" y="118" font-family="Black Han Sans,sans-serif" font-size="112" fill="#FFFFFF">USH</text>
+        <rect x="0"   y="128" width="118" height="9" rx="4.5" fill="#002395"/>
+        <rect x="122" y="128" width="118" height="9" rx="4.5" fill="#FFFFFF" opacity="0.95"/>
+        <rect x="244" y="128" width="118" height="9" rx="4.5" fill="#ED2939"/>
+        <text x="0" y="150" font-family="Poppins,sans-serif" font-weight="300" font-size="9" fill="#374151" letter-spacing="5">RESTAURANT  OPERATING  SYSTEM</text>
+      </svg>
+    </div>
+    <div class="lbl"><div class="lbl-n">T·07</div><div class="lbl-t">R=ROUGE · USH=BLANC</div></div>
+  </div>
+
+  <!-- T·08  Tricolore lettres R=Bleu U-S=Blanc H=Rouge -->
+  <div class="card pick">
+    <div class="stage" style="background:#06081A;height:180px;">
+      <svg width="380" height="160" viewBox="0 0 380 160" fill="none">
+        <text x="4" y="26" font-family="Poppins,sans-serif" font-weight="300" font-size="11" fill="rgba(255,255,255,0.25)" letter-spacing="12">L  E</text>
+        <text x="0"   y="118" font-family="Black Han Sans,sans-serif" font-size="112" fill="#002395">R</text>
+        <text x="88"  y="118" font-family="Black Han Sans,sans-serif" font-size="112" fill="#FFFFFF">U</text>
+        <text x="174" y="118" font-family="Black Han Sans,sans-serif" font-size="112" fill="#FFFFFF" opacity="0.85">S</text>
+        <text x="260" y="118" font-family="Black Han Sans,sans-serif" font-size="112" fill="#ED2939">H</text>
+        <rect x="0"   y="128" width="84" height="9" rx="4.5" fill="#002395"/>
+        <rect x="88"  y="128" width="172" height="9" rx="4.5" fill="#FFFFFF" opacity="0.9"/>
+        <rect x="264" y="128" width="98" height="9" rx="4.5" fill="#ED2939"/>
+      </svg>
+    </div>
+    <div class="lbl"><div class="lbl-n">T·08 ⭐</div><div class="lbl-t">R=BLEU · US=BLANC · H=ROUGE</div></div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div style="max-width:1300px;margin:52px auto 0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;padding:20px 28px;background:#0D0D14;border-radius:12px;border:1px solid rgba(255,255,255,0.04);">
+  <div style="display:flex;gap:0;height:28px;border-radius:5px;overflow:hidden;border:1px solid rgba(255,255,255,0.08)">
+    <div style="width:56px;background:#002395"></div>
+    <div style="width:56px;background:#FFFFFF"></div>
+    <div style="width:56px;background:#ED2939"></div>
+  </div>
+  <div style="font-family:'Black Han Sans',sans-serif;font-size:11px;letter-spacing:4px;color:#1F2937;text-transform:uppercase">DARK · BLANC · TRICOLORE · SANS ICÔNE</div>
+  <div style="font-family:'Black Han Sans',sans-serif;font-size:22px;letter-spacing:-1px;color:#FFFFFF">
+    <span style="color:#002395">R</span><span>US</span><span style="color:#ED2939">H</span>
+  </div>
+</div>
+
+<div style="text-align:center;padding:40px;color:#111827;font-size:10px;letter-spacing:3px;text-transform:uppercase;">Le Rush · Typo Only · Bleu Blanc Rouge</div>
+</body>
+</html>

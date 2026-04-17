@@ -2,7 +2,7 @@ import { Document, Page, Text, View, StyleSheet } from '@react-pdf/renderer'
 import type { BonDeCommandeData } from '@/lib/whatsapp'
 
 const styles = StyleSheet.create({
-  page: { padding: 40, fontFamily: 'Helvetica', fontSize: 10, color: '#1a1a2e' },
+  page: { padding: 40, fontFamily: 'Helvetica', fontSize: 10, color: '#06081A' },
   header: { marginBottom: 24 },
   title: { fontSize: 20, fontWeight: 'bold', marginBottom: 4 },
   subtitle: { fontSize: 10, color: '#666', marginBottom: 2 },
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 8,
     borderTopWidth: 2,
-    borderTopColor: '#1a1a2e',
+    borderTopColor: '#06081A',
     marginTop: 4,
   },
   totalLabel: { flex: 4, fontWeight: 'bold', fontSize: 12 },

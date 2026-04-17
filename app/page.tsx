@@ -2,13 +2,13 @@ import Link from 'next/link'
 
 export default function Home() {
   return (
-    <main className="min-h-screen flex flex-col" style={{ backgroundColor: '#0f0f1a' }}>
+    <main className="min-h-screen flex flex-col" style={{ backgroundColor: '#06081A' }}>
       {/* Hero */}
       <div className="flex-1 flex flex-col items-center justify-center px-6 py-16 text-center">
         <div className="mb-6">
           <span
             className="inline-block text-xs font-semibold uppercase tracking-widest px-3 py-1 rounded-full mb-4"
-            style={{ backgroundColor: '#e9456020', color: '#e94560' }}
+            style={{ backgroundColor: '#ED293920', color: '#ED2939' }}
           >
             Bêta privée
           </span>
@@ -37,7 +37,7 @@ export default function Home() {
           <Link
             href="/register"
             className="w-full py-4 rounded-xl font-semibold text-white text-base text-center transition-opacity hover:opacity-90 active:opacity-80"
-            style={{ backgroundColor: '#e94560' }}
+            style={{ backgroundColor: '#ED2939' }}
           >
             Créer mon compte
           </Link>
@@ -58,8 +58,16 @@ export default function Home() {
       </div>
 
       {/* Footer */}
-      <footer className="text-center py-6 text-xs text-gray-700">
-        © {new Date().getFullYear()} SAS La Fabrique Alimentaire — Le Rush
+      <footer className="text-center py-6 text-xs text-gray-700 space-y-1">
+        <div>© {new Date().getFullYear()} SAS La Fabrique Alimentaire — Le Rush</div>
+        <div className="flex justify-center gap-4">
+          <a href="/privacy" className="hover:text-gray-500 transition-colors">
+            Confidentialité
+          </a>
+          <a href="/support" className="hover:text-gray-500 transition-colors">
+            Support
+          </a>
+        </div>
       </footer>
     </main>
   )

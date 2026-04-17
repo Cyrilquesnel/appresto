@@ -1,0 +1,113 @@
+/**
+ * LE RUSH — Design Tokens Officiels
+ * SAS La Fabrique Alimentaire · 2026
+ * ─────────────────────────────────────────────
+ */
+
+:root {
+  /* ── COULEURS PRIMAIRES ── */
+  --rush-bleu: #002395; /* Bleu France · gradient top · accent */
+  --rush-blanc: #ffffff; /* Blanc · gradient centre · fond light */
+  --rush-rouge: #ed2939; /* Rouge France · gradient bottom · CTA */
+
+  /* ── FONDS ── */
+  --rush-bg-dark: #06081a; /* Background principal dark */
+  --rush-bg-navy: #1a1744; /* Navy · cards · icon bg */
+  --rush-bg-light: #ffffff; /* Background principal light */
+  --rush-bg-subtle: #f1f5f9; /* Fond subtil light */
+
+  /* ── TEXTE ── */
+  --rush-text-dark: #06081a; /* Texte principal dark */
+  --rush-text-white: #ffffff; /* Texte sur fond sombre */
+  --rush-text-muted-dark: rgba(255, 255, 255, 0.25);
+  --rush-text-muted-light: #9ca3af;
+
+  /* ── GRADIENT TRICOLORE DARK (sur fond sombre) ── */
+  --rush-gradient-dark: linear-gradient(180deg, #002395 0%, #ffffff 48%, #ed2939 100%);
+  --rush-gradient-dark-h: linear-gradient(90deg, #002395 0%, #ffffff 48%, #ed2939 100%);
+
+  /* ── GRADIENT TRICOLORE LIGHT (sur fond blanc) ── */
+  --rush-gradient-light: linear-gradient(180deg, #002395 0%, #1a1744 50%, #ed2939 100%);
+  --rush-gradient-light-h: linear-gradient(90deg, #002395 0%, #1a1744 50%, #ed2939 100%);
+
+  /* ── TYPOGRAPHIE ── */
+  --rush-font-display: 'Black Han Sans', sans-serif; /* RUSH, R — jamais substitué */
+  --rush-font-body: 'Poppins', sans-serif; /* Corps, UI */
+
+  /* ── ÉCHELLE TYPOGRAPHIQUE ── */
+  --rush-text-xs: 10px;
+  --rush-text-sm: 12px;
+  --rush-text-base: 14px;
+  --rush-text-md: 16px;
+  --rush-text-lg: 20px;
+  --rush-text-xl: 28px;
+  --rush-text-2xl: 36px;
+  --rush-text-3xl: 48px;
+  --rush-text-hero: 96px;
+
+  /* ── SPACING (base 8pt) ── */
+  --rush-space-1: 4px;
+  --rush-space-2: 8px;
+  --rush-space-3: 12px;
+  --rush-space-4: 16px;
+  --rush-space-5: 20px;
+  --rush-space-6: 24px;
+  --rush-space-8: 32px;
+  --rush-space-10: 40px;
+  --rush-space-12: 48px;
+  --rush-space-16: 64px;
+
+  /* ── BORDER RADIUS ── */
+  --rush-radius-sm: 6px;
+  --rush-radius-md: 10px;
+  --rush-radius-lg: 14px;
+  --rush-radius-xl: 18px;
+  --rush-radius-2xl: 24px;
+
+  /* ── OMBRES ── */
+  --rush-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --rush-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
+  --rush-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.16);
+
+  /* ── TRANSITIONS ── */
+  --rush-transition: 150ms ease;
+
+  /* ── BARRES TRICOLORES ── */
+  --rush-bar-height: 4px;
+  --rush-bar-radius: 2px;
+}
+
+/* ── UTILITAIRES GRADIENT ── */
+.rush-gradient-text-dark {
+  background: var(--rush-gradient-dark);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.rush-gradient-text-light {
+  background: var(--rush-gradient-light);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.rush-tricolor-bar {
+  display: flex;
+  gap: 0;
+}
+.rush-tricolor-bar span {
+  flex: 1;
+  height: var(--rush-bar-height);
+  border-radius: var(--rush-bar-radius);
+}
+.rush-tricolor-bar span:nth-child(1) {
+  background: var(--rush-bleu);
+}
+.rush-tricolor-bar span:nth-child(2) {
+  background: #9ca3af;
+  opacity: 0.4;
+}
+.rush-tricolor-bar span:nth-child(3) {
+  background: var(--rush-rouge);
+}
