@@ -62,6 +62,11 @@ export default function LoginPage() {
       >
         {loading ? 'Connexion...' : 'Se connecter'}
       </button>
+      <p className="text-center text-sm">
+        <Link href="/forgot-password" className="text-gray-500 hover:underline">
+          Mot de passe oublié ?
+        </Link>
+      </p>
       <p className="text-center text-sm text-gray-600">
         Pas encore de compte ?{' '}
         <Link href="/register" className="font-medium" style={{ color: 'var(--color-accent)' }}>
