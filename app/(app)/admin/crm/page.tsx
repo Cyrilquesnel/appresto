@@ -305,6 +305,32 @@ export default function CrmPage() {
 }
 
 function ProspectCard({ prospect: p }: { prospect: Prospect }) {
+  const [sending, setSending] = useState(false)
+  const [sent, setSent] = useState(false)
+
+  const canSendWhatsapp = !!p.telephone && p.statut === 'new' && !p.whatsapp_sent_at && !sent
+
+  const handleSendWhatsapp = async () => {
+    setSending(true)
+    try {
+      const res = await fetch('/api/crm/send-whatsapp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prospect_id: p.id }),
+      })
+      const data = await res.json()
+      if (!res.ok) {
+        alert(`Erreur : ${data.error ?? 'Erreur inconnue'}`)
+      } else {
+        setSent(true)
+      }
+    } catch {
+      alert("Erreur réseau lors de l'envoi WhatsApp")
+    } finally {
+      setSending(false)
+    }
+  }
+
   return (
     <div className="bg-white rounded-lg border border-gray-200 p-3 shadow-sm">
       <div className="flex items-start justify-between gap-2">
@@ -349,6 +375,26 @@ function ProspectCard({ prospect: p }: { prospect: Prospect }) {
           ⭐ {p.rating} ({p.reviews_count} avis)
         </p>
       )}
+      {sent ? (
+        <span className="mt-2 inline-flex items-center gap-1 text-xs text-green-700 bg-green-50 border border-green-200 px-2 py-1 rounded-lg">
+          Envoyé ✓
+        </span>
+      ) : canSendWhatsapp ? (
+        <button
+          onClick={handleSendWhatsapp}
+          disabled={sending}
+          className="mt-2 flex items-center gap-1 text-xs px-2 py-1 rounded-lg border border-gray-200 bg-gray-50 hover:bg-green-50 hover:border-green-200 hover:text-green-700 text-gray-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {sending ? (
+            <>
+              <span className="animate-spin h-3 w-3 border border-gray-400 rounded-full border-t-transparent inline-block" />
+              Envoi...
+            </>
+          ) : (
+            <>📤 Envoyer</>
+          )}
+        </button>
+      ) : null}
     </div>
   )
 }
