@@ -891,8 +891,185 @@ export interface Database {
         }
         Relationships: []
       }
+      prospects: {
+        Row: {
+          id: string
+          google_place_id: string | null
+          nom: string
+          telephone: string | null
+          email: string | null
+          website: string | null
+          adresse: Json | null
+          score: number | null
+          score_breakdown: Json | null
+          rating: number | null
+          reviews_count: number | null
+          menu_snippet: string | null
+          type_cuisine: string | null
+          statut: 'new' | 'contacted' | 'replied' | 'demo' | 'client' | 'dead'
+          whatsapp_sent_at: string | null
+          whatsapp_message_id: string | null
+          linkedin_sent_at: string | null
+          last_reply_at: string | null
+          last_reply_text: string | null
+          unsubscribed_at: string | null
+          intent: 'hot' | 'warm' | 'cold' | 'unsubscribe' | null
+          intent_confidence: number | null
+          notes: string | null
+          source: string | null
+          ville: string | null
+          code_postal: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          google_place_id?: string | null
+          nom: string
+          telephone?: string | null
+          email?: string | null
+          website?: string | null
+          adresse?: Json | null
+          score?: number | null
+          score_breakdown?: Json | null
+          rating?: number | null
+          reviews_count?: number | null
+          menu_snippet?: string | null
+          type_cuisine?: string | null
+          statut?: 'new' | 'contacted' | 'replied' | 'demo' | 'client' | 'dead'
+          whatsapp_sent_at?: string | null
+          whatsapp_message_id?: string | null
+          linkedin_sent_at?: string | null
+          last_reply_at?: string | null
+          last_reply_text?: string | null
+          unsubscribed_at?: string | null
+          intent?: 'hot' | 'warm' | 'cold' | 'unsubscribe' | null
+          intent_confidence?: number | null
+          notes?: string | null
+          source?: string | null
+          ville?: string | null
+          code_postal?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          google_place_id?: string | null
+          nom?: string
+          telephone?: string | null
+          email?: string | null
+          website?: string | null
+          adresse?: Json | null
+          score?: number | null
+          score_breakdown?: Json | null
+          rating?: number | null
+          reviews_count?: number | null
+          menu_snippet?: string | null
+          type_cuisine?: string | null
+          statut?: 'new' | 'contacted' | 'replied' | 'demo' | 'client' | 'dead'
+          whatsapp_sent_at?: string | null
+          whatsapp_message_id?: string | null
+          linkedin_sent_at?: string | null
+          last_reply_at?: string | null
+          last_reply_text?: string | null
+          unsubscribed_at?: string | null
+          intent?: 'hot' | 'warm' | 'cold' | 'unsubscribe' | null
+          intent_confidence?: number | null
+          notes?: string | null
+          source?: string | null
+          ville?: string | null
+          code_postal?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      scheduled_messages: {
+        Row: {
+          id: string
+          prospect_id: string | null
+          channel: 'whatsapp' | 'email'
+          send_at: string
+          template_key: string | null
+          personalization: Json | null
+          sent_at: string | null
+          status: 'pending' | 'staged' | 'sent' | 'failed'
+          error_message: string | null
+        }
+        Insert: {
+          id?: string
+          prospect_id?: string | null
+          channel: 'whatsapp' | 'email'
+          send_at: string
+          template_key?: string | null
+          personalization?: Json | null
+          sent_at?: string | null
+          status?: 'pending' | 'staged' | 'sent' | 'failed'
+          error_message?: string | null
+        }
+        Update: {
+          id?: string
+          prospect_id?: string | null
+          channel?: 'whatsapp' | 'email'
+          send_at?: string
+          template_key?: string | null
+          personalization?: Json | null
+          sent_at?: string | null
+          status?: 'pending' | 'staged' | 'sent' | 'failed'
+          error_message?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: 'scheduled_messages_prospect_id_fkey'
+            columns: ['prospect_id']
+            referencedRelation: 'prospects'
+            referencedColumns: ['id']
+          }
+        ]
+      }
+      content_calendar: {
+        Row: {
+          id: string
+          platform: 'instagram' | 'tiktok' | 'linkedin' | 'youtube'
+          content_type: string | null
+          content_text: string | null
+          script: string | null
+          publish_date: string | null
+          status: 'draft' | 'approved' | 'published'
+        }
+        Insert: {
+          id?: string
+          platform: 'instagram' | 'tiktok' | 'linkedin' | 'youtube'
+          content_type?: string | null
+          content_text?: string | null
+          script?: string | null
+          publish_date?: string | null
+          status?: 'draft' | 'approved' | 'published'
+        }
+        Update: {
+          id?: string
+          platform?: 'instagram' | 'tiktok' | 'linkedin' | 'youtube'
+          content_type?: string | null
+          content_text?: string | null
+          script?: string | null
+          publish_date?: string | null
+          status?: 'draft' | 'approved' | 'published'
+        }
+        Relationships: []
+      }
     }
     Views: {
+      prospection_weekly_stats: {
+        Row: {
+          week: string | null
+          contacts_sent: number | null
+          replies: number | null
+          reply_rate_pct: number | null
+          demos_booked: number | null
+          conversions: number | null
+          hot_leads: number | null
+          total_leads: number | null
+        }
+      }
       ingredients_view: {
         Row: {
           id: string

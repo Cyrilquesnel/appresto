@@ -34,3 +34,14 @@ export function createServiceClient() {
     process.env.SUPABASE_SERVICE_ROLE_KEY!
   )
 }
+
+// Helper pour les tables prospection — contourne les limitations d'inférence TS
+// de Supabase v2 sur les types union dans Update/Insert des tables ajoutées manuellement
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function prospectionTable(
+  supabase: ReturnType<typeof createServiceClient>,
+  table: 'prospects' | 'scheduled_messages'
+) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return (supabase as any).from(table)
+}
