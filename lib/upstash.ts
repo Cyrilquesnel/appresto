@@ -33,3 +33,11 @@ export const globalApiLimiter = redis
       prefix: 'global',
     })
   : null
+
+export const leadMagnetLimiter = redis
+  ? new Ratelimit({
+      redis,
+      limiter: Ratelimit.slidingWindow(3, '24h'),
+      prefix: 'lead-magnet',
+    })
+  : null

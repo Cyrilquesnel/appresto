@@ -7,6 +7,7 @@ export type HeartbeatKey =
   | 'whatsapp-outreach'
   | 'nurturing-sender'
   | 'prospection-report'
+  | 'content-calendar'
 
 const ENV_KEYS: Record<HeartbeatKey, string> = {
   rappelconso: 'BETTERUPTIME_HEARTBEAT_RAPPELCONSO',
@@ -17,6 +18,7 @@ const ENV_KEYS: Record<HeartbeatKey, string> = {
   'whatsapp-outreach': 'BETTERUPTIME_HEARTBEAT_WHATSAPP_OUTREACH',
   'nurturing-sender': 'BETTERUPTIME_HEARTBEAT_NURTURING',
   'prospection-report': 'BETTERUPTIME_HEARTBEAT_PROSPECTION_REPORT',
+  'content-calendar': 'BETTERUPTIME_HEARTBEAT_CONTENT_CALENDAR',
 }
 
 export async function pingHeartbeat(key: HeartbeatKey): Promise<void> {
