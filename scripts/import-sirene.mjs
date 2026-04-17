@@ -314,7 +314,8 @@ function mapToProspect(etab) {
     type_cuisine: null,
     statut: 'new',
     source: 'sirene',
-    google_place_id: null,
+    // Utilise siret préfixé comme identifiant unique (réutilise la contrainte google_place_id)
+    google_place_id: etab.siret ? `siret:${etab.siret}` : null,
   }
 }
 
@@ -330,7 +331,7 @@ async function upsertProspects(rows, serviceKey) {
     const batch = rows.slice(i, i + BATCH_SIZE)
 
     try {
-      const res = await fetch(`${SUPABASE_URL}/rest/v1/prospects?on_conflict=nom,ville`, {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/prospects?on_conflict=google_place_id`, {
         method: 'POST',
         headers: {
           apikey: serviceKey,
