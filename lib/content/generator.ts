@@ -89,7 +89,10 @@ export async function generateWeeklyPosts(): Promise<GeneratedPost[]> {
       // Petite pause entre les appels
       await new Promise((r) => setTimeout(r, 1000))
     } catch (err) {
-      console.error(`[content-generator] Erreur génération ${item.platform}:`, err)
+      console.error(
+        `[content-generator] Erreur génération ${item.platform}:`,
+        (err as Error).message
+      )
     }
   }
 
@@ -122,12 +125,10 @@ async function generatePost(
 
   const text = response.content[0].type === 'text' ? response.content[0].text.trim() : '{}'
 
-  // Nettoyage si Claude met des backticks malgré la consigne
-  const clean = text
-    .replace(/^```json?\n?/, '')
-    .replace(/\n?```$/, '')
-    .trim()
-  const parsed = JSON.parse(clean) as { content_text: string; hashtags: string[] }
+  // Extraction JSON robuste — cherche le premier { ... } dans la réponse
+  const jsonMatch = text.match(/\{[\s\S]*\}/)
+  if (!jsonMatch) throw new Error(`Pas de JSON dans la réponse Claude: ${text.slice(0, 200)}`)
+  const parsed = JSON.parse(jsonMatch[0]) as { content_text: string; hashtags: string[] }
 
   return {
     platform,

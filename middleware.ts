@@ -41,6 +41,9 @@ export async function middleware(request: NextRequest) {
     '/api/health',
     '/api/cron',
     '/api/webhooks',
+    '/api/analyze-dish-public',
+    '/api/lead-magnet-capture',
+    '/fiche-gratuite',
     '/privacy',
     '/support',
   ]

@@ -32,7 +32,10 @@ export async function GET(req: NextRequest) {
     console.log(`[content-calendar] ${posts.length} posts générés`)
 
     if (posts.length === 0) {
-      return Response.json({ error: 'Aucun post généré' }, { status: 500 })
+      return Response.json(
+        { error: 'Aucun post généré — voir logs Vercel pour détails' },
+        { status: 500 }
+      )
     }
 
     // 2. Sauvegarder en base

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { stripe } from '@/lib/stripe'
 import { createServiceClient } from '@/lib/supabase/server'
+import { crediterParrain } from '@/lib/brigade'
 
 export const dynamic = 'force-dynamic'
 
@@ -59,6 +60,61 @@ export async function POST(request: NextRequest) {
         .from('subscriptions')
         .update({ statut: 'canceled', updated_at: new Date().toISOString() })
         .eq('stripe_subscription_id', sub.id)
+      break
+    }
+
+    case 'invoice.payment_succeeded': {
+      const invoice = event.data.object as Stripe.Invoice
+      const customerId = invoice.customer as string
+
+      // Crédite le parrain si ce paiement correspond à un parrainage Brigade
+      if (customerId) {
+        try {
+          // Récupère le customer Stripe pour accéder à ses métadonnées
+          const customer = await stripe!.customers.retrieve(customerId)
+          if (customer && !customer.deleted) {
+            const referralCode = (customer as Stripe.Customer).metadata?.referral_code
+            if (referralCode) {
+              // Cherche le referral correspondant à ce code
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              const { data: referral } = await (supabase.from as any)('referrals')
+                .select('id, parrain_restaurant_id, stripe_coupon_parrain, statut')
+                .eq('code', referralCode)
+                .maybeSingle()
+
+              if (referral && referral.statut === 'registered') {
+                const now = new Date().toISOString()
+
+                // Met à jour statut → converted
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                await (supabase.from as any)('referrals')
+                  .update({ statut: 'converted', converted_at: now })
+                  .eq('id', referral.id)
+
+                // Crédite le parrain avec son coupon
+                if (referral.stripe_coupon_parrain) {
+                  try {
+                    await crediterParrain(
+                      referral.parrain_restaurant_id,
+                      referral.stripe_coupon_parrain
+                    )
+
+                    // Met à jour statut → credited
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    await (supabase.from as any)('referrals')
+                      .update({ statut: 'credited', credited_at: new Date().toISOString() })
+                      .eq('id', referral.id)
+                  } catch (err) {
+                    console.error('[stripe/webhook] Erreur crédit parrain Brigade:', err)
+                  }
+                }
+              }
+            }
+          }
+        } catch (err) {
+          console.error('[stripe/webhook] Erreur traitement Brigade:', err)
+        }
+      }
       break
     }
 
