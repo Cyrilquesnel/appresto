@@ -76,12 +76,15 @@ export default function TemperaturesPage() {
             {logs.slice(0, 10).map((log) => {
               const equipNom =
                 (log.equipement as unknown as { nom: string } | null)?.nom ?? 'Équipement'
-              const date = new Date(log.timestamp_releve).toLocaleString('fr-FR', {
-                day: '2-digit',
-                month: '2-digit',
-                hour: '2-digit',
-                minute: '2-digit',
-              })
+              const date = new Date(log.timestamp_releve ?? log.created_at ?? '').toLocaleString(
+                'fr-FR',
+                {
+                  day: '2-digit',
+                  month: '2-digit',
+                  hour: '2-digit',
+                  minute: '2-digit',
+                }
+              )
               return (
                 <div
                   key={log.id}

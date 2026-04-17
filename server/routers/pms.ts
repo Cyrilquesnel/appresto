@@ -417,6 +417,7 @@ export const pmsRouter = router({
           plat_id: p.plat_id,
           plat_nom: p.plat_nom ?? null,
           danger: p.danger,
+          etape: p.etape_critique,
           etape_critique: p.etape_critique,
           ccp_numero: p.ccp_numero,
           temperature_critique: p.temperature_critique ?? null,

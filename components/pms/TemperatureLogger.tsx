@@ -6,9 +6,9 @@ import { queuePMSRecord, requestBackgroundSync } from '@/lib/pms-offline'
 interface EquipementForLogger {
   id: string
   nom: string
-  type: string
-  temp_min: number
-  temp_max: number
+  type: string | null
+  temp_min: number | null
+  temp_max: number | null
 }
 
 interface TemperatureLoggerProps {
@@ -37,7 +37,9 @@ export function TemperatureLogger({ equipement, onLogged }: TemperatureLoggerPro
 
   const parsed = parseFloat(value)
   const isHorsPlage =
-    value !== '' && !isNaN(parsed) && (parsed < equipement.temp_min || parsed > equipement.temp_max)
+    value !== '' &&
+    !isNaN(parsed) &&
+    (parsed < (equipement.temp_min ?? -Infinity) || parsed > (equipement.temp_max ?? Infinity))
 
   const handleSubmit = async () => {
     try {

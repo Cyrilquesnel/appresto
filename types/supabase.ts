@@ -640,36 +640,57 @@ export type Database = {
       haccp_points_critiques: {
         Row: {
           action_corrective: string | null
+          ccp_numero: string | null
           created_at: string | null
           danger: string | null
           etape: string
+          etape_critique: string | null
           frequence_controle: string | null
+          genere_le: string | null
           id: string
+          limite_critique: string | null
+          mesure_surveillance: string | null
           plat_id: string | null
+          plat_nom: string | null
           restaurant_id: string | null
           temperature_critique: number | null
+          verification: string | null
         }
         Insert: {
           action_corrective?: string | null
+          ccp_numero?: string | null
           created_at?: string | null
           danger?: string | null
           etape: string
+          etape_critique?: string | null
           frequence_controle?: string | null
+          genere_le?: string | null
           id?: string
+          limite_critique?: string | null
+          mesure_surveillance?: string | null
           plat_id?: string | null
+          plat_nom?: string | null
           restaurant_id?: string | null
           temperature_critique?: number | null
+          verification?: string | null
         }
         Update: {
           action_corrective?: string | null
+          ccp_numero?: string | null
           created_at?: string | null
           danger?: string | null
           etape?: string
+          etape_critique?: string | null
           frequence_controle?: string | null
+          genere_le?: string | null
           id?: string
+          limite_critique?: string | null
+          mesure_surveillance?: string | null
           plat_id?: string | null
+          plat_nom?: string | null
           restaurant_id?: string | null
           temperature_critique?: number | null
+          verification?: string | null
         }
         Relationships: [
           {
@@ -1306,37 +1327,78 @@ export type Database = {
         Row: {
           action_prise: string | null
           date_alerte: string | null
+          date_rappel: string | null
           fournisseur: string | null
           id: string
+          ingredient_id: string | null
+          lien_info: string | null
           lot_concerne: string | null
+          motif: string | null
+          nom_marque: string | null
+          nom_produit: string | null
           produit_nom: string | null
           rappelconso_id: string
           restaurant_id: string | null
+          risques: string | null
           statut: string | null
+          traite: boolean | null
+          traite_le: string | null
         }
         Insert: {
           action_prise?: string | null
           date_alerte?: string | null
+          date_rappel?: string | null
           fournisseur?: string | null
           id?: string
+          ingredient_id?: string | null
+          lien_info?: string | null
           lot_concerne?: string | null
+          motif?: string | null
+          nom_marque?: string | null
+          nom_produit?: string | null
           produit_nom?: string | null
           rappelconso_id: string
           restaurant_id?: string | null
+          risques?: string | null
           statut?: string | null
+          traite?: boolean | null
+          traite_le?: string | null
         }
         Update: {
           action_prise?: string | null
           date_alerte?: string | null
+          date_rappel?: string | null
           fournisseur?: string | null
           id?: string
+          ingredient_id?: string | null
+          lien_info?: string | null
           lot_concerne?: string | null
+          motif?: string | null
+          nom_marque?: string | null
+          nom_produit?: string | null
           produit_nom?: string | null
           rappelconso_id?: string
           restaurant_id?: string | null
+          risques?: string | null
           statut?: string | null
+          traite?: boolean | null
+          traite_le?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "rappel_alerts_ingredient_id_fkey"
+            columns: ["ingredient_id"]
+            isOneToOne: false
+            referencedRelation: "ingredients_view"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "rappel_alerts_ingredient_id_fkey"
+            columns: ["ingredient_id"]
+            isOneToOne: false
+            referencedRelation: "restaurant_ingredients"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "rappel_alerts_restaurant_id_fkey"
             columns: ["restaurant_id"]
@@ -1354,9 +1416,11 @@ export type Database = {
           dlc: string | null
           id: string
           ingredient_id: string | null
+          nom_produit: string | null
           numero_lot: string | null
           quantite: number | null
           reception_id: string | null
+          restaurant_id: string | null
           temperature_reception: number | null
           unite: string | null
         }
@@ -1367,9 +1431,11 @@ export type Database = {
           dlc?: string | null
           id?: string
           ingredient_id?: string | null
+          nom_produit?: string | null
           numero_lot?: string | null
           quantite?: number | null
           reception_id?: string | null
+          restaurant_id?: string | null
           temperature_reception?: number | null
           unite?: string | null
         }
@@ -1380,9 +1446,11 @@ export type Database = {
           dlc?: string | null
           id?: string
           ingredient_id?: string | null
+          nom_produit?: string | null
           numero_lot?: string | null
           quantite?: number | null
           reception_id?: string | null
+          restaurant_id?: string | null
           temperature_reception?: number | null
           unite?: string | null
         }
@@ -1408,39 +1476,52 @@ export type Database = {
             referencedRelation: "receptions"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "reception_items_restaurant_id_fkey"
+            columns: ["restaurant_id"]
+            isOneToOne: false
+            referencedRelation: "restaurants"
+            referencedColumns: ["id"]
+          },
         ]
       }
       receptions: {
         Row: {
           bon_de_commande_id: string | null
           created_at: string | null
-          date: string
+          date_reception: string
           facture_url: string | null
           fournisseur_id: string | null
           id: string
           notes: string | null
+          numero_bl: string | null
+          receptionne_par: string | null
           restaurant_id: string | null
           statut: string | null
         }
         Insert: {
           bon_de_commande_id?: string | null
           created_at?: string | null
-          date?: string
+          date_reception?: string
           facture_url?: string | null
           fournisseur_id?: string | null
           id?: string
           notes?: string | null
+          numero_bl?: string | null
+          receptionne_par?: string | null
           restaurant_id?: string | null
           statut?: string | null
         }
         Update: {
           bon_de_commande_id?: string | null
           created_at?: string | null
-          date?: string
+          date_reception?: string
           facture_url?: string | null
           fournisseur_id?: string | null
           id?: string
           notes?: string | null
+          numero_bl?: string | null
+          receptionne_par?: string | null
           restaurant_id?: string | null
           statut?: string | null
         }
@@ -1682,28 +1763,37 @@ export type Database = {
         Row: {
           action_corrective: string | null
           auteur_id: string | null
+          conforme: boolean | null
           created_at: string | null
           equipement_id: string | null
           id: string
+          releve_par: string | null
           restaurant_id: string | null
+          timestamp_releve: string | null
           valeur: number
         }
         Insert: {
           action_corrective?: string | null
           auteur_id?: string | null
+          conforme?: boolean | null
           created_at?: string | null
           equipement_id?: string | null
           id?: string
+          releve_par?: string | null
           restaurant_id?: string | null
+          timestamp_releve?: string | null
           valeur: number
         }
         Update: {
           action_corrective?: string | null
           auteur_id?: string | null
+          conforme?: boolean | null
           created_at?: string | null
           equipement_id?: string | null
           id?: string
+          releve_par?: string | null
           restaurant_id?: string | null
+          timestamp_releve?: string | null
           valeur?: number
         }
         Relationships: [
