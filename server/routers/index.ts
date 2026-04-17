@@ -7,6 +7,7 @@ import { pmsRouter } from './pms'
 import { stripeRouter } from './stripe'
 import { accountRouter } from './account'
 import { ingredientsRouter } from './ingredients'
+import { prospectionRouter } from './prospection'
 
 export const appRouter = router({
   plats: platsRouter,
@@ -17,6 +18,7 @@ export const appRouter = router({
   stripe: stripeRouter,
   account: accountRouter,
   ingredients: ingredientsRouter,
+  prospection: prospectionRouter,
 })
 
 export type AppRouter = typeof appRouter

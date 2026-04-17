@@ -67,6 +67,13 @@ export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
   })
 })
 
+export const adminProcedure = t.procedure.use(({ ctx, next }) => {
+  if (!ctx.user || ctx.user.email !== process.env.ADMIN_EMAIL) {
+    throw new TRPCError({ code: 'FORBIDDEN' })
+  }
+  return next({ ctx: { ...ctx, user: ctx.user } })
+})
+
 // Procédure avec rate limiting pour routes AI (Gemini, OCR)
 export const aiProcedure = protectedProcedure.use(async ({ ctx, next }) => {
   const { success } = await ratelimit.ai.limit(ctx.restaurantId)
