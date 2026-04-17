@@ -1,17 +1,19 @@
 // Génération de carousels visuels via Gamma API
-// textMode: "condense" — Gamma adapte le texte pour qu'il rentre dans les slides
+// textMode "generate" : Gamma génère le contenu depuis le prompt (pas besoin de Claude)
+// textMode "condense" : Gamma adapte du texte existant pour les slides
 // Dimensions 4x5 (portrait) pour Instagram/LinkedIn
 
 const GAMMA_API = 'https://public-api.gamma.app/v1.0'
-// Thème professionnel adapté au secteur restaurant / SaaS B2B
 const DEFAULT_THEME = 'default-light'
-// Polling : max 20 tentatives × 4s = 80s max
 const POLL_INTERVAL_MS = 4000
 const POLL_MAX = 20
 
+export type GammaTextMode = 'generate' | 'condense' | 'preserve'
+
 export async function generateCarousel(
-  text: string,
-  themeId = DEFAULT_THEME
+  inputText: string,
+  themeId = DEFAULT_THEME,
+  textMode: GammaTextMode = 'generate'
 ): Promise<string | null> {
   const apiKey = process.env.GAMMA_API_KEY
   if (!apiKey) {
@@ -19,7 +21,6 @@ export async function generateCarousel(
     return null
   }
 
-  // Étape 1 : lancer la génération
   let generationId: string
   try {
     const res = await fetch(`${GAMMA_API}/generations`, {
@@ -27,10 +28,10 @@ export async function generateCarousel(
       headers: { 'X-API-KEY': apiKey, 'Content-Type': 'application/json' },
       body: JSON.stringify({
         format: 'social',
-        inputText: text,
-        // condense : Gamma adapte le texte pour qu'il rentre dans le format
-        // avec une légère marge de sécurité (pas de texte tronqué)
-        textMode: 'condense',
+        inputText,
+        // generate : Gamma crée le contenu depuis le prompt, son propre AI
+        // condense : adapte le texte fourni pour qu'il rentre dans les slides (marge de sécurité)
+        textMode,
         themeId,
         cardOptions: { dimensions: '4x5' },
       }),
@@ -49,7 +50,7 @@ export async function generateCarousel(
     return null
   }
 
-  // Étape 2 : polling jusqu'à completed
+  // Polling jusqu'à completed (max 80s)
   for (let i = 0; i < POLL_MAX; i++) {
     await new Promise((r) => setTimeout(r, POLL_INTERVAL_MS))
 
