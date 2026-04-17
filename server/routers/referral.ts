@@ -194,7 +194,8 @@ export const referralRouter = router({
               .maybeSingle()
 
             if (sub?.stripe_customer_id) {
-              await stripe.customers.update(sub.stripe_customer_id, {
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              await (stripe.customers.update as any)(sub.stripe_customer_id, {
                 coupon: r.stripe_coupon_filleul,
                 metadata: { referral_code: normalizedCode },
               })

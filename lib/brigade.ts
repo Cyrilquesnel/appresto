@@ -81,7 +81,8 @@ export async function crediterParrain(restaurantId: string, couponId: string): P
   if (!sub?.stripe_subscription_id) {
     // Pas d'abonnement actif : on applique le coupon sur le customer pour le prochain paiement
     if (sub?.stripe_customer_id) {
-      await stripe.customers.update(sub.stripe_customer_id, {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      await (stripe.customers.update as any)(sub.stripe_customer_id, {
         coupon: couponId,
       })
     }
@@ -89,7 +90,8 @@ export async function crediterParrain(restaurantId: string, couponId: string): P
   }
 
   // Applique le coupon sur l'abonnement actif
-  await stripe.subscriptions.update(sub.stripe_subscription_id, {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  await (stripe.subscriptions.update as any)(sub.stripe_subscription_id, {
     coupon: couponId,
   })
 }
