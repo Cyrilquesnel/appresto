@@ -9,7 +9,9 @@ import { pingHeartbeat } from '@/lib/betteruptime'
 export const maxDuration = 60
 export const dynamic = 'force-dynamic'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+function getResend() {
+  return new Resend(process.env.RESEND_API_KEY)
+}
 
 interface WeeklyStats {
   week: string
@@ -59,7 +61,7 @@ export async function GET(req: NextRequest) {
     })()
 
     // 4. Envoyer l'email HTML
-    await resend.emails.send({
+    await getResend().emails.send({
       from: 'Le Rush CRM <noreply@lerush.app>',
       to: adminEmail,
       subject: `📊 Prospection hebdo — ${current?.contacts_sent ?? 0} contacts, ${current?.hot_leads ?? 0} leads chauds`,
