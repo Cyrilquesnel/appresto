@@ -20,15 +20,18 @@ export interface ProspectionMessageData {
  * Template name : "lerush_prospection_v1"
  * Variables : {{1}} = nom_restaurant, {{2}} = ville
  *
- * Pour soumettre le template :
  * Meta Business Manager → WhatsApp → Message Templates → Create Template
  * Catégorie : MARKETING
  * Corps :
- *   "Bonjour, j'ai vu {{1}} à {{2}} sur Google Maps et je me permets ce message.
- *    Je suis Cyril, 20 ans de restauration. J'ai créé Le Rush — l'app mobile
- *    pour gérer fiches techniques, coûts et HACCP sans prise de tête.
- *    Ça vous intéresse de voir ça en 15 min ? Répondez OUI.
- *    Répondez STOP pour ne plus recevoir de messages."
+ *   "Bonjour, je me permets ce message après avoir vu {{1}} à {{2}} sur Maps.
+ *
+ *    Vous gérez encore vos fiches techniques sur papier ou Excel ? C'était mon quotidien pendant 20 ans de restauration.
+ *
+ *    Avec Le Rush, ça prend 5 min : photo du plat → fiche tech + food cost + HACCP générés automatiquement.
+ *
+ *    Ça mérite 15 min de votre temps ? Répondez OUI.
+ *
+ *    STOP pour ne plus être contacté."
  */
 export async function sendProspectionMessage(
   data: ProspectionMessageData
