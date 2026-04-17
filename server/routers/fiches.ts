@@ -338,6 +338,27 @@ export const fichesRouter = router({
         }))
         await ctx.supabase.from('fiche_technique').insert(lignes)
 
+        // Upsert mercuriale pour les ingrédients avec prix_achat + fournisseur_id
+        for (let i = 0; i < ingredients.length; i++) {
+          const ing = ingredients[i]
+          if (!ing.prix_achat || !ing.fournisseur_id) continue
+          const ingredientId = resolvedIds[i]
+          await ctx.supabase
+            .from('mercuriale')
+            .update({ est_actif: false })
+            .eq('ingredient_id', ingredientId)
+            .eq('est_actif', true)
+          await ctx.supabase.from('mercuriale').insert({
+            restaurant_id: ctx.restaurantId,
+            ingredient_id: ingredientId,
+            fournisseur_id: ing.fournisseur_id,
+            prix: ing.prix_achat,
+            unite: ing.unite_achat ?? 'kg',
+            est_actif: true,
+            date_maj: new Date().toISOString(),
+          })
+        }
+
         // Nouveau snapshot version
         const { count } = await ctx.supabase
           .from('fiche_technique_versions')
