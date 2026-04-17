@@ -8,7 +8,7 @@ import { enrichRestaurantWebsite } from '@/lib/prospection/firecrawl'
 import { scoreProspect } from '@/lib/prospection/scorer'
 import { pingHeartbeat } from '@/lib/betteruptime'
 
-export const maxDuration = 60
+export const maxDuration = 55
 export const dynamic = 'force-dynamic'
 
 // Nombre max de restaurants à traiter par exécution (respecte rate limits)

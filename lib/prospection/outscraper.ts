@@ -127,8 +127,8 @@ export async function searchRestaurants(query: string, limit = 20): Promise<Outs
 
   console.log(`[outscraper] Tâche ${task.id} en cours, polling...`)
 
-  // Poll toutes les 5s pendant 90s max
-  for (let attempt = 0; attempt < 18; attempt++) {
+  // Poll toutes les 5s pendant 45s max (budget Vercel maxDuration=60)
+  for (let attempt = 0; attempt < 9; attempt++) {
     await new Promise((r) => setTimeout(r, 5000))
 
     const pollRes = await fetch(resultsUrl, {
@@ -152,7 +152,7 @@ export async function searchRestaurants(query: string, limit = 20): Promise<Outs
     console.log(`[outscraper] Status: ${result.status}, attente...`)
   }
 
-  throw new Error('[outscraper] Timeout après 90s')
+  throw new Error('[outscraper] Timeout après 45s')
 }
 
 function filterResults(places: OutscraperPlace[]): OutscraperPlace[] {
