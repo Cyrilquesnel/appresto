@@ -24,7 +24,17 @@ async function resolveIngredientId(
   restaurantId: string,
   ing: { ingredient_id?: string; nom: string; allergenes?: string[] }
 ): Promise<string> {
-  if (ing.ingredient_id) return ing.ingredient_id
+  if (ing.ingredient_id) {
+    const { data: exists } = await supabase
+      .from('restaurant_ingredients')
+      .select('id')
+      .eq('id', ing.ingredient_id)
+      .eq('restaurant_id', restaurantId)
+      .is('deleted_at', null)
+      .single()
+    if (exists) return exists.id
+    // ID invalide ou ingrédient supprimé — on retombe sur la recherche par nom
+  }
 
   // 1. Cherche un ingrédient existant avec ce nom (non supprimé)
   const { data: existing } = await supabase
