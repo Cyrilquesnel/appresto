@@ -1,655 +1,1454 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Le Rush — 10 Propositions de Logo</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Le Rush — 10 Propositions de Logo</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&family=Open+Sans:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
 
-  :root {
-    --purple: #7C3AED;
-    --purple-light: #A78BFA;
-    --orange: #F97316;
-    --orange-dark: #EA580C;
-    --bg: #FAF5FF;
-    --text: #1E1B4B;
-    --muted: #6B7280;
-    --white: #FFFFFF;
-    --dark: #0F0A1E;
-  }
+      :root {
+        --purple: #7c3aed;
+        --purple-light: #a78bfa;
+        --orange: #f97316;
+        --orange-dark: #ea580c;
+        --bg: #faf5ff;
+        --text: #1e1b4b;
+        --muted: #6b7280;
+        --white: #ffffff;
+        --dark: #0f0a1e;
+      }
 
-  body {
-    font-family: 'Open Sans', sans-serif;
-    background: linear-gradient(135deg, #F5F0FF 0%, #FFF7ED 100%);
-    min-height: 100vh;
-    padding: 60px 24px;
-    color: var(--text);
-  }
+      body {
+        font-family: 'Open Sans', sans-serif;
+        background: linear-gradient(135deg, #f5f0ff 0%, #fff7ed 100%);
+        min-height: 100vh;
+        padding: 60px 24px;
+        color: var(--text);
+      }
 
-  .page-header {
-    text-align: center;
-    margin-bottom: 72px;
-  }
+      .page-header {
+        text-align: center;
+        margin-bottom: 72px;
+      }
 
-  .page-header h1 {
-    font-family: 'Poppins', sans-serif;
-    font-size: 42px;
-    font-weight: 900;
-    color: var(--text);
-    letter-spacing: -1px;
-    margin-bottom: 8px;
-  }
+      .page-header h1 {
+        font-family: 'Poppins', sans-serif;
+        font-size: 42px;
+        font-weight: 900;
+        color: var(--text);
+        letter-spacing: -1px;
+        margin-bottom: 8px;
+      }
 
-  .page-header h1 span { color: var(--orange); }
+      .page-header h1 span {
+        color: var(--orange);
+      }
 
-  .page-header p {
-    font-size: 16px;
-    color: var(--muted);
-    max-width: 560px;
-    margin: 0 auto;
-    line-height: 1.7;
-  }
+      .page-header p {
+        font-size: 16px;
+        color: var(--muted);
+        max-width: 560px;
+        margin: 0 auto;
+        line-height: 1.7;
+      }
 
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
-    gap: 32px;
-    max-width: 1320px;
-    margin: 0 auto;
-  }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+        gap: 32px;
+        max-width: 1320px;
+        margin: 0 auto;
+      }
 
-  .card {
-    background: white;
-    border-radius: 24px;
-    overflow: hidden;
-    box-shadow: 0 4px 24px rgba(124,58,237,0.08);
-    transition: transform 180ms ease, box-shadow 180ms ease;
-    cursor: pointer;
-  }
+      .card {
+        background: white;
+        border-radius: 24px;
+        overflow: hidden;
+        box-shadow: 0 4px 24px rgba(124, 58, 237, 0.08);
+        transition:
+          transform 180ms ease,
+          box-shadow 180ms ease;
+        cursor: pointer;
+      }
 
-  .card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 40px rgba(124,58,237,0.16);
-  }
+      .card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 40px rgba(124, 58, 237, 0.16);
+      }
 
-  .logo-stage {
-    height: 260px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-  }
+      .logo-stage {
+        height: 260px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+      }
 
-  .card-info {
-    padding: 24px 28px;
-    border-top: 1px solid #F3F4F6;
-  }
+      .card-info {
+        padding: 24px 28px;
+        border-top: 1px solid #f3f4f6;
+      }
 
-  .card-number {
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: var(--orange);
-    margin-bottom: 4px;
-  }
+      .card-number {
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: var(--orange);
+        margin-bottom: 4px;
+      }
 
-  .card-name {
-    font-family: 'Poppins', sans-serif;
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--text);
-    margin-bottom: 6px;
-  }
+      .card-name {
+        font-family: 'Poppins', sans-serif;
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--text);
+        margin-bottom: 6px;
+      }
 
-  .card-desc {
-    font-size: 13px;
-    color: var(--muted);
-    line-height: 1.6;
-  }
+      .card-desc {
+        font-size: 13px;
+        color: var(--muted);
+        line-height: 1.6;
+      }
 
-  .tag-row {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-    margin-top: 12px;
-  }
+      .tag-row {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        margin-top: 12px;
+      }
 
-  .tag {
-    font-size: 11px;
-    font-weight: 600;
-    padding: 3px 10px;
-    border-radius: 20px;
-    background: #F3F0FF;
-    color: var(--purple);
-  }
+      .tag {
+        font-size: 11px;
+        font-weight: 600;
+        padding: 3px 10px;
+        border-radius: 20px;
+        background: #f3f0ff;
+        color: var(--purple);
+      }
 
-  .tag.orange { background: #FFF7ED; color: var(--orange-dark); }
-  .tag.dark { background: var(--text); color: white; }
+      .tag.orange {
+        background: #fff7ed;
+        color: var(--orange-dark);
+      }
+      .tag.dark {
+        background: var(--text);
+        color: white;
+      }
 
-  /* ────────────────────────────────────────────────────────── */
-  /* LOGO 1 — Fork Lightning                                    */
-  /* ────────────────────────────────────────────────────────── */
-  .stage-1 { background: var(--dark); }
+      /* ────────────────────────────────────────────────────────── */
+      /* LOGO 1 — Fork Lightning                                    */
+      /* ────────────────────────────────────────────────────────── */
+      .stage-1 {
+        background: var(--dark);
+      }
 
-  /* ────────────────────────────────────────────────────────── */
-  /* LOGO 2 — The Rush R                                        */
-  /* ────────────────────────────────────────────────────────── */
-  .stage-2 { background: linear-gradient(135deg, #7C3AED, #5B21B6); }
+      /* ────────────────────────────────────────────────────────── */
+      /* LOGO 2 — The Rush R                                        */
+      /* ────────────────────────────────────────────────────────── */
+      .stage-2 {
+        background: linear-gradient(135deg, #7c3aed, #5b21b6);
+      }
 
-  /* ────────────────────────────────────────────────────────── */
-  /* LOGO 3 — Flame Knife                                       */
-  /* ────────────────────────────────────────────────────────── */
-  .stage-3 { background: #FFFBF0; }
+      /* ────────────────────────────────────────────────────────── */
+      /* LOGO 3 — Flame Knife                                       */
+      /* ────────────────────────────────────────────────────────── */
+      .stage-3 {
+        background: #fffbf0;
+      }
 
-  /* ────────────────────────────────────────────────────────── */
-  /* LOGO 4 — Speed Plate                                       */
-  /* ────────────────────────────────────────────────────────── */
-  .stage-4 { background: linear-gradient(135deg, #F97316, #EA580C); }
+      /* ────────────────────────────────────────────────────────── */
+      /* LOGO 4 — Speed Plate                                       */
+      /* ────────────────────────────────────────────────────────── */
+      .stage-4 {
+        background: linear-gradient(135deg, #f97316, #ea580c);
+      }
 
-  /* ────────────────────────────────────────────────────────── */
-  /* LOGO 5 — Brigade Badge                                     */
-  /* ────────────────────────────────────────────────────────── */
-  .stage-5 { background: #0F172A; }
+      /* ────────────────────────────────────────────────────────── */
+      /* LOGO 5 — Brigade Badge                                     */
+      /* ────────────────────────────────────────────────────────── */
+      .stage-5 {
+        background: #0f172a;
+      }
 
-  /* ────────────────────────────────────────────────────────── */
-  /* LOGO 6 — Rush Wave                                         */
-  /* ────────────────────────────────────────────────────────── */
-  .stage-6 { background: linear-gradient(160deg, #EEF2FF, #F0FDF4); }
+      /* ────────────────────────────────────────────────────────── */
+      /* LOGO 6 — Rush Wave                                         */
+      /* ────────────────────────────────────────────────────────── */
+      .stage-6 {
+        background: linear-gradient(160deg, #eef2ff, #f0fdf4);
+      }
 
-  /* ────────────────────────────────────────────────────────── */
-  /* LOGO 7 — Chef Peak                                         */
-  /* ────────────────────────────────────────────────────────── */
-  .stage-7 { background: linear-gradient(135deg, #1E1B4B, #312E81); }
+      /* ────────────────────────────────────────────────────────── */
+      /* LOGO 7 — Chef Peak                                         */
+      /* ────────────────────────────────────────────────────────── */
+      .stage-7 {
+        background: linear-gradient(135deg, #1e1b4b, #312e81);
+      }
 
-  /* ────────────────────────────────────────────────────────── */
-  /* LOGO 8 — Toque Motion                                      */
-  /* ────────────────────────────────────────────────────────── */
-  .stage-8 { background: #FAFAFA; }
+      /* ────────────────────────────────────────────────────────── */
+      /* LOGO 8 — Toque Motion                                      */
+      /* ────────────────────────────────────────────────────────── */
+      .stage-8 {
+        background: #fafafa;
+      }
 
-  /* ────────────────────────────────────────────────────────── */
-  /* LOGO 9 — Fire Brand                                        */
-  /* ────────────────────────────────────────────────────────── */
-  .stage-9 { background: var(--dark); }
+      /* ────────────────────────────────────────────────────────── */
+      /* LOGO 9 — Fire Brand                                        */
+      /* ────────────────────────────────────────────────────────── */
+      .stage-9 {
+        background: var(--dark);
+      }
 
-  /* ────────────────────────────────────────────────────────── */
-  /* LOGO 10 — Le Rush Wordmark                                 */
-  /* ────────────────────────────────────────────────────────── */
-  .stage-10 { background: white; }
+      /* ────────────────────────────────────────────────────────── */
+      /* LOGO 10 — Le Rush Wordmark                                 */
+      /* ────────────────────────────────────────────────────────── */
+      .stage-10 {
+        background: white;
+      }
 
-  .logo-lockup {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-  }
+      .logo-lockup {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+      }
 
-  .logo-lockup-h {
-    display: flex;
-    align-items: center;
-    gap: 18px;
-  }
+      .logo-lockup-h {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+      }
 
-  /* LOGOTYPE TEXT STYLES */
-  .lerush-text {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 800;
-    letter-spacing: -1px;
-  }
+      /* LOGOTYPE TEXT STYLES */
+      .lerush-text {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 800;
+        letter-spacing: -1px;
+      }
 
-  .lerush-text .le { font-weight: 400; opacity: 0.8; }
-</style>
-</head>
-<body>
+      .lerush-text .le {
+        font-weight: 400;
+        opacity: 0.8;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page-header">
+      <h1>Le Rush — <span>10 Propositions Logo</span></h1>
+      <p>
+        Identités visuelles pour l'outil SaaS qui révolutionne le quotidien des restaurateurs.
+        Dynamique, ambitieux, universel.
+      </p>
+    </div>
 
-<div class="page-header">
-  <h1>Le Rush — <span>10 Propositions Logo</span></h1>
-  <p>Identités visuelles pour l'outil SaaS qui révolutionne le quotidien des restaurateurs. Dynamique, ambitieux, universel.</p>
-</div>
-
-<div class="grid">
-
-  <!-- ═══════════════════════════════════════════════════ -->
-  <!-- LOGO 1 — Fork Lightning                            -->
-  <!-- ═══════════════════════════════════════════════════ -->
-  <div class="card">
-    <div class="logo-stage stage-1">
-      <div class="logo-lockup-h">
-        <svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Fork base transforming into lightning bolt -->
-          <rect width="72" height="72" rx="18" fill="#1A1035"/>
-          <!-- Fork tines -->
-          <line x1="20" y1="10" x2="20" y2="28" stroke="#F97316" stroke-width="3.5" stroke-linecap="round"/>
-          <line x1="27" y1="10" x2="27" y2="28" stroke="#F97316" stroke-width="3.5" stroke-linecap="round"/>
-          <line x1="34" y1="10" x2="34" y2="28" stroke="#F97316" stroke-width="3.5" stroke-linecap="round"/>
-          <!-- Fork handle merging into lightning -->
-          <path d="M20 28 Q27 34 27 40 L27 62" stroke="#F97316" stroke-width="3.5" stroke-linecap="round"/>
-          <!-- Lightning bolt (right side, white) -->
-          <path d="M44 8 L34 36 L42 36 L32 64 L54 30 L44 30 Z" fill="#A78BFA" opacity="0.9"/>
-          <!-- Speed lines -->
-          <line x1="56" y1="20" x2="65" y2="20" stroke="#F97316" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
-          <line x1="58" y1="28" x2="65" y2="28" stroke="#F97316" stroke-width="2" stroke-linecap="round" opacity="0.4"/>
-          <line x1="60" y1="36" x2="65" y2="36" stroke="#F97316" stroke-width="2" stroke-linecap="round" opacity="0.25"/>
-        </svg>
-        <div>
-          <div style="font-family:Poppins;font-weight:800;font-size:32px;color:white;letter-spacing:-1px;line-height:1">
-            <span style="color:#A78BFA">Le</span> Rush
+    <div class="grid">
+      <!-- ═══════════════════════════════════════════════════ -->
+      <!-- LOGO 1 — Fork Lightning                            -->
+      <!-- ═══════════════════════════════════════════════════ -->
+      <div class="card">
+        <div class="logo-stage stage-1">
+          <div class="logo-lockup-h">
+            <svg
+              width="72"
+              height="72"
+              viewBox="0 0 72 72"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <!-- Fork base transforming into lightning bolt -->
+              <rect width="72" height="72" rx="18" fill="#1A1035" />
+              <!-- Fork tines -->
+              <line
+                x1="20"
+                y1="10"
+                x2="20"
+                y2="28"
+                stroke="#F97316"
+                stroke-width="3.5"
+                stroke-linecap="round"
+              />
+              <line
+                x1="27"
+                y1="10"
+                x2="27"
+                y2="28"
+                stroke="#F97316"
+                stroke-width="3.5"
+                stroke-linecap="round"
+              />
+              <line
+                x1="34"
+                y1="10"
+                x2="34"
+                y2="28"
+                stroke="#F97316"
+                stroke-width="3.5"
+                stroke-linecap="round"
+              />
+              <!-- Fork handle merging into lightning -->
+              <path
+                d="M20 28 Q27 34 27 40 L27 62"
+                stroke="#F97316"
+                stroke-width="3.5"
+                stroke-linecap="round"
+              />
+              <!-- Lightning bolt (right side, white) -->
+              <path d="M44 8 L34 36 L42 36 L32 64 L54 30 L44 30 Z" fill="#A78BFA" opacity="0.9" />
+              <!-- Speed lines -->
+              <line
+                x1="56"
+                y1="20"
+                x2="65"
+                y2="20"
+                stroke="#F97316"
+                stroke-width="2"
+                stroke-linecap="round"
+                opacity="0.6"
+              />
+              <line
+                x1="58"
+                y1="28"
+                x2="65"
+                y2="28"
+                stroke="#F97316"
+                stroke-width="2"
+                stroke-linecap="round"
+                opacity="0.4"
+              />
+              <line
+                x1="60"
+                y1="36"
+                x2="65"
+                y2="36"
+                stroke="#F97316"
+                stroke-width="2"
+                stroke-linecap="round"
+                opacity="0.25"
+              />
+            </svg>
+            <div>
+              <div
+                style="
+                  font-family: Poppins;
+                  font-weight: 800;
+                  font-size: 32px;
+                  color: white;
+                  letter-spacing: -1px;
+                  line-height: 1;
+                "
+              >
+                <span style="color: #a78bfa">Le</span> Rush
+              </div>
+              <div
+                style="
+                  font-family: Poppins;
+                  font-size: 10px;
+                  font-weight: 600;
+                  color: #f97316;
+                  letter-spacing: 4px;
+                  text-transform: uppercase;
+                  margin-top: 2px;
+                "
+              >
+                Restaurant OS
+              </div>
+            </div>
           </div>
-          <div style="font-family:Poppins;font-size:10px;font-weight:600;color:#F97316;letter-spacing:4px;text-transform:uppercase;margin-top:2px">Restaurant OS</div>
         </div>
-      </div>
-    </div>
-    <div class="card-info">
-      <div class="card-number">Proposition 01</div>
-      <div class="card-name">Fork Lightning</div>
-      <div class="card-desc">La fourchette se transforme en éclair — restauration + vitesse. Dark background, contraste maximal. Parfait pour maillots, caps, packaging.</div>
-      <div class="tag-row">
-        <span class="tag">Universel</span>
-        <span class="tag orange">Sportswear</span>
-        <span class="tag dark">Dark</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- ═══════════════════════════════════════════════════ -->
-  <!-- LOGO 2 — The Rush R Monogram                       -->
-  <!-- ═══════════════════════════════════════════════════ -->
-  <div class="card">
-    <div class="logo-stage stage-2">
-      <div class="logo-lockup">
-        <!-- Bold R with speed slash -->
-        <svg width="96" height="96" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="48" cy="48" r="48" fill="rgba(255,255,255,0.1)"/>
-          <!-- Giant R -->
-          <text x="16" y="76" font-family="Poppins,sans-serif" font-weight="900" font-size="74" fill="white" letter-spacing="-4">R</text>
-          <!-- Orange speed slash through R -->
-          <path d="M52 20 L38 76" stroke="#F97316" stroke-width="5" stroke-linecap="round"/>
-          <!-- Small fork icon replacing leg of R -->
-          <circle cx="72" cy="72" r="14" fill="#F97316"/>
-          <line x1="68" y1="65" x2="68" y2="71" stroke="white" stroke-width="2" stroke-linecap="round"/>
-          <line x1="72" y1="65" x2="72" y2="73" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
-          <line x1="76" y1="65" x2="76" y2="71" stroke="white" stroke-width="2" stroke-linecap="round"/>
-          <line x1="72" y1="73" x2="72" y2="79" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
-        </svg>
-        <div style="font-family:Poppins;font-weight:800;font-size:26px;color:white;letter-spacing:6px;text-transform:uppercase">LE RUSH</div>
-      </div>
-    </div>
-    <div class="card-info">
-      <div class="card-number">Proposition 02</div>
-      <div class="card-name">The Rush R — Monogram</div>
-      <div class="card-desc">Monogramme "R" bold avec un slash orange dynamique. Lisible à toute taille — embroidery maillot, favicon, app icon. Le cercle orange porte la fourchette en badge.</div>
-      <div class="tag-row">
-        <span class="tag">Compact</span>
-        <span class="tag orange">App Icon</span>
-        <span class="tag">Broderie</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- ═══════════════════════════════════════════════════ -->
-  <!-- LOGO 3 — Flame Knife                               -->
-  <!-- ═══════════════════════════════════════════════════ -->
-  <div class="card">
-    <div class="logo-stage stage-3">
-      <div class="logo-lockup-h">
-        <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Knife silhouette -->
-          <path d="M38 8 C38 8 52 22 52 42 C52 52 46 60 40 64 L40 72 L36 72 L36 64 C30 60 24 52 24 42 C24 22 38 8 38 8Z" fill="#1E1B4B"/>
-          <!-- Flame inside knife -->
-          <path d="M40 28 C40 28 46 36 44 44 C43 48 40 52 40 52 C40 52 34 48 32 44 C30 36 36 28 40 28Z" fill="#F97316"/>
-          <path d="M40 34 C40 34 43 38 42 42 C41.5 44 40 46 40 46 C40 46 37 44 36 42 C35 38 37 34 40 34Z" fill="#FEF3C7"/>
-          <!-- Handle dots -->
-          <circle cx="38" cy="67" r="1.5" fill="#9CA3AF"/>
-          <circle cx="38" cy="71" r="1.5" fill="#9CA3AF"/>
-        </svg>
-        <div>
-          <div style="font-family:Poppins;font-weight:900;font-size:38px;color:#1E1B4B;letter-spacing:-2px;line-height:1">
-            le<span style="color:#F97316">rush</span>
+        <div class="card-info">
+          <div class="card-number">Proposition 01</div>
+          <div class="card-name">Fork Lightning</div>
+          <div class="card-desc">
+            La fourchette se transforme en éclair — restauration + vitesse. Dark background,
+            contraste maximal. Parfait pour maillots, caps, packaging.
           </div>
-          <div style="font-family:Open Sans;font-size:11px;font-weight:600;color:#9CA3AF;letter-spacing:3px;text-transform:uppercase;margin-top:4px">Gestion · Cuisine · Performance</div>
-        </div>
-      </div>
-    </div>
-    <div class="card-info">
-      <div class="card-number">Proposition 03</div>
-      <div class="card-name">Flame Knife</div>
-      <div class="card-desc">Un couteau de chef avec une flamme gravée à l'intérieur — passion culinaire + feu du service. Élégant, lisible sur fond clair. Très pro pour les cartes de visite.</div>
-      <div class="tag-row">
-        <span class="tag">Premium</span>
-        <span class="tag orange">Gastronomie</span>
-        <span class="tag">Print</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- ═══════════════════════════════════════════════════ -->
-  <!-- LOGO 4 — Speed Plate                               -->
-  <!-- ═══════════════════════════════════════════════════ -->
-  <div class="card">
-    <div class="logo-stage stage-4">
-      <div class="logo-lockup">
-        <svg width="140" height="80" viewBox="0 0 140 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Motion lines left -->
-          <line x1="4" y1="32" x2="28" y2="32" stroke="rgba(255,255,255,0.4)" stroke-width="3" stroke-linecap="round"/>
-          <line x1="10" y1="42" x2="28" y2="42" stroke="rgba(255,255,255,0.25)" stroke-width="2.5" stroke-linecap="round"/>
-          <line x1="16" y1="52" x2="28" y2="52" stroke="rgba(255,255,255,0.15)" stroke-width="2" stroke-linecap="round"/>
-          <!-- Plate circle -->
-          <circle cx="70" cy="42" r="34" fill="white"/>
-          <circle cx="70" cy="42" r="26" fill="none" stroke="#EA580C" stroke-width="2"/>
-          <!-- Fork on plate -->
-          <line x1="60" y1="30" x2="60" y2="38" stroke="#1E1B4B" stroke-width="2.5" stroke-linecap="round"/>
-          <line x1="64" y1="30" x2="64" y2="38" stroke="#1E1B4B" stroke-width="2.5" stroke-linecap="round"/>
-          <line x1="68" y1="30" x2="68" y2="38" stroke="#1E1B4B" stroke-width="2.5" stroke-linecap="round"/>
-          <path d="M60 38 Q64 43 64 50 L64 54" stroke="#1E1B4B" stroke-width="2.5" stroke-linecap="round"/>
-          <!-- Knife on plate -->
-          <path d="M76 30 C76 30 80 36 80 54 L76 54" stroke="#1E1B4B" stroke-width="2.5" stroke-linecap="round"/>
-          <!-- Motion lines right -->
-          <line x1="112" y1="32" x2="136" y2="32" stroke="rgba(255,255,255,0.4)" stroke-width="3" stroke-linecap="round"/>
-          <line x1="112" y1="42" x2="130" y2="42" stroke="rgba(255,255,255,0.25)" stroke-width="2.5" stroke-linecap="round"/>
-          <line x1="112" y1="52" x2="124" y2="52" stroke="rgba(255,255,255,0.15)" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-        <div style="font-family:Poppins;font-weight:900;font-size:30px;color:white;letter-spacing:-1px;text-align:center">
-          LE RUSH
-        </div>
-      </div>
-    </div>
-    <div class="card-info">
-      <div class="card-number">Proposition 04</div>
-      <div class="card-name">Speed Plate</div>
-      <div class="card-desc">L'assiette en mouvement — lignes de vitesse qui encadrent le couvert. Orange vif, énergie du service. Excellent pour les uniformes et le packaging alimentaire.</div>
-      <div class="tag-row">
-        <span class="tag orange">Énergie</span>
-        <span class="tag">Packaging</span>
-        <span class="tag">Uniforme</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- ═══════════════════════════════════════════════════ -->
-  <!-- LOGO 5 — Brigade Badge                             -->
-  <!-- ═══════════════════════════════════════════════════ -->
-  <div class="card">
-    <div class="logo-stage stage-5">
-      <div class="logo-lockup">
-        <svg width="100" height="110" viewBox="0 0 100 110" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Shield / Badge shape -->
-          <path d="M50 4 L92 20 L92 58 C92 80 72 98 50 106 C28 98 8 80 8 58 L8 20 Z" fill="#1E293B" stroke="#7C3AED" stroke-width="2"/>
-          <!-- Inner shield -->
-          <path d="M50 14 L82 26 L82 56 C82 74 68 88 50 96 C32 88 18 74 18 56 L18 26 Z" fill="#0F172A"/>
-          <!-- Chef toque simplified -->
-          <ellipse cx="50" cy="40" rx="18" ry="6" fill="#7C3AED"/>
-          <rect x="34" y="28" width="32" height="14" rx="6" fill="#A78BFA"/>
-          <rect x="38" y="40" width="24" height="4" rx="2" fill="#7C3AED"/>
-          <!-- LE RUSH inside badge -->
-          <text x="50" y="62" font-family="Poppins,sans-serif" font-weight="800" font-size="13" fill="white" text-anchor="middle" letter-spacing="2">LE RUSH</text>
-          <!-- Star dividers -->
-          <text x="28" y="62" font-family="sans-serif" font-size="8" fill="#F97316" text-anchor="middle">★</text>
-          <text x="72" y="62" font-family="sans-serif" font-size="8" fill="#F97316" text-anchor="middle">★</text>
-          <!-- Tagline -->
-          <text x="50" y="74" font-family="Open Sans,sans-serif" font-weight="600" font-size="7" fill="#6B7280" text-anchor="middle" letter-spacing="2">RESTAURANT OS</text>
-        </svg>
-      </div>
-    </div>
-    <div class="card-info">
-      <div class="card-number">Proposition 05</div>
-      <div class="card-name">Brigade Badge</div>
-      <div class="card-desc">Badge de brigade façon écusson militaire — prestige, équipe, appartenance. La toque intégrée dans le blason. Idéal pour l'embroidery maillots, casquettes, tabliers.</div>
-      <div class="tag-row">
-        <span class="tag">Prestige</span>
-        <span class="tag orange">Broderie</span>
-        <span class="tag dark">Maillot</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- ═══════════════════════════════════════════════════ -->
-  <!-- LOGO 6 — Rush Wave                                 -->
-  <!-- ═══════════════════════════════════════════════════ -->
-  <div class="card">
-    <div class="logo-stage stage-6">
-      <div class="logo-lockup-h">
-        <svg width="70" height="70" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Background circle gradient -->
-          <circle cx="35" cy="35" r="35" fill="url(#grad6)"/>
-          <defs>
-            <linearGradient id="grad6" x1="0" y1="0" x2="70" y2="70">
-              <stop offset="0%" stop-color="#7C3AED"/>
-              <stop offset="100%" stop-color="#F97316"/>
-            </linearGradient>
-          </defs>
-          <!-- Fork tines (white) -->
-          <line x1="22" y1="14" x2="22" y2="28" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
-          <line x1="28" y1="14" x2="28" y2="28" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
-          <line x1="34" y1="14" x2="34" y2="28" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
-          <path d="M22 28 Q28 34 28 40 L28 56" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
-          <!-- Wave / speed motion -->
-          <path d="M36 35 Q42 28 50 32 Q58 36 54 44" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.9"/>
-          <path d="M36 42 Q44 36 52 40 Q58 44 55 50" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.55"/>
-          <path d="M38 49 Q44 44 50 47" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0.3"/>
-        </svg>
-        <div>
-          <div style="font-family:Poppins;font-weight:900;font-size:34px;letter-spacing:-1.5px;line-height:1">
-            <span style="background:linear-gradient(135deg,#7C3AED,#F97316);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Le Rush</span>
-          </div>
-          <div style="font-family:Open Sans;font-size:10px;font-weight:700;color:#9CA3AF;letter-spacing:3px;text-transform:uppercase;margin-top:3px">L'OS des Restaurateurs</div>
-        </div>
-      </div>
-    </div>
-    <div class="card-info">
-      <div class="card-number">Proposition 06</div>
-      <div class="card-name">Rush Wave — Gradient</div>
-      <div class="card-desc">Gradient violet→orange symbolisant l'élan du service. La fourchette génère des ondes de vitesse. Le dégradé sur le wordmark est moderne et mémorable.</div>
-      <div class="tag-row">
-        <span class="tag">Digital First</span>
-        <span class="tag orange">Gradient</span>
-        <span class="tag">App</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- ═══════════════════════════════════════════════════ -->
-  <!-- LOGO 7 — Chef Peak                                 -->
-  <!-- ═══════════════════════════════════════════════════ -->
-  <div class="card">
-    <div class="logo-stage stage-7">
-      <div class="logo-lockup">
-        <svg width="160" height="90" viewBox="0 0 160 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Mountain peak shape = toque silhouette -->
-          <path d="M80 8 L110 58 L50 58 Z" fill="#7C3AED"/>
-          <!-- Peak inner highlight -->
-          <path d="M80 18 L98 52 L62 52 Z" fill="#A78BFA" opacity="0.4"/>
-          <!-- Summit dot -->
-          <circle cx="80" cy="10" r="4" fill="#F97316"/>
-          <!-- Speed line base -->
-          <rect x="36" y="62" width="88" height="3" rx="1.5" fill="#7C3AED" opacity="0.6"/>
-          <rect x="46" y="68" width="68" height="2" rx="1" fill="#7C3AED" opacity="0.35"/>
-          <rect x="56" y="73" width="48" height="1.5" rx="0.75" fill="#7C3AED" opacity="0.18"/>
-          <!-- Wordmark -->
-          <text x="80" y="90" font-family="Poppins,sans-serif" font-weight="800" font-size="18" fill="white" text-anchor="middle" letter-spacing="5">LE RUSH</text>
-        </svg>
-      </div>
-    </div>
-    <div class="card-info">
-      <div class="card-number">Proposition 07</div>
-      <div class="card-name">Chef Peak — Ambition</div>
-      <div class="card-desc">Le pic de montagne évoque à la fois la toque du chef et l'ambition d'atteindre le sommet. Le point orange = l'objectif. Simple, fort, intemporel.</div>
-      <div class="tag-row">
-        <span class="tag">Ambitieux</span>
-        <span class="tag dark">Premium</span>
-        <span class="tag">Intemporel</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- ═══════════════════════════════════════════════════ -->
-  <!-- LOGO 8 — Toque Motion                              -->
-  <!-- ═══════════════════════════════════════════════════ -->
-  <div class="card">
-    <div class="logo-stage stage-8">
-      <div class="logo-lockup-h">
-        <svg width="68" height="68" viewBox="0 0 68 68" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Toque stylisée avec vitesse -->
-          <!-- Bande basse de la toque -->
-          <rect x="12" y="46" width="44" height="10" rx="3" fill="#1E1B4B"/>
-          <!-- Corps de la toque -->
-          <path d="M16 46 C16 46 14 20 34 16 C54 20 52 46 52 46 Z" fill="#1E1B4B"/>
-          <!-- Bouffant de la toque (blanc) -->
-          <ellipse cx="34" cy="30" rx="16" ry="12" fill="white" stroke="#E5E7EB" stroke-width="1.5"/>
-          <!-- Lignes de vitesse qui sortent de la toque vers la droite -->
-          <line x1="52" y1="22" x2="64" y2="22" stroke="#F97316" stroke-width="3" stroke-linecap="round"/>
-          <line x1="54" y1="30" x2="64" y2="30" stroke="#F97316" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
-          <line x1="56" y1="38" x2="64" y2="38" stroke="#F97316" stroke-width="1.5" stroke-linecap="round" opacity="0.35"/>
-          <!-- Small circle accent -->
-          <circle cx="34" cy="30" r="5" fill="#7C3AED"/>
-        </svg>
-        <div>
-          <div style="font-family:Poppins;font-weight:900;font-size:36px;color:#1E1B4B;letter-spacing:-2px;line-height:1.05">
-            Le<br/><span style="color:#7C3AED">Rush</span>
+          <div class="tag-row">
+            <span class="tag">Universel</span>
+            <span class="tag orange">Sportswear</span>
+            <span class="tag dark">Dark</span>
           </div>
         </div>
       </div>
-    </div>
-    <div class="card-info">
-      <div class="card-number">Proposition 08</div>
-      <div class="card-name">Toque Motion</div>
-      <div class="card-desc">La toque classique avec des lignes de vitesse orange — mouvement, rapidité, passion. Design épuré sur blanc, très polyvalent. Parfait pour les cartes de visite B2B.</div>
-      <div class="tag-row">
-        <span class="tag">B2B</span>
-        <span class="tag">Clean</span>
-        <span class="tag orange">Polyvalent</span>
-      </div>
-    </div>
-  </div>
 
-  <!-- ═══════════════════════════════════════════════════ -->
-  <!-- LOGO 9 — Fire Brand                                -->
-  <!-- ═══════════════════════════════════════════════════ -->
-  <div class="card">
-    <div class="logo-stage stage-9">
-      <div class="logo-lockup-h">
-        <svg width="64" height="80" viewBox="0 0 64 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Stylized R as fire/flame shape -->
-          <path d="M12 72 L12 8 L36 8 C48 8 56 16 56 28 C56 36 52 42 44 45 L56 72 L44 72 L34 47 L24 47 L24 72 Z" fill="none"/>
-          <!-- R filled avec flamme -->
-          <path d="M12 72 L12 8 L36 8 C47 8 54 15 54 27 C54 35 50 41 43 45 L54 72 L43 72 L34 47 L23 47 L23 72 Z" fill="#F97316"/>
-          <!-- Flame highlight on R bowl -->
-          <path d="M23 16 L35 16 C42 16 46 21 46 27 C46 33 42 39 35 39 L23 39 Z" fill="#FEF3C7" opacity="0.4"/>
-          <!-- Flame tip -->
-          <path d="M28 6 C28 6 32 -2 38 4 C34 2 36 8 36 8 L28 8 Z" fill="#F97316"/>
-          <path d="M30 6 C30 6 33 1 36 5" stroke="#FCD34D" stroke-width="1.5" stroke-linecap="round"/>
-        </svg>
-        <div>
-          <div style="font-family:Poppins;font-weight:800;font-size:14px;color:white;letter-spacing:5px;text-transform:uppercase;margin-bottom:4px">Le</div>
-          <div style="font-family:Poppins;font-weight:900;font-size:38px;color:white;letter-spacing:-2px;line-height:1;margin-bottom:4px">RUSH</div>
-          <div style="width:100%;height:2px;background:linear-gradient(90deg,#F97316,transparent)"></div>
-        </div>
-      </div>
-    </div>
-    <div class="card-info">
-      <div class="card-number">Proposition 09</div>
-      <div class="card-name">Fire Brand — R Flamme</div>
-      <div class="card-desc">Le "R" sculpté en forme de flamme — énergie brute, passion du feu de cuisson. Dark background + orange incandescent. Impact maximum sur tous les supports noir.</div>
-      <div class="tag-row">
-        <span class="tag dark">Impact</span>
-        <span class="tag orange">Feu</span>
-        <span class="tag">Streetwear</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- ═══════════════════════════════════════════════════ -->
-  <!-- LOGO 10 — Le Rush Wordmark Premium                 -->
-  <!-- ═══════════════════════════════════════════════════ -->
-  <div class="card">
-    <div class="logo-stage stage-10" style="border:1px solid #F3F4F6;">
-      <div class="logo-lockup">
-        <!-- Wordmark horizontal avec underline dynamique -->
-        <div style="position:relative;padding:0 24px;text-align:center">
-          <div style="font-family:Poppins;font-weight:300;font-size:16px;color:#9CA3AF;letter-spacing:12px;text-transform:uppercase;margin-bottom:-2px">L E</div>
-          <div style="font-family:Poppins;font-weight:900;font-size:64px;color:#1E1B4B;letter-spacing:-4px;line-height:1">RUSH</div>
-          <!-- Animated underline bar -->
-          <div style="display:flex;gap:4px;justify-content:center;margin-top:6px">
-            <div style="width:48px;height:4px;background:#7C3AED;border-radius:2px"></div>
-            <div style="width:12px;height:4px;background:#A78BFA;border-radius:2px"></div>
-            <div style="width:6px;height:4px;background:#F97316;border-radius:2px"></div>
+      <!-- ═══════════════════════════════════════════════════ -->
+      <!-- LOGO 2 — The Rush R Monogram                       -->
+      <!-- ═══════════════════════════════════════════════════ -->
+      <div class="card">
+        <div class="logo-stage stage-2">
+          <div class="logo-lockup">
+            <!-- Bold R with speed slash -->
+            <svg
+              width="96"
+              height="96"
+              viewBox="0 0 96 96"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle cx="48" cy="48" r="48" fill="rgba(255,255,255,0.1)" />
+              <!-- Giant R -->
+              <text
+                x="16"
+                y="76"
+                font-family="Poppins,sans-serif"
+                font-weight="900"
+                font-size="74"
+                fill="white"
+                letter-spacing="-4"
+              >
+                R
+              </text>
+              <!-- Orange speed slash through R -->
+              <path d="M52 20 L38 76" stroke="#F97316" stroke-width="5" stroke-linecap="round" />
+              <!-- Small fork icon replacing leg of R -->
+              <circle cx="72" cy="72" r="14" fill="#F97316" />
+              <line
+                x1="68"
+                y1="65"
+                x2="68"
+                y2="71"
+                stroke="white"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+              <line
+                x1="72"
+                y1="65"
+                x2="72"
+                y2="73"
+                stroke="white"
+                stroke-width="2.5"
+                stroke-linecap="round"
+              />
+              <line
+                x1="76"
+                y1="65"
+                x2="76"
+                y2="71"
+                stroke="white"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+              <line
+                x1="72"
+                y1="73"
+                x2="72"
+                y2="79"
+                stroke="white"
+                stroke-width="2.5"
+                stroke-linecap="round"
+              />
+            </svg>
+            <div
+              style="
+                font-family: Poppins;
+                font-weight: 800;
+                font-size: 26px;
+                color: white;
+                letter-spacing: 6px;
+                text-transform: uppercase;
+              "
+            >
+              LE RUSH
+            </div>
           </div>
-          <!-- Fork + knife flanking the wordmark -->
-          <svg style="position:absolute;left:0;top:50%;transform:translateY(-50%)" width="28" height="52" viewBox="0 0 28 52" fill="none">
-            <line x1="8" y1="4" x2="8" y2="16" stroke="#7C3AED" stroke-width="2.5" stroke-linecap="round"/>
-            <line x1="14" y1="4" x2="14" y2="16" stroke="#7C3AED" stroke-width="2.5" stroke-linecap="round"/>
-            <line x1="20" y1="4" x2="20" y2="16" stroke="#7C3AED" stroke-width="2.5" stroke-linecap="round"/>
-            <path d="M8 16 Q14 22 14 28 L14 48" stroke="#7C3AED" stroke-width="2.5" stroke-linecap="round"/>
-          </svg>
-          <svg style="position:absolute;right:0;top:50%;transform:translateY(-50%)" width="28" height="52" viewBox="0 0 28 52" fill="none">
-            <path d="M14 4 C14 4 20 14 20 48 L12 48" stroke="#F97316" stroke-width="2.5" stroke-linecap="round"/>
-          </svg>
         </div>
-        <div style="font-family:Open Sans;font-size:10px;font-weight:700;color:#D1D5DB;letter-spacing:4px;text-transform:uppercase">Restaurant Operating System</div>
+        <div class="card-info">
+          <div class="card-number">Proposition 02</div>
+          <div class="card-name">The Rush R — Monogram</div>
+          <div class="card-desc">
+            Monogramme "R" bold avec un slash orange dynamique. Lisible à toute taille — embroidery
+            maillot, favicon, app icon. Le cercle orange porte la fourchette en badge.
+          </div>
+          <div class="tag-row">
+            <span class="tag">Compact</span>
+            <span class="tag orange">App Icon</span>
+            <span class="tag">Broderie</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════ -->
+      <!-- LOGO 3 — Flame Knife                               -->
+      <!-- ═══════════════════════════════════════════════════ -->
+      <div class="card">
+        <div class="logo-stage stage-3">
+          <div class="logo-lockup-h">
+            <svg
+              width="80"
+              height="80"
+              viewBox="0 0 80 80"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <!-- Knife silhouette -->
+              <path
+                d="M38 8 C38 8 52 22 52 42 C52 52 46 60 40 64 L40 72 L36 72 L36 64 C30 60 24 52 24 42 C24 22 38 8 38 8Z"
+                fill="#1E1B4B"
+              />
+              <!-- Flame inside knife -->
+              <path
+                d="M40 28 C40 28 46 36 44 44 C43 48 40 52 40 52 C40 52 34 48 32 44 C30 36 36 28 40 28Z"
+                fill="#F97316"
+              />
+              <path
+                d="M40 34 C40 34 43 38 42 42 C41.5 44 40 46 40 46 C40 46 37 44 36 42 C35 38 37 34 40 34Z"
+                fill="#FEF3C7"
+              />
+              <!-- Handle dots -->
+              <circle cx="38" cy="67" r="1.5" fill="#9CA3AF" />
+              <circle cx="38" cy="71" r="1.5" fill="#9CA3AF" />
+            </svg>
+            <div>
+              <div
+                style="
+                  font-family: Poppins;
+                  font-weight: 900;
+                  font-size: 38px;
+                  color: #1e1b4b;
+                  letter-spacing: -2px;
+                  line-height: 1;
+                "
+              >
+                le<span style="color: #f97316">rush</span>
+              </div>
+              <div
+                style="
+                  font-family: Open Sans;
+                  font-size: 11px;
+                  font-weight: 600;
+                  color: #9ca3af;
+                  letter-spacing: 3px;
+                  text-transform: uppercase;
+                  margin-top: 4px;
+                "
+              >
+                Gestion · Cuisine · Performance
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-info">
+          <div class="card-number">Proposition 03</div>
+          <div class="card-name">Flame Knife</div>
+          <div class="card-desc">
+            Un couteau de chef avec une flamme gravée à l'intérieur — passion culinaire + feu du
+            service. Élégant, lisible sur fond clair. Très pro pour les cartes de visite.
+          </div>
+          <div class="tag-row">
+            <span class="tag">Premium</span>
+            <span class="tag orange">Gastronomie</span>
+            <span class="tag">Print</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════ -->
+      <!-- LOGO 4 — Speed Plate                               -->
+      <!-- ═══════════════════════════════════════════════════ -->
+      <div class="card">
+        <div class="logo-stage stage-4">
+          <div class="logo-lockup">
+            <svg
+              width="140"
+              height="80"
+              viewBox="0 0 140 80"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <!-- Motion lines left -->
+              <line
+                x1="4"
+                y1="32"
+                x2="28"
+                y2="32"
+                stroke="rgba(255,255,255,0.4)"
+                stroke-width="3"
+                stroke-linecap="round"
+              />
+              <line
+                x1="10"
+                y1="42"
+                x2="28"
+                y2="42"
+                stroke="rgba(255,255,255,0.25)"
+                stroke-width="2.5"
+                stroke-linecap="round"
+              />
+              <line
+                x1="16"
+                y1="52"
+                x2="28"
+                y2="52"
+                stroke="rgba(255,255,255,0.15)"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+              <!-- Plate circle -->
+              <circle cx="70" cy="42" r="34" fill="white" />
+              <circle cx="70" cy="42" r="26" fill="none" stroke="#EA580C" stroke-width="2" />
+              <!-- Fork on plate -->
+              <line
+                x1="60"
+                y1="30"
+                x2="60"
+                y2="38"
+                stroke="#1E1B4B"
+                stroke-width="2.5"
+                stroke-linecap="round"
+              />
+              <line
+                x1="64"
+                y1="30"
+                x2="64"
+                y2="38"
+                stroke="#1E1B4B"
+                stroke-width="2.5"
+                stroke-linecap="round"
+              />
+              <line
+                x1="68"
+                y1="30"
+                x2="68"
+                y2="38"
+                stroke="#1E1B4B"
+                stroke-width="2.5"
+                stroke-linecap="round"
+              />
+              <path
+                d="M60 38 Q64 43 64 50 L64 54"
+                stroke="#1E1B4B"
+                stroke-width="2.5"
+                stroke-linecap="round"
+              />
+              <!-- Knife on plate -->
+              <path
+                d="M76 30 C76 30 80 36 80 54 L76 54"
+                stroke="#1E1B4B"
+                stroke-width="2.5"
+                stroke-linecap="round"
+              />
+              <!-- Motion lines right -->
+              <line
+                x1="112"
+                y1="32"
+                x2="136"
+                y2="32"
+                stroke="rgba(255,255,255,0.4)"
+                stroke-width="3"
+                stroke-linecap="round"
+              />
+              <line
+                x1="112"
+                y1="42"
+                x2="130"
+                y2="42"
+                stroke="rgba(255,255,255,0.25)"
+                stroke-width="2.5"
+                stroke-linecap="round"
+              />
+              <line
+                x1="112"
+                y1="52"
+                x2="124"
+                y2="52"
+                stroke="rgba(255,255,255,0.15)"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+            </svg>
+            <div
+              style="
+                font-family: Poppins;
+                font-weight: 900;
+                font-size: 30px;
+                color: white;
+                letter-spacing: -1px;
+                text-align: center;
+              "
+            >
+              LE RUSH
+            </div>
+          </div>
+        </div>
+        <div class="card-info">
+          <div class="card-number">Proposition 04</div>
+          <div class="card-name">Speed Plate</div>
+          <div class="card-desc">
+            L'assiette en mouvement — lignes de vitesse qui encadrent le couvert. Orange vif,
+            énergie du service. Excellent pour les uniformes et le packaging alimentaire.
+          </div>
+          <div class="tag-row">
+            <span class="tag orange">Énergie</span>
+            <span class="tag">Packaging</span>
+            <span class="tag">Uniforme</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════ -->
+      <!-- LOGO 5 — Brigade Badge                             -->
+      <!-- ═══════════════════════════════════════════════════ -->
+      <div class="card">
+        <div class="logo-stage stage-5">
+          <div class="logo-lockup">
+            <svg
+              width="100"
+              height="110"
+              viewBox="0 0 100 110"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <!-- Shield / Badge shape -->
+              <path
+                d="M50 4 L92 20 L92 58 C92 80 72 98 50 106 C28 98 8 80 8 58 L8 20 Z"
+                fill="#1E293B"
+                stroke="#7C3AED"
+                stroke-width="2"
+              />
+              <!-- Inner shield -->
+              <path
+                d="M50 14 L82 26 L82 56 C82 74 68 88 50 96 C32 88 18 74 18 56 L18 26 Z"
+                fill="#0F172A"
+              />
+              <!-- Chef toque simplified -->
+              <ellipse cx="50" cy="40" rx="18" ry="6" fill="#7C3AED" />
+              <rect x="34" y="28" width="32" height="14" rx="6" fill="#A78BFA" />
+              <rect x="38" y="40" width="24" height="4" rx="2" fill="#7C3AED" />
+              <!-- LE RUSH inside badge -->
+              <text
+                x="50"
+                y="62"
+                font-family="Poppins,sans-serif"
+                font-weight="800"
+                font-size="13"
+                fill="white"
+                text-anchor="middle"
+                letter-spacing="2"
+              >
+                LE RUSH
+              </text>
+              <!-- Star dividers -->
+              <text
+                x="28"
+                y="62"
+                font-family="sans-serif"
+                font-size="8"
+                fill="#F97316"
+                text-anchor="middle"
+              >
+                ★
+              </text>
+              <text
+                x="72"
+                y="62"
+                font-family="sans-serif"
+                font-size="8"
+                fill="#F97316"
+                text-anchor="middle"
+              >
+                ★
+              </text>
+              <!-- Tagline -->
+              <text
+                x="50"
+                y="74"
+                font-family="Open Sans,sans-serif"
+                font-weight="600"
+                font-size="7"
+                fill="#6B7280"
+                text-anchor="middle"
+                letter-spacing="2"
+              >
+                RESTAURANT OS
+              </text>
+            </svg>
+          </div>
+        </div>
+        <div class="card-info">
+          <div class="card-number">Proposition 05</div>
+          <div class="card-name">Brigade Badge</div>
+          <div class="card-desc">
+            Badge de brigade façon écusson militaire — prestige, équipe, appartenance. La toque
+            intégrée dans le blason. Idéal pour l'embroidery maillots, casquettes, tabliers.
+          </div>
+          <div class="tag-row">
+            <span class="tag">Prestige</span>
+            <span class="tag orange">Broderie</span>
+            <span class="tag dark">Maillot</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════ -->
+      <!-- LOGO 6 — Rush Wave                                 -->
+      <!-- ═══════════════════════════════════════════════════ -->
+      <div class="card">
+        <div class="logo-stage stage-6">
+          <div class="logo-lockup-h">
+            <svg
+              width="70"
+              height="70"
+              viewBox="0 0 70 70"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <!-- Background circle gradient -->
+              <circle cx="35" cy="35" r="35" fill="url(#grad6)" />
+              <defs>
+                <linearGradient id="grad6" x1="0" y1="0" x2="70" y2="70">
+                  <stop offset="0%" stop-color="#7C3AED" />
+                  <stop offset="100%" stop-color="#F97316" />
+                </linearGradient>
+              </defs>
+              <!-- Fork tines (white) -->
+              <line
+                x1="22"
+                y1="14"
+                x2="22"
+                y2="28"
+                stroke="white"
+                stroke-width="2.5"
+                stroke-linecap="round"
+              />
+              <line
+                x1="28"
+                y1="14"
+                x2="28"
+                y2="28"
+                stroke="white"
+                stroke-width="2.5"
+                stroke-linecap="round"
+              />
+              <line
+                x1="34"
+                y1="14"
+                x2="34"
+                y2="28"
+                stroke="white"
+                stroke-width="2.5"
+                stroke-linecap="round"
+              />
+              <path
+                d="M22 28 Q28 34 28 40 L28 56"
+                stroke="white"
+                stroke-width="2.5"
+                stroke-linecap="round"
+              />
+              <!-- Wave / speed motion -->
+              <path
+                d="M36 35 Q42 28 50 32 Q58 36 54 44"
+                stroke="white"
+                stroke-width="3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                fill="none"
+                opacity="0.9"
+              />
+              <path
+                d="M36 42 Q44 36 52 40 Q58 44 55 50"
+                stroke="white"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                fill="none"
+                opacity="0.55"
+              />
+              <path
+                d="M38 49 Q44 44 50 47"
+                stroke="white"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                fill="none"
+                opacity="0.3"
+              />
+            </svg>
+            <div>
+              <div
+                style="
+                  font-family: Poppins;
+                  font-weight: 900;
+                  font-size: 34px;
+                  letter-spacing: -1.5px;
+                  line-height: 1;
+                "
+              >
+                <span
+                  style="
+                    background: linear-gradient(135deg, #7c3aed, #f97316);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    background-clip: text;
+                  "
+                  >Le Rush</span
+                >
+              </div>
+              <div
+                style="
+                  font-family: Open Sans;
+                  font-size: 10px;
+                  font-weight: 700;
+                  color: #9ca3af;
+                  letter-spacing: 3px;
+                  text-transform: uppercase;
+                  margin-top: 3px;
+                "
+              >
+                L'OS des Restaurateurs
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-info">
+          <div class="card-number">Proposition 06</div>
+          <div class="card-name">Rush Wave — Gradient</div>
+          <div class="card-desc">
+            Gradient violet→orange symbolisant l'élan du service. La fourchette génère des ondes de
+            vitesse. Le dégradé sur le wordmark est moderne et mémorable.
+          </div>
+          <div class="tag-row">
+            <span class="tag">Digital First</span>
+            <span class="tag orange">Gradient</span>
+            <span class="tag">App</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════ -->
+      <!-- LOGO 7 — Chef Peak                                 -->
+      <!-- ═══════════════════════════════════════════════════ -->
+      <div class="card">
+        <div class="logo-stage stage-7">
+          <div class="logo-lockup">
+            <svg
+              width="160"
+              height="90"
+              viewBox="0 0 160 90"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <!-- Mountain peak shape = toque silhouette -->
+              <path d="M80 8 L110 58 L50 58 Z" fill="#7C3AED" />
+              <!-- Peak inner highlight -->
+              <path d="M80 18 L98 52 L62 52 Z" fill="#A78BFA" opacity="0.4" />
+              <!-- Summit dot -->
+              <circle cx="80" cy="10" r="4" fill="#F97316" />
+              <!-- Speed line base -->
+              <rect x="36" y="62" width="88" height="3" rx="1.5" fill="#7C3AED" opacity="0.6" />
+              <rect x="46" y="68" width="68" height="2" rx="1" fill="#7C3AED" opacity="0.35" />
+              <rect x="56" y="73" width="48" height="1.5" rx="0.75" fill="#7C3AED" opacity="0.18" />
+              <!-- Wordmark -->
+              <text
+                x="80"
+                y="90"
+                font-family="Poppins,sans-serif"
+                font-weight="800"
+                font-size="18"
+                fill="white"
+                text-anchor="middle"
+                letter-spacing="5"
+              >
+                LE RUSH
+              </text>
+            </svg>
+          </div>
+        </div>
+        <div class="card-info">
+          <div class="card-number">Proposition 07</div>
+          <div class="card-name">Chef Peak — Ambition</div>
+          <div class="card-desc">
+            Le pic de montagne évoque à la fois la toque du chef et l'ambition d'atteindre le
+            sommet. Le point orange = l'objectif. Simple, fort, intemporel.
+          </div>
+          <div class="tag-row">
+            <span class="tag">Ambitieux</span>
+            <span class="tag dark">Premium</span>
+            <span class="tag">Intemporel</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════ -->
+      <!-- LOGO 8 — Toque Motion                              -->
+      <!-- ═══════════════════════════════════════════════════ -->
+      <div class="card">
+        <div class="logo-stage stage-8">
+          <div class="logo-lockup-h">
+            <svg
+              width="68"
+              height="68"
+              viewBox="0 0 68 68"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <!-- Toque stylisée avec vitesse -->
+              <!-- Bande basse de la toque -->
+              <rect x="12" y="46" width="44" height="10" rx="3" fill="#1E1B4B" />
+              <!-- Corps de la toque -->
+              <path d="M16 46 C16 46 14 20 34 16 C54 20 52 46 52 46 Z" fill="#1E1B4B" />
+              <!-- Bouffant de la toque (blanc) -->
+              <ellipse
+                cx="34"
+                cy="30"
+                rx="16"
+                ry="12"
+                fill="white"
+                stroke="#E5E7EB"
+                stroke-width="1.5"
+              />
+              <!-- Lignes de vitesse qui sortent de la toque vers la droite -->
+              <line
+                x1="52"
+                y1="22"
+                x2="64"
+                y2="22"
+                stroke="#F97316"
+                stroke-width="3"
+                stroke-linecap="round"
+              />
+              <line
+                x1="54"
+                y1="30"
+                x2="64"
+                y2="30"
+                stroke="#F97316"
+                stroke-width="2"
+                stroke-linecap="round"
+                opacity="0.6"
+              />
+              <line
+                x1="56"
+                y1="38"
+                x2="64"
+                y2="38"
+                stroke="#F97316"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                opacity="0.35"
+              />
+              <!-- Small circle accent -->
+              <circle cx="34" cy="30" r="5" fill="#7C3AED" />
+            </svg>
+            <div>
+              <div
+                style="
+                  font-family: Poppins;
+                  font-weight: 900;
+                  font-size: 36px;
+                  color: #1e1b4b;
+                  letter-spacing: -2px;
+                  line-height: 1.05;
+                "
+              >
+                Le<br /><span style="color: #7c3aed">Rush</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-info">
+          <div class="card-number">Proposition 08</div>
+          <div class="card-name">Toque Motion</div>
+          <div class="card-desc">
+            La toque classique avec des lignes de vitesse orange — mouvement, rapidité, passion.
+            Design épuré sur blanc, très polyvalent. Parfait pour les cartes de visite B2B.
+          </div>
+          <div class="tag-row">
+            <span class="tag">B2B</span>
+            <span class="tag">Clean</span>
+            <span class="tag orange">Polyvalent</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════ -->
+      <!-- LOGO 9 — Fire Brand                                -->
+      <!-- ═══════════════════════════════════════════════════ -->
+      <div class="card">
+        <div class="logo-stage stage-9">
+          <div class="logo-lockup-h">
+            <svg
+              width="64"
+              height="80"
+              viewBox="0 0 64 80"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <!-- Stylized R as fire/flame shape -->
+              <path
+                d="M12 72 L12 8 L36 8 C48 8 56 16 56 28 C56 36 52 42 44 45 L56 72 L44 72 L34 47 L24 47 L24 72 Z"
+                fill="none"
+              />
+              <!-- R filled avec flamme -->
+              <path
+                d="M12 72 L12 8 L36 8 C47 8 54 15 54 27 C54 35 50 41 43 45 L54 72 L43 72 L34 47 L23 47 L23 72 Z"
+                fill="#F97316"
+              />
+              <!-- Flame highlight on R bowl -->
+              <path
+                d="M23 16 L35 16 C42 16 46 21 46 27 C46 33 42 39 35 39 L23 39 Z"
+                fill="#FEF3C7"
+                opacity="0.4"
+              />
+              <!-- Flame tip -->
+              <path d="M28 6 C28 6 32 -2 38 4 C34 2 36 8 36 8 L28 8 Z" fill="#F97316" />
+              <path
+                d="M30 6 C30 6 33 1 36 5"
+                stroke="#FCD34D"
+                stroke-width="1.5"
+                stroke-linecap="round"
+              />
+            </svg>
+            <div>
+              <div
+                style="
+                  font-family: Poppins;
+                  font-weight: 800;
+                  font-size: 14px;
+                  color: white;
+                  letter-spacing: 5px;
+                  text-transform: uppercase;
+                  margin-bottom: 4px;
+                "
+              >
+                Le
+              </div>
+              <div
+                style="
+                  font-family: Poppins;
+                  font-weight: 900;
+                  font-size: 38px;
+                  color: white;
+                  letter-spacing: -2px;
+                  line-height: 1;
+                  margin-bottom: 4px;
+                "
+              >
+                RUSH
+              </div>
+              <div
+                style="
+                  width: 100%;
+                  height: 2px;
+                  background: linear-gradient(90deg, #f97316, transparent);
+                "
+              ></div>
+            </div>
+          </div>
+        </div>
+        <div class="card-info">
+          <div class="card-number">Proposition 09</div>
+          <div class="card-name">Fire Brand — R Flamme</div>
+          <div class="card-desc">
+            Le "R" sculpté en forme de flamme — énergie brute, passion du feu de cuisson. Dark
+            background + orange incandescent. Impact maximum sur tous les supports noir.
+          </div>
+          <div class="tag-row">
+            <span class="tag dark">Impact</span>
+            <span class="tag orange">Feu</span>
+            <span class="tag">Streetwear</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════ -->
+      <!-- LOGO 10 — Le Rush Wordmark Premium                 -->
+      <!-- ═══════════════════════════════════════════════════ -->
+      <div class="card">
+        <div class="logo-stage stage-10" style="border: 1px solid #f3f4f6">
+          <div class="logo-lockup">
+            <!-- Wordmark horizontal avec underline dynamique -->
+            <div style="position: relative; padding: 0 24px; text-align: center">
+              <div
+                style="
+                  font-family: Poppins;
+                  font-weight: 300;
+                  font-size: 16px;
+                  color: #9ca3af;
+                  letter-spacing: 12px;
+                  text-transform: uppercase;
+                  margin-bottom: -2px;
+                "
+              >
+                L E
+              </div>
+              <div
+                style="
+                  font-family: Poppins;
+                  font-weight: 900;
+                  font-size: 64px;
+                  color: #1e1b4b;
+                  letter-spacing: -4px;
+                  line-height: 1;
+                "
+              >
+                RUSH
+              </div>
+              <!-- Animated underline bar -->
+              <div style="display: flex; gap: 4px; justify-content: center; margin-top: 6px">
+                <div
+                  style="width: 48px; height: 4px; background: #7c3aed; border-radius: 2px"
+                ></div>
+                <div
+                  style="width: 12px; height: 4px; background: #a78bfa; border-radius: 2px"
+                ></div>
+                <div style="width: 6px; height: 4px; background: #f97316; border-radius: 2px"></div>
+              </div>
+              <!-- Fork + knife flanking the wordmark -->
+              <svg
+                style="position: absolute; left: 0; top: 50%; transform: translateY(-50%)"
+                width="28"
+                height="52"
+                viewBox="0 0 28 52"
+                fill="none"
+              >
+                <line
+                  x1="8"
+                  y1="4"
+                  x2="8"
+                  y2="16"
+                  stroke="#7C3AED"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                />
+                <line
+                  x1="14"
+                  y1="4"
+                  x2="14"
+                  y2="16"
+                  stroke="#7C3AED"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                />
+                <line
+                  x1="20"
+                  y1="4"
+                  x2="20"
+                  y2="16"
+                  stroke="#7C3AED"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                />
+                <path
+                  d="M8 16 Q14 22 14 28 L14 48"
+                  stroke="#7C3AED"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                />
+              </svg>
+              <svg
+                style="position: absolute; right: 0; top: 50%; transform: translateY(-50%)"
+                width="28"
+                height="52"
+                viewBox="0 0 28 52"
+                fill="none"
+              >
+                <path
+                  d="M14 4 C14 4 20 14 20 48 L12 48"
+                  stroke="#F97316"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </div>
+            <div
+              style="
+                font-family: Open Sans;
+                font-size: 10px;
+                font-weight: 700;
+                color: #d1d5db;
+                letter-spacing: 4px;
+                text-transform: uppercase;
+              "
+            >
+              Restaurant Operating System
+            </div>
+          </div>
+        </div>
+        <div class="card-info">
+          <div class="card-number">Proposition 10</div>
+          <div class="card-name">Wordmark Premium — Typographique</div>
+          <div class="card-desc">
+            Le wordmark pur — typographie Poppins Black avec hiérarchie "le / RUSH". La barre en 3
+            segments (violet, lilas, orange) = la triple promesse. Fourchette et couteau en flanc.
+          </div>
+          <div class="tag-row">
+            <span class="tag">Typographique</span>
+            <span class="tag orange">Premium</span>
+            <span class="tag">Luxe</span>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="card-info">
-      <div class="card-number">Proposition 10</div>
-      <div class="card-name">Wordmark Premium — Typographique</div>
-      <div class="card-desc">Le wordmark pur — typographie Poppins Black avec hiérarchie "le / RUSH". La barre en 3 segments (violet, lilas, orange) = la triple promesse. Fourchette et couteau en flanc.</div>
-      <div class="tag-row">
-        <span class="tag">Typographique</span>
-        <span class="tag orange">Premium</span>
-        <span class="tag">Luxe</span>
+
+    <!-- ─────────────────────────────────────────── -->
+    <!-- COLOUR + FONT PALETTE REFERENCE           -->
+    <!-- ─────────────────────────────────────────── -->
+    <div
+      style="
+        max-width: 1320px;
+        margin: 72px auto 0;
+        padding: 40px;
+        background: white;
+        border-radius: 24px;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+      "
+    >
+      <div
+        style="
+          font-family: Poppins;
+          font-weight: 800;
+          font-size: 22px;
+          color: #1e1b4b;
+          margin-bottom: 24px;
+        "
+      >
+        Palette Marque & Typographie
+      </div>
+      <div style="display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 32px">
+        <div style="text-align: center">
+          <div
+            style="
+              width: 64px;
+              height: 64px;
+              border-radius: 12px;
+              background: #7c3aed;
+              margin: 0 auto 8px;
+            "
+          ></div>
+          <div style="font-size: 11px; font-weight: 600; color: #6b7280">
+            #7C3AED<br />Violet Primaire
+          </div>
+        </div>
+        <div style="text-align: center">
+          <div
+            style="
+              width: 64px;
+              height: 64px;
+              border-radius: 12px;
+              background: #a78bfa;
+              margin: 0 auto 8px;
+            "
+          ></div>
+          <div style="font-size: 11px; font-weight: 600; color: #6b7280">
+            #A78BFA<br />Violet Clair
+          </div>
+        </div>
+        <div style="text-align: center">
+          <div
+            style="
+              width: 64px;
+              height: 64px;
+              border-radius: 12px;
+              background: #f97316;
+              margin: 0 auto 8px;
+            "
+          ></div>
+          <div style="font-size: 11px; font-weight: 600; color: #6b7280">
+            #F97316<br />Orange CTA
+          </div>
+        </div>
+        <div style="text-align: center">
+          <div
+            style="
+              width: 64px;
+              height: 64px;
+              border-radius: 12px;
+              background: #1e1b4b;
+              margin: 0 auto 8px;
+            "
+          ></div>
+          <div style="font-size: 11px; font-weight: 600; color: #6b7280">
+            #1E1B4B<br />Texte Foncé
+          </div>
+        </div>
+        <div style="text-align: center">
+          <div
+            style="
+              width: 64px;
+              height: 64px;
+              border-radius: 12px;
+              background: #0f0a1e;
+              border: 1px solid #e5e7eb;
+              margin: 0 auto 8px;
+            "
+          ></div>
+          <div style="font-size: 11px; font-weight: 600; color: #6b7280">#0F0A1E<br />Dark BG</div>
+        </div>
+        <div style="text-align: center">
+          <div
+            style="
+              width: 64px;
+              height: 64px;
+              border-radius: 12px;
+              background: white;
+              border: 2px solid #e5e7eb;
+              margin: 0 auto 8px;
+            "
+          ></div>
+          <div style="font-size: 11px; font-weight: 600; color: #6b7280">#FFFFFF<br />Blanc</div>
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 640px">
+        <div style="padding: 20px; background: #faf5ff; border-radius: 12px">
+          <div
+            style="
+              font-size: 11px;
+              font-weight: 700;
+              color: #7c3aed;
+              letter-spacing: 2px;
+              text-transform: uppercase;
+              margin-bottom: 8px;
+            "
+          >
+            Titre
+          </div>
+          <div
+            style="
+              font-family: Poppins;
+              font-weight: 800;
+              font-size: 28px;
+              color: #1e1b4b;
+              letter-spacing: -1px;
+            "
+          >
+            Poppins 800
+          </div>
+        </div>
+        <div style="padding: 20px; background: #fff7ed; border-radius: 12px">
+          <div
+            style="
+              font-size: 11px;
+              font-weight: 700;
+              color: #f97316;
+              letter-spacing: 2px;
+              text-transform: uppercase;
+              margin-bottom: 8px;
+            "
+          >
+            Corps
+          </div>
+          <div style="font-family: Open Sans; font-size: 15px; color: #374151; line-height: 1.6">
+            Open Sans Regular — lisibilité maximale pour les interfaces métier.
+          </div>
+        </div>
       </div>
     </div>
-  </div>
 
-</div>
-
-<!-- ─────────────────────────────────────────── -->
-<!-- COLOUR + FONT PALETTE REFERENCE           -->
-<!-- ─────────────────────────────────────────── -->
-<div style="max-width:1320px;margin:72px auto 0;padding:40px;background:white;border-radius:24px;box-shadow:0 4px 24px rgba(0,0,0,0.06)">
-  <div style="font-family:Poppins;font-weight:800;font-size:22px;color:#1E1B4B;margin-bottom:24px">Palette Marque & Typographie</div>
-  <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:32px">
-    <div style="text-align:center">
-      <div style="width:64px;height:64px;border-radius:12px;background:#7C3AED;margin:0 auto 8px"></div>
-      <div style="font-size:11px;font-weight:600;color:#6B7280">#7C3AED<br/>Violet Primaire</div>
+    <div style="text-align: center; padding: 48px; color: #9ca3af; font-size: 13px">
+      Le Rush — Brand Identity Proposals · Conçu avec UI/UX Pro Max
     </div>
-    <div style="text-align:center">
-      <div style="width:64px;height:64px;border-radius:12px;background:#A78BFA;margin:0 auto 8px"></div>
-      <div style="font-size:11px;font-weight:600;color:#6B7280">#A78BFA<br/>Violet Clair</div>
-    </div>
-    <div style="text-align:center">
-      <div style="width:64px;height:64px;border-radius:12px;background:#F97316;margin:0 auto 8px"></div>
-      <div style="font-size:11px;font-weight:600;color:#6B7280">#F97316<br/>Orange CTA</div>
-    </div>
-    <div style="text-align:center">
-      <div style="width:64px;height:64px;border-radius:12px;background:#1E1B4B;margin:0 auto 8px"></div>
-      <div style="font-size:11px;font-weight:600;color:#6B7280">#1E1B4B<br/>Texte Foncé</div>
-    </div>
-    <div style="text-align:center">
-      <div style="width:64px;height:64px;border-radius:12px;background:#0F0A1E;border:1px solid #E5E7EB;margin:0 auto 8px"></div>
-      <div style="font-size:11px;font-weight:600;color:#6B7280">#0F0A1E<br/>Dark BG</div>
-    </div>
-    <div style="text-align:center">
-      <div style="width:64px;height:64px;border-radius:12px;background:white;border:2px solid #E5E7EB;margin:0 auto 8px"></div>
-      <div style="font-size:11px;font-weight:600;color:#6B7280">#FFFFFF<br/>Blanc</div>
-    </div>
-  </div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:640px">
-    <div style="padding:20px;background:#FAF5FF;border-radius:12px">
-      <div style="font-size:11px;font-weight:700;color:#7C3AED;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px">Titre</div>
-      <div style="font-family:Poppins;font-weight:800;font-size:28px;color:#1E1B4B;letter-spacing:-1px">Poppins 800</div>
-    </div>
-    <div style="padding:20px;background:#FFF7ED;border-radius:12px">
-      <div style="font-size:11px;font-weight:700;color:#F97316;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px">Corps</div>
-      <div style="font-family:Open Sans;font-size:15px;color:#374151;line-height:1.6">Open Sans Regular — lisibilité maximale pour les interfaces métier.</div>
-    </div>
-  </div>
-</div>
-
-<div style="text-align:center;padding:48px;color:#9CA3AF;font-size:13px;">
-  Le Rush — Brand Identity Proposals · Conçu avec UI/UX Pro Max
-</div>
-
-</body>
+  </body>
 </html>
