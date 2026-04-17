@@ -9,17 +9,23 @@ import { pingHeartbeat } from '@/lib/betteruptime'
 export const maxDuration = 60
 export const dynamic = 'force-dynamic'
 
-// Templates de follow-up (texte libre — envoyés dans session ouverte si réponse <24h)
-// Sinon utilise le template Meta approuvé
-const TEMPLATES: Record<string, string> = {
-  followup_warm:
-    "Bonjour, je reviens vers vous concernant Le Rush — l'app de gestion pour les restaurants. " +
-    "Avez-vous eu le temps d'y réfléchir ? Je suis disponible pour 15 minutes si vous souhaitez une démo rapide. " +
-    'Bonne journée ! Cyril',
-  followup_cold:
-    'Bonjour, je vous recontacte une dernière fois concernant Le Rush. ' +
-    'Depuis notre dernier message, plusieurs restaurateurs ont réduit leurs pertes matière de 8% en moyenne. ' +
-    'Si la gestion de vos coûts vous intéresse, répondez OUI. Sinon répondez STOP. Cyril — Le Rush',
+// Templates Meta pour les follow-ups (cold outreach — hors session)
+// Ces clés correspondent aux template names dans Meta Business Manager
+// Séquence : v1 (J0) → v2 (J+3) → v3 (J+7)
+const META_TEMPLATES: Record<string, string> = {
+  // J+3 — Preuve sociale + urgence douce
+  // Corps : "Bonjour, je reviens vers vous concernant {{1}} 🙂
+  //   Cette semaine j'ai aidé un chef à Lyon à recalculer son food cost sur 12 plats en 20 minutes
+  //   chrono — il le faisait à la main depuis 3 ans.
+  //   Si vous voulez voir comment ça marche pour votre carte, je suis dispo 15 min cette semaine.
+  //   Répondez OUI. STOP pour ne plus être contacté."
+  followup_warm: 'lerush_prospection_v2',
+
+  // J+7 — Dernier message, sortie propre
+  // Corps : "Bonjour, c'est mon dernier message concernant {{1}} — je ne veux pas vous déranger.
+  //   Si ce n'est pas le bon moment, pas de souci. Le Rush reste disponible sur lerush.app quand vous voulez.
+  //   Bonne continuation et bon service 🍽️ STOP pour ne plus être contacté."
+  followup_cold: 'lerush_prospection_v3',
 }
 
 interface ScheduledMessageRow {
@@ -108,13 +114,13 @@ export async function GET(req: NextRequest) {
         let success = false
 
         if (msg.channel === 'whatsapp') {
-          // Pour les follow-ups, on utilise le template Meta (cold) ou texte libre (warm, si session ouverte)
+          const templateName =
+            META_TEMPLATES[msg.template_key ?? 'followup_warm'] ?? META_TEMPLATES.followup_warm
           const result = await sendProspectionMessage({
             telephone: prospect.telephone,
             nom_restaurant: prospect.nom,
             ville: prospect.ville ?? 'France',
-            message_personnalise:
-              TEMPLATES[msg.template_key ?? 'followup_warm'] ?? TEMPLATES.followup_warm,
+            message_personnalise: templateName,
           })
           success = result.success
 
